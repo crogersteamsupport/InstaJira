@@ -114,8 +114,6 @@
     color:white;
 }
 
-@supports (-ms-ime-align: auto) {
-    .modal-backdrop, .modal {
-        position: absolute !important;
-    }
+.modal, .modal-backdrop {
+    position: absolute !important;
 }
