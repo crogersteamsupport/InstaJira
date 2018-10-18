@@ -114,6 +114,6 @@
     color:white;
 }
 
-.modal, .modal-backdrop {
+.modal, .modal-backdrop, .ui-widget-overlay {
     position: absolute !important;
 }
