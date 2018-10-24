@@ -626,17 +626,24 @@ namespace TeamSupport.Services
         }
 
         [WebMethod]
-        public void DeleteAction(int actionID)
+        public string DeleteAction(int actionID)
         {
-            if (!UserSession.CurrentUser.IsSystemAdmin) return;
-            TeamSupport.Data.Action action = Actions.GetAction(UserSession.LoginUser, actionID);
-            if (action == null) return;
+			string result = string.Empty;
+            if (!UserSession.CurrentUser.IsSystemAdmin) result = "The User is not an Admin and can't delete the action.";
+
+			Data.Action action = Actions.GetAction(UserSession.LoginUser, actionID);
+            if (action == null) result = "The action can't be found so it can't be deleted.";
+
             Ticket ticket = Tickets.GetTicket(UserSession.LoginUser, action.TicketID);
-            if (ticket == null) return;
-            if (ticket.OrganizationID != UserSession.LoginUser.OrganizationID) return;
+            if (ticket == null) result = "The Ticket of the action was not found so the action can't be deleted.";
+
+			if (ticket.OrganizationID != UserSession.LoginUser.OrganizationID) result = "The User does not belong to the organization of the ticket so the action can't be deleted.";
 
             action.Delete();
             action.Collection.Save();
+			result = "deleted";
+
+			return result;
         }
 
         [WebMethod]

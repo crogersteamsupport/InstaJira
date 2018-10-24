@@ -1221,11 +1221,14 @@ namespace TSWebServices
         }
 
         [WebMethod]
-        public void DeleteAction(int actionID)
+        public string DeleteAction(int actionID)
         {
+			string result = string.Empty;
             TeamSupport.Data.Action action = Actions.GetAction(TSAuthentication.GetLoginUser(), actionID);
-            if (!CanDeleteAction(action)) return;
+            if (!CanDeleteAction(action)) result =  "This User can't delete this action, or this action is the Description and can't be deleted.";
 
+			try
+			{
             ActionLinkToJiraItem actionlink = ActionLinkToJira.GetActionLinkToJiraItemByActionID(TSAuthentication.GetLoginUser(), actionID);
             if (actionlink != null)
             {
@@ -1235,6 +1238,16 @@ namespace TSWebServices
 
             action.Delete();
             action.Collection.Save();
+				result = "deleted";
+			}
+			catch (Exception ex)
+			{
+				ExceptionLogs.LogException(TSAuthentication.GetLoginUser(), ex, "TicketService.DeleteAction");
+				result = "There was an error deleting this action.";
+			}
+            
+
+			return result;
         }
 
         [WebMethod]
