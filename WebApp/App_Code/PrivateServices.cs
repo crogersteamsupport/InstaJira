@@ -639,6 +639,28 @@ namespace TeamSupport.Services
 
 			if (ticket.OrganizationID != UserSession.LoginUser.OrganizationID) result = "The User does not belong to the organization of the ticket so the action can't be deleted.";
 
+			ActionLinkToJiraItem actionlink = ActionLinkToJira.GetActionLinkToJiraItemByActionID(UserSession.LoginUser, actionID);
+			ActionLinkToTFSItem actionlinkTFS = ActionLinkToTFS.GetActionLinkToTFSItemByActionID(UserSession.LoginUser, actionID);
+			ActionLinkToSnowItem actionlinkSnow = ActionLinkToSnow.GetActionLinkToSnowItemByActionID(UserSession.LoginUser, actionID);
+
+			if (actionlink != null)
+			{
+				actionlink.Delete();
+				actionlink.Collection.Save();
+			}
+
+			if (actionlinkTFS != null)
+			{
+				actionlinkTFS.Delete();
+				actionlinkTFS.Collection.Save();
+			}
+
+			if (actionlinkSnow != null)
+			{
+				actionlinkSnow.Delete();
+				actionlinkSnow.Collection.Save();
+			}
+
             action.Delete();
             action.Collection.Save();
 			result = "deleted";

@@ -1229,12 +1229,28 @@ namespace TSWebServices
 
 			try
 			{
-            ActionLinkToJiraItem actionlink = ActionLinkToJira.GetActionLinkToJiraItemByActionID(TSAuthentication.GetLoginUser(), actionID);
+				LoginUser loginUser = TSAuthentication.GetLoginUser();
+				ActionLinkToJiraItem actionlink = ActionLinkToJira.GetActionLinkToJiraItemByActionID(loginUser, actionID);
+				ActionLinkToTFSItem actionlinkTFS = ActionLinkToTFS.GetActionLinkToTFSItemByActionID(loginUser, actionID);
+				ActionLinkToSnowItem actionlinkSnow = ActionLinkToSnow.GetActionLinkToSnowItemByActionID(loginUser, actionID);
+
             if (actionlink != null)
             {
                 actionlink.Delete();
                 actionlink.Collection.Save();
             }
+
+				if (actionlinkTFS != null)
+				{
+					actionlinkTFS.Delete();
+					actionlinkTFS.Collection.Save();
+				}
+
+				if (actionlinkSnow != null)
+				{
+					actionlinkSnow.Delete();
+					actionlinkSnow.Collection.Save();
+				}
 
             action.Delete();
             action.Collection.Save();
