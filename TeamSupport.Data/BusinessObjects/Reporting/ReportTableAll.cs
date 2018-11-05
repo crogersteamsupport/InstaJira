@@ -131,18 +131,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
         public DataTable GetReportTableAll(string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
-            SqlCommand command = new SqlCommand();
-
-            _report.GetCommand(command, includeHiddenFields, false, useUserFilter);
-            if (command.CommandText.ToLower().IndexOf(" order by ") < 0)
-            {
-                if (string.IsNullOrWhiteSpace(sortField))
-                {
-                    sortField = Reports.GetReportColumnNames(_loginUser, _report.ReportID)[0];
-                    isDesc = false;
-                }
-                command.CommandText = command.CommandText + " ORDER BY [" + sortField + (isDesc ? "] DESC" : "] ASC");
-            }
+            SqlCommand command = GetSqlCommand(ref sortField, ref isDesc, useUserFilter, includeHiddenFields);
 
             _report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
             _report.Collection.Save();
@@ -170,7 +159,57 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             return table;
         }
 
+        private SqlCommand GetSqlCommand(ref string sortField, ref bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        {
+            SqlCommand command = new SqlCommand();
+
+            _report.GetCommand(command, includeHiddenFields, false, useUserFilter);
+            if (command.CommandText.ToLower().IndexOf(" order by ") < 0)
+            {
+                if (string.IsNullOrWhiteSpace(sortField))
+                {
+                    sortField = Reports.GetReportColumnNames(_loginUser, _report.ReportID)[0];
+                    isDesc = false;
+                }
+                command.CommandText = command.CommandText + " ORDER BY [" + sortField + (isDesc ? "] DESC" : "] ASC");
+            }
+
+            AddReportTicketsViewTempTable(command);
+
+            return command;
+        }
+
         public DataTable GetReportTableAllForExports(string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        {
+            SqlCommand command = GetExportsSqlCommand(ref sortField, ref isDesc, useUserFilter, includeHiddenFields);
+
+            _report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
+            _report.Collection.Save();
+            BaseCollection.FixCommandParameters(command);
+
+            DataTable table = new DataTable();
+            using (SqlConnection connection = new SqlConnection(_loginUser.ConnectionString))
+            {
+                connection.Open();
+                command.Connection = connection;
+                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                {
+                    try
+                    {
+                        adapter.Fill(table);
+                    }
+                    catch (Exception ex)
+                    {
+                        ExceptionLogs.LogException(_loginUser, ex, "Report Data");
+                        throw;
+                    }
+                }
+                connection.Close();
+            }
+            return table;
+        }
+
+        private SqlCommand GetExportsSqlCommand(ref string sortField, ref bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
             SqlCommand command = new SqlCommand();
 
@@ -185,31 +224,35 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                 command.CommandText = command.CommandText + " ORDER BY [" + sortField + (isDesc ? "] DESC" : "] ASC");
             }
 
-            _report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
-            _report.Collection.Save();
-            BaseCollection.FixCommandParameters(command);
+            AddReportTicketsViewTempTable(command);
 
-            DataTable table = new DataTable();
-            using (SqlConnection connection = new SqlConnection(_loginUser.ConnectionString))
-            {
-                connection.Open();
-                command.Connection = connection;
-                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                {
-                    try
-                    {
-                        adapter.Fill(table);
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionLogs.LogException(_loginUser, ex, "Report Data");
-                        throw;
-                    }
-                }
-                connection.Close();
-            }
-            return table;
+            return command;
         }
+
+        private void AddReportTicketsViewTempTable(SqlCommand command)
+        {
+            if (ReportTicketsViewTempTable.Enable && (_report.ReportDefType != ReportType.Custom))
+            {
+                SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(_report.ReportDef);
+                ReportTicketsViewTempTable reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, summaryReport);
+                string tempTable = reportTicketsView.ToSql();
+                if (!String.IsNullOrEmpty(tempTable))
+                    command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
+            }
+        }
+
+        //private void AddReportTicketsViewTempTable(SqlCommand command)
+        //{
+        //    if (ReportTicketsViewTempTable.Enable && (_report.ReportDefType != ReportType.Custom))
+        //    {
+        //        TabularReport tabularReport = JsonConvert.DeserializeObject<TabularReport>(_report.ReportDef);
+        //        ReportTicketsViewTempTable reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, tabularReport);
+        //        string tempTable = reportTicketsView.ToSql();
+        //        if (!String.IsNullOrEmpty(tempTable))
+        //            command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
+        //    }
+        //}
+
 
     }
 }

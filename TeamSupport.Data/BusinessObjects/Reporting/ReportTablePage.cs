@@ -148,7 +148,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             from++;
             to++;
 
-            SqlCommand command = GetReportTableSqlCommand(from, to, ref sortField, ref isDesc, useUserFilter, includeHiddenFields);
+            SqlCommand command = GetSqlCommand(from, to, ref sortField, ref isDesc, useUserFilter, includeHiddenFields);
 
             _report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
             _report.Collection.Save();
@@ -186,7 +186,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             return table;
         }
 
-        private SqlCommand GetReportTableSqlCommand(int from, int to, ref string sortField, ref bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        private SqlCommand GetSqlCommand(int from, int to, ref string sortField, ref bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
             SqlCommand command = new SqlCommand();
 
@@ -243,13 +243,15 @@ WHERE RowNum BETWEEN @From AND @To";
                 command.CommandText = string.Format(query, command.CommandText, sortField, isDesc ? "DESC" : "ASC");
             }
 
+            AddReportTicketsViewTempTable(command);
+
             return command;
         }
 
         //For Exports
         public DataTable GetReportTablePageForExports(string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
-            SqlCommand command = GetSqlCommandForExports(ref sortField, ref isDesc, useUserFilter, includeHiddenFields);
+            SqlCommand command = GetExportsSqlCommand(ref sortField, ref isDesc, useUserFilter, includeHiddenFields);
 
             _report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
             _report.Collection.Save();
@@ -287,10 +289,12 @@ WHERE RowNum BETWEEN @From AND @To";
             if (table.Columns.Contains("RowNum"))
                 table.Columns.Remove("RowNum");
 
+            AddReportTicketsViewTempTable(command);
+
             return table;
         }
 
-        private SqlCommand GetSqlCommandForExports(ref string sortField, ref bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        private SqlCommand GetExportsSqlCommand(ref string sortField, ref bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
             SqlCommand command = new SqlCommand();
             string query = string.Empty;
@@ -325,6 +329,31 @@ WHERE RowNum BETWEEN @From AND @To";
 
             return command;
         }
+
+        //private void AddReportTicketsViewTempTable(SqlCommand command)
+        //{
+        //    if (ReportTicketsViewTempTable.Enable && (_report.ReportDefType != ReportType.Custom))
+        //    {
+        //        SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(_report.ReportDef);
+        //        ReportTicketsViewTempTable reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, summaryReport);
+        //        string tempTable = reportTicketsView.ToSql();
+        //        if (!String.IsNullOrEmpty(tempTable))
+        //            command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
+        //    }
+        //}
+
+        private void AddReportTicketsViewTempTable(SqlCommand command)
+        {
+            if (ReportTicketsViewTempTable.Enable && (_report.ReportDefType != ReportType.Custom))
+            {
+                TabularReport tabularReport = JsonConvert.DeserializeObject<TabularReport>(_report.ReportDef);
+                ReportTicketsViewTempTable reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, tabularReport);
+                string tempTable = reportTicketsView.ToSql();
+                if (!String.IsNullOrEmpty(tempTable))
+                    command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
+            }
+        }
+
 
     }
 }
