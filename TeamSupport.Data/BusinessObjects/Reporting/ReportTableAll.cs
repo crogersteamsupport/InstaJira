@@ -11,9 +11,6 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 {
     class ReportTableAll
     {
-        LoginUser _loginUser;
-        Report report;
-
         public static GridResult GetReportData(LoginUser loginUser, int reportID, int from, int to, string sortField, bool isDesc, bool useUserFilter)
         {
             Report report = Reports.GetReport(loginUser, reportID, loginUser.UserID);
