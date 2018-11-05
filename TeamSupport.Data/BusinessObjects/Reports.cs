@@ -1163,6 +1163,55 @@ namespace TeamSupport.Data
 
             Collection.Save();
         }
+
+        public GridResult GetReportData(LoginUser loginUser, int from, int to, string sortField, bool isDesc, bool useUserFilter)
+        {
+            if (IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
+            if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
+            {
+                ReportTableAll reportTableAll = new ReportTableAll(loginUser, this);
+                return reportTableAll.GetReportDataAll(sortField, isDesc, useUserFilter);
+            }
+            else
+            {
+                ReportTablePage reportTablePage = new ReportTablePage(loginUser, this);
+                return reportTablePage.GetReportDataPage(from, to, sortField, isDesc, useUserFilter);
+            }
+        }
+
+        public DataTable GetReportTable(LoginUser loginUser, int from, int to, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        {
+            if (IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
+
+            if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
+            {
+                ReportTableAll reportTableAll = new ReportTableAll(loginUser, this);
+                return reportTableAll.GetReportTableAll(sortField, isDesc, useUserFilter, includeHiddenFields);
+            }
+            else
+            {
+                ReportTablePage reportTablePage = new ReportTablePage(loginUser, this);
+                return reportTablePage.GetReportTablePage(from, to, sortField, isDesc, useUserFilter, includeHiddenFields);
+            }
+        }
+
+        //For exports
+        public DataTable GetReportTableForExports(LoginUser loginUser, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        {
+            if (IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
+
+            if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
+            {
+                ReportTableAll reportTableAll = new ReportTableAll(loginUser, this);
+                return reportTableAll.GetReportTableAllForExports(sortField, isDesc, useUserFilter, includeHiddenFields);
+            }
+            else
+            {
+                ReportTablePage reportTablePage = new ReportTablePage(loginUser, this);
+                return reportTablePage.GetReportTablePageForExports(sortField, isDesc, useUserFilter, includeHiddenFields);
+            }
+        }
+
     }
 
     public partial class Reports
@@ -1281,68 +1330,20 @@ namespace TeamSupport.Data
         public static GridResult GetReportData(LoginUser loginUser, int reportID, int from, int to, string sortField, bool isDesc, bool useUserFilter)
         {
             Report report = Reports.GetReport(loginUser, reportID, loginUser.UserID);
-
-            if (report.IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
-            if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                return ReportTableAll.GetReportDataAll(loginUser, report, sortField, isDesc, useUserFilter);
-            else
-                return ReportTablePage.GetReportDataPage(loginUser, report, from, to, sortField, isDesc, useUserFilter);
+            return report.GetReportData(loginUser, from, to, sortField, isDesc, useUserFilter);
         }
 
         public static DataTable GetReportTable(LoginUser loginUser, int reportID, int from, int to, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
             Report report = Reports.GetReport(loginUser, reportID);
-            if (report.IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
-
-            if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                return ReportTableAll.GetReportTableAll(loginUser, report, sortField, isDesc, useUserFilter, includeHiddenFields);
-            else
-                return ReportTablePage.GetReportTablePage(loginUser, report, from, to, sortField, isDesc, useUserFilter, includeHiddenFields);
+            return report.GetReportTable(loginUser, from, to, sortField, isDesc, useUserFilter, includeHiddenFields);
         }
 
         //For exports
         public static DataTable GetReportTableForExports(LoginUser loginUser, int reportID,  string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
             Report report = Reports.GetReport(loginUser, reportID);
-            if (report.IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
-
-            if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                return ReportTableAll.GetReportTableAllForExports(loginUser, report, sortField, isDesc, useUserFilter, includeHiddenFields);
-            else
-                return ReportTablePage.GetReportTablePageForExports(loginUser, report,sortField, isDesc, useUserFilter, includeHiddenFields);
-        }
-
-        public static DataTable GetSummaryData(LoginUser loginUser, SummaryReport summaryReport, bool useDefaultOrderBy, Report report = null)
-        {
-            SqlCommand command = new SqlCommand();
-            SummaryReportSql.GetSummaryCommand(loginUser, command, summaryReport, false, false, useDefaultOrderBy);
-            FixCommandParameters(command);
-            if (report != null)
-            {
-                report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
-                report.Collection.Save();
-            }
-
-            DataTable table = new DataTable();
-            using (SqlConnection connection = new SqlConnection(loginUser.ConnectionString))
-            {
-                connection.Open();
-                command.Connection = connection;
-                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                {
-                    try
-                    {
-                        adapter.Fill(table);
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionLogs.LogException(loginUser, ex, "GetSummaryData");
-                        throw;
-                    }
-                }
-                connection.Close();
-            }
-            return table;
+            return report.GetReportTableForExports(loginUser, sortField, isDesc, useUserFilter, includeHiddenFields);
         }
 
         public static string[] GetReportColumnNames(LoginUser loginUser, int reportID)
@@ -1685,100 +1686,6 @@ IF @@ROWCOUNT=0
             reportView.Collection.Save();
         }
 
-        public static string BuildChartData(LoginUser loginUser, DataTable table, SummaryReport summaryReport)
-        {
-            DataResult[] result = new DataResult[table.Columns.Count];
-
-            for (int i = 0; i < table.Columns.Count; i++)
-            {
-                result[i] = new DataResult();
-                result[i].name = table.Columns[i].ColumnName;
-                result[i].data = new object[table.Rows.Count];
-
-                for (int j = 0; j < table.Rows.Count; j++)
-                {
-                    object data = table.Rows[j][i];
-                    result[i].data[j] = data == null || data == DBNull.Value ? null : data;
-                }
-
-                if (i < summaryReport.Fields.Descriptive.Length)
-                {
-                    result[i].fieldType = summaryReport.Fields.Descriptive[i].Field.FieldType;
-                    result[i].format = summaryReport.Fields.Descriptive[i].Value1;
-                    if (result[i].fieldType == "datetime") FixChartDateNames(loginUser, result[i].data, summaryReport.Fields.Descriptive[i].Value1);
-                }
-
-
-            }
-
-            return JsonConvert.SerializeObject(result);
-        }
-
-        public static void FixChartDateNames(LoginUser loginUser, object[] list, string dateType)
-        {
-            try
-            {
-                DateTime baseDate = new DateTime(1970, 1, 1);
-                for (int i = 0; i < list.Length; i++)
-                {
-                    if (string.IsNullOrWhiteSpace((string)list[i])) continue;
-                    string item = ((string)list[i]).Trim().ToLower();
-
-
-                    if (dateType == "qtryear" || dateType == "monthyear" || dateType == "weekyear")
-                    {
-                        string[] items = item.Split('-');
-                        if (items.Length == 2)
-                        {
-                            string year = items[0];
-                            string value = items[1];
-
-                            switch (dateType)
-                            {
-                                case "qtryear": list[i] = string.Format("{1} - Q{0}", value, year); break;
-                                case "monthyear":
-                                    list[i] =
-                    string.Format("{1} {0}", loginUser.CultureInfo.DateTimeFormat.GetAbbreviatedMonthName(int.Parse(value)), year);
-                                    break;
-                                case "weekyear": list[i] = string.Format("{1}-{0}", value, year); break;
-                                default:
-                                    break;
-                            }
-                        }
-
-
-                    }
-                    else if (dateType == "qtr")
-                    {
-                        list[i] = "Q" + item;
-                    }
-                    else if (dateType == "month")
-                    {
-                        list[i] = loginUser.CultureInfo.DateTimeFormat.GetMonthName(int.Parse(item));
-                    }
-                    else if (dateType == "dayweek")
-                    {
-                        list[i] = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName((DayOfWeek)(int.Parse(item) - 1));
-                    }
-                    else if (dateType == "date")
-                    {
-
-                        DateTime d = DateTime.SpecifyKind(DateTime.Parse(item), DateTimeKind.Utc);
-                        list[i] = new TimeSpan(d.Ticks - baseDate.Ticks).TotalMilliseconds.ToString();
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-
-            }
-
-        }
 
     }
 
