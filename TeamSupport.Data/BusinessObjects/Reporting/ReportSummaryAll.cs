@@ -9,12 +9,14 @@ using System.Data;
 
 namespace TeamSupport.Data.BusinessObjects.Reporting
 {
-    class ReportTableAll
+    class ReportSummaryAll
     {
         LoginUser _loginUser;
         Report _report;
+        SummaryReport _summaryReport;
+        ReportTicketsViewTempTable _reportTicketsView;
 
-        public ReportTableAll(LoginUser loginUser, Report report)
+        public ReportSummaryAll(LoginUser loginUser, Report report)
         {
             _loginUser = loginUser;
             _report = report;
@@ -233,26 +235,14 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
         {
             if (ReportTicketsViewTempTable.Enable && (_report.ReportDefType != ReportType.Custom))
             {
-                SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(_report.ReportDef);
-                ReportTicketsViewTempTable reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, summaryReport);
-                string tempTable = reportTicketsView.ToSql();
+                _summaryReport = JsonConvert.DeserializeObject<SummaryReport>(_report.ReportDef);
+                _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _summaryReport);
+                string tempTable = _reportTicketsView.ToSql();
                 if (!String.IsNullOrEmpty(tempTable))
                     command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
             }
         }
 
-        //private void AddReportTicketsViewTempTable(SqlCommand command)
-        //{
-        //    if (ReportTicketsViewTempTable.Enable && (_report.ReportDefType != ReportType.Custom))
-        //    {
-        //        TabularReport tabularReport = JsonConvert.DeserializeObject<TabularReport>(_report.ReportDef);
-        //        ReportTicketsViewTempTable reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, tabularReport);
-        //        string tempTable = reportTicketsView.ToSql();
-        //        if (!String.IsNullOrEmpty(tempTable))
-        //            command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
-        //    }
-        //}
-
-
     }
+
 }

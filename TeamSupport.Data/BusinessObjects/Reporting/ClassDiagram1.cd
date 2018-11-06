@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.ReportTicketsViewJoin" Collapsed="true">
+    <Position X="19" Y="2.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAQAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\ReportTicketsViewJoin.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_table" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.ReportTicketsViewField" Collapsed="true">
+    <Position X="16.25" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAEAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\ReportTicketsViewField.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ViewField" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.ReportTicketsViewTempTable" Collapsed="true">
+    <Position X="16.25" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAQAAAAAAAAAAAASACQAAAEIAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\ReportTicketsViewTempTable.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_fields" />
+      <Field Name="_joins" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.SummaryReport" Collapsed="true">
+    <Position X="9" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAgAAAAAAAAAgAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\SummaryReportSql.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Fields" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Filters" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.ReportSummaryFields" Collapsed="true">
+    <Position X="9" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\SummaryReportSql.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Calculated" />
+      <Property Name="Descriptive" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.ReportSummaryDescriptiveField" Collapsed="true">
+    <Position X="8.25" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAgAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\SummaryReportSql.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Field" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.ReportSummaryCalculatedField" Collapsed="true">
+    <Position X="5.25" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAgAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\SummaryReportSql.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Field" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.SummaryReportSql">
+    <Position X="3.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAAAABAACBAEAQAAAAAAAAAAYACAAAAAAAAQABQ=</HashCode>
+      <FileName>BusinessObjects\Reporting\SummaryReportSql.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.ReportFilter" Collapsed="true">
+    <Position X="11.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAJAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Reports.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Conditions" />
+      <Property Name="Filters" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.ReportFilterCondition" Collapsed="true">
+    <Position X="11.5" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AQAIAAAAAAIAAAAAAAAAAAAAAACAAAAAAAAgQAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Reports.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.SummarySelectedField" Collapsed="true">
+    <Position X="8.75" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAIAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Reports.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.TabularReport" Collapsed="true">
+    <Position X="14.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAgAAAAAAAAAgAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\TabularReportSql.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Fields" />
+      <Property Name="Filters" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.TabularReportSql" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\TabularReportSql.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.ReportSelectedField" Collapsed="true">
+    <Position X="14.5" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Reports.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.UserRights" Collapsed="true">
+    <Position X="3.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAQAAAAAAAAAAAAAADAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\UserRights.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="_loginUser" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.CustomReportSql">
+    <Position X="5.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAgAAAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\CustomReportSql.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.ReportSummaryAll" Collapsed="true">
+    <Position X="10.75" Y="5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAkAAwAgACAAAAABAAAAgAAAAAAACAAAADAAAAAE=</HashCode>
+      <FileName>BusinessObjects\Reporting\ReportSummaryAll.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_report" />
+      <Field Name="_summaryReport" />
+      <Field Name="_reportTicketsView" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.BusinessObjects.Reporting.ReportTablePage" Collapsed="true">
+    <Position X="14.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAkAAQAEACAAAAABAAAAgAAAAQBACAAAACAAAAAE=</HashCode>
+      <FileName>BusinessObjects\Reporting\ReportTablePage.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_report" />
+      <Field Name="_reportTicketsView" />
+      <Field Name="_tabularReport" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TeamSupport.Data.Report" Collapsed="true">
+    <Position X="12.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgS0AgQAgg4QCSSQAiAASAIgAjBAmkwKBNCAFAAAE=</HashCode>
+      <FileName>BusinessObjects\Reports.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.BaseItem" Collapsed="true">
+    <Position X="12.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ADCAIAEAAAAAEAAAAAwAAAAgBAEwEhAIABAACAABgAA=</HashCode>
+      <FileName>Classes\BaseCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.LoginUser" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAEAgAAAAAEAAAJAAAAAoABAgAAAALkSABIAAAgAA=</HashCode>
+      <FileName>Classes\LoginUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="TeamSupport.Data.BusinessObjects.Reporting.EJoin" Collapsed="true">
+    <Position X="19.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAEICACAAAABigAAAAAgAAAAQBAAAQAJAgAAAAAA=</HashCode>
+      <FileName>BusinessObjects\Reporting\ReportTicketsViewJoin.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TeamSupport.Data.BusinessObjects.Reporting.EField" Collapsed="true">
+    <Position X="16.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>dRUEBgBuASBQaiAiABhYIUyBCSIQRkACA1A/lAcaGLE=</HashCode>
+      <FileName>BusinessObjects\Reporting\ReportTicketsViewField.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

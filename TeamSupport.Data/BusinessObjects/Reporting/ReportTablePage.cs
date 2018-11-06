@@ -13,6 +13,8 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
     {
         LoginUser _loginUser;
         Report _report;
+        TabularReport _tabularReport;
+        ReportTicketsViewTempTable _reportTicketsView;
 
         public ReportTablePage(LoginUser loginUser, Report report)
         {
@@ -329,31 +331,18 @@ WHERE RowNum BETWEEN @From AND @To";
 
             return command;
         }
-
-        //private void AddReportTicketsViewTempTable(SqlCommand command)
-        //{
-        //    if (ReportTicketsViewTempTable.Enable && (_report.ReportDefType != ReportType.Custom))
-        //    {
-        //        SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(_report.ReportDef);
-        //        ReportTicketsViewTempTable reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, summaryReport);
-        //        string tempTable = reportTicketsView.ToSql();
-        //        if (!String.IsNullOrEmpty(tempTable))
-        //            command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
-        //    }
-        //}
-
         private void AddReportTicketsViewTempTable(SqlCommand command)
         {
             if (ReportTicketsViewTempTable.Enable && (_report.ReportDefType != ReportType.Custom))
             {
-                TabularReport tabularReport = JsonConvert.DeserializeObject<TabularReport>(_report.ReportDef);
-                ReportTicketsViewTempTable reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, tabularReport);
-                string tempTable = reportTicketsView.ToSql();
+                _tabularReport = JsonConvert.DeserializeObject<TabularReport>(_report.ReportDef);
+                _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _tabularReport);
+                string tempTable = _reportTicketsView.ToSql();
                 if (!String.IsNullOrEmpty(tempTable))
                     command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
             }
         }
 
-
     }
+
 }

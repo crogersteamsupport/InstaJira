@@ -1169,7 +1169,7 @@ namespace TeamSupport.Data
             if (IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
             if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
             {
-                ReportTableAll reportTableAll = new ReportTableAll(loginUser, this);
+                ReportSummaryAll reportTableAll = new ReportSummaryAll(loginUser, this);
                 return reportTableAll.GetReportDataAll(sortField, isDesc, useUserFilter);
             }
             else
@@ -1185,7 +1185,7 @@ namespace TeamSupport.Data
 
             if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
             {
-                ReportTableAll reportTableAll = new ReportTableAll(loginUser, this);
+                ReportSummaryAll reportTableAll = new ReportSummaryAll(loginUser, this);
                 return reportTableAll.GetReportTableAll(sortField, isDesc, useUserFilter, includeHiddenFields);
             }
             else
@@ -1202,7 +1202,7 @@ namespace TeamSupport.Data
 
             if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
             {
-                ReportTableAll reportTableAll = new ReportTableAll(loginUser, this);
+                ReportSummaryAll reportTableAll = new ReportSummaryAll(loginUser, this);
                 return reportTableAll.GetReportTableAllForExports(sortField, isDesc, useUserFilter, includeHiddenFields);
             }
             else
@@ -1329,12 +1329,14 @@ namespace TeamSupport.Data
 
         public static GridResult GetReportData(LoginUser loginUser, int reportID, int from, int to, string sortField, bool isDesc, bool useUserFilter)
         {
+            // forward to the Report object
             Report report = Reports.GetReport(loginUser, reportID, loginUser.UserID);
             return report.GetReportData(loginUser, from, to, sortField, isDesc, useUserFilter);
         }
 
         public static DataTable GetReportTable(LoginUser loginUser, int reportID, int from, int to, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
+            // forward to the Report object
             Report report = Reports.GetReport(loginUser, reportID);
             return report.GetReportTable(loginUser, from, to, sortField, isDesc, useUserFilter, includeHiddenFields);
         }
@@ -1342,6 +1344,7 @@ namespace TeamSupport.Data
         //For exports
         public static DataTable GetReportTableForExports(LoginUser loginUser, int reportID,  string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
+            // forward to the Report object
             Report report = Reports.GetReport(loginUser, reportID);
             return report.GetReportTableForExports(loginUser, sortField, isDesc, useUserFilter, includeHiddenFields);
         }

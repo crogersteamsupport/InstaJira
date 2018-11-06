@@ -18,7 +18,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
     }
 
 
-    public class TabularReportSql
+    public abstract class TabularReportSql
     {
         public static void GetTabularSql(LoginUser loginUser, SqlCommand command, TabularReport tabularReport, bool inlcudeHiddenFields, bool isSchemaOnly, int? reportID, bool useUserFilter, string sortField = null, string sortDir = null)
         {
@@ -295,7 +295,8 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                 builder.Append(" AND (" + mainTable.TableName + ".ViewerID = @UserID)");
             }
 
-            UserRights.UseTicketRights(loginUser, (int)tabularReport.Subcategory, tables, command, builder);
+            UserRights userRights = new UserRights(loginUser);
+            userRights.UseTicketRights((int)tabularReport.Subcategory, tables, command, builder);
 
             if (isSchemaOnly) builder.Append(" AND (0=1)");
         }

@@ -308,7 +308,7 @@
     <Compile Include="BusinessObjects\ReportEmails.cs" />
     <Compile Include="BusinessObjects\ReportFolders.cs" />
     <Compile Include="BusinessObjects\Reporting\CustomReportSql.cs" />
-    <Compile Include="BusinessObjects\Reporting\ReportTableAll.cs" />
+    <Compile Include="BusinessObjects\Reporting\ReportSummaryAll.cs" />
     <Compile Include="BusinessObjects\Reporting\ReportTablePage.cs" />
     <Compile Include="BusinessObjects\Reporting\ReportTicketsViewField.cs" />
     <Compile Include="BusinessObjects\Reporting\ReportTicketsViewJoin.cs" />
@@ -1062,6 +1062,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="bin\x86\Debug\TeamSupport.Data.dll.config" />
+    <None Include="BusinessObjects\Reporting\ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

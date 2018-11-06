@@ -75,7 +75,8 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             ReportTable mainTable = tables.FindByReportTableID(sub.ReportCategoryTableID);
             builder.Append(" WHERE (" + mainTable.TableName + "." + mainTable.OrganizationIDFieldName + " = @OrganizationID)");
             //add user rights where needed
-            UserRights.UseTicketRights(loginUser, (int)summaryReport.Subcategory, tables, command, builder);
+            UserRights userRights = new UserRights(loginUser);
+            userRights.UseTicketRights((int)summaryReport.Subcategory, tables, command, builder);
             if (isSchemaOnly) builder.Append(" AND (0=1)");
 
             // filters
