@@ -314,7 +314,10 @@ namespace TeamSupport.Data
             switch (ReportDefType)
             {
                 case ReportType.Table:
-                    TabularReportSql.GetTabularSql(Collection.LoginUser, command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    {
+                        TabularReportSql tabularReportSql = new TabularReportSql(Collection.LoginUser);
+                        tabularReportSql.GetTabularSql(command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    }
                     break;
                 case ReportType.Chart:
                     SummaryReportSql.GetSummarySql(Collection.LoginUser, command, JsonConvert.DeserializeObject<SummaryReport>(ReportDef), isSchemaOnly, null, false, true);
@@ -326,7 +329,10 @@ namespace TeamSupport.Data
                     SummaryReportSql.GetSummarySql(Collection.LoginUser, command, JsonConvert.DeserializeObject<SummaryReport>(ReportDef), isSchemaOnly, ReportID, useUserFilter, false);
                     break;
                 case ReportType.TicketView:
-                    TabularReportSql.GetTabularSql(Collection.LoginUser, command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    {
+                        TabularReportSql tabularReportSql = new TabularReportSql(Collection.LoginUser);
+                        tabularReportSql.GetTabularSql(command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    }
                     break;
                 default:
                     break;
@@ -335,6 +341,7 @@ namespace TeamSupport.Data
             AddCommandParametersForExport(command, Collection.LoginUser);
             command.CommandText = $" /* ReportID: {ReportID.ToString()} OrganizationID: {OrganizationID.ToString()} */ " + command.CommandText;
         }
+
         public void GetCommandForExports(SqlCommand command, bool inlcudeHiddenFields = true, bool isSchemaOnly = false, bool useUserFilter = true, string sortField = null, string sortDir = null)
         {
             MigrateToNewReport();
@@ -357,7 +364,10 @@ namespace TeamSupport.Data
                     SummaryReportSql.GetSummarySql(Collection.LoginUser, command, JsonConvert.DeserializeObject<SummaryReport>(ReportDef), isSchemaOnly, ReportID, useUserFilter, false);
                     break;
                 case ReportType.TicketView:
-                    TabularReportSql.GetTabularSql(Collection.LoginUser, command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    {
+                        TabularReportSql tabularReportSql = new TabularReportSql(Collection.LoginUser);
+                        tabularReportSql.GetTabularSql(command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    }
                     break;
                 default:
                     break;
@@ -387,7 +397,7 @@ namespace TeamSupport.Data
             }
         }
 
-        private static void AddCommandParametersForExport(SqlCommand command, LoginUser loginUser)
+        public static void AddCommandParametersForExport(SqlCommand command, LoginUser loginUser)
         {
             User user = loginUser.GetUser();
 

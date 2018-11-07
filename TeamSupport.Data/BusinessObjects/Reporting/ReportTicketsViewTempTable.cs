@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeamSupport.Data.BusinessObjects.Reporting
 {
-    class ReportTicketsViewTempTable
+    public class ReportTicketsViewTempTable
     {
         public static bool Enable { get; set; }
 

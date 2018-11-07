@@ -14,12 +14,14 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
         LoginUser _loginUser;
         Report _report;
         SummaryReport _summaryReport;
+        SummaryReportSql _summaryReportSql;
         ReportTicketsViewTempTable _reportTicketsView;
 
         public ReportSummaryAll(LoginUser loginUser, Report report)
         {
             _loginUser = loginUser;
             _report = report;
+            _summaryReportSql = new SummaryReportSql(loginUser);
         }
 
         public GridResult GetReportData(string sortField, bool isDesc, bool useUserFilter)
@@ -165,7 +167,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
         {
             SqlCommand command = new SqlCommand();
 
-            _report.GetCommand(command, includeHiddenFields, false, useUserFilter);
+            GetCommand(command, includeHiddenFields, false, useUserFilter);
             if (command.CommandText.ToLower().IndexOf(" order by ") < 0)
             {
                 if (string.IsNullOrWhiteSpace(sortField))
@@ -241,6 +243,29 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                 if (!String.IsNullOrEmpty(tempTable))
                     command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
             }
+        }
+
+        private void GetCommand(SqlCommand command, bool inlcudeHiddenFields = true, bool isSchemaOnly = false, bool useUserFilter = true, string sortField = null, string sortDir = null)
+        {
+            _report.MigrateToNewReport();
+            _summaryReport = JsonConvert.DeserializeObject<SummaryReport>(_report.ReportDef);
+
+            command.CommandType = CommandType.Text;
+            command.CommandTimeout = SystemSettings.GetReportTimeout();
+            switch (_report.ReportDefType)
+            {
+                case ReportType.Chart:
+                    _summaryReportSql.GetSummarySql(command, _summaryReport, isSchemaOnly, null, false, true);
+                    break;
+                case ReportType.Summary:
+                    _summaryReportSql.GetSummarySql(command, _summaryReport, isSchemaOnly, _report.ReportID, useUserFilter, false);
+                    break;
+                default:
+                    break;
+            }
+
+            Report.AddCommandParametersForExport(command, _report.Collection.LoginUser);
+            command.CommandText = $" /* ReportID: {_report.ReportID.ToString()} OrganizationID: {_report.OrganizationID.ToString()} */ " + command.CommandText;
         }
 
     }

@@ -45,8 +45,21 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
     public class SummaryReportSql
     {
+        UserRights _userRights;
+        public SummaryReportSql(LoginUser loginUser)
+        {
+            _userRights = new UserRights(loginUser);
+        }
+
         public static void GetSummarySql(LoginUser loginUser, SqlCommand command, SummaryReport summaryReport, bool isSchemaOnly, int? reportID, bool useUserFilter, bool useDefaultOrderBy)
         {
+            SummaryReportSql summaryReportSql = new SummaryReportSql(loginUser);
+            summaryReportSql.GetSummarySql(command, summaryReport, isSchemaOnly, reportID, useUserFilter, useDefaultOrderBy);
+        }
+
+        public void GetSummarySql(SqlCommand command, SummaryReport summaryReport, bool isSchemaOnly, int? reportID, bool useUserFilter, bool useDefaultOrderBy)
+        {
+            LoginUser loginUser = _userRights._loginUser;
             StringBuilder builder = new StringBuilder();
             ReportSubcategory sub = ReportSubcategories.GetReportSubcategory(loginUser, summaryReport.Subcategory);
             ReportTables tables = new ReportTables(loginUser);
@@ -75,8 +88,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             ReportTable mainTable = tables.FindByReportTableID(sub.ReportCategoryTableID);
             builder.Append(" WHERE (" + mainTable.TableName + "." + mainTable.OrganizationIDFieldName + " = @OrganizationID)");
             //add user rights where needed
-            UserRights userRights = new UserRights(loginUser);
-            userRights.UseTicketRights((int)summaryReport.Subcategory, tables, command, builder);
+            _userRights.UseTicketRights((int)summaryReport.Subcategory, tables, command, builder);
             if (isSchemaOnly) builder.Append(" AND (0=1)");
 
             // filters

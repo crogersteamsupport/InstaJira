@@ -9,17 +9,19 @@ using System.Threading.Tasks;
 
 namespace TeamSupport.Data.BusinessObjects.Reporting
 {
-    class ReportTablePage
+    public class ReportTablePage
     {
         LoginUser _loginUser;
         Report _report;
         TabularReport _tabularReport;
+        TabularReportSql _tabularReportSql;
         ReportTicketsViewTempTable _reportTicketsView;
 
         public ReportTablePage(LoginUser loginUser, Report report)
         {
             _loginUser = loginUser;
             _report = report;
+            _tabularReportSql = new TabularReportSql(report.Collection.LoginUser); ;
         }
 
         public GridResult GetReportData(int from, int to, string sortField, bool isDesc, bool useUserFilter)
@@ -236,12 +238,12 @@ WHERE RowNum BETWEEN @From AND @To";
 
             if (_report.ReportDefType != ReportType.Custom)
             {
-                _report.GetCommand(command, includeHiddenFields, false, useUserFilter, sortField, isDesc ? "DESC" : "ASC");
+                GetCommand(command, includeHiddenFields, false, useUserFilter, sortField, isDesc ? "DESC" : "ASC");
                 command.CommandText = string.Format(query, command.CommandText);
             }
             else
             {
-                _report.GetCommand(command, includeHiddenFields, false, useUserFilter);
+                GetCommand(command, includeHiddenFields, false, useUserFilter);
                 command.CommandText = string.Format(query, command.CommandText, sortField, isDesc ? "DESC" : "ASC");
             }
 
@@ -341,6 +343,28 @@ WHERE RowNum BETWEEN @From AND @To";
                 if (!String.IsNullOrEmpty(tempTable))
                     command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
             }
+        }
+
+        public void GetCommand(SqlCommand command, bool inlcudeHiddenFields = true, bool isSchemaOnly = false, bool useUserFilter = true, string sortField = null, string sortDir = null)
+        {
+            _report.MigrateToNewReport();
+
+            command.CommandType = CommandType.Text;
+            command.CommandTimeout = SystemSettings.GetReportTimeout();
+            switch (_report.ReportDefType)
+            {
+                case ReportType.Table:
+                    _tabularReportSql.GetTabularSql(command, JsonConvert.DeserializeObject<TabularReport>(_report.ReportDef), inlcudeHiddenFields, isSchemaOnly, _report.ReportID, useUserFilter, sortField, sortDir);
+                    break;
+                case ReportType.TicketView:
+                    _tabularReportSql.GetTabularSql(command, JsonConvert.DeserializeObject<TabularReport>(_report.ReportDef), inlcudeHiddenFields, isSchemaOnly, _report.ReportID, useUserFilter, sortField, sortDir);
+                    break;
+                default:
+                    break;
+            }
+
+            Report.AddCommandParametersForExport(command, _report.Collection.LoginUser);
+            command.CommandText = $" /* ReportID: {_report.ReportID.ToString()} OrganizationID: {_report.OrganizationID.ToString()} */ " + command.CommandText;
         }
 
     }
