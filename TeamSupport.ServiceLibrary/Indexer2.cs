@@ -15,6 +15,8 @@ namespace TeamSupport.ServiceLibrary
     {
         private bool _isVerbose = false;
 
+        
+
         public override void Run()
         {
 
@@ -26,52 +28,51 @@ namespace TeamSupport.ServiceLibrary
 
                     _isVerbose = Settings.ReadBool("VerboseLogging", false);
 
-                    ProcessIndex(org, ReferenceType.Tickets, isRebuilder);
-                    ProcessIndex(org, ReferenceType.Wikis, isRebuilder);
-                    ProcessIndex(org, ReferenceType.Notes, isRebuilder);
-                    ProcessIndex(org, ReferenceType.ProductVersions, isRebuilder);
-                    ProcessIndex(org, ReferenceType.WaterCooler, isRebuilder);
-                    ProcessIndex(org, ReferenceType.Organizations, isRebuilder);
-                    ProcessIndex(org, ReferenceType.Contacts, isRebuilder);
-                    ProcessIndex(org, ReferenceType.Assets, isRebuilder);
-                    ProcessIndex(org, ReferenceType.Products, isRebuilder);
-                    ProcessIndex(org, ReferenceType.Tasks, isRebuilder);
+                    ProcessIndex(ReferenceType.Tickets);
+                    /*
+                    ProcessIndex(ReferenceType.Wikis);
+                    ProcessIndex(ReferenceType.Notes);
+                    ProcessIndex(ReferenceType.ProductVersions);
+                    ProcessIndex(ReferenceType.WaterCooler);
+                    ProcessIndex(ReferenceType.Organizations);
+                    ProcessIndex(ReferenceType.Contacts);
+                    ProcessIndex(ReferenceType.Assets);
+                    ProcessIndex(ReferenceType.Products);
+                    ProcessIndex(ReferenceType.Tasks);
+                    */
                 }
                 catch (Exception ex)
                 {
-                    Logs.WriteEvent("Error processing organization");
+                    Logs.WriteEvent("Error processing indexes");
                     Logs.WriteException(ex);
-                    ExceptionLogs.LogException(LoginUser, ex, "Indexer", "Error processing organization");
+                    ExceptionLogs.LogException(LoginUser, ex, "Indexer2", "Error processing indexes");
                 }
             }
 
         }
 
-        private void ProcessIndex(Organization organization, ReferenceType referenceType, bool isRebuilder)
+        private void ProcessIndex(ReferenceType referenceType)
         {
             if (IsStopped) return;
             string indexPath = string.Empty;
-            string deletedIndexItemsFileName = string.Empty;
             string storedFields = string.Empty;
             string tableName = string.Empty;
             string primaryKeyName = string.Empty;
 
-            IndexDataSource indexDataSource = null;
-            int maxRecords = Settings.ReadInt("Max Records", 1000);
+            IndexDataSource2 indexDataSource = null;
 
             switch (referenceType)
             {
                 case ReferenceType.Tickets:
                     indexPath = "\\Tickets";
-                    deletedIndexItemsFileName = "DeletedTickets.txt";
                     storedFields = "TicketID OrganizationID TicketNumber Name IsKnowledgeBase Status Severity DateModified DateCreated DateClosed SlaViolationDate SlaWarningDate";
                     tableName = "Tickets";
                     primaryKeyName = "TicketID";
-                    indexDataSource = new TicketIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
+                    //indexDataSource = new TicketIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
                     break;
+                    /*
                 case ReferenceType.Wikis:
                     indexPath = "\\Wikis";
-                    deletedIndexItemsFileName = "DeletedWikis.txt";
                     storedFields = "OrganizationID Creator Modifier";
                     tableName = "WikiArticles";
                     primaryKeyName = "ArticleID";
@@ -79,28 +80,24 @@ namespace TeamSupport.ServiceLibrary
                     break;
                 case ReferenceType.Notes:
                     indexPath = "\\Notes";
-                    deletedIndexItemsFileName = "DeletedNotes.txt";
                     tableName = "Notes";
                     primaryKeyName = "NoteID";
                     indexDataSource = new NoteIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
                     break;
                 case ReferenceType.ProductVersions:
                     indexPath = "\\ProductVersions";
-                    deletedIndexItemsFileName = "DeletedProductVersions.txt";
                     tableName = "ProductVersions";
                     primaryKeyName = "ProductVersionID";
                     indexDataSource = new ProductVersionIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
                     break;
                 case ReferenceType.WaterCooler:
                     indexPath = "\\WaterCooler";
-                    deletedIndexItemsFileName = "DeletedWaterCoolerMessages.txt";
                     tableName = "WatercoolerMsg";
                     primaryKeyName = "MessageID";
                     indexDataSource = new WaterCoolerIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
                     break;
                 case ReferenceType.Organizations:
                     indexPath = "\\Customers";
-                    deletedIndexItemsFileName = "DeletedCustomers.txt";
                     storedFields = "Name JSON";
                     tableName = "Organizations";
                     primaryKeyName = "OrganizationID";
@@ -108,7 +105,6 @@ namespace TeamSupport.ServiceLibrary
                     break;
                 case ReferenceType.Contacts:
                     indexPath = "\\Contacts";
-                    deletedIndexItemsFileName = "DeletedContacts.txt";
                     storedFields = "Name JSON";
                     tableName = "Users";
                     primaryKeyName = "UserID";
@@ -116,7 +112,6 @@ namespace TeamSupport.ServiceLibrary
                     break;
                 case ReferenceType.Assets:
                     indexPath = "\\Assets";
-                    deletedIndexItemsFileName = "DeletedAssets.txt";
                     storedFields = "Name JSON";
                     tableName = "Assets";
                     primaryKeyName = "AssetID";
@@ -124,7 +119,6 @@ namespace TeamSupport.ServiceLibrary
                     break;
                 case ReferenceType.Products:
                     indexPath = "\\Products";
-                    deletedIndexItemsFileName = "DeletedProducts.txt";
                     storedFields = "Name JSON";
                     tableName = "Products";
                     primaryKeyName = "ProductID";
@@ -132,18 +126,19 @@ namespace TeamSupport.ServiceLibrary
                     break;
                 case ReferenceType.Tasks:
                     indexPath = "\\Tasks";
-                    deletedIndexItemsFileName = "DeletedTasks.txt";
                     storedFields = "Name JSON";
                     tableName = "Tasks";
                     primaryKeyName = "TaskID";
                     indexDataSource = new TaskIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
                     break;
+                    */
                 default:
                     throw new System.ArgumentException("ReferenceType " + referenceType.ToString() + " is not supported by indexer.");
             }
+
+            /*
             string root = Settings.ReadString("Tickets Index Path", "c:\\Indexes");
             string mainIndexPath = Path.Combine(root, organization.OrganizationID.ToString() + indexPath);
-            if (isRebuilder) indexPath = "\\Rebuild" + indexPath;
             string path = Path.Combine(Settings.ReadString("Tickets Index Path", "c:\\Indexes"), organization.OrganizationID.ToString() + indexPath);
             LogVerbose("Path: " + path);
 
@@ -181,7 +176,7 @@ namespace TeamSupport.ServiceLibrary
                 job.DataSourceToIndex = indexDataSource;
 
                 job.IndexPath = path;
-                job.ActionCreate = isNew || isRebuilder;
+                job.ActionCreate = isNew;
                 job.ActionAdd = true;
                 job.CreateRelativePaths = false;
                 job.StoredFields = Server.Tokenize(storedFields);
@@ -241,26 +236,13 @@ namespace TeamSupport.ServiceLibrary
                     UpdateItems(indexDataSource, tableName, primaryKeyName);
                 }
 
-
+            
             }
+            */
         }
                 
-        private void UpdateItems(IndexDataSource dataSource, string tableName, string primaryKeyName)
-        {
-            UpdateHealth();
-
-            if (dataSource.UpdatedItems.Count < 1) return;
-
-            string updateSql = "UPDATE " + tableName + " SET NeedsIndexing = 0 WHERE " + primaryKeyName + " IN (" + DataUtils.IntArrayToCommaString(dataSource.UpdatedItems.ToArray()) + ")";
-            LogVerbose(updateSql);
-            SqlCommand command = new SqlCommand();
-            command.CommandText = updateSql;
-            command.CommandType = System.Data.CommandType.Text;
-
-            SqlExecutor.ExecuteNonQuery(LoginUser, command);
-            LogVerbose(tableName + " Indexes Statuses UPdated");
-        }
-
+       
+/*
         private void RemoveOldIndexItems(LoginUser loginUser, string indexPath, Organization organization, ReferenceType referenceType, string deletedIndexItemsFileName)
         {
             LogVerbose("Removing deleted items:  " + referenceType.ToString());
@@ -312,9 +294,18 @@ namespace TeamSupport.ServiceLibrary
             items.Save();
             LogVerbose("Finished Removing Old Indexes - OrgID = " + organization.OrganizationID + " - " + referenceType.ToString());
         }
+
+    */
+
+
         private void LogVerbose(string message)
         {
             if (_isVerbose) Logs.WriteEvent(message);
+        }
+
+        public override void ReleaseAllLocks()
+        {
+            
         }
     }
 

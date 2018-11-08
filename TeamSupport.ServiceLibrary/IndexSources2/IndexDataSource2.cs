@@ -57,7 +57,7 @@ namespace TeamSupport.ServiceLibrary
             }
             catch (Exception ex)
             {
-                _logs.WriteEvent($"Table:{_table}, ID:{_itemIDList[_rowIndex]}, IsRebuilding:{_isRebuilding}, OrgID: {_organizationID}");
+                _logs.WriteEvent($"Table:{_table}, ID:{_itemIDList[_rowIndex]}, OrgID: {_organizationID}");
                 _logs.WriteException(ex);
             }
             return true;
