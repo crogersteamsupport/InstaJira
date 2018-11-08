@@ -105,7 +105,7 @@ namespace TeamSupport.Data
     }
 
   }
-  
+
   public partial class Emails
   {
     public void LoadWaiting()
@@ -144,7 +144,7 @@ namespace TeamSupport.Data
       {
         command.CommandText = @"
 UPDATE Emails
-SET LockProcessID = @ProcessID 
+SET LockProcessID = @ProcessID
 OUTPUT Inserted.*
 WHERE EmailID IN (
   SELECT TOP 1 EmailID FROM Emails WHERE LockProcessID IS NULL AND IsWaiting = 1 AND NextAttempt < GETUTCDATE() ORDER BY Attempts, Size, DateCreated
@@ -161,7 +161,7 @@ WHERE EmailID IN (
       else
         return emails[0];
 
-    
+
     }
 
         public static bool IsTrialEmailOverLimit(LoginUser loginUser, int organizationID)
@@ -180,7 +180,7 @@ WHERE EmailID IN (
         public static int GetMaxEmailsForTrial(LoginUser loginUser, int organizationID)
         {
             int maxEmails = 5;
-            int.TryParse(OrganizationSettings.ReadString(loginUser, organizationID, "Emails_MaxForTrial", "5"), out maxEmails);
+            int.TryParse(OrganizationSettings.ReadString(loginUser, organizationID, "Emails_MaxForTrial", "50"), out maxEmails);
             return maxEmails;
         }
 
@@ -202,13 +202,13 @@ WHERE EmailID IN (
             using (SqlCommand command = new SqlCommand())
             {
                 command.CommandText = @"
-SELECT COUNT(*) FROM Emails 
-WHERE IsWaiting = 0 
-AND OrganizationID = @OrganizationID 
+SELECT COUNT(*) FROM Emails WITH(NOLOCK)
+WHERE IsWaiting = 0
+AND OrganizationID = @OrganizationID
 ";
                 command.CommandType = CommandType.Text;
                 command.Parameters.AddWithValue("@OrganizationID", organizationID);
-                o = command.ExecuteScalar();
+				o = emails.ExecuteScalar(command);
             }
 
             if (o == null || o == DBNull.Value) return 0;
@@ -308,7 +308,7 @@ AND OrganizationID = @OrganizationID
     public Email AddEmail(int organizationID, int? emailPostID, string description, MailMessage message, string[] attachmentFileNames = null, DateTime? timeToSend = null)
     {
         Email email = AddNewEmail();
-      
+
         email.OrganizationID = organizationID;
         email.Description = description;
         email.FromAddress = message.From.ToString();

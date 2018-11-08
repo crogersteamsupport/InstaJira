@@ -382,7 +382,6 @@ namespace TeamSupport.ServiceLibrary
                     }
                 }
 
-
                 try
                 {
                     job.ExecuteInThread();
@@ -412,7 +411,6 @@ namespace TeamSupport.ServiceLibrary
                     LogVerbose("Info - Doc Count:" + info.DocCount.ToString());
                     LogVerbose("Info - Obsolete:" + info.ObsoleteCount.ToString());
                 }
-
 
                 if (!IsStopped)
                 {

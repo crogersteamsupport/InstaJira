@@ -178,29 +178,19 @@ namespace TSWebServices {
             }
         }
 
-        //private List<DeflectorReturn> GetHubDeflectionResults(int organizationID, string phrase, int customerHubID)
-        //{
+        public void RemoveTag(int organizationID, int ticketID, string value)
+        {
 
-        //    List<DeflectorReturn> result = new List<DeflectorReturn>();
-        //    Deflector.FetchHubDeflections(organizationID, phrase, null, customerHubID);
-
-        //    //if we want to open this up to multiple hubs, we can pass the parent organizationID and modify the query to "unlock" the record set
-        //    //List<DataRow> whiteListTickets = Deflector.GetWhiteListHubTicketPaths((int)customerHubID);
-
-        //    //result = deflectorMatches.Join(whiteListTickets,
-        //    //            deflectorMatch => deflectorMatch.TicketID,
-        //    //            whiteListItem => (int)whiteListItem["TicketID"],
-        //    //            (deflectorMatch, whiteListItem) => new DeflectorReturn
-        //    //            {
-        //    //                TicketID = deflectorMatch.TicketID,
-        //    //                Name = deflectorMatch.Name,
-        //    //                ReturnURL = formatHubKBURL(deflectorMatch.TicketID, (string)whiteListItem["CNameURL"], (string)whiteListItem["PortalName"], baseHubURL)
-        //    //            }).ToList();
-
-        //    //an additional step with a ranking system can be utilized here if we open this up to multiple hubs
-
-        //    return result;
-        //}
- }
+            try
+            {
+                DeflectorAPI deflectorAPI = new DeflectorAPI();
+                deflectorAPI.RemoveTagAsync(organizationID, ticketID, value);
+            }
+            catch (Exception ex)
+            {
+                ExceptionLogs.LogException(LoginUser.Anonymous, ex, "Deflector");
+            }
+        }
+    }
 
 }

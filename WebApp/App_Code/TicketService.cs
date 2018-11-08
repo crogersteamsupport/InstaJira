@@ -3338,7 +3338,7 @@ WHERE t.TicketID = @TicketID
 
             // DEFLECTOR
             DeflectorService Deflection = new DeflectorService();
-            Deflection.DeleteTag(ticket.OrganizationID, tagValue);
+            Deflection.RemoveTag(ticket.OrganizationID, ticketID, tagValue);
 
             return GetTicketTags(ticketID);
         }

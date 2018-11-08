@@ -10,8 +10,8 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebApp", "http://localhost:58276", "{FE81BB07-5E84-4DBA-9A7A-76F47826EBB9}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		ProjectReferences = "{cc4d311a-d6ea-4113-b648-537824e3b5d7}|TeamSupport.Api.dll;{7b8aa298-9f29-4cb1-979b-18cc31df76b1}|TeamSupport.Handlers.dll;{a5e5fc71-6b6f-4e57-9bf0-8602f7a707ea}|TeamSupport.JIRA.dll;{cc262e84-5002-4e7f-b078-7278e93f0c04}|TeamSupport.Messaging.dll;{7beb5c4f-414e-4660-904c-6407a3bc3acf}|TeamSupport.WebUtils.dll;{1943AC11-1F2D-4B85-9F0F-4D67284814BE}|TeamSupport.Data.dll;{8F3F388C-10F5-45D4-9F4C-471236DC14C0}|TeamSupport.Proxy.dll;{7E2B2E07-518A-47A4-A39A-502654E8C8ED}|TeamSupport.ModelAPI.dll;{5C253014-D40C-4927-92F6-A91C2EFB49C5}|TeamSupport.DataAPI.dll;{11C7D899-BCAA-408F-8B85-35593AB7E617}|TeamSupport.IDTree.dll;{ea4d4d19-dbfa-45ca-bb1e-6bb676bd6f0f}|TeamSupport.Permissions.dll;"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.2"
+		ProjectReferences = "{cc4d311a-d6ea-4113-b648-537824e3b5d7}|TeamSupport.Api.dll;{7b8aa298-9f29-4cb1-979b-18cc31df76b1}|TeamSupport.Handlers.dll;{a5e5fc71-6b6f-4e57-9bf0-8602f7a707ea}|TeamSupport.JIRA.dll;{cc262e84-5002-4e7f-b078-7278e93f0c04}|TeamSupport.Messaging.dll;{7beb5c4f-414e-4660-904c-6407a3bc3acf}|TeamSupport.WebUtils.dll;{1943AC11-1F2D-4B85-9F0F-4D67284814BE}|TeamSupport.Data.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/WebApp"
 		Debug.AspNetCompiler.PhysicalPath = "WebApp\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\WebApp\"

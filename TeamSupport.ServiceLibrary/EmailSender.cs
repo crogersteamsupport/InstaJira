@@ -142,13 +142,16 @@ namespace TeamSupport.ServiceLibrary
             {
                 if (Emails.IsTrialEmailOverLimit(LoginUser, organization.OrganizationID))
                 {
-                    email.IsSuccess = true;
-                    email.IsWaiting = false;
-                    email.Body = "";
-                    email.DateSent = DateTime.UtcNow;
-                    email.LastFailedReason = "Organization has gone over the trial email limits.";
-                    email.Collection.Save();
-                    return;
+                    if (!(email.Subject.ToUpper().Contains("PASSWORD") || email.Subject.ToUpper().Contains("WELCOME")))
+                    {
+                        email.IsSuccess = true;
+                        email.IsWaiting = false;
+                        email.Body = "";
+                        email.DateSent = DateTime.UtcNow;
+                        email.LastFailedReason = "Organization has gone over the trial email limits.";
+                        email.Collection.Save();
+                        return;
+                    }
                 }
             }
 
