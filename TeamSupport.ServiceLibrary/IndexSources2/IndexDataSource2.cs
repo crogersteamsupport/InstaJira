@@ -13,7 +13,7 @@ namespace TeamSupport.ServiceLibrary
         protected LoginUser _loginUser = null;
         protected Logs _logs;
 
-        protected List<int> _itemIDList = null;
+        protected int[] _itemIDList = null;
         protected List<int> _updatedItems = null;
         protected int _rowIndex = 0;
         protected int? _lastItemID = null;
@@ -27,14 +27,14 @@ namespace TeamSupport.ServiceLibrary
 
         protected IndexDataSource2() { }
 
-        public IndexDataSource2(LoginUser loginUser, int organizationID, string table, Logs logs)
+        public IndexDataSource2(LoginUser loginUser, int organizationID, string table, int[] idList, Logs logs)
         {
             _organizationID = organizationID;
             _table = table;
             _loginUser = new LoginUser(loginUser.ConnectionString, loginUser.UserID, loginUser.OrganizationID, null);
             _logs = logs;
             _docFields = new StringBuilder();
-
+            _itemIDList = idList;
             _updatedItems = new List<int>();
 
             DocIsFile = false;
@@ -50,7 +50,7 @@ namespace TeamSupport.ServiceLibrary
         {
             if (_itemIDList == null) { Rewind(); }
             _rowIndex++;
-            if (_itemIDList.Count <= _rowIndex) { return false; }
+            if (_itemIDList.Length <= _rowIndex) { return false; }
             try
             {
                 GetNextRecord();
@@ -69,8 +69,6 @@ namespace TeamSupport.ServiceLibrary
             try
             {
                 //_logs.WriteEvent(string.Format("Rewind {0}, OrgID: {1}", _table, _organizationID.ToString()));
-                _itemIDList = new List<int>();
-                LoadData();
                 _lastItemID = null;
                 _rowIndex = -1;
                 return true;
@@ -83,7 +81,7 @@ namespace TeamSupport.ServiceLibrary
             }
         }
 
-        protected virtual void LoadData()
+        protected void LoadData()
         {
         }
 

@@ -12,8 +12,8 @@ namespace TeamSupport.ServiceLibrary
   {
     protected TicketIndexDataSource2() { }
 
-    public TicketIndexDataSource2(LoginUser loginUser, int organizationID, string table, Logs logs)
-      : base(loginUser, organizationID, table, logs)
+    public TicketIndexDataSource2(LoginUser loginUser, int organizationID, string table, int[] idList, Logs logs)
+      : base(loginUser, organizationID, table, idList, logs)
     {
     }
 
@@ -88,18 +88,5 @@ namespace TeamSupport.ServiceLibrary
       DocModifiedDate = (DateTime)ticket.Row["DateModified"];
     }
 
-
-
-    override protected void LoadData()
-    {
-            // read from q 
-            /*
-      TicketsView tickets = new TicketsView(_loginUser);
-      tickets.LoadForIndexing(_organizationID, _maxCount, _isRebuilding);
-      foreach (TicketsViewItem ticket in tickets)
-      {
-        _itemIDList.Add(ticket.TicketID);
-      }*/
-    }
   }
 }

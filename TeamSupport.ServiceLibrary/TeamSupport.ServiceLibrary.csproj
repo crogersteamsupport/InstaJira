@@ -225,6 +225,7 @@
       <HintPath>..\packages\Microsoft.Tpl.Dataflow.4.5.24\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -265,6 +266,7 @@
     <Compile Include="IndexSources\AssetIndexDataSource.cs" />
     <Compile Include="ImportProcessor.cs" />
     <Compile Include="IndexSources\TaskIndexDataSource.cs" />
+    <Compile Include="ServiceBrokerUtils.cs" />
     <Compile Include="ServiceNow\ServiceNow.cs" />
     <Compile Include="TaskProcessor.cs" />
     <Compile Include="MailChimp\ListsObject.cs" />
@@ -301,10 +303,6 @@
     <ProjectReference Include="..\TeamSupport.Data\TeamSupport.Data.csproj">
       <Project>{1943AC11-1F2D-4B85-9F0F-4D67284814BE}</Project>
       <Name>TeamSupport.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TeamSupport.ModelAPI\TeamSupport.ModelAPI.csproj">
-      <Project>{7e2b2e07-518a-47a4-a39a-502654e8c8ed}</Project>
-      <Name>TeamSupport.ModelAPI</Name>
     </ProjectReference>
     <ProjectReference Include="..\TeamSupport.Proxy\TeamSupport.Proxy.csproj">
       <Project>{8f3f388c-10f5-45d4-9f4c-471236dc14c0}</Project>

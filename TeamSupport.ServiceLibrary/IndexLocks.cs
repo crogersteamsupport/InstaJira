@@ -12,7 +12,7 @@ namespace TeamSupport.ServiceLibrary
         private static object _staticLock = new object();
         private static List<string> _lockedPaths = new List<string>();
 
-        public bool ObtainLock(string indexPath) {
+        public static bool AquireLock(string indexPath) {
             bool result = false;
             lock (_staticLock)
             {
@@ -25,7 +25,7 @@ namespace TeamSupport.ServiceLibrary
             return result;
         }
 
-        public void ReleaseLock(string indexPath)
+        public static void ReleaseLock(string indexPath)
         {
             lock (_staticLock)
             {
