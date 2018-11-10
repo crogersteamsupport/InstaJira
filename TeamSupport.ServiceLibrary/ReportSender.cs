@@ -318,27 +318,61 @@ namespace TeamSupport.ServiceLibrary
                 }
                 else if (records.Count == 2)
                 {
-                    Log("//vv Unhandled chart case until know.");
-                    //options.series.push("{ name: records[1].name, data: [] }");
+					seriesList.Add(new SeriesValues()
+					{
+						Name = records[1].name,
+						Value = string.Empty,
+						Data = new List<string>()
+					});
 
-                    //for (var i = 0; i < records[0].data.length; i++)
-                    //{
-                    //    List<string> item = new List<string>();
-                    //    //vv item.push(Date.parse(records[0].data[i]));
-                    //    //vv item.push(records[1].data[i]);
+					for (var i = 0; i < records[0].data.Count; i++)
+					{
+						List<string> item = new List<string>();
 
-                    //    if (item[0] != null)
-                    //    {
-                    //        if (item[1] == null) item[1] = "0";
-                    //        options.series[0].data.push(item);
-                    //    }
-                    //}
+						if (records[0].fieldType == "datetime" && records[0].format == "date")
+						{
+							item.Add(((DateTime)records[0].data[i]).ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds.ToString());
+						}
+						else
+						{
+							item.Add(records[0].data[i]);
+						}
+
+						string itemValue = records[1].data[i];
+						item.Add(itemValue);
+
+						if (item.Any() && !string.IsNullOrEmpty(item[0]))
+						{
+							if (item.Count > 1 && string.IsNullOrEmpty(item[1]))
+							{
+								item[1] = "0";
+							}
+
+							string name = records[1].name;
+							SeriesValues values = seriesList.Where(p => p.Name == name).FirstOrDefault();
+							values.Data.Add("[" + item[0] + "," + item[1] + "]");
+						}
+					}
+
+					string seriesFormat = @"{{""name"": ""{0}"",""value"": ""{1}"",""data"": [{2}]}},";
+
+					foreach (SeriesValues serie in seriesList)
+					{
+						series += "" + string.Format(seriesFormat, serie.Name, serie.Value, (serie.Data.Any() ? string.Join(",", serie.Data.ToArray()) : ""));
+					}
+
+					if (!string.IsNullOrEmpty(series))
+					{
+						series = "[" + series.Substring(0, series.Length - 1) + "]";
+					}
+					else
+					{
+						Log("No data in series.", LogType.Both);
+					}
                 }
             }
             else
             {
-                //options.series = new List<string>(); //vv [];
-
                 if (records.Count == 3)
                 {
                     List<string> categoriesList = new List<string>();
