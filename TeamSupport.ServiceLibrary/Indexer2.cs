@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using dtSearch.Engine;
 using TeamSupport.Data;
 using System.IO;
-using System.Data.SqlClient;
-using System.Configuration;
 using Newtonsoft.Json;
-using System.Dynamic;
+using System.Linq;
 
 namespace TeamSupport.ServiceLibrary
 {
@@ -59,27 +55,35 @@ namespace TeamSupport.ServiceLibrary
             string tableName = string.Empty;
             string primaryKeyName = string.Empty;
 
-
-            IndexDataSource2 indexDataSource = null;
+			List<IndexDataSource2> indexDataSources = new List<IndexDataSource2>();
+            IndexDataSource2 indexDataSource2 = null;
             bool isUpdateMessage = true;
-            int organizationID;
-            int[] itemIDs;
+			int maxMessages = Settings.ReadInt("Max Records", 1000);
 
-            switch (referenceType)
+			switch (referenceType)
             {
                 case ReferenceType.Tickets:
                     indexPath = "\\Tickets";
                     storedFields = "TicketID OrganizationID TicketNumber Name IsKnowledgeBase Status Severity DateModified DateCreated DateClosed SlaViolationDate SlaWarningDate";
                     tableName = "Tickets";
                     primaryKeyName = "TicketID";
-                    string message = ServiceBrokerUtils.ReadMessage(_loginUser.ConnectionString, "TicketIndexReceiverQ");
+					string ticketsQueue = Settings.ReadString("TicketsBrokerQueue", "TicketIndexReceiverQ");
+					List<string> messages = ServiceBrokerUtils.ReadMessage(_loginUser.ConnectionString, ticketsQueue, maxMessages);
                     isUpdateMessage = true;// need to integrate this into SB utils
-                    if (string.IsNullOrEmpty(message)) return;
-                    ParseTicketMessage(message, out organizationID, out itemIDs);
-                    if (isUpdateMessage)
+
+					if (!messages.Any()) return;
+
+					Dictionary<int, List<int>> orgTickets = new Dictionary<int, List<int>>();
+					orgTickets = ParseTicketMessage(messages);
+
+					if (isUpdateMessage)
                     {
-                        indexDataSource = new TicketIndexDataSource2(LoginUser, organizationID, tableName, itemIDs, Logs);
-                    }
+						foreach(KeyValuePair<int, List<int>> orgTicketsList in orgTickets)
+						{
+							indexDataSource2 = new TicketIndexDataSource2(LoginUser, orgTicketsList.Key, tableName, orgTicketsList.Value.ToArray(), Logs);
+							indexDataSources.Add(indexDataSource2);
+						}
+					}
                     break;
                 /*
             case ReferenceType.Wikis:
@@ -147,99 +151,10 @@ namespace TeamSupport.ServiceLibrary
                     throw new System.ArgumentException("ReferenceType " + referenceType.ToString() + " is not supported by indexer.");
             }
 
-
-            string root = Settings.ReadString("Tickets Index Path", "c:\\Indexes");
-            string mainIndexPath = Path.Combine(root, organizationID.ToString() + indexPath);
-            string path = Path.Combine(Settings.ReadString("Tickets Index Path", "c:\\Indexes"), organizationID.ToString() + indexPath);
-            LogVerbose("Path: " + path);
-
-            while (true)
-            {
-                if (IndexLocks.AquireLock(path))
-                {
-                    break;
-                }
-                else
-                {
-                    System.Threading.Thread.Sleep(1000);
-                }
-
-                // we may need to max out attempts and requeue the message
-            }
-
-            try
-            {
-
-                bool isNew = !System.IO.Directory.Exists(path);
-                if (isNew) Directory.CreateDirectory(path);
-                string noiseFile = Path.Combine(root, "noise.dat");
-                if (!File.Exists(noiseFile)) File.Create(noiseFile).Dispose();
-
-
-                if (!isUpdateMessage)
-                {
-                    //                RemoveOldIndexItems(LoginUser, path, organization, referenceType, deletedIndexItemsFileName);
-                    return;
-                }
-
-
-                Options options = new Options();
-                options.TextFlags = TextFlags.dtsoTfRecognizeDates;
-                options.NoiseWordFile = noiseFile;
-                options.Save();
-                LogVerbose("Processing " + tableName);
-                using (IndexJob job = new IndexJob())
-                {
-                    job.DataSourceToIndex = indexDataSource;
-
-                    job.IndexPath = path;
-                    job.ActionCreate = isNew;
-                    job.ActionAdd = true;
-                    job.CreateRelativePaths = false;
-                    job.StoredFields = Server.Tokenize(storedFields);
-                    job.IndexingFlags = IndexingFlags.dtsAlwaysAdd;
-                    bool doCompress = false;
-                    if (_threadPosition % 2 == 0 && (DateTime.Now.DayOfWeek == DayOfWeek.Saturday || DateTime.Now.DayOfWeek == DayOfWeek.Sunday))
-                    {
-                        IndexInfo info = new IndexInfo();
-                        info = IndexJob.GetIndexInfo(path);
-                        LogVerbose("Info - Doc Count:" + info.DocCount.ToString());
-                        LogVerbose("Info - Obsolete:" + info.ObsoleteCount.ToString());
-
-                        doCompress = (info.ObsoleteCount / info.DocCount) > 0.2;
-                        if (doCompress)
-                        {
-                            job.ActionCompress = true;
-                            job.ActionVerify = true;
-                            LogVerbose("Compressing");
-                        }
-                    }
-
-                    try
-                    {
-                        job.Execute();
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionLogs.LogException(LoginUser, ex, "Index Job Processor - " + referenceType.ToString() + " - " + organizationID.ToString());
-                        Logs.WriteException(ex);
-                        throw;
-                    }
-
-                    if (doCompress)
-                    {
-                        IndexInfo info = new IndexInfo();
-                        info = IndexJob.GetIndexInfo(path);
-                        LogVerbose("Compressed");
-                        LogVerbose("Info - Doc Count:" + info.DocCount.ToString());
-                        LogVerbose("Info - Obsolete:" + info.ObsoleteCount.ToString());
-                    }
-                }
-            }
-            finally
-            {
-                IndexLocks.ReleaseLock(path);
-            }
+			foreach(IndexDataSource2 indexDataSource in indexDataSources)
+			{
+				IndexWork(indexDataSource, tableName, storedFields, indexPath, referenceType, isUpdateMessage);
+			}
         }
 
         /*
@@ -308,24 +223,142 @@ namespace TeamSupport.ServiceLibrary
 
         }
 
-        private bool ParseTicketMessage(string message, out int organizationID, out int[] idList)
-        {
-            organizationID = 0;
-            idList = null;
+		private Dictionary<int, List<int>> ParseTicketMessage(List<string> messages)
+		{
+			Dictionary<int, List<int>> orgTickets = new Dictionary<int, List<int>>();
 
-            List<int> ids = new List<int>();
+			foreach(string message in messages)
+			{
+				dynamic o = JsonConvert.DeserializeObject(message);
 
-            dynamic o = JsonConvert.DeserializeObject(message);
-            if (o == null || o.Count < 1) return false;
-            organizationID = (int)o[0].OrganizationID;
-            for (int i = 0; i < o.Count; i++)
-            {
-                ids.Add((int)o[i].TicketID);
-            }
+				if (o == null || o.Count < 1) return null;
 
-            idList = ids.ToArray();
-            return true;
+				int organizationID = (int)o[0].OrganizationID;
+				int ticketID = (int)o[0].TicketID;
+
+				if (orgTickets.Where(p => p.Key == organizationID).Any())
+				{
+					List<int> tickets = orgTickets.Where(p => p.Key == organizationID).FirstOrDefault().Value;
+
+					if (!tickets.Where(p => p == ticketID).Any())
+					{
+						tickets.Add(ticketID);
+					}
+				}
+				else
+				{
+					orgTickets.Add(organizationID, new List<int>() { ticketID });
+				}
+			}
+
+            return orgTickets;
         }
+
+		private void IndexWork(IndexDataSource2 indexDataSource, string tableName, string storedFields, string indexPath, ReferenceType referenceType, bool isUpdateMessage)
+		{
+			int organizationID = indexDataSource.OrganizationID;
+
+			string root = Settings.ReadString("Tickets Index Path", "c:\\Indexes");
+			string mainIndexPath = Path.Combine(root, organizationID.ToString() + indexPath);
+			string path = Path.Combine(Settings.ReadString("Tickets Index Path", "c:\\Indexes"), organizationID.ToString() + indexPath);
+			LogVerbose("Path: " + path);
+
+			while (true)
+			{
+				if (IndexLocks.AquireLock(path))
+				{
+					break;
+				}
+				else
+				{
+					System.Threading.Thread.Sleep(1000);
+				}
+
+				// we may need to max out attempts and requeue the message
+			}
+
+			try
+			{
+				bool isNew = !System.IO.Directory.Exists(path);
+				if (isNew) Directory.CreateDirectory(path);
+				string noiseFile = Path.Combine(root, "noise.dat");
+				if (!File.Exists(noiseFile)) File.Create(noiseFile).Dispose();
+
+
+				if (!isUpdateMessage)
+				{
+					//                RemoveOldIndexItems(LoginUser, path, organization, referenceType, deletedIndexItemsFileName);
+					return;
+				}
+
+				Options options = new Options();
+				options.TextFlags = TextFlags.dtsoTfRecognizeDates;
+				options.NoiseWordFile = noiseFile;
+				options.Save();
+				LogVerbose("Processing " + tableName);
+
+				using (IndexJob job = new IndexJob())
+				{
+					job.DataSourceToIndex = indexDataSource;
+
+					job.IndexPath = path;
+					job.ActionCreate = isNew;
+					job.ActionAdd = true;
+					job.CreateRelativePaths = false;
+					job.StoredFields = Server.Tokenize(storedFields);
+					job.IndexingFlags = IndexingFlags.dtsAlwaysAdd;
+					bool doCompress = IsCompress(path);
+
+					if (doCompress)
+					{
+						job.ActionCompress = true;
+						job.ActionVerify = true;
+						LogVerbose("Compressing");
+					}
+
+					try
+					{
+						job.Execute();
+					}
+					catch (Exception ex)
+					{
+						ExceptionLogs.LogException(LoginUser, ex, "Index Job Processor - " + referenceType.ToString() + " - " + organizationID.ToString());
+						Logs.WriteException(ex);
+						throw;
+					}
+
+					if (doCompress)
+					{
+						IndexInfo info = new IndexInfo();
+						info = IndexJob.GetIndexInfo(path);
+						LogVerbose("Compressed");
+						LogVerbose("Info - Doc Count:" + info.DocCount.ToString());
+						LogVerbose("Info - Obsolete:" + info.ObsoleteCount.ToString());
+					}
+				}
+			}
+			finally
+			{
+				IndexLocks.ReleaseLock(path);
+			}
+		}
+
+		private bool IsCompress(string path)
+		{
+			bool doCompress = false;
+
+			if (_threadPosition % 2 == 0 && (DateTime.Now.DayOfWeek == DayOfWeek.Saturday || DateTime.Now.DayOfWeek == DayOfWeek.Sunday))
+			{
+				IndexInfo info = new IndexInfo();
+				info = IndexJob.GetIndexInfo(path);
+				LogVerbose("Info - Doc Count:" + info.DocCount.ToString());
+				LogVerbose("Info - Obsolete:" + info.ObsoleteCount.ToString());
+
+				doCompress = (info.ObsoleteCount / info.DocCount) > 0.2;
+			}
+
+			return doCompress;
+		}
     }
 
 

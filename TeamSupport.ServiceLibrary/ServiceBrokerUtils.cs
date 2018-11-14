@@ -13,29 +13,37 @@ namespace TeamSupport.ServiceLibrary
     public class ServiceBrokerUtils
     {
 
-        internal static string GetMessage(string queueName, SqlConnection con, TimeSpan timeout)
+        internal static List<byte[]> GetMessage(string queueName, SqlConnection con, TimeSpan timeout, int maxMessages = 1)
         {
-            using (SqlDataReader r = GetMessageBatch(queueName, con, timeout, 1))
+			List<byte[]> messages = new List<byte[]>();
+
+			using (SqlDataReader r = GetMessageBatch(queueName, con, timeout, maxMessages))
             {
                 if (r == null || !r.HasRows)
                     return null;
-                r.Read();
-                Guid conversation_handle = r.GetGuid(r.GetOrdinal("conversation_handle"));
-                string messageType = r.GetString(r.GetOrdinal("message_type_name"));
-                if (messageType == "http://schemas.microsoft.com/SQL/ServiceBroker/EndDialog")
-                {
-                    EndConversation(conversation_handle, con);
-                    return null;
-                }
-                var body = r.GetSqlBinary(r.GetOrdinal("message_body"));
-                return  body.Value != null ? Encoding.Unicode.GetString(body.Value) : null;
 
+				while (r.Read())
+				{
+					Guid conversation_handle = r.GetGuid(r.GetOrdinal("conversation_handle"));
+					string messageType = r.GetString(r.GetOrdinal("message_type_name"));
+
+					if (messageType == "http://schemas.microsoft.com/SQL/ServiceBroker/EndDialog")
+					{
+						EndConversation(conversation_handle, con);
+						return null;
+					}
+
+					var body = r.GetSqlBinary(r.GetOrdinal("message_body"));
+					messages.Add((byte[])body);
+				}
             }
-        }
 
-        public static string ReadMessage(string connectionString, string queueName)
+			return messages;
+		}
+
+        public static List<string> ReadMessage(string connectionString, string queueName, int maxMessages = 1)
         {
-            string message = null;
+            List<string> messages = new List<string>();
             TransactionOptions to = new TransactionOptions();
             to.IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted;
             to.Timeout = TimeSpan.MaxValue;
@@ -49,17 +57,23 @@ namespace TeamSupport.ServiceLibrary
                 {
                     con.Open();
                     con.EnlistTransaction(tran);
-                    message = ServiceBrokerUtils.GetMessage(queueName, con, TimeSpan.FromSeconds(10));
-                    if (message == null) //no message available
+					List<byte[]> messagesBytes = ServiceBrokerUtils.GetMessage(queueName, con, TimeSpan.FromSeconds(10), maxMessages);
+
+					if (messagesBytes == null) //no messages available
                     {
                         tran.Commit();
                         con.Close();
                         return null;
                     }
+					
+					foreach(byte[] messageBytes in messagesBytes)
+					{
+						string messageText = messageBytes != null ? Encoding.Unicode.GetString(messageBytes) : null;
+						messages.Add(messageText);
+					}
 
                     tran.Commit(); // the message processing succeeded or the FailedMessageProcessor ran so commit the RECEIVE
                     con.Close();
-
                 }
             }
             catch (SqlException ex)
@@ -78,7 +92,7 @@ namespace TeamSupport.ServiceLibrary
                 return null;
             }
 
-            return message;
+            return messages;
         }
 
         internal static void EndConversation(Guid conversationHandle, SqlConnection con)

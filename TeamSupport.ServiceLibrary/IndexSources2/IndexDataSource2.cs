@@ -20,6 +20,14 @@ namespace TeamSupport.ServiceLibrary
         protected string _table;
         protected StringBuilder _docFields;
 
+		public int OrganizationID
+		{
+			get
+			{
+				return _organizationID;
+			}
+		}
+
         public List<int> UpdatedItems
         {
             get { lock (this) { return _updatedItems; } }
