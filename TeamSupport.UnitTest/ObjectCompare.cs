@@ -30,8 +30,8 @@ namespace TeamSupport.UnitTest
             bool result = first == second;
             if (!result)
             {
-                System.IO.File.WriteAllText(@"C:\Users\sprichard\source\repos3\ts-app\one.json", first.ToLower());
-                System.IO.File.WriteAllText(@"C:\Users\sprichard\source\repos3\ts-app\two.json", second.ToLower());
+                System.IO.File.WriteAllText(@"one.json", first.ToLower());
+                System.IO.File.WriteAllText(@"two.json", second.ToLower());
                 Debugger.Break();
             }
             return result;

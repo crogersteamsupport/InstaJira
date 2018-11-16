@@ -189,6 +189,7 @@ namespace TeamSupport.UnitTest
             return true;
         }
 
+
         bool TryGet(LoginUser loginUser, Report report, bool enable, out DataTable table)
         {
             ReportTicketsViewTempTable.Enable = enable;
@@ -202,15 +203,11 @@ namespace TeamSupport.UnitTest
 
             try
             {
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
                 GridResult result = report.GetReportData(loginUser, from, to, sortField, isDesc, useUserFilter);
                 table = (DataTable)result.Data;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"       Original: {ex.Message}");
-                if (Debugger.IsAttached) Debugger.Break();
                 table = null;
                 return false;
             }
@@ -233,15 +230,24 @@ namespace TeamSupport.UnitTest
             if ((report == null) || (report.ReportDef == null) ||
                 (report.ReportDefType < 0) ||
                 !report.OrganizationID.HasValue ||
-                report.IsDisabled)
+                report.IsDisabled ||
+                (report.ReportDefType == ReportType.Custom))
                 return false;
 
             loginUser = new LoginUser(AttachmentTest._connectionString, report.ModifierID, report.OrganizationID.Value, (IDataCache)null);
+
             DataTable original;
             DataTable optimized;
-            if (TryGet(loginUser, report, false, out original) &&
-                TryGet(loginUser, report, true, out optimized))
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            if (TryGet(loginUser, report, false, out original))
             {
+                Debug.WriteLine("");
+                Debug.Write($"{reportID} {stopwatch.ElapsedMilliseconds}");
+                stopwatch.Restart();
+                TryGet(loginUser, report, true, out optimized);
+                Debug.WriteLine($" {stopwatch.ElapsedMilliseconds}");
+
                 if (!ObjectCompare.AreEqual(original, optimized))
                     Debugger.Break();
             }
@@ -257,22 +263,19 @@ namespace TeamSupport.UnitTest
             AuthenticationModel authentication = AuthenticationModel.AuthenticationModelTest(userData, AttachmentTest._connectionString);
             using (ConnectionContext connection = new ConnectionContext(authentication))
             {
-                //TestReportID(58771);
+                int[] reportIDs = connection._db.ExecuteQuery<int>("SELECT TOP 1000 ReportID FROM Reports ORDER BY LastTimeTaken DESC").ToArray();
+                foreach (int reportID in reportIDs)
+                    TestReportID(reportID);
 
+                //TestReportID(58771);
                 //TestReportID(36592);
                 //TestReportID(49907);
                 //TestReportID(57964);
                 //TestReportID(32147);
-                TestReportID(57460);
-                TestReportID(55737);
-                TestReportID(56958);
-                TestReportID(36592);
-
-                //for (int reportID = 58710; reportID > 1000; --reportID)
-                //{
-                //    if (TestReportID(reportID))
-                //        Debug.WriteLine($"ReportID {reportID}");
-                //}
+                //TestReportID(57460);
+                //TestReportID(55737);
+                //TestReportID(56958);
+                //TestReportID(36592);
             }
         }
 
@@ -312,7 +315,6 @@ namespace TeamSupport.UnitTest
                         catch (Exception ex)
                         {
                             // fails without optimization so we don't care...
-                            Debug.WriteLine($"      {ex.Message}");
                             return false;
                         }
 

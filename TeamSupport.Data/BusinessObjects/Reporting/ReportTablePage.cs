@@ -337,8 +337,6 @@ WHERE RowNum BETWEEN @From AND @To";
 
         private void AddReportTicketsViewTempTable(SqlCommand command)
         {
-            System.Diagnostics.Debug.Write(DataUtils.GetCommandTextSql(command));
-
             if (!_tabularReportSql.IsOrganizationID ||   // not Parent organizationID report
                 (_report.ReportDefType == ReportType.Custom))   // not a custom report
                 throw new Exception("optimization not supported on report type");
