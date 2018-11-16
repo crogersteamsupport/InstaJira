@@ -19,6 +19,8 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
         static ReportTicketsViewTempTable()
         {
+            Enable = true;
+
             // WARNING - Update this if ReportTicketsView changes
             _mapFieldToJoin = new Dictionary<EField, EJoin>()
             {
@@ -109,7 +111,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                 //[EField.EmailReplyToAddress] = EJoin.Tickets, // "t.EmailReplyToAddress",
                 [EField.ProductFamily] = EJoin.ProductFamilies, // "pf.Name AS [ProductFamily]"
             };
-            Enable = true;
+
         }
 
         private ReportTicketsViewTempTable(LoginUser loginUser)

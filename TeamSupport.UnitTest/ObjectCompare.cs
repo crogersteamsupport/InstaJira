@@ -24,14 +24,13 @@ namespace TeamSupport.UnitTest
                 break;
             }
 
-
             string first = AsJson(dt1, rowNumIndex);
             string second = AsJson(dt2, rowNumIndex);
             bool result = first == second;
             if (!result)
             {
-                System.IO.File.WriteAllText(@"one.json", first.ToLower());
-                System.IO.File.WriteAllText(@"two.json", second.ToLower());
+                System.IO.File.WriteAllText(@"one.json", first);    // use a diff tool to compare the files
+                System.IO.File.WriteAllText(@"two.json", second);
                 Debugger.Break();
             }
             return result;
@@ -39,9 +38,8 @@ namespace TeamSupport.UnitTest
 
         private static string AsJson(DataTable dt, int? rowNumIndex)
         {
-            object[][] optimized = dt.AsEnumerable().Select(i => i.ItemArray).ToArray();
-
             // SQL ignores whitespace and is case insensitive in GROUP BY
+            object[][] optimized = dt.AsEnumerable().Select(i => i.ItemArray).ToArray();
             foreach(object[] row in optimized)
             {
                 for(int i = 0; i < row.Length; ++i)
@@ -51,26 +49,28 @@ namespace TeamSupport.UnitTest
                 }
             }
 
+            // toss RowNum
             if (rowNumIndex.HasValue)
             {
                 foreach (var row in optimized)
                     row[rowNumIndex.Value] = -1;
             }
 
-            Sort(optimized);
+            SortRows(optimized);
             return JsonConvert.SerializeObject(optimized, Formatting.Indented);
         }
 
-        public static void Sort(object[] values)
+        public static void SortRows(object[] rows)
         {
-            Array.Sort(values, CompareTo);
+            Array.Sort(rows, TypedCompare);
         }
 
         /// <summary>
         /// Can throw if different data types
         /// </summary>
-        public static int CompareTo(object one, object two)
+        public static int TypedCompare(object one, object two)
         {
+            // DBNull
             if (one is DBNull && two is DBNull)
                 return 0;
             else if (one is DBNull)
@@ -78,19 +78,12 @@ namespace TeamSupport.UnitTest
             else if (two is DBNull)
                 return 1;
 
-            if (one == null && two == null)
-                return 0;
-            else if (one == null)
-                return -1;
-            else if (two == null)
-                return 1;
-
             int result = 0;
-
             switch (one)
             {
                 case object[] value:
-                    result = ArrayCompareTo(value, (object[])two);
+                    // compare as array
+                    result = TypedArrayCompare(value, (object[])two);
                     break;
                 case DateTime value:
                     result = value.CompareTo((DateTime)two);
@@ -110,9 +103,6 @@ namespace TeamSupport.UnitTest
                 case decimal value:
                     result = value.CompareTo((decimal)two);
                     break;
-                //case DBNull value:
-                //    result = (two is DBNull) ? 0 : -1;
-                //    break;
                 case null:
                 default:
                     if (Debugger.IsAttached) Debugger.Break();
@@ -121,7 +111,7 @@ namespace TeamSupport.UnitTest
             return result;
         }
 
-        public static int ArrayCompareTo(object[] one, object[] two)
+        public static int TypedArrayCompare(object[] one, object[] two)
         {
             int result = one.Length.CompareTo(two.Length);
             if (result != 0)
@@ -134,38 +124,13 @@ namespace TeamSupport.UnitTest
                 tmp1 += one[i].ToString();
                 tmp2 += two[i].ToString();
 
-                result = CompareTo(one[i], two[i]);
+                result = TypedCompare(one[i], two[i]);
                 if (result != 0)
                     break;
             }
 
             return result;
         }
-
-
-        const decimal _tolerance = 2;
-
-        void EpsilonCompare(int? value1, int? value2)
-        {
-            if (value1.Equals(value2))
-                return;
-            if (value1.HasValue)
-                value1 = (int)Math.Floor(value1.Value / _tolerance);
-            if (value2.HasValue)
-                value2 = (int)Math.Floor(value2.Value / _tolerance);
-        }
-
-        void EpsilonCompare(decimal? value1, decimal? value2)
-        {
-            if (value1.Equals(value2))
-                return;
-            if (value1.HasValue)
-                value1 = (decimal)Math.Floor(value1.Value / _tolerance);
-            if (value2.HasValue)
-                value2 = (decimal)Math.Floor(value2.Value / _tolerance);
-        }
-
-
 
     }
 }

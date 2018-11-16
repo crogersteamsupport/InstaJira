@@ -16,187 +16,69 @@ using System.Diagnostics;
 
 namespace TeamSupport.UnitTest
 {
-
-
     [TestClass]
     public class ReportTest
     {
-
         [TestMethod]
-        void VerifyFieldNamesEnum()
+        public void ReportTicketsViewTest()
         {
             string userData = AttachmentTest._userScot;
             AuthenticationModel authentication = AuthenticationModel.AuthenticationModelTest(userData, AttachmentTest._connectionString);
             using (ConnectionContext connection = new ConnectionContext(authentication))
             {
-                // hard coded fields for ReportTicketsView
-                List<string> fieldNames = new List<string>();
-                foreach (EField field in Enum.GetValues(typeof(EField)))
-                    fieldNames.Add(field.ToString());
-                fieldNames.Sort();
-
-                // DB configured fields for ReportTicketsView
-                int reportTicketsViewID = connection._db.ExecuteQuery<int>("SELECT ReportTableID FROM ReportTables WHERE TableName='ReportTicketsView").Min();
-                List<string> testNames = connection._db.ExecuteQuery<string>($"SELECT FieldName FROM ReportTableFields WHERE ReportTableID={reportTicketsViewID}").ToList();
-                testNames.Sort();
-
-                // Are they the same?  Was one updated but not the other?
-                CollectionAssert.AreEqual(fieldNames, testNames);
-                Assert.AreEqual(JsonConvert.SerializeObject(fieldNames), JsonConvert.SerializeObject(testNames));
+                // only actually runs for valid reports where optimization applies
+                int[] reportIDs = connection._db.ExecuteQuery<int>("SELECT TOP 1000 ReportID FROM Reports ORDER BY LastTimeTaken DESC").ToArray();
+                foreach (int reportID in reportIDs)
+                    TestReportID(reportID);
             }
         }
 
-        /*
-        static string QueryString()
+        bool TestReportID(int reportID)
         {
-            Query query = new Query();
-            foreach (EField field in Enum.GetValues(typeof(EField)))
-                query.Add(field);
+            // NOTE: PAGESIZE = 50 thus getData(0, 99, ...)
+            // req = getData(fromPage * PAGESIZE, (toPage * PAGESIZE) + PAGESIZE - 1, sortcol, (sortdir < 1)
 
-            return query.AsSql(1078);
-        }
+            // run as author of report
+            LoginUser loginUser = new LoginUser(AttachmentTest._connectionString, 4787299, 1078, (IDataCache)null);    // Scot, TeamSupport
+            Report report = Reports.GetReport(loginUser, reportID);
 
-        static string QueryStringNonDateConversion()
-        {
-            Query query = new Query();
-            query.Add(EField.DateCreated);  // DaysOpened, MinutesOpened
-            query.Add(EField.DateClosed);   // DaysClosed, MinutesClosed
-            query.Add(EField.SlaViolationDate); // SlaViolationTime, SlaViolationHours
-            query.Add(EField.SlaWarningDate);   // SlaWarningTime, SlaWarningHours
-
-            query.Add(EField.SlaViolationTimeClosed);
-            //query.Add(EField.SlaViolationLastAction);
-            //query.Add(EField.SlaViolationInitialResponse);
-            //query.Add(EField.SlaWarningTimeClosed);
-            //query.Add(EField.SlaWarningLastAction);
-            //query.Add(EField.SlaWarningInitialResponse);
-
-            return query.AsSql(1078);
-        }
-
-        //DECLARE @From Int; SET @From = 1;
-        //DECLARE @To Int; SET @To = 10000001;
-        //DECLARE @Param00003 NVarChar; SET @Param00003 = '';
-        //DECLARE @OrganizationID Int; SET @OrganizationID = 512739;
-        //DECLARE @Self NVarChar; SET @Self = 'Justin Potter';
-        //DECLARE @SelfID Int; SET @SelfID = 1083447;
-        //DECLARE @UserID Int; SET @UserID = 1083447;
-        //DECLARE @Offset NVarChar; SET @Offset = '-07:00';
-        //WITH q AS( SELECT ReportTicketsView.UserName AS [Assigned To], ReportTicketsView.Customers AS [Customers], CAST(SWITCHOFFSET(TODATETIMEOFFSET(ReportTicketsView.DateCreated, '+00:00'), '-07:00') AS DATETIME) AS[Date Ticket Created], ReportTicketsView.Name AS[Ticket Name], ReportTicketsView.TicketNumber AS[Ticket Number], (SELECT CAST(NULLIF(RTRIM(CustomValue), '') AS varchar(8000)) FROM CustomValues WHERE(CustomFieldID = 9963) AND(RefID = ReportTicketsView.TicketID))  AS[Product Issue(Support)], (SELECT CAST(NULLIF(RTRIM(CustomValue), '') AS varchar(8000)) FROM CustomValues WHERE(CustomFieldID = 9961) AND(RefID = ReportTicketsView.TicketID))  AS[Reseller(Support)], (SELECT CAST(NULLIF(RTRIM(CustomValue), '') AS varchar(8000)) FROM CustomValues WHERE(CustomFieldID = 21881) AND(RefID = ReportTicketsView.TicketID))  AS[Temperature Check(Support)], (SELECT CAST(NULLIF(RTRIM(CustomValue), '') AS varchar(8000)) FROM CustomValues WHERE(CustomFieldID = 9962) AND(RefID = ReportTicketsView.TicketID))  AS[Time to Resolve(Support)], ROW_NUMBER() OVER(ORDER BY CAST(SWITCHOFFSET(TODATETIMEOFFSET(ReportTicketsView.DateCreated, '+00:00'), '-07:00') AS DATETIME) DESC) AS[RowNum] FROM ReportTicketsView WHERE(ReportTicketsView.OrganizationID = @OrganizationID) AND((DATEPART(year, CAST(SWITCHOFFSET(TODATETIMEOFFSET(ReportTicketsView.[DateCreated], '+00:00'), '-07:00') AS DATETIME)) = 2018) AND((SELECT CAST(NULLIF(RTRIM(CustomValue), '') AS varchar(8000)) FROM CustomValues WHERE(CustomFieldID = 9963) AND(RefID = ReportTicketsView.TicketID))  <> @Param00003))) SELECT* FROM q WHERE RowNum BETWEEN @From AND @To ORDER BY RowNum ASC
-
-        static string QueryString49907()
-        {
-            Query query = new Query();
-            query.Add(EField.UserName);  // DaysOpened, MinutesOpened
-            query.Add(EField.Customers);   // DaysClosed, MinutesClosed
-            query.Add(EField.DateCreated); // SlaViolationTime, SlaViolationHours
-            query.Add(EField.Name);   // SlaWarningTime, SlaWarningHours
-            query.Add(EField.TicketID);
-            query.Add(EField.TicketNumber);
-
-            return query.AsSql(512739);
-        }
-
-        static string QueryString57964()
-        {
-            Query query = new Query();
-            query.Add(EField.UserName);
-            query.Add(EField.Contacts);
-            query.Add(EField.DateClosed);
-            query.Add(EField.DateCreated);
-            query.Add(EField.GroupName);
-            query.Add(EField.IsClosed);
-            query.Add(EField.Status);
-            query.Add(EField.Name);
-            query.Add(EField.TicketNumber);
-            query.Add(EField.TicketTypeName);
-            query.Add(EField.TicketID);
-            return query.AsSql(414323); // EField.OrganizationID
-        }
-
-        static string QueryString32147()
-        {
-            Query query = new Query();
-            query.Add(EField.UserName);
-            query.Add(EField.TicketNumber);
-            query.Add(EField.TicketID);
-            query.Add(EField.GroupName);
-            query.Add(EField.TicketNumber);
-            query.Add(EField.TicketNumber);
-            return query.AsSql(1085741); // EField.OrganizationID
-        }
-
-        static string QueryString57460()
-        {
-            Query query = new Query();
-            query.Add(EField.Name);
-            query.Add(EField.TicketTypeName);
-            query.Add(EField.TicketID);
-
-            return query.AsSql(641823); // EField.OrganizationID
-        }
-
-        static string QueryString55737()
-        {
-            Query query = new Query();
-            query.Add(EField.Customers);
-            query.Add(EField.DaysOpened);
-            query.Add(EField.Severity);
-            query.Add(EField.TicketID);
-            query.Add(EField.ProductName);
-            query.Add(EField.TicketTypeName);
-
-            return query.AsSql(1081853); // EField.OrganizationID
-        }
-
-        static string QueryString56958()
-        {
-            Query query = new Query();
-            query.Add(EField.UserName);
-            query.Add(EField.DateCreated);
-            query.Add(EField.Name);
-            query.Add(EField.TicketNumber);
-            query.Add(EField.TicketID);
-            query.Add(EField.IsClosed);
-
-            return query.AsSql(420794); // EField.OrganizationID
-        }
-
-        static string QueryString36592()
-        {
-            Query query = new Query();
-            query.Add(EField.CreatorEmail);
-            query.Add(EField.DateCreated);
-            query.Add(EField.TicketID);
-            return query.AsSql(464464); // EField.OrganizationID
-        }
-        */
-
-        public static bool AreTablesTheSame(DataTable tbl1, DataTable tbl2)
-        {
-            if (tbl1.Rows.Count != tbl2.Rows.Count || tbl1.Columns.Count != tbl2.Columns.Count)
+            // valid report to run?
+            if ((report == null) || (report.ReportDef == null) ||
+                (report.ReportDefType < 0) ||
+                !report.OrganizationID.HasValue ||
+                report.IsDisabled ||
+                (report.ReportDefType == ReportType.Custom))
                 return false;
 
+            loginUser = new LoginUser(AttachmentTest._connectionString, report.ModifierID, report.OrganizationID.Value, (IDataCache)null);
 
-            for (int i = 0; i < tbl1.Rows.Count; i++)
+            // run the query
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            ReportTicketsViewTempTable.Enable = false;
+            if (TryGet(loginUser, report, out DataTable original)) // if original query does throw, don't try optimized
             {
-                for (int c = 0; c < tbl1.Columns.Count; c++)
-                {
-                    if (!Equals(tbl1.Rows[i][c], tbl2.Rows[i][c]))
-                        return false;
-                }
+                // run it a second time using temp table #ReportTicketsView
+                Debug.WriteLine("");
+                Debug.Write($"{reportID},{stopwatch.ElapsedMilliseconds / 1000f},");
+                stopwatch.Restart();
+                ReportTicketsViewTempTable.Enable = true;
+                TryGet(loginUser, report, out DataTable optimized);
+                Debug.WriteLine($", {stopwatch.ElapsedMilliseconds / 1000f}");
+
+                // same results?
+                if (!ObjectCompare.AreEqual(original, optimized))
+                    Debugger.Break();
             }
+
             return true;
         }
 
-
-        bool TryGet(LoginUser loginUser, Report report, bool enable, out DataTable table)
+        bool TryGet(LoginUser loginUser, Report report, out DataTable table)
         {
-            ReportTicketsViewTempTable.Enable = enable;
-
-            // ???
+            // parameters passed in from front end
             int from = 0;
-            int to = 100;
+            int to = 10000000;  // default to full data set so comparison works
             string sortField = String.Empty;
             bool isDesc = false;
             bool useUserFilter = false;
@@ -215,232 +97,5 @@ namespace TeamSupport.UnitTest
             return true;
         }
 
-        bool TestReportID(int reportID)
-        {
-            Debug.WriteLine("");
-            Debug.Write($"{reportID} ");
-            // NOTE: PAGESIZE = 50 thus getData(0, 99, ...)
-            // req = getData(fromPage * PAGESIZE, (toPage * PAGESIZE) + PAGESIZE - 1, sortcol, (sortdir < 1)
-
-            // run as author of report
-            LoginUser loginUser = new LoginUser(AttachmentTest._connectionString, 4787299, 1078, (IDataCache)null);    // Scot, TeamSupport
-            Report report = Reports.GetReport(loginUser, reportID);
-
-            // valid report to run?
-            if ((report == null) || (report.ReportDef == null) ||
-                (report.ReportDefType < 0) ||
-                !report.OrganizationID.HasValue ||
-                report.IsDisabled ||
-                (report.ReportDefType == ReportType.Custom))
-                return false;
-
-            loginUser = new LoginUser(AttachmentTest._connectionString, report.ModifierID, report.OrganizationID.Value, (IDataCache)null);
-
-            DataTable original;
-            DataTable optimized;
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            if (TryGet(loginUser, report, false, out original))
-            {
-                Debug.WriteLine("");
-                Debug.Write($"{reportID} {stopwatch.ElapsedMilliseconds}");
-                stopwatch.Restart();
-                TryGet(loginUser, report, true, out optimized);
-                Debug.WriteLine($" {stopwatch.ElapsedMilliseconds}");
-
-                if (!ObjectCompare.AreEqual(original, optimized))
-                    Debugger.Break();
-            }
-
-            return true;
-        }
-
-
-        [TestMethod]
-        public void ReportTicketsViewTest()
-        {
-            string userData = AttachmentTest._userScot;
-            AuthenticationModel authentication = AuthenticationModel.AuthenticationModelTest(userData, AttachmentTest._connectionString);
-            using (ConnectionContext connection = new ConnectionContext(authentication))
-            {
-                int[] reportIDs = connection._db.ExecuteQuery<int>("SELECT TOP 1000 ReportID FROM Reports ORDER BY LastTimeTaken DESC").ToArray();
-                foreach (int reportID in reportIDs)
-                    TestReportID(reportID);
-
-                //TestReportID(58771);
-                //TestReportID(36592);
-                //TestReportID(49907);
-                //TestReportID(57964);
-                //TestReportID(32147);
-                //TestReportID(57460);
-                //TestReportID(55737);
-                //TestReportID(56958);
-                //TestReportID(36592);
-            }
-        }
-
-        bool TestReportID1(int reportID)
-        {
-            // run as author of report
-            LoginUser loginUser = new LoginUser(AttachmentTest._connectionString, 4787299, 1078, (IDataCache)null);    // Scot, TeamSupport
-            Report report = Reports.GetReport(loginUser, reportID);
-            if ((report == null) || (report.ReportDef == null) ||
-                (report.ReportDefType < 0) || !report.OrganizationID.HasValue ||
-                (report.LastTimeTaken < 10))
-                return false;
-
-            loginUser = new LoginUser(AttachmentTest._connectionString, report.ModifierID, report.OrganizationID.Value, (IDataCache)null);
-            switch (report.ReportType)
-            {
-                case ReportType.Summary:
-                case ReportType.Chart:
-                case ReportType.Custom:
-                    break;
-
-                default:
-                case ReportType.Table:
-                    {
-                        ReportTablePage tabular;
-                        DataTable original;
-                        Stopwatch stopwatch = new Stopwatch();
-
-                        try
-                        {
-                            tabular = new ReportTablePage(loginUser, report);
-                            ReportTicketsViewTempTable.Enable = false;
-                            stopwatch.Start();
-                            original = tabular.GetReportTablePage(0, 10000000, "Email", false, true, true);
-                            Debug.WriteLine($"original {stopwatch.Elapsed.TotalSeconds}");
-                        }
-                        catch (Exception ex)
-                        {
-                            // fails without optimization so we don't care...
-                            return false;
-                        }
-
-                        ReportTicketsViewTempTable.Enable = true;
-                        stopwatch.Restart();
-                        DataTable optimized = tabular.GetReportTablePage(0, 10000000, "Email", false, true, true);
-                        Debug.WriteLine($"optimized {stopwatch.Elapsed.TotalSeconds}");
-
-                        if (!ObjectCompare.AreEqual(original, optimized))
-                            Debugger.Break();
-                    }
-                    break;
-            }
-
-            return true;
-        }
-
-        //[TestMethod]
-        //public void ReportTicketsViewTest1()
-        //{
-        //    //command.CommandText = "INSERT INTO TeamSupportNightly.dbo.SystemSettings VALUES ('ReportTimeout', 10000)";
-
-        //    //string fields = "{ \"Fields\":[{\"FieldID\":562,\"IsCustom\":false},{\"FieldID\":492,\"IsCustom\":false},{\"FieldID\":494,\"IsCustom\":false},{\"FieldID\":524,\"IsCustom\":false},{\"FieldID\":555,\"IsCustom\":false},{\"FieldID\":9963,\"IsCustom\":true},{\"FieldID\":9961,\"IsCustom\":true},{\"FieldID\":21881,\"IsCustom\":true},{\"FieldID\":9962,\"IsCustom\":true}],\"Subcategory\":\"47\",\"Filters\":[{\"Conjunction\":\"AND\",\"Conditions\":[{\"FieldID\":494,\"IsCustom\":false,\"FieldName\":\"Date Ticket Created\",\"DataType\":\"datetime\",\"Comparator\":\"CURRENT YEAR\"},{\"FieldID\":9963,\"IsCustom\":true,\"FieldName\":\"Product Issue\",\"DataType\":\"text\",\"Comparator\":\"IS NOT\",\"Value1\":\"\"}],\"Filters\":[]}]}";
-
-        //    string userData = AttachmentTest._userScot;
-        //    AuthenticationModel authentication = AuthenticationModel.AuthenticationModelTest(userData, AttachmentTest._connectionString);
-        //    using (ConnectionContext connection = new ConnectionContext(authentication))
-        //    {
-        //        // find all the slow reports
-        //        //int[] slow;
-        //        //using (SqlConnection sqlConnection = new SqlConnection(LoginUser.GetConnectionString(-1)))
-        //        //using (DataContext db = new DataContext(sqlConnection))
-        //        //{
-        //        //    slow = db.ExecuteQuery<int>("SELECT [ReportID] FROM [Reports] WHERE LastTimeTaken > 10").ToArray();
-        //        //}
-
-        //        for (int reportID = 58710; reportID > 1000; --reportID)
-        //        {
-        //            if (TestReportID(reportID))
-        //                Debug.WriteLine($"ReportID {reportID}");
-        //        }
-        //        return;
-
-        //        TestReportID(36592);
-
-        //        LoginUser loginUser = new LoginUser(AttachmentTest._connectionString, 552821, 464464, (IDataCache)null);    // UserID, OrganizationID
-        //        Report report = Reports.GetReport(loginUser, 36592);    // ReportID 
-
-        //        if (false)
-        //        {
-        //            ReportTicketsViewTempTable.Enable = false;
-        //            GridResult result = report.GetReportData(loginUser, 0, 99, "Email", false, true);
-
-        //            ReportTicketsViewTempTable.Enable = true;
-        //            GridResult result1 = report.GetReportData(loginUser, 0, 99, "Email", false, true);
-        //            Assert.AreEqual(result, result1);
-        //        }
-
-        //        if (false)
-        //        {
-        //            // #ReportTicketsView temp table
-        //            ReportTablePage tabular = new ReportTablePage(loginUser, report);
-        //            ReportTicketsViewTempTable.Enable = true;
-        //            DataTable dt = tabular.GetReportTablePage(0, 10000000, "Email", false, true, true);
-        //            string one = ObjectCompare.AsJson(dt, 6);
-
-        //            //object[][] optimized = dt1.AsEnumerable().Select(i => i.ItemArray).ToArray();
-        //            //ObjectCompare.Sort(optimized);
-        //            //string one = JsonConvert.SerializeObject(optimized);
-        //            //optimized.Sort(TableComparer);
-        //            string[] x = dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName).ToArray();
-        //            //string one = JsonConvert.SerializeObject(dt1.AsEnumerable().Select(i => i.ItemArray).ToArray());
-
-        //            // ReportTicketsView
-        //            ReportTicketsViewTempTable.Enable = false;
-        //            dt = tabular.GetReportTablePage(0, 10000000, "Email", false, true, true);
-        //            string two = ObjectCompare.AsJson(dt, 6);
-        //            Assert.AreEqual(one, two);
-        //        }
-
-        //        //SqlCommand command = new SqlCommand();
-        //        //tabular.GetCommand(command, true, false, true, null, null, 120);
-        //        //tabular.AddReportTicketsViewTempTable(command);
-
-
-        //        //ReportTicketsViewItemProxy[] report = connection._db.ExecuteQuery<ReportTicketsViewItemProxy>(queryString).ToArray();
-
-        //        Table<ReportTicketsViewItemProxy> table = connection._db.GetTable<ReportTicketsViewItemProxy>();
-        //        //ReportTicketsViewItemProxy[] proxies = table.Where(t => t.TicketID < 100000).OrderBy(t => t.TicketID).ToArray();
-        //        ReportTicketsViewItemProxy[] proxies = (from t in table select t).Where(t => t.SlaViolationTimeClosed.HasValue).Take(1000).ToArray();
-        //        DateTime now = DateTime.UtcNow;
-        //        foreach (ReportTicketsViewItemProxy proxy in proxies)
-        //        {
-        //            ReportTicketsViewItemProxy clone = JsonConvert.DeserializeObject<ReportTicketsViewItemProxy>(JsonConvert.SerializeObject(proxy));
-        //            Assert.AreEqual(JsonConvert.SerializeObject(proxy), JsonConvert.SerializeObject(clone));
-
-        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.DaysClosed, now);
-        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.MinutesClosed, now);
-        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.DaysOpened, now);
-        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.MinutesOpened, now);
-        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaViolationTime, now);
-        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaWarningTime, now);
-        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaViolationHours, now);
-        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaWarningHours, now);
-
-        //            Assert.AreEqual(JsonConvert.SerializeObject(proxy), JsonConvert.SerializeObject(clone));
-        //        }
-
-        //        //Assert.AreEqual(JsonConvert.SerializeObject(proxies), JsonConvert.SerializeObject(report));
-        //    }
-        //}
-
-        public void ReportTicketsViewOrganizationTest()
-        {
-            string userData = AttachmentTest._userScot;
-            AuthenticationModel authentication = AuthenticationModel.AuthenticationModelTest(userData, AttachmentTest._connectionString);
-            using (ConnectionContext connection = new ConnectionContext(authentication))
-            {
-
-            }
-
-        }
-
-        public void ReportTicketsViewOrganizationFieldTest()
-        {
-
-        }
     }
 }

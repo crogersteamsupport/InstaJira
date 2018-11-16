@@ -155,7 +155,6 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             SqlCommand command = GetSqlCommand(from, to, ref sortField, ref isDesc, useUserFilter, includeHiddenFields);
 
             _report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
-            //System.Diagnostics.Debug.WriteLine($"       {_report.LastSqlExecuted}");
             _report.Collection.Save();
             BaseCollection.FixCommandParameters(command);
 
@@ -348,10 +347,7 @@ WHERE RowNum BETWEEN @From AND @To";
             _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _tabularReport);
             string tempTable = _reportTicketsView.ToSql();
             if (!String.IsNullOrEmpty(tempTable))
-            {
                 command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
-                System.Diagnostics.Debug.Write(" #ReportTicketsView ");
-            }
         }
 
         public void GetCommand(SqlCommand command, bool inlcudeHiddenFields = true, bool isSchemaOnly = false, bool useUserFilter = true, string sortField = null, string sortDir = null)

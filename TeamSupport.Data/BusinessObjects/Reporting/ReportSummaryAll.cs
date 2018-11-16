@@ -245,10 +245,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _summaryReport);
             string tempTable = _reportTicketsView.ToSql();
             if (!String.IsNullOrEmpty(tempTable))
-            {
                 command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
-                //System.Diagnostics.Debug.Write(DataUtils.GetCommandTextSql(command));
-            }
         }
 
         private void GetCommand(SqlCommand command, bool inlcudeHiddenFields = true, bool isSchemaOnly = false, bool useUserFilter = true, string sortField = null, string sortDir = null)
