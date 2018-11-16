@@ -235,13 +235,19 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
         private void AddReportTicketsViewTempTable(SqlCommand command)
         {
-            if (ReportTicketsViewTempTable.Enable && (_report.ReportDefType != ReportType.Custom))
+
+            if (!_summaryReportSql.IsOrganizationID ||   // not Parent organizationID report
+                (_report.ReportDefType == ReportType.Custom) ||   // not a custom report
+                !ReportTicketsViewTempTable.Enable)
+                return;
+
+            _summaryReport = JsonConvert.DeserializeObject<SummaryReport>(_report.ReportDef);
+            _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _summaryReport);
+            string tempTable = _reportTicketsView.ToSql();
+            if (!String.IsNullOrEmpty(tempTable))
             {
-                _summaryReport = JsonConvert.DeserializeObject<SummaryReport>(_report.ReportDef);
-                _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _summaryReport);
-                string tempTable = _reportTicketsView.ToSql();
-                if (!String.IsNullOrEmpty(tempTable))
-                    command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
+                command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
+                //System.Diagnostics.Debug.Write(DataUtils.GetCommandTextSql(command));
             }
         }
 

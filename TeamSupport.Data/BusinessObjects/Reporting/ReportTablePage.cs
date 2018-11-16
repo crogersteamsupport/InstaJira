@@ -155,6 +155,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             SqlCommand command = GetSqlCommand(from, to, ref sortField, ref isDesc, useUserFilter, includeHiddenFields);
 
             _report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
+            //System.Diagnostics.Debug.WriteLine($"       {_report.LastSqlExecuted}");
             _report.Collection.Save();
             BaseCollection.FixCommandParameters(command);
 
@@ -333,15 +334,25 @@ WHERE RowNum BETWEEN @From AND @To";
 
             return command;
         }
+
         private void AddReportTicketsViewTempTable(SqlCommand command)
         {
-            if (ReportTicketsViewTempTable.Enable && (_report.ReportDefType != ReportType.Custom))
+            System.Diagnostics.Debug.Write(DataUtils.GetCommandTextSql(command));
+
+            if (!_tabularReportSql.IsOrganizationID ||   // not Parent organizationID report
+                (_report.ReportDefType == ReportType.Custom))   // not a custom report
+                throw new Exception("optimization not supported on report type");
+
+            if (!ReportTicketsViewTempTable.Enable)
+                return;
+
+            _tabularReport = JsonConvert.DeserializeObject<TabularReport>(_report.ReportDef);
+            _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _tabularReport);
+            string tempTable = _reportTicketsView.ToSql();
+            if (!String.IsNullOrEmpty(tempTable))
             {
-                _tabularReport = JsonConvert.DeserializeObject<TabularReport>(_report.ReportDef);
-                _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _tabularReport);
-                string tempTable = _reportTicketsView.ToSql();
-                if (!String.IsNullOrEmpty(tempTable))
-                    command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
+                command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
+                System.Diagnostics.Debug.Write(" #ReportTicketsView ");
             }
         }
 

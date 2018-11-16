@@ -21,6 +21,14 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
     public class TabularReportSql
     {
         UserRights _userRights;
+        string _organizationIDFieldName;
+        public bool IsOrganizationID    // can't optimize if using ParentID
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_organizationIDFieldName) ? true : _organizationIDFieldName.Equals("OrganizationID");
+            }
+        }
 
         public TabularReportSql(LoginUser loginUser)
         {
@@ -300,6 +308,9 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             builder.Append(" " + sub.BaseQuery);
 
             ReportTable mainTable = tables.FindByReportTableID(sub.ReportCategoryTableID);
+
+            _organizationIDFieldName = mainTable.OrganizationIDFieldName;
+
             builder.Append(" WHERE (" + mainTable.TableName + "." + mainTable.OrganizationIDFieldName + " = @OrganizationID)");
             if (tabularReport.Subcategory == 70)
             {

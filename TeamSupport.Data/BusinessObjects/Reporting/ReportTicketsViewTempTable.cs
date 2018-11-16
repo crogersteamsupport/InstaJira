@@ -139,6 +139,15 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             }
         }
 
+        // filter fields can be recursive
+        void AddFields(ReportFilter filter)
+        {
+            foreach (ReportFilterCondition condition in filter.Conditions)
+                Add(condition.FieldID);
+            foreach (ReportFilter filter1 in filter.Filters)
+                AddFields(filter1);
+        }
+
         /// <summary> Summary Report </summary>
         public ReportTicketsViewTempTable(LoginUser loginUser, SummaryReport summaryReport) : this(loginUser)
         {
@@ -151,8 +160,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
             // filter fields (WHERE, ORDER BY...)
             foreach (ReportFilter filter in summaryReport.Filters)
-                foreach (ReportFilterCondition condition in filter.Conditions)
-                    Add(condition.FieldID);
+                AddFields(filter);
 
             if (_fields.Count > 0)  // include TicketID and OrganizationID
             {

@@ -46,6 +46,15 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
     public class SummaryReportSql
     {
         UserRights _userRights;
+        string _organizationIDFieldName;
+        public bool IsOrganizationID    // can't optimize if using ParentID
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_organizationIDFieldName) ? true : _organizationIDFieldName.Equals("OrganizationID");
+            }
+        }
+
         public SummaryReportSql(LoginUser loginUser)
         {
             _userRights = new UserRights(loginUser);
@@ -86,6 +95,9 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             // from + where clause
             builder.Append(" " + sub.BaseQuery);
             ReportTable mainTable = tables.FindByReportTableID(sub.ReportCategoryTableID);
+
+            _organizationIDFieldName = mainTable.OrganizationIDFieldName;
+
             builder.Append(" WHERE (" + mainTable.TableName + "." + mainTable.OrganizationIDFieldName + " = @OrganizationID)");
             //add user rights where needed
             _userRights.UseTicketRights((int)summaryReport.Subcategory, tables, command, builder);

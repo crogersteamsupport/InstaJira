@@ -12,6 +12,7 @@ using TeamSupport.Data.BusinessObjects.Reporting;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.Diagnostics;
 
 namespace TeamSupport.UnitTest
 {
@@ -171,86 +172,258 @@ namespace TeamSupport.UnitTest
         }
         */
 
+        public static bool AreTablesTheSame(DataTable tbl1, DataTable tbl2)
+        {
+            if (tbl1.Rows.Count != tbl2.Rows.Count || tbl1.Columns.Count != tbl2.Columns.Count)
+                return false;
+
+
+            for (int i = 0; i < tbl1.Rows.Count; i++)
+            {
+                for (int c = 0; c < tbl1.Columns.Count; c++)
+                {
+                    if (!Equals(tbl1.Rows[i][c], tbl2.Rows[i][c]))
+                        return false;
+                }
+            }
+            return true;
+        }
+
+        bool TryGet(LoginUser loginUser, Report report, bool enable, out DataTable table)
+        {
+            ReportTicketsViewTempTable.Enable = enable;
+
+            // ???
+            int from = 0;
+            int to = 100;
+            string sortField = String.Empty;
+            bool isDesc = false;
+            bool useUserFilter = false;
+
+            try
+            {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+                GridResult result = report.GetReportData(loginUser, from, to, sortField, isDesc, useUserFilter);
+                table = (DataTable)result.Data;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"       Original: {ex.Message}");
+                if (Debugger.IsAttached) Debugger.Break();
+                table = null;
+                return false;
+            }
+
+            return true;
+        }
+
+        bool TestReportID(int reportID)
+        {
+            Debug.WriteLine("");
+            Debug.Write($"{reportID} ");
+            // NOTE: PAGESIZE = 50 thus getData(0, 99, ...)
+            // req = getData(fromPage * PAGESIZE, (toPage * PAGESIZE) + PAGESIZE - 1, sortcol, (sortdir < 1)
+
+            // run as author of report
+            LoginUser loginUser = new LoginUser(AttachmentTest._connectionString, 4787299, 1078, (IDataCache)null);    // Scot, TeamSupport
+            Report report = Reports.GetReport(loginUser, reportID);
+
+            // valid report to run?
+            if ((report == null) || (report.ReportDef == null) ||
+                (report.ReportDefType < 0) ||
+                !report.OrganizationID.HasValue ||
+                report.IsDisabled)
+                return false;
+
+            loginUser = new LoginUser(AttachmentTest._connectionString, report.ModifierID, report.OrganizationID.Value, (IDataCache)null);
+            DataTable original;
+            DataTable optimized;
+            if (TryGet(loginUser, report, false, out original) &&
+                TryGet(loginUser, report, true, out optimized))
+            {
+                if (!ObjectCompare.AreEqual(original, optimized))
+                    Debugger.Break();
+            }
+
+            return true;
+        }
 
 
         [TestMethod]
         public void ReportTicketsViewTest()
         {
-            //string fields = "{ \"Fields\":[{\"FieldID\":562,\"IsCustom\":false},{\"FieldID\":492,\"IsCustom\":false},{\"FieldID\":494,\"IsCustom\":false},{\"FieldID\":524,\"IsCustom\":false},{\"FieldID\":555,\"IsCustom\":false},{\"FieldID\":9963,\"IsCustom\":true},{\"FieldID\":9961,\"IsCustom\":true},{\"FieldID\":21881,\"IsCustom\":true},{\"FieldID\":9962,\"IsCustom\":true}],\"Subcategory\":\"47\",\"Filters\":[{\"Conjunction\":\"AND\",\"Conditions\":[{\"FieldID\":494,\"IsCustom\":false,\"FieldName\":\"Date Ticket Created\",\"DataType\":\"datetime\",\"Comparator\":\"CURRENT YEAR\"},{\"FieldID\":9963,\"IsCustom\":true,\"FieldName\":\"Product Issue\",\"DataType\":\"text\",\"Comparator\":\"IS NOT\",\"Value1\":\"\"}],\"Filters\":[]}]}";
-
             string userData = AttachmentTest._userScot;
             AuthenticationModel authentication = AuthenticationModel.AuthenticationModelTest(userData, AttachmentTest._connectionString);
             using (ConnectionContext connection = new ConnectionContext(authentication))
             {
-                LoginUser loginUser = new LoginUser(AttachmentTest._connectionString, 552821, 464464, (IDataCache)null);    // UserID, OrganizationID
-                Report report = Reports.GetReport(loginUser, 36592);    // ReportID 
-                ReportTablePage tabular = new ReportTablePage(loginUser, report);
+                //TestReportID(58771);
 
-                ReportTicketsViewTempTable.Enable = false;
-                DataTable original = tabular.GetReportTablePage(0, 99, "Email", false, true, true);
+                //TestReportID(36592);
+                //TestReportID(49907);
+                //TestReportID(57964);
+                //TestReportID(32147);
+                TestReportID(57460);
+                TestReportID(55737);
+                TestReportID(56958);
+                TestReportID(36592);
 
-                ReportTicketsViewTempTable.Enable = true;
-                DataTable withTempTable = tabular.GetReportTablePage(0, 99, "Email", false, true, true);
+                //for (int reportID = 58710; reportID > 1000; --reportID)
+                //{
+                //    if (TestReportID(reportID))
+                //        Debug.WriteLine($"ReportID {reportID}");
+                //}
+            }
+        }
 
-                Assert.AreEqual(original, withTempTable);
+        bool TestReportID1(int reportID)
+        {
+            // run as author of report
+            LoginUser loginUser = new LoginUser(AttachmentTest._connectionString, 4787299, 1078, (IDataCache)null);    // Scot, TeamSupport
+            Report report = Reports.GetReport(loginUser, reportID);
+            if ((report == null) || (report.ReportDef == null) ||
+                (report.ReportDefType < 0) || !report.OrganizationID.HasValue ||
+                (report.LastTimeTaken < 10))
+                return false;
 
-                //SqlCommand command = new SqlCommand();
-                //tabular.GetCommand(command, true, false, true, null, null, 120);
-                //tabular.AddReportTicketsViewTempTable(command);
+            loginUser = new LoginUser(AttachmentTest._connectionString, report.ModifierID, report.OrganizationID.Value, (IDataCache)null);
+            switch (report.ReportType)
+            {
+                case ReportType.Summary:
+                case ReportType.Chart:
+                case ReportType.Custom:
+                    break;
 
+                default:
+                case ReportType.Table:
+                    {
+                        ReportTablePage tabular;
+                        DataTable original;
+                        Stopwatch stopwatch = new Stopwatch();
 
-                //ReportTicketsViewItemProxy[] report = connection._db.ExecuteQuery<ReportTicketsViewItemProxy>(queryString).ToArray();
+                        try
+                        {
+                            tabular = new ReportTablePage(loginUser, report);
+                            ReportTicketsViewTempTable.Enable = false;
+                            stopwatch.Start();
+                            original = tabular.GetReportTablePage(0, 10000000, "Email", false, true, true);
+                            Debug.WriteLine($"original {stopwatch.Elapsed.TotalSeconds}");
+                        }
+                        catch (Exception ex)
+                        {
+                            // fails without optimization so we don't care...
+                            Debug.WriteLine($"      {ex.Message}");
+                            return false;
+                        }
 
-                Table<ReportTicketsViewItemProxy> table = connection._db.GetTable<ReportTicketsViewItemProxy>();
-                //ReportTicketsViewItemProxy[] proxies = table.Where(t => t.TicketID < 100000).OrderBy(t => t.TicketID).ToArray();
-                ReportTicketsViewItemProxy[] proxies = (from t in table select t).Where(t => t.SlaViolationTimeClosed.HasValue).Take(1000).ToArray();
-                DateTime now = DateTime.UtcNow;
-                foreach (ReportTicketsViewItemProxy proxy in proxies)
-                {
-                    ReportTicketsViewItemProxy clone = JsonConvert.DeserializeObject<ReportTicketsViewItemProxy>(JsonConvert.SerializeObject(proxy));
-                    Assert.AreEqual(JsonConvert.SerializeObject(proxy), JsonConvert.SerializeObject(clone));
+                        ReportTicketsViewTempTable.Enable = true;
+                        stopwatch.Restart();
+                        DataTable optimized = tabular.GetReportTablePage(0, 10000000, "Email", false, true, true);
+                        Debug.WriteLine($"optimized {stopwatch.Elapsed.TotalSeconds}");
 
-                    //clone.CalculateDate(ReportTicketsViewItemProxy.EField.DaysClosed, now);
-                    //clone.CalculateDate(ReportTicketsViewItemProxy.EField.MinutesClosed, now);
-                    //clone.CalculateDate(ReportTicketsViewItemProxy.EField.DaysOpened, now);
-                    //clone.CalculateDate(ReportTicketsViewItemProxy.EField.MinutesOpened, now);
-                    //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaViolationTime, now);
-                    //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaWarningTime, now);
-                    //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaViolationHours, now);
-                    //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaWarningHours, now);
-
-                    Assert.AreEqual(JsonConvert.SerializeObject(proxy), JsonConvert.SerializeObject(clone));
-                }
-
-                //Assert.AreEqual(JsonConvert.SerializeObject(proxies), JsonConvert.SerializeObject(report));
+                        if (!ObjectCompare.AreEqual(original, optimized))
+                            Debugger.Break();
+                    }
+                    break;
             }
 
-
+            return true;
         }
 
-        const decimal _tolerance = 2;
+        //[TestMethod]
+        //public void ReportTicketsViewTest1()
+        //{
+        //    //command.CommandText = "INSERT INTO TeamSupportNightly.dbo.SystemSettings VALUES ('ReportTimeout', 10000)";
 
-        void EpsilonCompare(int? value1, int? value2)
-        {
-            if (value1.Equals(value2))
-                return;
-            if (value1.HasValue)
-                value1 = (int)Math.Floor(value1.Value / _tolerance);
-            if (value2.HasValue)
-                value2 = (int)Math.Floor(value2.Value / _tolerance);
-            Assert.AreEqual(value1, value2);
-        }
+        //    //string fields = "{ \"Fields\":[{\"FieldID\":562,\"IsCustom\":false},{\"FieldID\":492,\"IsCustom\":false},{\"FieldID\":494,\"IsCustom\":false},{\"FieldID\":524,\"IsCustom\":false},{\"FieldID\":555,\"IsCustom\":false},{\"FieldID\":9963,\"IsCustom\":true},{\"FieldID\":9961,\"IsCustom\":true},{\"FieldID\":21881,\"IsCustom\":true},{\"FieldID\":9962,\"IsCustom\":true}],\"Subcategory\":\"47\",\"Filters\":[{\"Conjunction\":\"AND\",\"Conditions\":[{\"FieldID\":494,\"IsCustom\":false,\"FieldName\":\"Date Ticket Created\",\"DataType\":\"datetime\",\"Comparator\":\"CURRENT YEAR\"},{\"FieldID\":9963,\"IsCustom\":true,\"FieldName\":\"Product Issue\",\"DataType\":\"text\",\"Comparator\":\"IS NOT\",\"Value1\":\"\"}],\"Filters\":[]}]}";
 
-        void EpsilonCompare(decimal? value1, decimal? value2)
-        {
-            if (value1.Equals(value2))
-                return;
-            if (value1.HasValue)
-                value1 = (decimal)Math.Floor(value1.Value / _tolerance);
-            if (value2.HasValue)
-                value2 = (decimal)Math.Floor(value2.Value / _tolerance);
-            Assert.AreEqual(value1, value2);
-        }
+        //    string userData = AttachmentTest._userScot;
+        //    AuthenticationModel authentication = AuthenticationModel.AuthenticationModelTest(userData, AttachmentTest._connectionString);
+        //    using (ConnectionContext connection = new ConnectionContext(authentication))
+        //    {
+        //        // find all the slow reports
+        //        //int[] slow;
+        //        //using (SqlConnection sqlConnection = new SqlConnection(LoginUser.GetConnectionString(-1)))
+        //        //using (DataContext db = new DataContext(sqlConnection))
+        //        //{
+        //        //    slow = db.ExecuteQuery<int>("SELECT [ReportID] FROM [Reports] WHERE LastTimeTaken > 10").ToArray();
+        //        //}
+
+        //        for (int reportID = 58710; reportID > 1000; --reportID)
+        //        {
+        //            if (TestReportID(reportID))
+        //                Debug.WriteLine($"ReportID {reportID}");
+        //        }
+        //        return;
+
+        //        TestReportID(36592);
+
+        //        LoginUser loginUser = new LoginUser(AttachmentTest._connectionString, 552821, 464464, (IDataCache)null);    // UserID, OrganizationID
+        //        Report report = Reports.GetReport(loginUser, 36592);    // ReportID 
+
+        //        if (false)
+        //        {
+        //            ReportTicketsViewTempTable.Enable = false;
+        //            GridResult result = report.GetReportData(loginUser, 0, 99, "Email", false, true);
+
+        //            ReportTicketsViewTempTable.Enable = true;
+        //            GridResult result1 = report.GetReportData(loginUser, 0, 99, "Email", false, true);
+        //            Assert.AreEqual(result, result1);
+        //        }
+
+        //        if (false)
+        //        {
+        //            // #ReportTicketsView temp table
+        //            ReportTablePage tabular = new ReportTablePage(loginUser, report);
+        //            ReportTicketsViewTempTable.Enable = true;
+        //            DataTable dt = tabular.GetReportTablePage(0, 10000000, "Email", false, true, true);
+        //            string one = ObjectCompare.AsJson(dt, 6);
+
+        //            //object[][] optimized = dt1.AsEnumerable().Select(i => i.ItemArray).ToArray();
+        //            //ObjectCompare.Sort(optimized);
+        //            //string one = JsonConvert.SerializeObject(optimized);
+        //            //optimized.Sort(TableComparer);
+        //            string[] x = dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName).ToArray();
+        //            //string one = JsonConvert.SerializeObject(dt1.AsEnumerable().Select(i => i.ItemArray).ToArray());
+
+        //            // ReportTicketsView
+        //            ReportTicketsViewTempTable.Enable = false;
+        //            dt = tabular.GetReportTablePage(0, 10000000, "Email", false, true, true);
+        //            string two = ObjectCompare.AsJson(dt, 6);
+        //            Assert.AreEqual(one, two);
+        //        }
+
+        //        //SqlCommand command = new SqlCommand();
+        //        //tabular.GetCommand(command, true, false, true, null, null, 120);
+        //        //tabular.AddReportTicketsViewTempTable(command);
+
+
+        //        //ReportTicketsViewItemProxy[] report = connection._db.ExecuteQuery<ReportTicketsViewItemProxy>(queryString).ToArray();
+
+        //        Table<ReportTicketsViewItemProxy> table = connection._db.GetTable<ReportTicketsViewItemProxy>();
+        //        //ReportTicketsViewItemProxy[] proxies = table.Where(t => t.TicketID < 100000).OrderBy(t => t.TicketID).ToArray();
+        //        ReportTicketsViewItemProxy[] proxies = (from t in table select t).Where(t => t.SlaViolationTimeClosed.HasValue).Take(1000).ToArray();
+        //        DateTime now = DateTime.UtcNow;
+        //        foreach (ReportTicketsViewItemProxy proxy in proxies)
+        //        {
+        //            ReportTicketsViewItemProxy clone = JsonConvert.DeserializeObject<ReportTicketsViewItemProxy>(JsonConvert.SerializeObject(proxy));
+        //            Assert.AreEqual(JsonConvert.SerializeObject(proxy), JsonConvert.SerializeObject(clone));
+
+        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.DaysClosed, now);
+        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.MinutesClosed, now);
+        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.DaysOpened, now);
+        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.MinutesOpened, now);
+        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaViolationTime, now);
+        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaWarningTime, now);
+        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaViolationHours, now);
+        //            //clone.CalculateDate(ReportTicketsViewItemProxy.EField.SlaWarningHours, now);
+
+        //            Assert.AreEqual(JsonConvert.SerializeObject(proxy), JsonConvert.SerializeObject(clone));
+        //        }
+
+        //        //Assert.AreEqual(JsonConvert.SerializeObject(proxies), JsonConvert.SerializeObject(report));
+        //    }
+        //}
 
         public void ReportTicketsViewOrganizationTest()
         {
