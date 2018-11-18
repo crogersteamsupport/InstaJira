@@ -50,167 +50,32 @@ namespace TeamSupport.ServiceLibrary
         private void ProcessIndex(ReferenceType referenceType)
         {
             if (IsStopped) return;
-            string indexPath = string.Empty;
-            string storedFields = string.Empty;
-            string tableName = string.Empty;
-            string primaryKeyName = string.Empty;
+            IndexProperties props = new IndexProperties(referenceType, Settings);
 
 			List<IndexDataSource2> indexDataSources = new List<IndexDataSource2>();
             IndexDataSource2 indexDataSource2 = null;
-            bool isUpdateMessage = true;
 			int maxMessages = Settings.ReadInt("Max Records", 1000);
 
-			switch (referenceType)
+
+            ServiceMessages messages = ServiceBrokerUtils.ReadMessage(_loginUser.ConnectionString, props.QueueName, props.MessageKeyFieldName, maxMessages);
+            if (!messages.Any()) return;
+            /*
+
+            if (messages.Updates.Any())
             {
-                case ReferenceType.Tickets:
-                    indexPath = "\\Tickets";
-                    storedFields = "TicketID OrganizationID TicketNumber Name IsKnowledgeBase Status Severity DateModified DateCreated DateClosed SlaViolationDate SlaWarningDate";
-                    tableName = "Tickets";
-                    primaryKeyName = "TicketID";
-					string ticketsQueue = Settings.ReadString("TicketsBrokerQueue", "TicketIndexReceiverQ");
-					List<string> messages = ServiceBrokerUtils.ReadMessage(_loginUser.ConnectionString, ticketsQueue, maxMessages);
-                    isUpdateMessage = true;// need to integrate this into SB utils
-
-					if (!messages.Any()) return;
-
-					Dictionary<int, List<int>> orgTickets = new Dictionary<int, List<int>>();
-					orgTickets = ParseTicketMessage(messages);
-
-					if (isUpdateMessage)
-                    {
-						foreach(KeyValuePair<int, List<int>> orgTicketsList in orgTickets)
-						{
-							indexDataSource2 = new TicketIndexDataSource2(LoginUser, orgTicketsList.Key, tableName, orgTicketsList.Value.ToArray(), Logs);
-							indexDataSources.Add(indexDataSource2);
-						}
-					}
-                    break;
-                /*
-            case ReferenceType.Wikis:
-                indexPath = "\\Wikis";
-                storedFields = "OrganizationID Creator Modifier";
-                tableName = "WikiArticles";
-                primaryKeyName = "ArticleID";
-                indexDataSource = new WikiIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
-                break;
-            case ReferenceType.Notes:
-                indexPath = "\\Notes";
-                tableName = "Notes";
-                primaryKeyName = "NoteID";
-                indexDataSource = new NoteIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
-                break;
-            case ReferenceType.ProductVersions:
-                indexPath = "\\ProductVersions";
-                tableName = "ProductVersions";
-                primaryKeyName = "ProductVersionID";
-                indexDataSource = new ProductVersionIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
-                break;
-            case ReferenceType.WaterCooler:
-                indexPath = "\\WaterCooler";
-                tableName = "WatercoolerMsg";
-                primaryKeyName = "MessageID";
-                indexDataSource = new WaterCoolerIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
-                break;
-            case ReferenceType.Organizations:
-                indexPath = "\\Customers";
-                storedFields = "Name JSON";
-                tableName = "Organizations";
-                primaryKeyName = "OrganizationID";
-                indexDataSource = new CustomerIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
-                break;
-            case ReferenceType.Contacts:
-                indexPath = "\\Contacts";
-                storedFields = "Name JSON";
-                tableName = "Users";
-                primaryKeyName = "UserID";
-                indexDataSource = new ContactIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
-                break;
-            case ReferenceType.Assets:
-                indexPath = "\\Assets";
-                storedFields = "Name JSON";
-                tableName = "Assets";
-                primaryKeyName = "AssetID";
-                indexDataSource = new AssetIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
-                break;
-            case ReferenceType.Products:
-                indexPath = "\\Products";
-                storedFields = "Name JSON";
-                tableName = "Products";
-                primaryKeyName = "ProductID";
-                indexDataSource = new ProductIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
-                break;
-            case ReferenceType.Tasks:
-                indexPath = "\\Tasks";
-                storedFields = "Name JSON";
-                tableName = "Tasks";
-                primaryKeyName = "TaskID";
-                indexDataSource = new TaskIndexDataSource(LoginUser, maxRecords, organization.OrganizationID, tableName, isRebuilder, Logs);
-                break;
-                */
-                default:
-                    throw new System.ArgumentException("ReferenceType " + referenceType.ToString() + " is not supported by indexer.");
-            }
-
-			foreach(IndexDataSource2 indexDataSource in indexDataSources)
-			{
-				IndexWork(indexDataSource, tableName, storedFields, indexPath, referenceType, isUpdateMessage);
-			}
-        }
-
-        /*
-                private void RemoveOldIndexItems(LoginUser loginUser, string indexPath, Organization organization, ReferenceType referenceType, string deletedIndexItemsFileName)
+                foreach (KeyValuePair<int, List<int>> orgTicketsList in orgTickets)
                 {
-                    LogVerbose("Removing deleted items:  " + referenceType.ToString());
-                    if (!Directory.Exists(indexPath))
-                    {
-                        Logs.WriteEvent("Path does not exist:  " + indexPath);
-                        return;
-                    }
-                    DeletedIndexItems items = new DeletedIndexItems(loginUser);
-                    LogVerbose(string.Format("Retrieving deleted items:  RefType: {0}, OrgID: {1}", referenceType.ToString(), organization.OrganizationID.ToString()));
-                    items.LoadByReferenceType(referenceType, organization.OrganizationID);
-                    if (items.IsEmpty)
-                    {
-                        LogVerbose("No Items to delete");
-                        return;
-                    }
-
-
-                    StringBuilder builder = new StringBuilder();
-                    foreach (DeletedIndexItem item in items)
-                    {
-                        builder.AppendLine(item.RefID.ToString());
-                    }
-
-                    string fileName = Path.Combine(indexPath, deletedIndexItemsFileName);
-                    if (File.Exists(fileName)) File.Delete(fileName);
-                    using (StreamWriter writer = new StreamWriter(fileName))
-                    {
-                        LogVerbose("Adding IDs to delete file: " + builder.ToString());
-                        writer.Write(builder.ToString());
-                    }
-
-
-                    LogVerbose("Deleting Items");
-                    using (IndexJob job = new IndexJob())
-                    {
-                        job.IndexPath = indexPath;
-                        job.ActionCreate = false;
-                        job.ActionAdd = false;
-                        job.ActionRemoveListed = true;
-                        job.ToRemoveListName = fileName;
-                        job.CreateRelativePaths = false;
-                        job.Execute();
-                    }
-
-                    LogVerbose("Items deleted");
-                    UpdateHealth();
-                    items.DeleteAll();
-                    items.Save();
-                    LogVerbose("Finished Removing Old Indexes - OrgID = " + organization.OrganizationID + " - " + referenceType.ToString());
+                    indexDataSource2 = new TicketIndexDataSource2(LoginUser, orgTicketsList.Key, tableName, orgTicketsList.Value.ToArray(), Logs);
+                    indexDataSources.Add(indexDataSource2);
                 }
+            }
+            
 
-            */
+            foreach (IndexDataSource2 indexDataSource in indexDataSources)
+			{
+                UpdateIndex(indexDataSource, tableName, storedFields, indexPath, referenceType);
+			}*/
+        }
 
 
         private void LogVerbose(string message)
@@ -223,38 +88,7 @@ namespace TeamSupport.ServiceLibrary
 
         }
 
-		private Dictionary<int, List<int>> ParseTicketMessage(List<string> messages)
-		{
-			Dictionary<int, List<int>> orgTickets = new Dictionary<int, List<int>>();
-
-			foreach(string message in messages)
-			{
-				dynamic o = JsonConvert.DeserializeObject(message);
-
-				if (o == null || o.Count < 1) return null;
-
-				int organizationID = (int)o[0].OrganizationID;
-				int ticketID = (int)o[0].TicketID;
-
-				if (orgTickets.Where(p => p.Key == organizationID).Any())
-				{
-					List<int> tickets = orgTickets.Where(p => p.Key == organizationID).FirstOrDefault().Value;
-
-					if (!tickets.Where(p => p == ticketID).Any())
-					{
-						tickets.Add(ticketID);
-					}
-				}
-				else
-				{
-					orgTickets.Add(organizationID, new List<int>() { ticketID });
-				}
-			}
-
-            return orgTickets;
-        }
-
-		private void IndexWork(IndexDataSource2 indexDataSource, string tableName, string storedFields, string indexPath, ReferenceType referenceType, bool isUpdateMessage)
+		private void UpdateIndex(IndexDataSource2 indexDataSource, string tableName, string storedFields, string indexPath, ReferenceType referenceType)
 		{
 			int organizationID = indexDataSource.OrganizationID;
 
@@ -263,18 +97,10 @@ namespace TeamSupport.ServiceLibrary
 			string path = Path.Combine(Settings.ReadString("Tickets Index Path", "c:\\Indexes"), organizationID.ToString() + indexPath);
 			LogVerbose("Path: " + path);
 
+            // wait for lock
 			while (true)
 			{
-				if (IndexLocks.AquireLock(path))
-				{
-					break;
-				}
-				else
-				{
-					System.Threading.Thread.Sleep(1000);
-				}
-
-				// we may need to max out attempts and requeue the message
+				if (IndexLocks.AquireLock(path)) break; else System.Threading.Thread.Sleep(1000);
 			}
 
 			try
@@ -283,13 +109,6 @@ namespace TeamSupport.ServiceLibrary
 				if (isNew) Directory.CreateDirectory(path);
 				string noiseFile = Path.Combine(root, "noise.dat");
 				if (!File.Exists(noiseFile)) File.Create(noiseFile).Dispose();
-
-
-				if (!isUpdateMessage)
-				{
-					//                RemoveOldIndexItems(LoginUser, path, organization, referenceType, deletedIndexItemsFileName);
-					return;
-				}
 
 				Options options = new Options();
 				options.TextFlags = TextFlags.dtsoTfRecognizeDates;
@@ -359,9 +178,174 @@ namespace TeamSupport.ServiceLibrary
 
 			return doCompress;
 		}
-    }
+
+
+        private class IndexProperties
+        {
+            public string IndexPath { get; set; }
+            public string StoredFields { get; set; }
+            public string TableName { get; set; }
+            public string PrimaryKeyName { get; set; }
+            public string QueueName { get; set; }
+            public string MessageKeyFieldName { get; set; }
+
+            public IndexProperties(ReferenceType refType, Settings settings)
+            {
+                switch (refType)
+                {
+                    case ReferenceType.Tickets:
+                        IndexPath = "\\Tickets";
+                        StoredFields = "TicketID OrganizationID TicketNumber Name IsKnowledgeBase Status Severity DateModified DateCreated DateClosed SlaViolationDate SlaWarningDate";
+                        TableName = "Tickets";
+                        PrimaryKeyName = "TicketID";
+                        QueueName = settings.ReadString("TicketsBrokerQueue", "TicketIndexReceiverQ");
+                        MessageKeyFieldName = "TicketID";
+                        break;
+
+                    case ReferenceType.Wikis:
+                        IndexPath = "\\Wikis";
+                        StoredFields = "OrganizationID Creator Modifier";
+                        TableName = "WikiArticles";
+                        PrimaryKeyName = "ArticleID";
+                        QueueName = settings.ReadString("WikiIndexReceiverQ", "WikiIndexReceiverQ");
+                        MessageKeyFieldName = "ArticleID";
+                        break;
+                    case ReferenceType.Notes:
+                        IndexPath = "\\Notes";
+                        StoredFields = "";
+                        TableName = "Notes";
+                        PrimaryKeyName = "NoteID";
+                        QueueName = settings.ReadString("NoteIndexReceiverQ", "NoteIndexReceiverQ");
+                        MessageKeyFieldName = "NoteID";
+                        break;
+                    case ReferenceType.ProductVersions:
+                        IndexPath = "\\ProductVersions";
+                        StoredFields = "";
+                        TableName = "ProductVersions";
+                        PrimaryKeyName = "ProductVersionID";
+                        QueueName = settings.ReadString("ProductVersionIndexReceiverQ", "ProductVersionIndexReceiverQ");
+                        MessageKeyFieldName = "ProductVersionID";
+                        break;
+                    case ReferenceType.WaterCooler:
+                        IndexPath = "\\WaterCooler";
+                        StoredFields = "";
+                        TableName = "WatercoolerMsg";
+                        PrimaryKeyName = "MessageID";
+                        QueueName = settings.ReadString("WaterCoolerIndexReceiverQ", "WaterCoolerIndexReceiverQ");
+                        MessageKeyFieldName = "MessageID";
+                        break;
+                    case ReferenceType.Organizations:
+                        IndexPath = "\\Customers";
+                        StoredFields = "Name JSON";
+                        TableName = "Organizations";
+                        PrimaryKeyName = "OrganizationID";
+                        QueueName = settings.ReadString("CustomerIndexReceiverQ", "CustomerIndexReceiverQ");
+                        MessageKeyFieldName = "CustomerID";
+                        break;
+                    case ReferenceType.Contacts:
+                        IndexPath = "\\Contacts";
+                        StoredFields = "Name JSON";
+                        TableName = "Users";
+                        PrimaryKeyName = "UserID";
+                        QueueName = settings.ReadString("ContactIndexReceiverQ", "ContactIndexReceiverQ");
+                        MessageKeyFieldName = "UserID";
+                        break;
+                    case ReferenceType.Assets:
+                        IndexPath = "\\Assets";
+                        StoredFields = "Name JSON";
+                        TableName = "Assets";
+                        PrimaryKeyName = "AssetID";
+                        QueueName = settings.ReadString("AssetIndexReceiverQ", "AssetIndexReceiverQ");
+                        MessageKeyFieldName = "AssetID";
+                        break;
+                    case ReferenceType.Products:
+                        IndexPath = "\\Products";
+                        StoredFields = "Name JSON";
+                        TableName = "Products";
+                        PrimaryKeyName = "ProductID";
+                        QueueName = settings.ReadString("ProductIndexReceiverQ", "ProductIndexReceiverQ");
+                        MessageKeyFieldName = "ProductID";
+                        break;
+                    case ReferenceType.Tasks:
+                        IndexPath = "\\Tasks";
+                        StoredFields = "Name JSON";
+                        TableName = "Tasks";
+                        PrimaryKeyName = "TaskID";
+                        QueueName = settings.ReadString("TaskIndexReceiverQ", "TaskIndexReceiverQ");
+                        MessageKeyFieldName = "TaskID";
+                        break;
+
+                    default:
+                        throw new System.ArgumentException("ReferenceType " + refType.ToString() + " is not supported by indexer.");
+                }
+            }
+        }
+
+        /*
+                private void RemoveOldIndexItems(LoginUser loginUser, string indexPath, Organization organization, ReferenceType referenceType, string deletedIndexItemsFileName)
+                {
+                    LogVerbose("Removing deleted items:  " + referenceType.ToString());
+                    if (!Directory.Exists(indexPath))
+                    {
+                        Logs.WriteEvent("Path does not exist:  " + indexPath);
+                        return;
+                    }
+                    DeletedIndexItems items = new DeletedIndexItems(loginUser);
+                    LogVerbose(string.Format("Retrieving deleted items:  RefType: {0}, OrgID: {1}", referenceType.ToString(), organization.OrganizationID.ToString()));
+                    items.LoadByReferenceType(referenceType, organization.OrganizationID);
+                    if (items.IsEmpty)
+                    {
+                        LogVerbose("No Items to delete");
+                        return;
+                    }
+
+
+                    StringBuilder builder = new StringBuilder();
+                    foreach (DeletedIndexItem item in items)
+                    {
+                        builder.AppendLine(item.RefID.ToString());
+                    }
+
+                    string fileName = Path.Combine(indexPath, deletedIndexItemsFileName);
+                    if (File.Exists(fileName)) File.Delete(fileName);
+                    using (StreamWriter writer = new StreamWriter(fileName))
+                    {
+                        LogVerbose("Adding IDs to delete file: " + builder.ToString());
+                        writer.Write(builder.ToString());
+                    }
+
+
+                    LogVerbose("Deleting Items");
+                    using (IndexJob job = new IndexJob())
+                    {
+                        job.IndexPath = indexPath;
+                        job.ActionCreate = false;
+                        job.ActionAdd = false;
+                        job.ActionRemoveListed = true;
+                        job.ToRemoveListName = fileName;
+                        job.CreateRelativePaths = false;
+                        job.Execute();
+                    }
+
+                    LogVerbose("Items deleted");
+                    UpdateHealth();
+                    items.DeleteAll();
+                    items.Save();
+                    LogVerbose("Finished Removing Old Indexes - OrgID = " + organization.OrganizationID + " - " + referenceType.ToString());
+                }
+
+            */
 
 
 
 
-}
+                }
+
+
+
+
+
+
+
+
+            }

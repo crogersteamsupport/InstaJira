@@ -6,16 +6,54 @@ using System.Data.SqlClient;
 using System.Threading;
 using System.Data;
 using System.Transactions;
+using Newtonsoft.Json;
 
 
 namespace TeamSupport.ServiceLibrary
 {
+    public class ServiceMessages {
+        public Dictionary<int, List<int>> Updates { get; set; }
+        public Dictionary<int, List<int>> Deletes { get; set; }
+        public ServiceMessages() {
+            this.Updates = new Dictionary<int, List<int>>();
+            this.Deletes = new Dictionary<int, List<int>>();
+        }
+
+        public void Add(bool isUpdate, int organizationID, int itemID)
+        {
+            AddMessage(isUpdate ? Updates : Deletes, organizationID, itemID);
+        }
+        
+        private static void AddMessage(Dictionary<int, List<int>> d, int organizationID, int itemID)
+        {
+            if (d.Where(p => p.Key == organizationID).Any())
+            {
+                List<int> items = d.Where(p => p.Key == organizationID).FirstOrDefault().Value;
+
+                if (!items.Where(p => p == itemID).Any())
+                {
+                    items.Add(itemID);
+                }
+            }
+            else
+            {
+                d.Add(organizationID, new List<int>() { itemID });
+            }
+        }
+
+        public bool Any()
+        {
+            return Updates.Any() || Deletes.Any();
+        }
+    }
+
     public class ServiceBrokerUtils
     {
 
-        internal static List<byte[]> GetMessage(string queueName, SqlConnection con, TimeSpan timeout, int maxMessages = 1)
+        internal static ServiceMessages GetMessage(string queueName, SqlConnection con, TimeSpan timeout, string keyFieldName, int maxMessages = 1)
         {
 			List<byte[]> messages = new List<byte[]>();
+            ServiceMessages result = new ServiceMessages();
 
 			using (SqlDataReader r = GetMessageBatch(queueName, con, timeout, maxMessages))
             {
@@ -30,19 +68,32 @@ namespace TeamSupport.ServiceLibrary
 					if (messageType == "http://schemas.microsoft.com/SQL/ServiceBroker/EndDialog")
 					{
 						EndConversation(conversation_handle, con);
-						return null;
+                        break;
 					}
 
-					var body = r.GetSqlBinary(r.GetOrdinal("message_body"));
-					messages.Add((byte[])body);
-				}
+                    try
+                    {
+                        string body = Encoding.Unicode.GetString((byte[])r.GetSqlBinary(r.GetOrdinal("message_body")));
+                        dynamic o = JsonConvert.DeserializeObject(body);
+                        if (o == null || o.Count < 1) continue;
+                        result.Add(messageType == "UpdateIndex", (int)o[0].OrganizationID, (int)o[0][keyFieldName]);
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
             }
 
-			return messages;
+			return result;
 		}
 
-        public static List<string> ReadMessage(string connectionString, string queueName, int maxMessages = 1)
+       
+
+        public static ServiceMessages ReadMessage(string connectionString, string queueName, string keyFieldName, int maxMessages = 1)
         {
+            ServiceMessages result = null;
+
             List<string> messages = new List<string>();
             TransactionOptions to = new TransactionOptions();
             to.IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted;
@@ -57,21 +108,7 @@ namespace TeamSupport.ServiceLibrary
                 {
                     con.Open();
                     con.EnlistTransaction(tran);
-					List<byte[]> messagesBytes = ServiceBrokerUtils.GetMessage(queueName, con, TimeSpan.FromSeconds(10), maxMessages);
-
-					if (messagesBytes == null) //no messages available
-                    {
-                        tran.Commit();
-                        con.Close();
-                        return null;
-                    }
-					
-					foreach(byte[] messageBytes in messagesBytes)
-					{
-						string messageText = messageBytes != null ? Encoding.Unicode.GetString(messageBytes) : null;
-						messages.Add(messageText);
-					}
-
+					result = ServiceBrokerUtils.GetMessage(queueName, con, TimeSpan.FromSeconds(10), keyFieldName, maxMessages);
                     tran.Commit(); // the message processing succeeded or the FailedMessageProcessor ran so commit the RECEIVE
                     con.Close();
                 }
@@ -86,13 +123,14 @@ namespace TeamSupport.ServiceLibrary
             ///catch any other non-fatal exceptions that should not stop the listener loop.
             catch (Exception ex)
             {
+
                 System.Diagnostics.Trace.WriteLine("Unexpected Exception in Thread Proc for " + queueName + ".  Thread Proc is exiting: " + ex.Message);
                 tran.Rollback();
                 tran.Dispose();
                 return null;
             }
 
-            return messages;
+            return result;
         }
 
         internal static void EndConversation(Guid conversationHandle, SqlConnection con)
