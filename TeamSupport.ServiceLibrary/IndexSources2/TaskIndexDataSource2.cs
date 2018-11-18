@@ -9,14 +9,13 @@ using Newtonsoft.Json;
 namespace TeamSupport.ServiceLibrary
 {
     [Serializable]
-    class TaskIndexDataSource : IndexDataSource
+    class TaskIndexDataSource2 : IndexDataSource2
     {
-        protected TaskIndexDataSource() { }
-        public TaskIndexDataSource(LoginUser loginUser, int maxCount, int organizationID, string table, bool isRebuilding, Logs logs)
-          : base(loginUser, maxCount, organizationID, table, isRebuilding, logs)
+        protected TaskIndexDataSource2() { }
+        public TaskIndexDataSource2(LoginUser loginUser, int organizationID, string table, int[] idList, Logs logs)
+            : base(loginUser, organizationID, table, idList, logs)
         {
         }
-
         override protected void GetNextRecord()
         {
             TasksViewItem task = TasksView.GetTasksViewItem(_loginUser, _itemIDList[_rowIndex]);
@@ -63,14 +62,6 @@ namespace TeamSupport.ServiceLibrary
             }
         }
 
-        override protected void LoadData()
-        {
-            Tasks tasks = new Tasks(_loginUser);
-            tasks.LoadForIndexing(_organizationID, _maxCount, _isRebuilding);
-            foreach (Task task in tasks)
-            {
-                _itemIDList.Add(task.TaskID);
-            }
-        }
+
     }
 }

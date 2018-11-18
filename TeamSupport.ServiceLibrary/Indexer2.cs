@@ -51,15 +51,8 @@ namespace TeamSupport.ServiceLibrary
         {
             if (IsStopped) return;
             IndexProperties props = new IndexProperties(referenceType, Settings);
-
-			List<IndexDataSource2> indexDataSources = new List<IndexDataSource2>();
-            IndexDataSource2 indexDataSource2 = null;
 			int maxMessages = Settings.ReadInt("Max Records", 1000);
-
-
             ServiceMessages messages = ServiceBrokerUtils.ReadMessage(_loginUser.ConnectionString, props.QueueName, props.MessageKeyFieldName, maxMessages);
-            if (!messages.Any()) return;
-            /*
 
             if (messages.Updates.Any())
             {
@@ -69,6 +62,8 @@ namespace TeamSupport.ServiceLibrary
                     indexDataSources.Add(indexDataSource2);
                 }
             }
+
+
             
 
             foreach (IndexDataSource2 indexDataSource in indexDataSources)

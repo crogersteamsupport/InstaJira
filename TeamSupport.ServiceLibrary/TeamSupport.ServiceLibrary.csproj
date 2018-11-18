@@ -264,10 +264,9 @@
     <Compile Include="IndexSources2\AssetIndexDataSource2.cs" />
     <Compile Include="IndexSources2\ContactIndexDataSource2.cs" />
     <Compile Include="IndexSources2\CustomerIndexDataSource2.cs" />
-    <Compile Include="IndexSources2\IndexDataSource.cs" />
     <Compile Include="IndexSources2\IndexDataSource2.cs" />
-    <Compile Include="IndexSources2\NoteIndexDataSource.cs" />
-    <Compile Include="IndexSources2\ProductIndexDataSource.cs" />
+    <Compile Include="IndexSources2\NoteIndexDataSource2.cs" />
+    <Compile Include="IndexSources2\ProductIndexDataSource2.cs" />
     <Compile Include="IndexSources2\ProductVersionIndexDataSource.cs" />
     <Compile Include="IndexSources2\TaskIndexDataSource.cs" />
     <Compile Include="IndexSources2\TicketIndexDataSource2.cs" />

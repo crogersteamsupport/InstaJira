@@ -8,10 +8,10 @@ using Newtonsoft.Json;
 
 namespace TeamSupport.ServiceLibrary
 {
-  [Serializable]
-  class ContactIndexDataSource2 : IndexDataSource2
-  {
-    protected ContactIndexDataSource2() { }
+    [Serializable]
+    class ContactIndexDataSource2 : IndexDataSource2
+    {
+        protected ContactIndexDataSource2() { }
 
         public ContactIndexDataSource2(LoginUser loginUser, int organizationID, string table, int[] idList, Logs logs)
 : base(loginUser, organizationID, table, idList, logs)
@@ -19,92 +19,92 @@ namespace TeamSupport.ServiceLibrary
         }
 
         protected override void GetNextRecord()
-    {
-      ContactsViewItem contact = ContactsView.GetContactsViewItem(_loginUser, _itemIDList[_rowIndex]);
-      _lastItemID = contact.UserID;
-      UpdatedItems.Add((int)_lastItemID);
+        {
+            ContactsViewItem contact = ContactsView.GetContactsViewItem(_loginUser, _itemIDList[_rowIndex]);
+            _lastItemID = contact.UserID;
+            UpdatedItems.Add((int)_lastItemID);
 
-      List<CustomerSearchPhone> phones = new List<CustomerSearchPhone>();
-      StringBuilder builder = new StringBuilder();
-      if (!string.IsNullOrWhiteSpace(contact.Email)) builder.AppendLine(Regex.Replace(contact.Email, "[,.]+", ""));
-      PhoneNumbers phoneNumbers = new PhoneNumbers(_loginUser);
-      phoneNumbers.LoadByID(contact.UserID, ReferenceType.Users);
-      foreach (PhoneNumber number in phoneNumbers)
-      {
-        phones.Add(new CustomerSearchPhone(number));
-        builder.AppendLine(Regex.Replace(number.Number, "[^0-9]", ""));
-      }
+            List<CustomerSearchPhone> phones = new List<CustomerSearchPhone>();
+            StringBuilder builder = new StringBuilder();
+            if (!string.IsNullOrWhiteSpace(contact.Email)) builder.AppendLine(Regex.Replace(contact.Email, "[,.]+", ""));
+            PhoneNumbers phoneNumbers = new PhoneNumbers(_loginUser);
+            phoneNumbers.LoadByID(contact.UserID, ReferenceType.Users);
+            foreach (PhoneNumber number in phoneNumbers)
+            {
+                phones.Add(new CustomerSearchPhone(number));
+                builder.AppendLine(Regex.Replace(number.Number, "[^0-9]", ""));
+            }
 
-      Addresses addresses = new Addresses(_loginUser);
-      addresses.LoadByID(contact.UserID, ReferenceType.Users);
-      foreach (Address address in addresses)
-      {
-        builder.AppendLine(address.Description
-        + " " + address.Addr1
-        + " " + address.Addr2
-        + " " + address.Addr3
-        + " " + address.City
-        + " " + address.State
-        + " " + address.Zip
-        + " " + address.Country);
-      }
+            Addresses addresses = new Addresses(_loginUser);
+            addresses.LoadByID(contact.UserID, ReferenceType.Users);
+            foreach (Address address in addresses)
+            {
+                builder.AppendLine(address.Description
+                + " " + address.Addr1
+                + " " + address.Addr2
+                + " " + address.Addr3
+                + " " + address.City
+                + " " + address.State
+                + " " + address.Zip
+                + " " + address.Country);
+            }
 
-      EmailAddresses emailAddresses = new EmailAddresses(_loginUser);
-      emailAddresses.LoadByRefID(contact.UserID, ReferenceType.Users);
-      foreach (EmailAddress emailAddress in emailAddresses)
-      {
-        builder.AppendLine(Regex.Replace(emailAddress.Email, "[,.]+", ""));
-      }
+            EmailAddresses emailAddresses = new EmailAddresses(_loginUser);
+            emailAddresses.LoadByRefID(contact.UserID, ReferenceType.Users);
+            foreach (EmailAddress emailAddress in emailAddresses)
+            {
+                builder.AppendLine(Regex.Replace(emailAddress.Email, "[,.]+", ""));
+            }
 
-      _docFields.Clear();
-      AddDocField("UserID", contact.UserID);
-      AddDocField("OrganizationID", contact.OrganizationID);
-      AddDocField("Organization", contact.Organization);
-      AddDocField("Email", contact.Email);
-      AddDocField("IsActive", contact.IsActive);
-        
-      if (string.IsNullOrWhiteSpace(contact.FirstName))
-      {
-        AddDocField("Name", contact.LastName);
-        DocDisplayName = string.IsNullOrWhiteSpace(contact.FirstName) ? "" : contact.FirstName.Trim();
-      }
-      else
-      {
-        AddDocField("Name", contact.FirstName + " " + contact.LastName);
-        DocDisplayName = contact.LastName.Trim() + (string.IsNullOrWhiteSpace(contact.FirstName) ? "" : ", " + contact.FirstName.Trim());
-      }
+            _docFields.Clear();
+            AddDocField("UserID", contact.UserID);
+            AddDocField("OrganizationID", contact.OrganizationID);
+            AddDocField("Organization", contact.Organization);
+            AddDocField("Email", contact.Email);
+            AddDocField("IsActive", contact.IsActive);
 
-      builder.AppendLine(Regex.Replace(DocDisplayName, "[^a-zA-Z0-9 -]", ""));
-      builder.AppendLine(Regex.Replace(contact.Organization, "[^a-zA-Z0-9 -]", ""));
+            if (string.IsNullOrWhiteSpace(contact.FirstName))
+            {
+                AddDocField("Name", contact.LastName);
+                DocDisplayName = string.IsNullOrWhiteSpace(contact.FirstName) ? "" : contact.FirstName.Trim();
+            }
+            else
+            {
+                AddDocField("Name", contact.FirstName + " " + contact.LastName);
+                DocDisplayName = contact.LastName.Trim() + (string.IsNullOrWhiteSpace(contact.FirstName) ? "" : ", " + contact.FirstName.Trim());
+            }
 
-      DocText = builder.ToString();
+            builder.AppendLine(Regex.Replace(DocDisplayName, "[^a-zA-Z0-9 -]", ""));
+            builder.AppendLine(Regex.Replace(contact.Organization, "[^a-zA-Z0-9 -]", ""));
 
-      CustomerSearchContact contactItem = new CustomerSearchContact(contact);
-      contactItem.phones = phones.ToArray();
-      TicketsView tickets = new TicketsView(_loginUser);
-      contactItem.openTicketCount = tickets.GetUserTicketCount(contact.UserID, 0);
-        
-      AddDocField("**JSON", JsonConvert.SerializeObject(contactItem));
+            DocText = builder.ToString();
 
-      CustomValues customValues = new CustomValues(_loginUser);
-      customValues.LoadByReferenceType(_organizationID, ReferenceType.Contacts, contact.UserID);
-        
-      foreach (CustomValue value in customValues)
-      {
-        object o = value.Row["CustomValue"];
-        string s = o == null || o == DBNull.Value ? "" : o.ToString();
-        AddDocField(value.Row["Name"].ToString(), s);
-      }
+            CustomerSearchContact contactItem = new CustomerSearchContact(contact);
+            contactItem.phones = phones.ToArray();
+            TicketsView tickets = new TicketsView(_loginUser);
+            contactItem.openTicketCount = tickets.GetUserTicketCount(contact.UserID, 0);
 
-      DocFields = _docFields.ToString();
-      DocIsFile = false;
-      DocName = contact.UserID.ToString();
-      DocCreatedDate = (DateTime)contact.Row["DateCreated"];
-      DocModifiedDate = (DateTime)contact.Row["DateModified"];
+            AddDocField("**JSON", JsonConvert.SerializeObject(contactItem));
+
+            CustomValues customValues = new CustomValues(_loginUser);
+            customValues.LoadByReferenceType(_organizationID, ReferenceType.Contacts, contact.UserID);
+
+            foreach (CustomValue value in customValues)
+            {
+                object o = value.Row["CustomValue"];
+                string s = o == null || o == DBNull.Value ? "" : o.ToString();
+                AddDocField(value.Row["Name"].ToString(), s);
+            }
+
+            DocFields = _docFields.ToString();
+            DocIsFile = false;
+            DocName = contact.UserID.ToString();
+            DocCreatedDate = (DateTime)contact.Row["DateCreated"];
+            DocModifiedDate = (DateTime)contact.Row["DateModified"];
+        }
+
+
     }
-
- 
-  }
 
 
 
