@@ -235,7 +235,6 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
         private void AddReportTicketsViewTempTable(SqlCommand command)
         {
-
             if (!_summaryReportSql.IsOrganizationID ||   // not Parent organizationID report
                 (_report.ReportDefType == ReportType.Custom) ||   // not a custom report
                 !ReportTicketsViewTempTable.Enable)

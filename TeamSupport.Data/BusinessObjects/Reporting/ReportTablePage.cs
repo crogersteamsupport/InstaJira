@@ -338,7 +338,7 @@ WHERE RowNum BETWEEN @From AND @To";
         {
             if (!_tabularReportSql.IsOrganizationID ||   // not Parent organizationID report
                 (_report.ReportDefType == ReportType.Custom))   // not a custom report
-                throw new Exception("optimization not supported on report type");
+                return;
 
             if (!ReportTicketsViewTempTable.Enable)
                 return;
