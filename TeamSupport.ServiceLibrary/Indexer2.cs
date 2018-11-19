@@ -50,7 +50,7 @@ namespace TeamSupport.ServiceLibrary
             IndexProperties props = new IndexProperties(referenceType, Settings);
             int maxMessages = Settings.ReadInt("Max Records", 1000);
             ServiceMessages messages = ServiceBrokerUtils.ReadMessage(_loginUser.ConnectionString, props.QueueName, props.MessageKeyFieldName, Logs, maxMessages);
-
+            if (messages == null) return;
             if (messages.Updates.Any())
             {
                 foreach (KeyValuePair<int, List<int>> item in messages.Updates)
