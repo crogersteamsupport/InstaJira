@@ -7,6 +7,7 @@ using System.Threading;
 using System.Data;
 using System.Transactions;
 using Newtonsoft.Json;
+using TeamSupport.Data;
 
 
 namespace TeamSupport.ServiceLibrary
@@ -50,7 +51,7 @@ namespace TeamSupport.ServiceLibrary
     public class ServiceBrokerUtils
     {
 
-        internal static ServiceMessages GetMessage(string queueName, SqlConnection con, TimeSpan timeout, string keyFieldName, int maxMessages = 1)
+        internal static ServiceMessages GetMessage(string queueName, SqlConnection con, TimeSpan timeout, string keyFieldName, Logs logs, int maxMessages = 1)
         {
 			List<byte[]> messages = new List<byte[]>();
             ServiceMessages result = new ServiceMessages();
@@ -70,17 +71,19 @@ namespace TeamSupport.ServiceLibrary
 						EndConversation(conversation_handle, con);
                         break;
 					}
+                    string body = "";
 
                     try
                     {
-                        string body = Encoding.Unicode.GetString((byte[])r.GetSqlBinary(r.GetOrdinal("message_body")));
+                        body = Encoding.Unicode.GetString((byte[])r.GetSqlBinary(r.GetOrdinal("message_body")));
                         dynamic o = JsonConvert.DeserializeObject(body);
                         if (o == null || o.Count < 1) continue;
                         result.Add(messageType == "UpdateIndex", (int)o[0].OrganizationID, (int)o[0][keyFieldName]);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        throw;
+                        logs.WriteEvent("Body: " + body);
+                        logs.WriteException(ex);
                     }
                 }
             }
@@ -88,9 +91,7 @@ namespace TeamSupport.ServiceLibrary
 			return result;
 		}
 
-       
-
-        public static ServiceMessages ReadMessage(string connectionString, string queueName, string keyFieldName, int maxMessages = 1)
+        public static ServiceMessages ReadMessage(string connectionString, string queueName, string keyFieldName, Logs logs, int maxMessages = 1)
         {
             ServiceMessages result = null;
 
@@ -108,7 +109,7 @@ namespace TeamSupport.ServiceLibrary
                 {
                     con.Open();
                     con.EnlistTransaction(tran);
-					result = ServiceBrokerUtils.GetMessage(queueName, con, TimeSpan.FromSeconds(10), keyFieldName, maxMessages);
+					result = ServiceBrokerUtils.GetMessage(queueName, con, TimeSpan.FromSeconds(10), keyFieldName, logs, maxMessages);
                     tran.Commit(); // the message processing succeeded or the FailedMessageProcessor ran so commit the RECEIVE
                     con.Close();
                 }

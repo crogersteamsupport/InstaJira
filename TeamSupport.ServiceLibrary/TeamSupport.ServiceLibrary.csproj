@@ -267,11 +267,11 @@
     <Compile Include="IndexSources2\IndexDataSource2.cs" />
     <Compile Include="IndexSources2\NoteIndexDataSource2.cs" />
     <Compile Include="IndexSources2\ProductIndexDataSource2.cs" />
-    <Compile Include="IndexSources2\ProductVersionIndexDataSource.cs" />
-    <Compile Include="IndexSources2\TaskIndexDataSource.cs" />
+    <Compile Include="IndexSources2\ProductVersionIndexDataSource2.cs" />
+    <Compile Include="IndexSources2\TaskIndexDataSource2.cs" />
     <Compile Include="IndexSources2\TicketIndexDataSource2.cs" />
-    <Compile Include="IndexSources2\WaterCoolerIndexDataSource.cs" />
-    <Compile Include="IndexSources2\WikiIndexDataSource.cs" />
+    <Compile Include="IndexSources2\WaterCoolerIndexDataSource2.cs" />
+    <Compile Include="IndexSources2\WikiIndexDataSource2.cs" />
     <Compile Include="IndexSources\AssetIndexDataSource.cs" />
     <Compile Include="ImportProcessor.cs" />
     <Compile Include="IndexSources\TaskIndexDataSource.cs" />
