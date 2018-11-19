@@ -27,6 +27,8 @@ namespace TeamSupport.ServiceLibrary
         
         private static void AddMessage(Dictionary<int, List<int>> d, int organizationID, int itemID)
         {
+
+
             if (d.Where(p => p.Key == organizationID).Any())
             {
                 List<int> items = d.Where(p => p.Key == organizationID).FirstOrDefault().Value;
@@ -78,7 +80,10 @@ namespace TeamSupport.ServiceLibrary
                         body = Encoding.Unicode.GetString((byte[])r.GetSqlBinary(r.GetOrdinal("message_body")));
                         dynamic o = JsonConvert.DeserializeObject(body);
                         if (o == null || o.Count < 1) continue;
-                        result.Add(messageType == "UpdateIndex", (int)o[0].OrganizationID, (int)o[0][keyFieldName]);
+                        for (int i = 0; i < o.Count; i++)
+                        {
+                            result.Add(messageType == "UpdateIndex", (int)o[i].OrganizationID, (int)o[i][keyFieldName]);
+                        }
                     }
                     catch (Exception ex)
                     {
