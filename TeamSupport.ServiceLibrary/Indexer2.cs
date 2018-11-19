@@ -56,7 +56,7 @@ namespace TeamSupport.ServiceLibrary
                 foreach (KeyValuePair<int, List<int>> item in messages.Updates)
                 {
                     UpdateHealth();
-
+                    LogVerbose("Updating: " + item.Value.ToString());
                     IndexDataSource2 source = GetIndexDataSource(referenceType, item.Key, props, item.Value.ToArray());
                     UpdateIndex(source, props.TableName, props.StoredFields, props.IndexPath, referenceType);
                 }
@@ -179,40 +179,54 @@ namespace TeamSupport.ServiceLibrary
         {
             string path = Path.Combine(Settings.ReadString("Tickets Index Path", "c:\\Indexes"), orgID.ToString() + indexPath);
 
-            LogVerbose("Removing deleted items:  " + path);
-            if (!Directory.Exists(path))
+            // wait for lock
+            while (true)
             {
-                Logs.WriteEvent("Path does not exist:  " + path);
-                return;
+                if (IndexLocks.AquireLock(path)) break; else System.Threading.Thread.Sleep(1000);
             }
 
-            StringBuilder builder = new StringBuilder();
-            foreach (int id in ids)
+            try
             {
-                builder.AppendLine(id.ToString());
+                LogVerbose("Removing deleted items:  " + path);
+                if (!Directory.Exists(path))
+                {
+                    Logs.WriteEvent("Path does not exist:  " + path);
+                    return;
+                }
+
+                StringBuilder builder = new StringBuilder();
+                foreach (int id in ids)
+                {
+                    builder.AppendLine(id.ToString());
+                }
+
+                string fileName = Path.Combine(path, "delete.txt");
+                if (File.Exists(fileName)) File.Delete(fileName);
+                using (StreamWriter writer = new StreamWriter(fileName))
+                {
+                    LogVerbose("Adding IDs to delete file: " + builder.ToString());
+                    writer.Write(builder.ToString());
+                }
+
+                LogVerbose("Deleting Items");
+                using (IndexJob job = new IndexJob())
+                {
+                    job.IndexPath = path;
+                    job.ActionCreate = false;
+                    job.ActionAdd = false;
+                    job.ActionRemoveListed = true;
+                    job.ToRemoveListName = fileName;
+                    job.CreateRelativePaths = false;
+                    job.Execute();
+                }
+
+                LogVerbose("Items deleted");
+            }
+            finally
+            {
+                IndexLocks.ReleaseLock(path);
             }
 
-            string fileName = Path.Combine(path, "delete.txt");
-            if (File.Exists(fileName)) File.Delete(fileName);
-            using (StreamWriter writer = new StreamWriter(fileName))
-            {
-                LogVerbose("Adding IDs to delete file: " + builder.ToString());
-                writer.Write(builder.ToString());
-            }
-
-            LogVerbose("Deleting Items");
-            using (IndexJob job = new IndexJob())
-            {
-                job.IndexPath = path;
-                job.ActionCreate = false;
-                job.ActionAdd = false;
-                job.ActionRemoveListed = true;
-                job.ToRemoveListName = fileName;
-                job.CreateRelativePaths = false;
-                job.Execute();
-            }
-
-            LogVerbose("Items deleted");
         }
 
         private bool IsCompress(string path)

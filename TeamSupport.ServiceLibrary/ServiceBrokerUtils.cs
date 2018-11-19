@@ -87,7 +87,7 @@ namespace TeamSupport.ServiceLibrary
                     }
                     catch (Exception ex)
                     {
-                        logs.WriteEvent("Body: " + body);
+                        logs.WriteEvent($"body: {body}; queueName: {queueName}; keyFieldName: {keyFieldName}");
                         logs.WriteException(ex);
                     }
                 }
