@@ -131,8 +131,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
             // filter fields (WHERE, ORDER BY...)
             foreach (ReportFilter filter in tabularReport.Filters)
-                foreach (ReportFilterCondition condition in filter.Conditions)
-                    Add(condition.FieldID);
+                AddFields(filter);
 
             if (_fields.Count > 0)  // include TicketID and OrganizationID
             {
