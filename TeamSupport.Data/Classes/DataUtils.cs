@@ -2253,8 +2253,23 @@ namespace TeamSupport.Data
 
                             for (int j = 0; j < filterValues.Count; j++)
                             {
-                                if (j > 0)
+								bool isBetween = filterOperator.ToString().Trim().ToUpper() == "BETWEEN";
+
+								//If is a BETWEEN filter statement we must have only two values, if not then add a 1=1 (due to the already appended 'AND' of a few lines above)
+								if (isBetween && filterValues.Count != 2)
+								{
+									result.Append(" 1=1 ");
+									break;
+								}
+
+								if (j > 0 && !isBetween)
+								{
                                     result.Append(" OR ");
+								}
+								else if (j > 0 && isBetween)
+								{
+									result.Append(" AND ");
+								}
 
                                 if (filterValues[j] == null)
                                 {
@@ -2272,7 +2287,14 @@ namespace TeamSupport.Data
                                     if (j > 0)
                                         parameterIndex = j.ToString();
 
-                                    result.Append(filterFieldName + " " + filterOperator + " @" + filterFieldName + parameterIndex);
+									if (!isBetween || (isBetween && j == 0))
+									{
+										result.Append(filterFieldName + " " + filterOperator + " @" + filterFieldName + parameterIndex);
+									}
+									else if (isBetween && j >0)
+									{
+										result.Append(" @" + filterFieldName + parameterIndex);
+									}
 
                                     if (hasSize)
                                     {
@@ -2467,12 +2489,19 @@ namespace TeamSupport.Data
 
                             filterValues.Add(filterValue.ToString());
 
+							if (i > 0)
+								filterValues.Sort();
+
                             if (i == 0)
                             {
                                 if (rawOperator == "lt")
                                 {
                                     result.Append("<");
                                 }
+								else if (rawOperator == "bt")
+								{
+									result.Append("BETWEEN");
+								}
                                 else
                                 {
                                     result.Append(">");

@@ -152,9 +152,7 @@ namespace TeamSupport.ServiceLibrary
 
             DataTable dataTable = GetReportTableAll(scheduledReportCreator, report, "", false, true, false);
             ReportItem reportItem = new ReportItem(report, true);
-            SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(report.ReportDef);
-            DataTable table = Reports.GetSummaryData(scheduledReportCreator, summaryReport, true, report);
-            string reportData = Reports.BuildChartData(scheduledReportCreator, table, summaryReport);
+            string reportData = TeamSupport.Data.BusinessObjects.Reporting.SummaryReportSql.GetHubChartData(scheduledReportCreator, report);
             string optionsFileData = GetChartOptionsAndData(report.ReportDef, reportData);
 
             string optionsFile = string.Format("{0}_{1}.js", scheduledReport.Id, scheduledReport.ReportId);

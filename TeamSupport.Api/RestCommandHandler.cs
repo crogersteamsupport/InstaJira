@@ -111,7 +111,11 @@ namespace TeamSupport.Api
                 catch (Exception ex)
                 {
                     ExceptionLogs.LogException(_loginUser, ex, "API", string.Format("OrgID: {0}{1}Verb: {2}{1}Url: {3}{1}Body: {4}", log.OrganizationID, Environment.NewLine, log.Verb, log.Url, log.RequestBody));
-                    if (!(ex is RestException))
+					if (ex is System.Data.SqlClient.SqlException && ex.Message.ToLower().Contains("variable names must be unique within a query batch or stored procedure"))
+					{
+						throw new RestException(HttpStatusCode.Unused, "{ Error: 'Filters can't be duplicated' }", ex);
+					}
+					else if (!(ex is RestException))
                     {
                         throw new RestException(HttpStatusCode.InternalServerError, "Internal Server Error: " + ex.Message + ex.StackTrace, ex);
                     }

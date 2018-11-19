@@ -97,12 +97,7 @@ namespace TeamSupport.Handlers
 
     private static string GetReportChartData(JObject args)
     {
-      LoginUser loginUser = TSAuthentication.GetLoginUser();
-      Report report = Reports.GetReport(loginUser, GetIntFromArgs(args["reportID"]), TSAuthentication.UserID);
-      Reports.UpdateReportView(loginUser, report.ReportID);
-      SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(report.ReportDef);
-      DataTable table = Reports.GetSummaryData(TSAuthentication.GetLoginUser(), summaryReport, true, report);
-      return Reports.BuildChartData(loginUser, table, summaryReport);
+      return TeamSupport.Data.BusinessObjects.Reporting.SummaryReportSql.GetReportChartData(TSAuthentication.GetLoginUser(), GetIntFromArgs(args["reportID"]));
     }
 
     private static int GetIntFromArgs(JToken arg)

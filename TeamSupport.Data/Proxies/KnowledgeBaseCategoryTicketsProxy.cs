@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 namespace TeamSupport.Data
 {
   [DataContract(Namespace = "http://teamsupport.com/")]
-  [KnownType(typeof(ActionLogProxy))]
+  [KnownType(typeof(KnowledgeBaseCategoryTicketsProxy))]
   public class KnowledgeBaseCategoryTicketsProxy
   {
     [DataMember]

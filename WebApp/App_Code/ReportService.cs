@@ -36,19 +36,13 @@ namespace TSWebServices
         [WebMethod]
         public string GetChartReportData(int reportID)
         {
-            Report report = Reports.GetReport(TSAuthentication.GetLoginUser(), reportID, TSAuthentication.UserID);
-            Reports.UpdateReportView(TSAuthentication.GetLoginUser(), report.ReportID);
-            SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(report.ReportDef);
-            DataTable table = Reports.GetSummaryData(TSAuthentication.GetLoginUser(), summaryReport, true, report);
-            return Reports.BuildChartData(TSAuthentication.GetLoginUser(), table, summaryReport);
+            return TeamSupport.Data.BusinessObjects.Reporting.SummaryReportSql.GetChartReportData(TSAuthentication.GetLoginUser(), reportID);
         }
 
         [WebMethod]
         public string GetChartData(string summaryReportFields)
         {
-            SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(summaryReportFields);
-            DataTable table = Reports.GetSummaryData(TSAuthentication.GetLoginUser(), summaryReport, true);
-            return Reports.BuildChartData(TSAuthentication.GetLoginUser(), table, summaryReport);
+            return TeamSupport.Data.BusinessObjects.Reporting.SummaryReportSql.GetChartData(TSAuthentication.GetLoginUser(), summaryReportFields);
         }
 
         [WebMethod]

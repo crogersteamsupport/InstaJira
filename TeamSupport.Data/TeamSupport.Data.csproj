@@ -307,6 +307,10 @@
     <Compile Include="BusinessObjects\Reminders.cs" />
     <Compile Include="BusinessObjects\ReportEmails.cs" />
     <Compile Include="BusinessObjects\ReportFolders.cs" />
+    <Compile Include="BusinessObjects\Reporting\CustomReportSql.cs" />
+    <Compile Include="BusinessObjects\Reporting\SummaryReportSql.cs" />
+    <Compile Include="BusinessObjects\Reporting\TabularReportSql.cs" />
+    <Compile Include="BusinessObjects\Reporting\UserRights.cs" />
     <Compile Include="BusinessObjects\ReportTicketsView.cs" />
     <Compile Include="BusinessObjects\ReportViews.cs" />
     <Compile Include="BusinessObjects\ScheduledReports.cs" />

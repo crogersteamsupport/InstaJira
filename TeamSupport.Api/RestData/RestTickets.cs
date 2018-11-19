@@ -126,9 +126,16 @@ namespace TeamSupport.Api
                         }
                         catch (Exception ex)
                         {
+							if (ex is System.Data.SqlClient.SqlException && ex.Message.ToLower().Contains("variable names must be unique within a query batch or stored procedure"))
+							{
+								throw ex;
+							}
+							else
+							{
                             //if something fails use the old method
                             tickets.LoadByTicketTypeID(ticketType.TicketTypeID);
                             ExceptionLogs.LogException(command.LoginUser, ex, "API", "RestTickets. GetTickets(). No Paging. No TicketTypeId filter. SQL filtering generation failed, fell into old method.");
+                        }
                         }
 
                         foreach (DataRow row in tickets.Table.Rows)
