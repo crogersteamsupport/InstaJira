@@ -1180,12 +1180,12 @@ namespace TeamSupport.Data
             if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
             {
                 ReportSummaryAll reportTableAll = new ReportSummaryAll(loginUser, this);
-                return reportTableAll.GetReportDataAll(sortField, isDesc, useUserFilter);
+                return reportTableAll.GetReportData(sortField, isDesc, useUserFilter);
             }
             else
             {
                 ReportTablePage reportTablePage = new ReportTablePage(loginUser, this);
-                return reportTablePage.GetReportDataPage(from, to, sortField, isDesc, useUserFilter);
+                return reportTablePage.GetReportData(from, to, sortField, isDesc, useUserFilter);
             }
         }
 
@@ -1196,12 +1196,12 @@ namespace TeamSupport.Data
             if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
             {
                 ReportSummaryAll reportTableAll = new ReportSummaryAll(loginUser, this);
-                return reportTableAll.GetReportTableAll(sortField, isDesc, useUserFilter, includeHiddenFields);
+                return reportTableAll.GetReportTable(sortField, isDesc, useUserFilter, includeHiddenFields);
             }
             else
             {
                 ReportTablePage reportTablePage = new ReportTablePage(loginUser, this);
-                return reportTablePage.GetReportTablePage(from, to, sortField, isDesc, useUserFilter, includeHiddenFields);
+                return reportTablePage.GetReportTable(from, to, sortField, isDesc, useUserFilter, includeHiddenFields);
             }
         }
 
@@ -1213,12 +1213,12 @@ namespace TeamSupport.Data
             if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
             {
                 ReportSummaryAll reportTableAll = new ReportSummaryAll(loginUser, this);
-                return reportTableAll.GetReportTableAllForExports(sortField, isDesc, useUserFilter, includeHiddenFields);
+                return reportTableAll.GetReportTableForExports(sortField, isDesc, useUserFilter, includeHiddenFields);
             }
             else
             {
                 ReportTablePage reportTablePage = new ReportTablePage(loginUser, this);
-                return reportTablePage.GetReportTablePageForExports(sortField, isDesc, useUserFilter, includeHiddenFields);
+                return reportTablePage.GetReportTableForExports(sortField, isDesc, useUserFilter, includeHiddenFields);
             }
         }
 

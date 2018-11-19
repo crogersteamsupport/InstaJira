@@ -56,7 +56,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             return result;
         }
 
-        public GridResult GetReportDataAll(string sortField, bool isDesc, bool useUserFilter)
+        private GridResult GetReportDataAll(string sortField, bool isDesc, bool useUserFilter)
         {
             DataTable table = GetReportTableAll(sortField, isDesc, useUserFilter, true);
 
@@ -133,7 +133,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             return result;
         }
 
-        public DataTable GetReportTableAll(string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        private DataTable GetReportTableAll(string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
             SqlCommand command = GetSqlCommand(ref sortField, ref isDesc, useUserFilter, includeHiddenFields);
 
@@ -183,7 +183,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             return command;
         }
 
-        public DataTable GetReportTableAllForExports(string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        private DataTable GetReportTableAllForExports(string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
             SqlCommand command = GetExportsSqlCommand(ref sortField, ref isDesc, useUserFilter, includeHiddenFields);
 

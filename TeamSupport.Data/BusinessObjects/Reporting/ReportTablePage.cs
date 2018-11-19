@@ -121,7 +121,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             return result;
         }
 
-        public GridResult GetReportDataPage(int from, int to, string sortField, bool isDesc, bool useUserFilter)
+        private GridResult GetReportDataPage(int from, int to, string sortField, bool isDesc, bool useUserFilter)
         {
             DataTable table = GetReportTablePage(from, to, sortField, isDesc, useUserFilter, true);
             GridResult result = new GridResult();
@@ -147,7 +147,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             return result;
         }
 
-        public DataTable GetReportTablePage(int from, int to, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        private DataTable GetReportTablePage(int from, int to, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
             from++;
             to++;
@@ -253,7 +253,7 @@ WHERE RowNum BETWEEN @From AND @To";
         }
 
         //For Exports
-        public DataTable GetReportTablePageForExports(string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        private DataTable GetReportTablePageForExports(string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
             SqlCommand command = GetExportsSqlCommand(ref sortField, ref isDesc, useUserFilter, includeHiddenFields);
 
