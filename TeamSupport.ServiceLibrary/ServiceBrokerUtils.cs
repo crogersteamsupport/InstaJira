@@ -96,7 +96,7 @@ namespace TeamSupport.ServiceLibrary
 			return result;
 		}
 
-        public static ServiceMessages ReadMessage(string connectionString, string queueName, string keyFieldName, Logs logs, int maxMessages = 1)
+        public static ServiceMessages ReadMessage(string connectionString, string queueName, string keyFieldName, Logs logs, int maxMessages = 1, int queueTimeOut = 1000)
         {
             ServiceMessages result = null;
 
@@ -114,7 +114,7 @@ namespace TeamSupport.ServiceLibrary
                 {
                     con.Open();
                     con.EnlistTransaction(tran);
-					result = ServiceBrokerUtils.GetMessage(queueName, con, TimeSpan.FromSeconds(10), keyFieldName, logs, maxMessages);
+					result = ServiceBrokerUtils.GetMessage(queueName, con, TimeSpan.FromMilliseconds(queueTimeOut), keyFieldName, logs, maxMessages);
                     tran.Commit(); // the message processing succeeded or the FailedMessageProcessor ran so commit the RECEIVE
                     con.Close();
                 }

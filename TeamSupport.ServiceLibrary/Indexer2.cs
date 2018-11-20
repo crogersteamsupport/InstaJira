@@ -34,6 +34,7 @@ namespace TeamSupport.ServiceLibrary
                     ProcessIndex(ReferenceType.Assets);
                     ProcessIndex(ReferenceType.Products);
                     ProcessIndex(ReferenceType.Tasks);
+                    
                 }
                 catch (Exception ex)
                 {
@@ -49,7 +50,8 @@ namespace TeamSupport.ServiceLibrary
         {
             IndexProperties props = new IndexProperties(referenceType, Settings);
             int maxMessages = Settings.ReadInt("Max Records", 1000);
-            ServiceMessages messages = ServiceBrokerUtils.ReadMessage(_loginUser.ConnectionString, props.QueueName, props.MessageKeyFieldName, Logs, maxMessages);
+            int queueTimeOut = Settings.ReadInt("Queue Timeout", 1000);
+            ServiceMessages messages = ServiceBrokerUtils.ReadMessage(_loginUser.ConnectionString, props.QueueName, props.MessageKeyFieldName, Logs, maxMessages, queueTimeOut);
             if (messages == null) return;
             if (messages.Updates.Any())
             {
