@@ -162,7 +162,7 @@ namespace TeamSupport.Data
         }
 
         private static string Exclusions (string phrase) {
-            phrase = Regex.Replace(phrase, "<(.+?)?exclude>.*?</(.+?)?>", "", RegexOptions.IgnoreCase);
+            phrase = Regex.Replace(phrase, "<i(.+?)?exclude(.+?)?>.*?</i>", "", RegexOptions.IgnoreCase);
             return phrase;
         }
 
