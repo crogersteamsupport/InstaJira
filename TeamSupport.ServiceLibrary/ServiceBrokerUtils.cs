@@ -57,22 +57,21 @@ namespace TeamSupport.ServiceLibrary
         {
 			List<byte[]> messages = new List<byte[]>();
             ServiceMessages result = new ServiceMessages();
+            bool endConversation = false;
+            Guid conversation_handle = Guid.Empty;
 
-			using (SqlDataReader r = GetMessageBatch(queueName, con, timeout, maxMessages))
+
+            using (SqlDataReader r = GetMessageBatch(queueName, con, timeout, maxMessages))
             {
                 if (r == null || !r.HasRows)
                     return null;
 
 				while (r.Read())
 				{
-					Guid conversation_handle = r.GetGuid(r.GetOrdinal("conversation_handle"));
+					conversation_handle = r.GetGuid(r.GetOrdinal("conversation_handle"));
 					string messageType = r.GetString(r.GetOrdinal("message_type_name"));
 
-					if (messageType == "http://schemas.microsoft.com/SQL/ServiceBroker/EndDialog")
-					{
-						EndConversation(conversation_handle, con);
-                        break;
-					}
+                    endConversation = (messageType == "http://schemas.microsoft.com/SQL/ServiceBroker/EndDialog");					
                     string body = "";
 
                     try
@@ -93,7 +92,12 @@ namespace TeamSupport.ServiceLibrary
                 }
             }
 
-			return result;
+            if(endConversation)
+            {
+                EndConversation(conversation_handle, con);                
+            }
+
+            return result;
 		}
 
         public static ServiceMessages ReadMessage(string connectionString, string queueName, string keyFieldName, Logs logs, int maxMessages = 1, int queueTimeOut = 1000)
