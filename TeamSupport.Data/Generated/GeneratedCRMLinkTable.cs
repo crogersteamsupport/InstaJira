@@ -126,6 +126,12 @@ namespace TeamSupport.Data
     
 
     
+    public bool SendCustomFields
+    {
+      get { return (bool)Row["SendCustomFields"]; }
+      set { Row["SendCustomFields"] = CheckValue("SendCustomFields", value); }
+    }
+    
     public bool UseNetworkCredentials
     {
       get { return (bool)Row["UseNetworkCredentials"]; }
@@ -325,7 +331,7 @@ namespace TeamSupport.Data
 		updateCommand.Connection = connection;
 		//updateCommand.Transaction = transaction;
 		updateCommand.CommandType = CommandType.Text;
-		updateCommand.CommandText = "SET NOCOUNT OFF; UPDATE [dbo].[CRMLinkTable] SET     [OrganizationID] = @OrganizationID,    [Active] = @Active,    [CRMType] = @CRMType,    [Username] = @Username,    [Password] = @Password,    [SecurityToken] = @SecurityToken,    [TypeFieldMatch] = @TypeFieldMatch,    [LastLink] = @LastLink,    [SendBackTicketData] = @SendBackTicketData,    [LastProcessed] = @LastProcessed,    [LastTicketID] = @LastTicketID,    [AllowPortalAccess] = @AllowPortalAccess,    [SendWelcomeEmail] = @SendWelcomeEmail,    [DefaultSlaLevelID] = @DefaultSlaLevelID,    [PullCasesAsTickets] = @PullCasesAsTickets,    [PushTicketsAsCases] = @PushTicketsAsCases,    [PullCustomerProducts] = @PullCustomerProducts,    [UpdateStatus] = @UpdateStatus,    [ActionTypeIDToPush] = @ActionTypeIDToPush,    [HostName] = @HostName,    [DefaultProject] = @DefaultProject,    [MatchAccountsByName] = @MatchAccountsByName,    [UseSandBoxServer] = @UseSandBoxServer,    [AlwaysUseDefaultProjectKey] = @AlwaysUseDefaultProjectKey,    [RestrictedToTicketTypes] = @RestrictedToTicketTypes,    [UpdateTicketType] = @UpdateTicketType,    [InstanceName] = @InstanceName,    [ExcludedTicketStatusUpdate] = @ExcludedTicketStatusUpdate,    [IncludeIssueNonRequired] = @IncludeIssueNonRequired,    [UseNetworkCredentials] = @UseNetworkCredentials,    [WebHookTokenId] = @WebHookTokenId  WHERE ([CRMLinkID] = @CRMLinkID);";
+		updateCommand.CommandText = "SET NOCOUNT OFF; UPDATE [dbo].[CRMLinkTable] SET     [OrganizationID] = @OrganizationID,    [Active] = @Active,    [CRMType] = @CRMType,    [Username] = @Username,    [Password] = @Password,    [SecurityToken] = @SecurityToken,    [TypeFieldMatch] = @TypeFieldMatch,    [LastLink] = @LastLink,    [SendBackTicketData] = @SendBackTicketData,    [LastProcessed] = @LastProcessed,    [LastTicketID] = @LastTicketID,    [AllowPortalAccess] = @AllowPortalAccess,    [SendWelcomeEmail] = @SendWelcomeEmail,    [DefaultSlaLevelID] = @DefaultSlaLevelID,    [PullCasesAsTickets] = @PullCasesAsTickets,    [PushTicketsAsCases] = @PushTicketsAsCases,    [PullCustomerProducts] = @PullCustomerProducts,    [UpdateStatus] = @UpdateStatus,    [ActionTypeIDToPush] = @ActionTypeIDToPush,    [HostName] = @HostName,    [DefaultProject] = @DefaultProject,    [MatchAccountsByName] = @MatchAccountsByName,    [UseSandBoxServer] = @UseSandBoxServer,    [AlwaysUseDefaultProjectKey] = @AlwaysUseDefaultProjectKey,    [RestrictedToTicketTypes] = @RestrictedToTicketTypes,    [UpdateTicketType] = @UpdateTicketType,    [InstanceName] = @InstanceName,    [ExcludedTicketStatusUpdate] = @ExcludedTicketStatusUpdate,    [IncludeIssueNonRequired] = @IncludeIssueNonRequired,    [UseNetworkCredentials] = @UseNetworkCredentials,    [WebHookTokenId] = @WebHookTokenId,    [SendCustomFields] = @SendCustomFields  WHERE ([CRMLinkID] = @CRMLinkID);";
 
 		
 		tempParameter = updateCommand.Parameters.Add("CRMLinkID", SqlDbType.Int, 4);
@@ -552,13 +558,27 @@ namespace TeamSupport.Data
 		  tempParameter.Scale = 10;
 		}
 		
+		tempParameter = updateCommand.Parameters.Add("SendCustomFields", SqlDbType.Bit, 1);
+		if (tempParameter.SqlDbType == SqlDbType.Float)
+		{
+		  tempParameter.Precision = 255;
+		  tempParameter.Scale = 255;
+		}
+		
 
 		SqlCommand insertCommand = connection.CreateCommand();
 		insertCommand.Connection = connection;
 		//insertCommand.Transaction = transaction;
 		insertCommand.CommandType = CommandType.Text;
-		insertCommand.CommandText = "SET NOCOUNT OFF; INSERT INTO [dbo].[CRMLinkTable] (    [OrganizationID],    [Active],    [CRMType],    [Username],    [Password],    [SecurityToken],    [TypeFieldMatch],    [LastLink],    [SendBackTicketData],    [LastProcessed],    [LastTicketID],    [AllowPortalAccess],    [SendWelcomeEmail],    [DefaultSlaLevelID],    [PullCasesAsTickets],    [PushTicketsAsCases],    [PullCustomerProducts],    [UpdateStatus],    [ActionTypeIDToPush],    [HostName],    [DefaultProject],    [MatchAccountsByName],    [UseSandBoxServer],    [AlwaysUseDefaultProjectKey],    [RestrictedToTicketTypes],    [UpdateTicketType],    [InstanceName],    [ExcludedTicketStatusUpdate],    [IncludeIssueNonRequired],    [UseNetworkCredentials],    [WebHookTokenId]) VALUES ( @OrganizationID, @Active, @CRMType, @Username, @Password, @SecurityToken, @TypeFieldMatch, @LastLink, @SendBackTicketData, @LastProcessed, @LastTicketID, @AllowPortalAccess, @SendWelcomeEmail, @DefaultSlaLevelID, @PullCasesAsTickets, @PushTicketsAsCases, @PullCustomerProducts, @UpdateStatus, @ActionTypeIDToPush, @HostName, @DefaultProject, @MatchAccountsByName, @UseSandBoxServer, @AlwaysUseDefaultProjectKey, @RestrictedToTicketTypes, @UpdateTicketType, @InstanceName, @ExcludedTicketStatusUpdate, @IncludeIssueNonRequired, @UseNetworkCredentials, @WebHookTokenId); SET @Identity = SCOPE_IDENTITY();";
+		insertCommand.CommandText = "SET NOCOUNT OFF; INSERT INTO [dbo].[CRMLinkTable] (    [OrganizationID],    [Active],    [CRMType],    [Username],    [Password],    [SecurityToken],    [TypeFieldMatch],    [LastLink],    [SendBackTicketData],    [LastProcessed],    [LastTicketID],    [AllowPortalAccess],    [SendWelcomeEmail],    [DefaultSlaLevelID],    [PullCasesAsTickets],    [PushTicketsAsCases],    [PullCustomerProducts],    [UpdateStatus],    [ActionTypeIDToPush],    [HostName],    [DefaultProject],    [MatchAccountsByName],    [UseSandBoxServer],    [AlwaysUseDefaultProjectKey],    [RestrictedToTicketTypes],    [UpdateTicketType],    [InstanceName],    [ExcludedTicketStatusUpdate],    [IncludeIssueNonRequired],    [UseNetworkCredentials],    [WebHookTokenId],    [SendCustomFields]) VALUES ( @OrganizationID, @Active, @CRMType, @Username, @Password, @SecurityToken, @TypeFieldMatch, @LastLink, @SendBackTicketData, @LastProcessed, @LastTicketID, @AllowPortalAccess, @SendWelcomeEmail, @DefaultSlaLevelID, @PullCasesAsTickets, @PushTicketsAsCases, @PullCustomerProducts, @UpdateStatus, @ActionTypeIDToPush, @HostName, @DefaultProject, @MatchAccountsByName, @UseSandBoxServer, @AlwaysUseDefaultProjectKey, @RestrictedToTicketTypes, @UpdateTicketType, @InstanceName, @ExcludedTicketStatusUpdate, @IncludeIssueNonRequired, @UseNetworkCredentials, @WebHookTokenId, @SendCustomFields); SET @Identity = SCOPE_IDENTITY();";
 
+		
+		tempParameter = insertCommand.Parameters.Add("SendCustomFields", SqlDbType.Bit, 1);
+		if (tempParameter.SqlDbType == SqlDbType.Float)
+		{
+		  tempParameter.Precision = 255;
+		  tempParameter.Scale = 255;
+		}
 		
 		tempParameter = insertCommand.Parameters.Add("WebHookTokenId", SqlDbType.Int, 4);
 		if (tempParameter.SqlDbType == SqlDbType.Float)
@@ -889,7 +909,7 @@ namespace TeamSupport.Data
     {
       using (SqlCommand command = new SqlCommand())
       {
-        command.CommandText = "SET NOCOUNT OFF; SELECT [CRMLinkID], [OrganizationID], [Active], [CRMType], [Username], [Password], [SecurityToken], [TypeFieldMatch], [LastLink], [SendBackTicketData], [LastProcessed], [LastTicketID], [AllowPortalAccess], [SendWelcomeEmail], [DefaultSlaLevelID], [PullCasesAsTickets], [PushTicketsAsCases], [PullCustomerProducts], [UpdateStatus], [ActionTypeIDToPush], [HostName], [DefaultProject], [MatchAccountsByName], [UseSandBoxServer], [AlwaysUseDefaultProjectKey], [RestrictedToTicketTypes], [UpdateTicketType], [InstanceName], [ExcludedTicketStatusUpdate], [IncludeIssueNonRequired], [UseNetworkCredentials], [WebHookTokenId] FROM [dbo].[CRMLinkTable] WHERE ([CRMLinkID] = @CRMLinkID);";
+        command.CommandText = "SET NOCOUNT OFF; SELECT [CRMLinkID], [OrganizationID], [Active], [CRMType], [Username], [Password], [SecurityToken], [TypeFieldMatch], [LastLink], [SendBackTicketData], [LastProcessed], [LastTicketID], [AllowPortalAccess], [SendWelcomeEmail], [DefaultSlaLevelID], [PullCasesAsTickets], [PushTicketsAsCases], [PullCustomerProducts], [UpdateStatus], [ActionTypeIDToPush], [HostName], [DefaultProject], [MatchAccountsByName], [UseSandBoxServer], [AlwaysUseDefaultProjectKey], [RestrictedToTicketTypes], [UpdateTicketType], [InstanceName], [ExcludedTicketStatusUpdate], [IncludeIssueNonRequired], [UseNetworkCredentials], [WebHookTokenId], [SendCustomFields] FROM [dbo].[CRMLinkTable] WHERE ([CRMLinkID] = @CRMLinkID);";
         command.CommandType = CommandType.Text;
         command.Parameters.AddWithValue("CRMLinkID", cRMLinkID);
         Fill(command);

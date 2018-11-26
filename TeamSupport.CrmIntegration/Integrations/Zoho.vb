@@ -5,6 +5,7 @@ Imports System.Xml
 Imports System.Text
 Imports System.IO
 Imports System.Data.SqlClient
+Imports Newtonsoft.Json
 
 Namespace TeamSupport
     Namespace CrmIntegration
@@ -690,7 +691,21 @@ Namespace TeamSupport
 
                 Dim ticketsViewBatchSize As Integer = thisSettings.ReadInt("ZohoReportsBatchSize", 50000)
 
-                Dim batches As List(Of String) = GetCSVBatches(tix.Table, ticketsViewBatchSize)
+				Dim customFieldsList As List(Of CustomFieldsForZohoReports) = New List(Of CustomFieldsForZohoReports)
+				Dim ticketCustomValues As List(Of TicketCustomValues) = New List(Of TicketCustomValues)
+
+				If (CRMLinkRow.SendCustomFields) Then
+					customFieldsList = GetCustomFieldsList()
+					Dim ticketIdList As List(Of Integer) = New List(Of Integer)
+
+					For Each thisRow As DataRow In tix.Table.Rows
+						ticketIdList.Add(thisRow("TicketURL"))
+					Next
+
+					ticketCustomValues = GetCustomValuesList(ticketIdList.Select(Function(x) x).ToList)
+				End If
+
+				Dim batches As List(Of String) = GetCSVBatches(tix.Table, ticketsViewBatchSize, customFieldsList, ticketCustomValues)
 
                 If batches IsNot Nothing Then
                     Log.Write("Found " & batches.Count & " ticketsView batches to send to Zoho.")
@@ -774,18 +789,45 @@ Namespace TeamSupport
                 Return True
             End Function
 
-            Private Function GetCSVBatches(ByVal thisTable As DataTable, ByVal batchSize As Integer) As List(Of String)
+			Private Function GetCSVBatches(ByVal thisTable As DataTable, ByVal batchSize As Integer) As List(Of String)
+				GetCSVBatches(thisTable, batchSize, Nothing, Nothing)
+			End Function
+
+			Private Function GetCSVBatches(ByVal thisTable As DataTable, ByVal batchSize As Integer, ByVal customFieldsForZohoReports As List(Of CustomFieldsForZohoReports), ByVal ticketCustomValues As List(Of TicketCustomValues)) As List(Of String)
                 Dim csvBatches As New List(Of String)()
                 Dim csvContent As StringBuilder = Nothing
                 Dim csvHeader As New StringBuilder()
                 Dim rowIndex As Integer = 0
 				Dim ticketUrlHeader As String = "ticketurl"
+				Dim includeCustomFields As Boolean = (customFieldsForZohoReports IsNot Nothing AndAlso customFieldsForZohoReports.Any AndAlso ticketCustomValues IsNot Nothing AndAlso ticketCustomValues.Any)
+				Dim ticketCustomValuesList As Dictionary(Of Integer, String) = New Dictionary(Of Integer, String)
 
-                'column names in first row
-                For i As Integer = 0 To thisTable.Columns.Count - 1
+				'column names in first row
+				For i As Integer = 0 To thisTable.Columns.Count - 1
                     csvHeader.Append(thisTable.Columns(i).ColumnName)
-                    csvHeader.Append(If(i < thisTable.Columns.Count - 1, ",", Environment.NewLine))
-                Next
+					csvHeader.Append(If(i < thisTable.Columns.Count - 1, ",", If(Not includeCustomFields, Environment.NewLine, ",")))
+				Next
+
+				'Add the custom fields column names to the first row
+				If (includeCustomFields) Then
+					Dim count As Integer = 0
+					For Each cf As CustomFieldsForZohoReports In customFieldsForZohoReports.OrderBy(Function(o) o.TicketTypeID).ThenBy(Function(o) o.ApiFieldName)
+						csvHeader.Append(cf.ApiFieldName)
+						csvHeader.Append(If(count < customFieldsForZohoReports.Count - 1, ",", Environment.NewLine))
+						count += 1
+					Next
+
+					'Create the data row for each ticket including those custom fields that don't belong to its type
+					For Each ticketId In ticketCustomValues.Select(Function(x) x.TicketID).Distinct
+						Dim values As String = ""
+
+						For Each cf As CustomFieldsForZohoReports In customFieldsForZohoReports.OrderBy(Function(o) o.TicketTypeID).ThenBy(Function(o) o.ApiFieldName)
+							values += ticketCustomValues.Where(Function(x) x.TicketID = ticketId AndAlso x.CustomFieldID = cf.CustomFieldID).Select(Function(v) v.CustomValue).FirstOrDefault + ","
+						Next
+
+						ticketCustomValuesList.Add(ticketId, values.Trim().Remove(values.Length - 1))
+					Next
+				End If
 
                 'append a dummy row so zoho knows what data type each column is--in case this is the first import
                 For Each thisCol As DataColumn In thisTable.Columns
@@ -802,8 +844,18 @@ Namespace TeamSupport
                     Else
                         csvHeader.Append("-1")
                     End If
-                    csvHeader.Append(If(thisCol.Ordinal < thisTable.Columns.Count - 1, ",", Environment.NewLine))
-                Next
+					csvHeader.Append(If(thisCol.Ordinal < thisTable.Columns.Count - 1, ",", If(Not includeCustomFields, Environment.NewLine, ",")))
+				Next
+
+				If (includeCustomFields) Then
+					Dim count As Integer = 0
+
+					For Each cf As CustomFieldsForZohoReports In customFieldsForZohoReports
+						csvHeader.Append("""String""")
+						csvHeader.Append(If(count < customFieldsForZohoReports.Count - 1, ",", Environment.NewLine))
+						count += 1
+					Next
+				End If
 
                 Dim organization As Organizations = New Organizations(User)
                 organization.LoadByOrganizationID(CRMLinkRow.OrganizationID)
@@ -817,18 +869,27 @@ Namespace TeamSupport
                         csvContent = New StringBuilder(csvHeader.ToString())
                     End If
 
-                    For i As Integer = 0 To thisTable.Columns.Count - 1
+					Dim ticketId As Integer = 0
+
+					For i As Integer = 0 To thisTable.Columns.Count - 1
                         If thisTable.Columns(i).DataType Is GetType(String) Then
 							csvContent.Append("""" & thisRow(i).ToString().Replace("""", "'") & """")
                         ElseIf thisTable.Columns(i).DataType Is GetType(DateTime) AndAlso Not IsDBNull(thisRow(i)) Then 'translate dates to org's local timezone
                             csvContent.Append("""" & TimeZoneInfo.ConvertTimeFromUtc(CType(thisRow(i).ToString(), DateTime), TimeZoneInfo.FindSystemTimeZoneById(organization(0).TimeZoneID)).ToString("M/d/yyyy H:mm:ss") & """")
                         ElseIf thisTable.Columns(i).ColumnName.ToLower() = ticketUrlHeader Then
 							csvContent.Append("""" & SystemSettings.ReadString(User, "AppDomain", "https://app.teamsupport.com") & "?ticketid=" & thisRow(i).ToString() & """")
+							ticketId = thisRow(i)
 						Else
                             csvContent.Append(thisRow(i).ToString())
                         End If
-                        csvContent.Append(If(i < thisTable.Columns.Count - 1, ",", Environment.NewLine))
-                    Next
+						csvContent.Append(If(i < thisTable.Columns.Count - 1, ",", If(Not includeCustomFields, Environment.NewLine, ",")))
+
+						If (includeCustomFields AndAlso i = thisTable.Columns.Count - 1) Then
+							Dim ticketValues As String = ticketCustomValuesList.Where(Function(x) x.Key = ticketId).Select(Function(x) x.Value).FirstOrDefault
+							csvContent.Append(ticketValues)
+							csvContent.Append(Environment.NewLine)
+						End If
+					Next
                     rowIndex += 1
 
                     If rowIndex = batchSize Then
@@ -867,7 +928,7 @@ Namespace TeamSupport
                 postParameters.Add("ZOHO_DATE_FORMAT", "MM/dd/yyyy HH:mm:ss")
                 postParameters.Add("ZOHO_FILE", byteData)
 
-                '       File.WriteAllBytes(Path.Combine(thisSettings.ReadString("Log File Path", "C:\CrmLogs\"), CRMLinkRow.OrganizationID.ToString() & "\reports.csv"), byteData)
+				File.WriteAllBytes("C:\Development\Repositories\Victor\ts-app\TeamSupport.ServiceTestApplication\bin\Debug\Logs\13679\reports.csv", byteData)
 
                 Try
                     Using response As HttpWebResponse = WebHelpers.MultipartFormDataPost(zohoUri, Client, postParameters)
@@ -906,6 +967,66 @@ Namespace TeamSupport
                 Return PostQueryString(Nothing, ZohoUri, PostParameters)
             End Function
 
+			Private Function GetCustomFieldsList() As List(Of CustomFieldsForZohoReports)
+				Dim customFieldsCommand As New SqlCommand("SELECT CustomFieldID, ApiFieldName, AuxID AS TicketTypeID FROM CustomFields WITH(NOLOCK) WHERE OrganizationID = @OrganizationID AND RefType = @RefType")
+				customFieldsCommand.Parameters.AddWithValue("@OrganizationID", CRMLinkRow.OrganizationID)
+				customFieldsCommand.Parameters.AddWithValue("@RefType", 17) '17 is for Tickets
+
+				Dim customFieldsJson As String = SqlExecutor.GetJson(User, customFieldsCommand)
+				Dim customFieldsList As List(Of CustomFieldsForZohoReports) = JsonConvert.DeserializeObject(Of List(Of CustomFieldsForZohoReports))(customFieldsJson)
+
+				Return customFieldsList
+			End Function
+
+			Private Function GetCustomValuesList(ByVal ticketIds As List(Of Integer)) As List(Of TicketCustomValues)
+				Dim sqlXML As String = "DECLARE @strString varchar(max)
+				DECLARE @x XML
+				SET @strString = '{0}'
+				SELECT @x = CAST('<A>'+ REPLACE(@strString,',','</A><A>')+ '</A>' AS XML)"
+				Dim sqlXMLJoin As String = "JOIN @x.nodes('/A') AS x(t)
+				ON CustomValues.RefID = t.value('.', 'int')"
+				Dim sqlCommand As String = "{0}
+SELECT CustomValues.RefID AS TicketID, CustomFields.CustomFieldID, CustomValues.CustomValue
+FROM
+	CustomFields WITH(NOLOCK)
+	LEFT JOIN CustomValues WITH(NOLOCK)
+		ON CustomFields.CustomFieldID = CustomValues.CustomFieldID
+	{1}
+WHERE
+	CustomFields.OrganizationID = @OrganizationID
+	AND CustomFields.RefType = @RefType"
+
+				sqlXML = String.Format(sqlXML, String.Join(", ", ticketIds.Select(Function(x) x).ToArray()))
+				sqlCommand = String.Format(sqlCommand, sqlXML, sqlXMLJoin)
+
+				Dim customValuesCommand As New SqlCommand(sqlCommand)
+				customValuesCommand.Parameters.AddWithValue("@OrganizationID", CRMLinkRow.OrganizationID)
+				customValuesCommand.Parameters.AddWithValue("@RefType", 17) '17 is for Tickets
+
+				Dim customValuesJson As String = SqlExecutor.GetJson(User, customValuesCommand)
+				Dim customValuesList As List(Of TicketCustomValues) = JsonConvert.DeserializeObject(Of List(Of TicketCustomValues))(customValuesJson)
+
+				'If there are tickets without any custom field value, add them to the list with no value and -1 (non existing custom field), so they are still sent to ZohoReports
+				Dim withNocustomValues As List(Of Integer) = ticketIds.Where(Function(w) Not customValuesList.Any(Function(x) x.TicketID = w)).ToList()
+
+				For Each ticketIdNoCustomValues As Integer In withNocustomValues
+					customValuesList.Add(New TicketCustomValues With {.TicketID = ticketIdNoCustomValues, .CustomFieldID = -1, .CustomValue = String.Empty})
+				Next
+
+				Return customValuesList
+			End Function
+        End Class
+
+		Friend Class CustomFieldsForZohoReports
+			Public Property CustomFieldID() As Integer
+			Public Property ApiFieldName() As String
+			Public Property TicketTypeID() As Integer
+		End Class
+
+		Friend Class TicketCustomValues
+			Public Property TicketID() As Integer
+			Public Property CustomFieldID() As Integer
+			Public Property CustomValue() As String
         End Class
     End Namespace
 End Namespace

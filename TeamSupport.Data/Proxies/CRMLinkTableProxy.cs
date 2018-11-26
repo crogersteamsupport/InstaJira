@@ -46,6 +46,7 @@ namespace TeamSupport.Data
     [DataMember] public bool UseNetworkCredentials { get; set; }
     [DataMember] public int? WebHookTokenId { get; set; }
 	[DataMember] public string WebHookTokenFullUrl { get; set; }
+    [DataMember] public bool SendCustomFields { get; set; }
 	}
   
   public partial class CRMLinkTableItem : BaseItem
@@ -53,6 +54,7 @@ namespace TeamSupport.Data
     public CRMLinkTableItemProxy GetProxy()
     {
       CRMLinkTableItemProxy result = new CRMLinkTableItemProxy();
+      result.SendCustomFields = this.SendCustomFields;
       result.WebHookTokenId = this.WebHookTokenId;
 	  result.WebHookTokenFullUrl = this.WebHookTokenFullUrl;
 	  result.UseNetworkCredentials = this.UseNetworkCredentials;

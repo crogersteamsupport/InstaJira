@@ -45,6 +45,7 @@ namespace TeamSupport.Data
       _fieldMap.AddMap("IncludeIssueNonRequired", "IncludeIssueNonRequired", false, false, false);
       _fieldMap.AddMap("UseNetworkCredentials", "UseNetworkCredentials", false, false, false);
       _fieldMap.AddMap("WebHookTokenId", "WebHookTokenId", false, false, false);
+      _fieldMap.AddMap("SendCustomFields", "SendCustomFields", false, false, false);
             
     }
   }
