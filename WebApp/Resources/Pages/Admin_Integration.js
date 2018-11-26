@@ -158,6 +158,12 @@ AdminInt = function () {
 		else {
 			element.find('.int-crm-portal').prop('checked', false);
 		}
+		if (item.SendCustomFields) {
+			element.find('.int-crm-zohoreport-sendcustomfields').prop('checked', true);
+		}
+		else {
+			element.find('.int-crm-zohoreport-sendcustomfields').prop('checked', false);
+		}
 
 		if (item.CRMType == 'Jira') {
 			loadActionTypes(element);
@@ -966,6 +972,7 @@ AdminInt = function () {
         }
 
         var pullCustomerProducts = parent.find('.int-crm-pull-customer-products').prop('checked');
+		var sendCustomFields = parent.find('.int-crm-zohoreport-sendcustomfields').prop('checked');
 
         if (typeof pullCustomerProducts == 'undefined') {
             pullCustomerProducts = false;
@@ -1162,6 +1169,7 @@ AdminInt = function () {
               jiraInstanceName,
               useNetworkCredentials,
 			  webhookToken,
+			  sendCustomFields,
               function (result) {
                   parent.data('link', result).find('.int-message').removeClass('ui-state-error').html('Your information was saved.').show().delay(1000).fadeOut('slow');
                   loadMaps(parent);
