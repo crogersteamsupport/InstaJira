@@ -173,15 +173,6 @@ WHERE EmailPostID IN (
 				command.CommandType = CommandType.Text;
 				emailPosts.ExecuteNonQuery(command, "EmailPosts");
 			}
-
-			using (SqlCommand command = new SqlCommand())
-			{
-				command.CommandText = "DELETE FROM EmailPosts where Param1 in (SELECT TicketID FROM Tickets WHERE OrganizationID=@OrganizationID AND ImportID IS NOT NULL)";
-				command.CommandType = CommandType.Text;
-				command.Parameters.AddWithValue("OrganizationID", loginUser.OrganizationID);
-				emailPosts.ExecuteNonQuery(command, "EmailPosts");
-			}
-
 		}
 
 		public static void UnlockAll(LoginUser loginUser)
