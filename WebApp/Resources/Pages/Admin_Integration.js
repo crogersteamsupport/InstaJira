@@ -972,11 +972,16 @@ AdminInt = function () {
         }
 
         var pullCustomerProducts = parent.find('.int-crm-pull-customer-products').prop('checked');
-		var sendCustomFields = parent.find('.int-crm-zohoreport-sendcustomfields').prop('checked');
 
         if (typeof pullCustomerProducts == 'undefined') {
             pullCustomerProducts = false;
         }
+
+		var sendCustomFields = parent.find('.int-crm-zohoreport-sendcustomfields').prop('checked');
+
+		if (typeof sendCustomFields == 'undefined') {
+			sendCustomFields = false;
+		}
 
         var actionTypeIDToPush = parent.find('.int-actionTypeToPush').val();
 
