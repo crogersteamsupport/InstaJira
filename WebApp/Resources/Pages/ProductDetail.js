@@ -13,7 +13,7 @@ var _dateFormat;
 
 $(document).ready(function () {
   _productID = window.parent.Ts.Utils.getQueryValue("productid", window);
-  
+
 
   parent.Ts.Services.Customers.GetDateFormat(false, function (dateformat) {
       $('.datepicker').attr("data-format", dateformat);
@@ -843,7 +843,7 @@ $(document).ready(function () {
     $('.versionList').fadeTo(200, 0.5);
     window.parent.Ts.Services.Products.LoadVersions(_productID, start, function (versions) {
       $('.versionList').fadeTo(0, 1);
-      
+
       if (start == 0) {
         insertVersions(versions);
       } else {
@@ -938,7 +938,7 @@ $(document).ready(function () {
   });
 
   var _isAdmin = window.parent.Ts.System.User.IsSystemAdmin;
-  if (!window.parent.Ts.System.User.CanEditCompany && !_isAdmin) 
+  if (!window.parent.Ts.System.User.CanEditCompany && !_isAdmin)
   {
       $('#customerToggle').hide();
   }
@@ -950,7 +950,7 @@ $(document).ready(function () {
   if (!window.parent.Ts.System.User.CanCreateVersions && !_isAdmin) {
       $('.version-action-add').hide();
   }
-  
+
 
   if (!_isAdmin) {
       $('#productDelete').hide();
@@ -988,7 +988,7 @@ $(document).ready(function () {
   function LoadCustomers(start) {
 
       if(!_headersLoaded){
-        
+
           window.parent.Ts.Services.Customers.LoadcustomProductHeaders(function (headers) {
               for (var i = 0; i < headers.length; i++) {
                   var header = headers[i];
@@ -1108,7 +1108,7 @@ $(document).ready(function () {
   LoadProductVersions();
   function LoadProductVersions() {
       $("#productVersion").empty();
-        
+
       window.parent.Ts.Services.Customers.LoadProductVersions(_productID, function (pt) {
           $('<option>').attr('value', '-1').text('Unassigned').appendTo('#productVersion');
           for (var i = 0; i < pt.length; i++) {
@@ -1243,7 +1243,7 @@ $(document).ready(function () {
                   //    var date = field.value == null ? null : window.parent.Ts.Utils.getMsDate(field.Value);
                   //    $('#' + custField[i].CustomFieldID).val(date.localeFormat(window.parent.Ts.Utils.getDatePattern()));
                   //}
-                        
+
                   else
                       $('#' + custField[i].CustomFieldID).val(custField[i].Value);
               }
@@ -1301,7 +1301,7 @@ $(document).ready(function () {
           parent.privateServices.DeleteOrganizationProduct($(this).parent().parent().attr('id'), false, function (e) {
               LoadCustomers();
           });
-            
+
       }
   });
 
@@ -1434,10 +1434,8 @@ var getUrls = function (input) {
   var url;
   var matchArray;
   var result = '';
-
-  // Regular expression to find FTP, HTTP(S) and email URLs. Updated to include urls without http
-  var regexToken = /(((ftp|https?|www):?\/?\/?)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
-
+  // Regular expression to find FTP, HTTP(S). Updated to include urls without http
+  var regexToken = /(((ftp|https?|www):?\/?\/?)[\-\w@:%_\+.~#?,&\/\/=]+)/g;
   // Iterate through any URLs in the text.
   while ((matchArray = regexToken.exec(source)) !== null) {
     url = matchArray[0];
@@ -1446,7 +1444,6 @@ var getUrls = function (input) {
     }
     result = result + '<a target="_blank" class="valueLink" href="' + url + '" title="' + matchArray[0] + '">' + matchArray[0] + '</a>'
   }
-
   return result == '' ? input : result;
 }
 
