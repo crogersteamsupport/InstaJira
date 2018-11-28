@@ -1,96 +1,121 @@
-
 {{#if item.IsPinned}}
-<div data-id="{{item.RefID}}" data-isWC="{{item.IsWC}}" data-action="{{ActionData}}" class="ticket-action pinned">
+<div class="action pinned" data-id="{{item.RefID}}" data-isWC="{{item.IsWC}}" data-action="{{ActionData}}">
 {{else}}
-<div data-id="{{item.RefID}}" data-iswc="{{item.IsWC}}" data-action="{{ActionData}}" class="ticket-action">
+<div class="action" data-id="{{item.RefID}}" data-isWC="{{item.IsWC}}" data-action="{{ActionData}}">
 {{/if}}
 
-    <div class="timeline-panel">
-        {{#unless item.IsWC}}
-        <label class="ticket-action-number">{{ActionNumber}}</label>
-        <div class="timeline-indicators">
-            {{#if item.IsKnowledgeBase}}
-            <a class="glyphicon glyphicon-bookmark TeamSupportBlue ticket-action-kb" aria-hidden="true"></a>
-            {{else}}
-            <a class="glyphicon glyphicon-bookmark TeamSupportBlue ticket-action-kb hidden" aria-hidden="true"></a>
-            {{/if}}
+    <div class="header flexbox">
+        <div class="avatar flex basis80">{{{UserImageTag}}}</div>
+        <div class="info flex push">
             {{#if item.IsPinned}}
             <a class="glyphicon glyphicon-pushpin TeamSupportBlue ticket-action-pinned" aria-hidden="true"></a>
             {{else}}
             <a class="glyphicon glyphicon-pushpin TeamSupportBlue ticket-action-pinned hidden" aria-hidden="true"></a>
             {{/if}}
-        </div>
-        <span class="pull-right action-options">
-            <span class="fa fa-ellipsis-h action-options-icon text-muted" aria-hidden="true"></span>
-            <span class="action-option-items">
 
-                {{#CanEdit}}
-                <a href="#" class="action-option-edit"><i class="glyphicon glyphicon-pencil action-option-item"></i>Edit</a>
-                <a href="#" class="action-option-delete"><i class="glyphicon glyphicon-trash action-option-item"></i>Delete</a>
-                {{/CanEdit}}
-                {{#CanPin}}
-                {{#if item.IsPinned}}
-                <a href="#" class="action-option-pin"><i class=" glyphicon glyphicon-pushpin action-option-item"></i>Unpin</a>
-                {{else}}
-                <a href="#" class="action-option-pin"><i class=" glyphicon glyphicon-pushpin action-option-item"></i>Pin</a>
-                {{/if}}
-                {{/CanPin}}
-                {{#CanKB}}
-                <a href="#" class="action-option-kb"><i class="glyphicon glyphicon-bookmark action-option-item"></i>KB</a>
-                {{/CanKB}}
-                {{#CanMakeVisible}}
-                <a href="#" class="action-option-visible"><i class="glyphicon glyphicon-eye-open action-option-item"></i>Visible</a>
-                {{/CanMakeVisible}}
-            </span>
-        </span>
-        {{/unless}}
-
-        <div class="ticket-badge">{{{TimeLineLabel}}} {{{WaterCoolerRelationships}}}</div>
-        <div class="timeline-header">
-            {{{UserImageTag}}}
-            <span class="pull-left" style="line-height: 15px;">
-                <a data-userid="{{item.CreatorID}}" data-ticketid="{{item.TicketID}}" data-name="{{item.CreatorName}}" class="TeamSupportBlue UserAnchor">{{item.CreatorName}}</a><br>
-                <small class="text-muted">added a {{item.MessageType}} on {{FormatDateTime item.DateCreated}}</small><br />
-                <small class="text-muted">{{TimeSpent}} <span id="watson-{{item.RefID}}">{{Watson}}</span></small><br />
-            </span>
-            {{{Applause}}}
+            <div><a data-userid="{{item.CreatorID}}" data-ticketid="{{item.TicketID}}" data-name="{{item.CreatorName}}" class="TeamSupportBlue UserAnchor">{{item.CreatorName}}</a></div>
+            <div class="text-muted">{{item.MessageType}} added on {{FormatDateTime item.DateCreated}}</div>
+            <div class="text-muted">{{TimeSpent}} <span id="watson-{{item.RefID}}">{{Watson}}</span></div>
         </div>
-        <div class="timeline-body">{{{item.Message}}}</div>
-        <div class="timeline-attachments">
-            {{#each Attachments}}
-            <a target="_blank" href="../../../dc/1/attachments/{{AttachmentID}}"><i class="glyphicon glyphicon-paperclip"></i>{{FileName}}</a>
-            <a data-attachmentid="{{AttachmentID}}" data-name="{{FileName}}" class="remove-attachment"><i class="glyphicon glyphicon-remove" style="font-size:10px; margin-left:5px; cursor:pointer;"></i></a> {{/each}}
-        </div>
-
-        {{#if item.IsWC}}
-        <div id="timeline-wc-responses" class="timeline-wc-responses">
-            {{#each WaterCoolerReplies}}
-            <div data-messageid="{{WaterCoolerReplyProxy.MessageID}}" class="timeline-wc-reply">
-                <img class="user-avatar pull-left wc-avatar" src="../../../dc/{{WaterCoolerReplyProxy.OrganizationID}}/UserAvatar/{{WaterCoolerReplyProxy.UserID}}/120">
-                <div>
-                    <a class="TeamSupportBlue">{{WaterCoolerReplyProxy.UserName}}</a>
-                    <small class="text-muted">  {{FormatDateTime WaterCoolerReplyProxy.LastModified}}  </small>
-                    <a data-liked="{{DidLike}}" href="#" class="wc-reply-like-link"><span class="wc-reply-like-total">{{WCLikes}}</span> <span>{{#unless DidLike}} like {{/unless}}</span></a>
-                    <p>{{{WaterCoolerReplyProxy.Message}}}</p>
+        <div class="extras flex pull">
+            <div class="flexbox">
+                {{#unless item.IsWC}}
+                <div class="indicators flex push">
+                    {{#if item.IsKnowledgeBase}}
+                    <a class="glyphicon glyphicon-bookmark TeamSupportBlue ticket-action-kb" aria-hidden="true"></a>
+                    {{else}}
+                    <a class="glyphicon glyphicon-bookmark TeamSupportBlue ticket-action-kb hidden" aria-hidden="true"></a>
+                    {{/if}}
                 </div>
-            </div>
-            {{/each}}
-        </div>
+                <div class="applause flex pull">{{{Applause}}}</div>
+                {{/unless}}
 
-        <div class="wc-options">
-            {{#if DidLike}}
-            <span data-liked="{{DidLike}}" class="wc-option wc-option-likes wc-liked">+<span>{{Likes}}</span></span>
-            {{else}}
-            <span data-liked="{{DidLike}}" class="wc-option wc-option-likes">+<span>{{Likes}}</span></span>
-            {{/if}}
-            <div class="wc-option-replyarea">
-                <span class="wc-faux-textarea text-muted">post comment...</span>
+                {{#if item.IsWC}}
+                <div class="indicators flex push"></div>
+                {{/if}}
+
+                <div class="badges flex pull">
+                    {{#if item.IsWC}}
+                    <span class="number ticket-action-number">&nbsp;</span>
+                    {{else}}
+                    <span id="action-number-{{item.RefID}}" class="number ticket-action-number">{{ActionNumber}}</span>
+                    {{/if}}
+                    <div class="ticket-badge">{{{TimeLineLabel}}} {{{WaterCoolerRelationships}}}</div>
+                </div>
+
             </div>
-            <div class="wc-textarea" style="display:none;">
-                <textarea class="form-control wc-reply-text" rows="3"></textarea>
-                <button type="button" class="btn btn-primary wc-textarea-send">Reply</button>
+            <div class="flexbox" style="text-align:right;position:relative;top:10px;right:10px;">
+                <div class="action-options">
+                    <span class="action-option-items" style="display:none;">
+                        {{#CanEdit}}
+                        <a href="#" class="action-option-edit"><i class="glyphicon glyphicon-pencil action-option-item"></i> Edit</a>
+                        <a href="#" class="action-option-delete"><i class="glyphicon glyphicon-trash action-option-item"></i> Delete</a>
+                        {{/CanEdit}}
+                        {{#CanPin}}
+                        {{#if item.IsPinned}}
+                        <a href="#" class="action-option-pin"><i class="glyphicon glyphicon-pushpin action-option-item"></i> <span>Unpin</span></a>
+                        {{else}}
+                        <a href="#" class="action-option-pin"><i class="glyphicon glyphicon-pushpin action-option-item"></i> <span>Pin</span></a>
+                        {{/if}}
+                        {{/CanPin}}
+                        {{#CanKB}}
+                        <a href="#" class="action-option-kb"><i class="glyphicon glyphicon-bookmark action-option-item"></i> KB</a>
+                        {{/CanKB}}
+                        {{#CanMakeVisible}}
+                        <a href="#" class="action-option-visible"><i class="glyphicon glyphicon-eye-open action-option-item"></i> Visible</a>
+                        {{/CanMakeVisible}}
+                    </span>
+                    <span class="fa fa-ellipsis-h action-options-icon text-muted" aria-hidden="true"></span>
+                </div>
+
             </div>
         </div>
-        {{/if}}
     </div>
+
+    <div class="specifics">
+        <div class="details">{{{item.Message}}}</div>
+    </div>
+
+    {{#if Attachments}}
+    <div class="attachments">
+        {{#each Attachments}}
+        <a target="_blank" href="../../../dc/1/attachments/{{AttachmentID}}"><i class="glyphicon glyphicon-paperclip"></i> {{FileName}}</a>
+        <a data-attachmentid="{{AttachmentID}}" data-name="{{FileName}}" class="remove-attachment"><i class="glyphicon glyphicon-remove" style="font-size:10px; margin-left:5px; cursor:pointer;"></i></a>
+        {{/each}}
+    </div>
+    {{/if}}
+
+    {{#if item.IsWC}}
+    <div id="timeline-wc-responses" class="wc-responses">
+        {{#each WaterCoolerReplies}}
+        <div data-messageid="{{WaterCoolerReplyProxy.MessageID}}" class="timeline-wc-reply">
+            <img class="user-avatar pull-left wc-avatar" src="../../../dc/{{WaterCoolerReplyProxy.OrganizationID}}/UserAvatar/{{WaterCoolerReplyProxy.UserID}}/120">
+            <div>
+                <a class="TeamSupportBlue">{{WaterCoolerReplyProxy.UserName}}</a>
+                <small class="text-muted">  {{FormatDateTime WaterCoolerReplyProxy.LastModified}}  </small>
+                <a data-liked="{{DidLike}}" href="#" class="wc-reply-like-link"><span class="wc-reply-like-total">{{WCLikes}}</span> <span>{{#unless DidLike}} like {{/unless}}</span></a>
+                <p>{{{WaterCoolerReplyProxy.Message}}}</p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+    <div class="wc-options">
+        {{#if DidLike}}
+        <span data-liked="{{DidLike}}" class="wc-option wc-option-likes wc-liked">+<span>{{Likes}}</span></span>
+        {{else}}
+        <span data-liked="{{DidLike}}" class="wc-option wc-option-likes">+<span>{{Likes}}</span></span>
+        {{/if}}
+        <div class="wc-option-replyarea">
+            <span class="wc-faux-textarea text-muted">post comment...</span>
+        </div>
+        <div class="wc-textarea" style="display:none;">
+            <textarea class="form-control wc-reply-text autogrow" rows="3"></textarea>
+            <button type="button" class="btn btn-primary wc-textarea-send">Reply</button>
+        </div>
+    </div>
+    {{/if}}
+
+
+
 </div>
