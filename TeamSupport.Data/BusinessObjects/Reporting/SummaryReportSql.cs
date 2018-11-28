@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace TeamSupport.Data.BusinessObjects.Reporting
 {
@@ -44,8 +45,30 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
     public class SummaryReportSql
     {
+        UserRights _userRights;
+        string _organizationIDFieldName;
+        public bool IsOrganizationID    // can't optimize if using ParentID
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_organizationIDFieldName) ? true : _organizationIDFieldName.Equals("OrganizationID");
+            }
+        }
+
+        public SummaryReportSql(LoginUser loginUser)
+        {
+            _userRights = new UserRights(loginUser);
+        }
+
         public static void GetSummarySql(LoginUser loginUser, SqlCommand command, SummaryReport summaryReport, bool isSchemaOnly, int? reportID, bool useUserFilter, bool useDefaultOrderBy)
         {
+            SummaryReportSql summaryReportSql = new SummaryReportSql(loginUser);
+            summaryReportSql.GetSummarySql(command, summaryReport, isSchemaOnly, reportID, useUserFilter, useDefaultOrderBy);
+        }
+
+        public void GetSummarySql(SqlCommand command, SummaryReport summaryReport, bool isSchemaOnly, int? reportID, bool useUserFilter, bool useDefaultOrderBy)
+        {
+            LoginUser loginUser = _userRights._loginUser;
             StringBuilder builder = new StringBuilder();
             ReportSubcategory sub = ReportSubcategories.GetReportSubcategory(loginUser, summaryReport.Subcategory);
             ReportTables tables = new ReportTables(loginUser);
@@ -72,9 +95,12 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             // from + where clause
             builder.Append(" " + sub.BaseQuery);
             ReportTable mainTable = tables.FindByReportTableID(sub.ReportCategoryTableID);
+
+            _organizationIDFieldName = mainTable.OrganizationIDFieldName;
+
             builder.Append(" WHERE (" + mainTable.TableName + "." + mainTable.OrganizationIDFieldName + " = @OrganizationID)");
             //add user rights where needed
-            UserRights.UseTicketRights(loginUser, (int)summaryReport.Subcategory, tables, command, builder);
+            _userRights.UseTicketRights((int)summaryReport.Subcategory, tables, command, builder);
             if (isSchemaOnly) builder.Append(" AND (0=1)");
 
             // filters
@@ -399,8 +425,8 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             Report report = Reports.GetReport(loginUser, reportID, loginUser.UserID);
             Reports.UpdateReportView(loginUser, report.ReportID);
             SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(report.ReportDef);
-            DataTable table = Reports.GetSummaryData(loginUser, summaryReport, true, report);
-            return Reports.BuildChartData(loginUser, table, summaryReport);
+            DataTable table = GetSummaryData(loginUser, summaryReport, true, report);
+            return BuildChartData(loginUser, table, summaryReport);
         }
 
         public static string GetChartReportData(LoginUser loginUser, int reportID)
@@ -408,22 +434,150 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             Report report = Reports.GetReport(loginUser, reportID, loginUser.UserID);
             Reports.UpdateReportView(loginUser, report.ReportID);
             SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(report.ReportDef);
-            DataTable table = Reports.GetSummaryData(loginUser, summaryReport, true, report);
-            return Reports.BuildChartData(loginUser, table, summaryReport);
+            DataTable table = GetSummaryData(loginUser, summaryReport, true, report);
+            return BuildChartData(loginUser, table, summaryReport);
         }
 
         public static string GetChartData(LoginUser loginUser, string summaryReportFields)
         {
             SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(summaryReportFields);
-            DataTable table = Reports.GetSummaryData(loginUser, summaryReport, true);
-            return Reports.BuildChartData(loginUser, table, summaryReport);
+            DataTable table = GetSummaryData(loginUser, summaryReport, true);
+            return BuildChartData(loginUser, table, summaryReport);
         }
 
         public static string GetHubChartData(LoginUser loginUser, Report report)
         {
             SummaryReport summaryReport = JsonConvert.DeserializeObject<SummaryReport>(report.ReportDef);
-            DataTable table = Reports.GetSummaryData(loginUser, summaryReport, true, report);
-            return Reports.BuildChartData(loginUser, table, summaryReport);
+            DataTable table = GetSummaryData(loginUser, summaryReport, true, report);
+            return BuildChartData(loginUser, table, summaryReport);
+        }
+
+        private static DataTable GetSummaryData(LoginUser loginUser, SummaryReport summaryReport, bool useDefaultOrderBy, Report report = null)
+        {
+            SqlCommand command = new SqlCommand();
+            SummaryReportSql.GetSummaryCommand(loginUser, command, summaryReport, false, false, useDefaultOrderBy);
+            BaseCollection.FixCommandParameters(command);
+            if (report != null)
+            {
+                report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
+                report.Collection.Save();
+            }
+
+            DataTable table = new DataTable();
+            using (SqlConnection connection = new SqlConnection(loginUser.ConnectionString))
+            {
+                connection.Open();
+                command.Connection = connection;
+                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                {
+                    try
+                    {
+                        adapter.Fill(table);
+                    }
+                    catch (Exception ex)
+                    {
+                        ExceptionLogs.LogException(loginUser, ex, "GetSummaryData");
+                        throw;
+                    }
+                }
+                connection.Close();
+            }
+            return table;
+        }
+
+        private static string BuildChartData(LoginUser loginUser, DataTable table, SummaryReport summaryReport)
+        {
+            DataResult[] result = new DataResult[table.Columns.Count];
+
+            for (int i = 0; i < table.Columns.Count; i++)
+            {
+                result[i] = new DataResult();
+                result[i].name = table.Columns[i].ColumnName;
+                result[i].data = new object[table.Rows.Count];
+
+                for (int j = 0; j < table.Rows.Count; j++)
+                {
+                    object data = table.Rows[j][i];
+                    result[i].data[j] = data == null || data == DBNull.Value ? null : data;
+                }
+
+                if (i < summaryReport.Fields.Descriptive.Length)
+                {
+                    result[i].fieldType = summaryReport.Fields.Descriptive[i].Field.FieldType;
+                    result[i].format = summaryReport.Fields.Descriptive[i].Value1;
+                    if (result[i].fieldType == "datetime") FixChartDateNames(loginUser, result[i].data, summaryReport.Fields.Descriptive[i].Value1);
+                }
+
+
+            }
+
+            return JsonConvert.SerializeObject(result);
+        }
+
+        private static void FixChartDateNames(LoginUser loginUser, object[] list, string dateType)
+        {
+            try
+            {
+                DateTime baseDate = new DateTime(1970, 1, 1);
+                for (int i = 0; i < list.Length; i++)
+                {
+                    if (string.IsNullOrWhiteSpace((string)list[i])) continue;
+                    string item = ((string)list[i]).Trim().ToLower();
+
+
+                    if (dateType == "qtryear" || dateType == "monthyear" || dateType == "weekyear")
+                    {
+                        string[] items = item.Split('-');
+                        if (items.Length == 2)
+                        {
+                            string year = items[0];
+                            string value = items[1];
+
+                            switch (dateType)
+                            {
+                                case "qtryear": list[i] = string.Format("{1} - Q{0}", value, year); break;
+                                case "monthyear":
+                                    list[i] =
+                    string.Format("{1} {0}", loginUser.CultureInfo.DateTimeFormat.GetAbbreviatedMonthName(int.Parse(value)), year);
+                                    break;
+                                case "weekyear": list[i] = string.Format("{1}-{0}", value, year); break;
+                                default:
+                                    break;
+                            }
+                        }
+
+
+                    }
+                    else if (dateType == "qtr")
+                    {
+                        list[i] = "Q" + item;
+                    }
+                    else if (dateType == "month")
+                    {
+                        list[i] = loginUser.CultureInfo.DateTimeFormat.GetMonthName(int.Parse(item));
+                    }
+                    else if (dateType == "dayweek")
+                    {
+                        list[i] = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName((DayOfWeek)(int.Parse(item) - 1));
+                    }
+                    else if (dateType == "date")
+                    {
+
+                        DateTime d = DateTime.SpecifyKind(DateTime.Parse(item), DateTimeKind.Utc);
+                        list[i] = new TimeSpan(d.Ticks - baseDate.Ticks).TotalMilliseconds.ToString();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+
+            }
+
         }
 
     }

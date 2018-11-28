@@ -20,10 +20,26 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
     public class TabularReportSql
     {
-        public static void GetTabularSql(LoginUser loginUser, SqlCommand command, TabularReport tabularReport, bool inlcudeHiddenFields, bool isSchemaOnly, int? reportID, bool useUserFilter, string sortField = null, string sortDir = null)
+        UserRights _userRights;
+        string _organizationIDFieldName;
+        public bool IsOrganizationID    // can't optimize if using ParentID
         {
+            get
+            {
+                return string.IsNullOrEmpty(_organizationIDFieldName) ? true : _organizationIDFieldName.Equals("OrganizationID");
+            }
+        }
+
+        public TabularReportSql(LoginUser loginUser)
+        {
+            _userRights = new UserRights(loginUser);
+        }
+
+        public void GetTabularSql(SqlCommand command, TabularReport tabularReport, bool inlcudeHiddenFields, bool isSchemaOnly, int? reportID, bool useUserFilter, string sortField = null, string sortDir = null)
+        {
+            LoginUser loginUser = _userRights._loginUser;
             StringBuilder builder = new StringBuilder();
-            GetTabluarSelectClause(loginUser, command, builder, tabularReport, inlcudeHiddenFields, isSchemaOnly, sortField, sortDir);
+            GetTabluarSelectClause(command, builder, tabularReport, inlcudeHiddenFields, isSchemaOnly, sortField, sortDir);
             if (isSchemaOnly)
             {
                 command.CommandText = builder.ToString();
@@ -66,7 +82,8 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
         public static void GetTabularSqlForExports(LoginUser loginUser, SqlCommand command, TabularReport tabularReport, bool inlcudeHiddenFields, bool isSchemaOnly, int? reportID, bool useUserFilter, string sortField = null, string sortDir = null)
         {
             StringBuilder builder = new StringBuilder();
-            GetTabluarSelectClause(loginUser, command, builder, tabularReport, inlcudeHiddenFields, isSchemaOnly, sortField, sortDir);
+            TabularReportSql tabularReportSql = new TabularReportSql(loginUser);
+            tabularReportSql.GetTabluarSelectClause(command, builder, tabularReport, inlcudeHiddenFields, isSchemaOnly, sortField, sortDir);
             if (isSchemaOnly)
             {
                 command.CommandText = builder.ToString();
@@ -109,7 +126,8 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
         public static void GetPortalTicketsSQL(LoginUser loginUser, SqlCommand command, TabularReport tabularReport, bool inlcudeHiddenFields, bool isSchemaOnly)
         {
             StringBuilder builder = new StringBuilder();
-            GetTabluarSelectClause(loginUser, command, builder, tabularReport, inlcudeHiddenFields, isSchemaOnly);
+            TabularReportSql tabularReportSql = new TabularReportSql(loginUser);
+            tabularReportSql.GetTabluarSelectClause(command, builder, tabularReport, inlcudeHiddenFields, isSchemaOnly);
             if (isSchemaOnly)
             {
                 command.CommandText = builder.ToString();
@@ -131,8 +149,9 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             }
         }
 
-        private static void GetTabluarSelectClause(LoginUser loginUser, SqlCommand command, StringBuilder builder, TabularReport tabularReport, bool includeHiddenFields, bool isSchemaOnly, string sortField = null, string sortDir = null)
+        private void GetTabluarSelectClause(SqlCommand command, StringBuilder builder, TabularReport tabularReport, bool includeHiddenFields, bool isSchemaOnly, string sortField = null, string sortDir = null)
         {
+            LoginUser loginUser = _userRights._loginUser;
             ReportSubcategory sub = ReportSubcategories.GetReportSubcategory(loginUser, tabularReport.Subcategory);
 
             ReportTables tables = new ReportTables(loginUser);
@@ -289,13 +308,16 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             builder.Append(" " + sub.BaseQuery);
 
             ReportTable mainTable = tables.FindByReportTableID(sub.ReportCategoryTableID);
+
+            _organizationIDFieldName = mainTable.OrganizationIDFieldName;
+
             builder.Append(" WHERE (" + mainTable.TableName + "." + mainTable.OrganizationIDFieldName + " = @OrganizationID)");
             if (tabularReport.Subcategory == 70)
             {
                 builder.Append(" AND (" + mainTable.TableName + ".ViewerID = @UserID)");
             }
 
-            UserRights.UseTicketRights(loginUser, (int)tabularReport.Subcategory, tables, command, builder);
+            _userRights.UseTicketRights((int)tabularReport.Subcategory, tables, command, builder);
 
             if (isSchemaOnly) builder.Append(" AND (0=1)");
         }
