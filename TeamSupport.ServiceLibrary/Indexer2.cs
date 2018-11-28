@@ -120,6 +120,7 @@ namespace TeamSupport.ServiceLibrary
 
             try
             {
+                LogVerbose("Lock Acquired -- Beginning index");
                 bool isNew = !System.IO.Directory.Exists(path);
                 if (isNew) Directory.CreateDirectory(path);
                 string noiseFile = Path.Combine(root, "noise.dat");
@@ -174,6 +175,7 @@ namespace TeamSupport.ServiceLibrary
             finally
             {
                 IndexLocks.ReleaseLock(path);
+                LogVerbose("Lock Released -- Index End");
             }
         }
 
@@ -227,6 +229,7 @@ namespace TeamSupport.ServiceLibrary
             finally
             {
                 IndexLocks.ReleaseLock(path);
+                LogVerbose("Lock Released -- Index Delete End");
             }
 
         }
