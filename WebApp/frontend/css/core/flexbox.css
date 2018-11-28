@@ -118,21 +118,21 @@ div.flexbox .flex.basis60 {
     -webkit-flex-basis:60px;
 }
 div.flexbox .flex.basis70 {
-    flex:0 0 60px;
+    flex:0 0 70px;
     flex-grow:0;
     flex-shrink:0;
     flex-basis:70px !important;
     -webkit-flex-basis:70px;
 }
 div.flexbox .flex.basis80 {
-    flex:0 0 60px;
+    flex:0 0 80px;
     flex-grow:0;
     flex-shrink:0;
     flex-basis:80px !important;
     -webkit-flex-basis:80px;
 }
 div.flexbox .flex.basis90 {
-    flex:0 0 60px;
+    flex:0 0 90px;
     flex-grow:0;
     flex-shrink:0;
     flex-basis:90px !important;
