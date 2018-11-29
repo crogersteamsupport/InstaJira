@@ -25,17 +25,16 @@ namespace TeamSupport.ServiceLibrary
                     _isVerbose = Settings.ReadBool("VerboseLogging", false);
 
                     ProcessIndex(ReferenceType.Tickets);
-                    ProcessIndex(ReferenceType.Wikis);
-                    ProcessIndex(ReferenceType.Notes);
-                    ProcessIndex(ReferenceType.ProductVersions);
-                    ProcessIndex(ReferenceType.WaterCooler);
-                    ProcessIndex(ReferenceType.Organizations);
-                    ProcessIndex(ReferenceType.Contacts);
-                    ProcessIndex(ReferenceType.Assets);
-                    ProcessIndex(ReferenceType.Products);
-                    ProcessIndex(ReferenceType.Tasks);
-                    
-                }
+					ProcessIndex(ReferenceType.Wikis);
+					ProcessIndex(ReferenceType.Notes);
+					ProcessIndex(ReferenceType.ProductVersions);
+					ProcessIndex(ReferenceType.WaterCooler);
+					ProcessIndex(ReferenceType.Organizations);
+					ProcessIndex(ReferenceType.Contacts);
+					ProcessIndex(ReferenceType.Assets);
+					ProcessIndex(ReferenceType.Products);
+					ProcessIndex(ReferenceType.Tasks);
+				}
                 catch (Exception ex)
                 {
                     Logs.WriteEvent("Error processing indexes");
@@ -58,8 +57,9 @@ namespace TeamSupport.ServiceLibrary
                 foreach (KeyValuePair<int, List<int>> item in messages.Updates)
                 {
                     UpdateHealth();
-                    LogVerbose("Updating: " + item.Value.ToString());
-                    IndexDataSource2 source = GetIndexDataSource(referenceType, item.Key, props, item.Value.ToArray());
+                    LogVerbose($"Updating {referenceType} orgId {item.Key}, ids: {string.Join(",", item.Value.ToArray())}");
+
+					IndexDataSource2 source = GetIndexDataSource(referenceType, item.Key, props, item.Value.ToArray());
                     UpdateIndex(source, props.TableName, props.StoredFields, props.IndexPath, referenceType);
                 }
             }

@@ -60,7 +60,6 @@ namespace TeamSupport.ServiceLibrary
             bool endConversation = false;
             Guid conversation_handle = Guid.Empty;
 
-
             using (SqlDataReader r = GetMessageBatch(queueName, con, timeout, maxMessages))
             {
                 if (r == null || !r.HasRows)
@@ -76,13 +75,16 @@ namespace TeamSupport.ServiceLibrary
 
                     try
                     {
-                        body = Encoding.Unicode.GetString((byte[])r.GetSqlBinary(r.GetOrdinal("message_body")));
-                        dynamic o = JsonConvert.DeserializeObject(body);
-                        if (o == null || o.Count < 1) continue;
-                        for (int i = 0; i < o.Count; i++)
-                        {
-                            result.Add(messageType == "UpdateIndex", (int)o[i].OrganizationID, (int)o[i][keyFieldName]);
-                        }
+						if (!endConversation)
+						{
+							body = Encoding.Unicode.GetString((byte[])r.GetSqlBinary(r.GetOrdinal("message_body")));
+							dynamic o = JsonConvert.DeserializeObject(body);
+							if (o == null || o.Count < 1) continue;
+							for (int i = 0; i < o.Count; i++)
+							{
+								result.Add(messageType == "UpdateIndex", (int)o[i].OrganizationID, (int)o[i][keyFieldName]);
+							}
+						}
                     }
                     catch (Exception ex)
                     {
