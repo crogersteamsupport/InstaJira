@@ -69,9 +69,9 @@ namespace TeamSupport.Permissions
             using (DataContext db = new DataContext(connection))
             {
                 string query = @"Select a.AttachmentID FROM Users as u 
-                    JOIN UserProducts up on up.UserID = u.UserID 
-                    JOIN Products p on p.ProductID = up.ProductID 
-                    JOIN ProductVersions pv on pv.ProductID = up.ProductID 
+                    JOIN OrganizationProducts op on op.OrganizationID = u.OrganizationID
+                    JOIN Products p on p.ProductID = op.ProductID 
+                    JOIN ProductVersions pv on pv.ProductID = op.ProductID 
                     JOIN Attachments a on a.RefID = pv.ProductVersionID 
                     WHERE " + $"a.AttachmentID={attachment.AttachmentID} AND u.UserID={loginUser.UserID} AND a.RefType={(int)AttachmentProxy.References.ProductVersions}";
 
