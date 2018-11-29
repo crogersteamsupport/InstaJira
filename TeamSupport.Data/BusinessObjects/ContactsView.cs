@@ -145,16 +145,18 @@ namespace TeamSupport.Data
         command.CommandText = "SELECT cv.* FROM ContactsView cv LEFT JOIN UserTickets ut ON ut.UserID = cv.UserID WHERE ut.TicketID = @TicketID AND (cv.MarkDeleted = 0) ORDER BY " + orderBy;
         command.CommandText = InjectCustomFields(command.CommandText, "cv.UserID", ReferenceType.Contacts);
 
-        // optimization to reduce load time for custom values
-        command.CommandText = @"Select cvs.CustomValue, CustomFieldID, RefID
+                // optimization to reduce load time for custom values
+        command.CommandText = @"Select cvs.CustomValue, cvs.CustomFieldID, RefID
             INTO #CustomValues
             FROM ContactsView cv
             JOIN CustomValues cvs on cvs.RefID = cv.UserID
+            JOIN CustomFields cf on cf.CustomFieldID = cvs.CustomFieldID
             LEFT JOIN UserTickets ut ON ut.UserID = cv.UserID
-            WHERE ut.TicketID = " + ticketID + ";" + command.CommandText.Replace("CustomValues", "#CustomValues");
+            WHERE ut.TicketID = " + ticketID + " AND cf.RefType = 32 AND cf.OrganizationID = " + LoginUser.OrganizationID + "; " + command.CommandText.Replace("CustomValues", "#CustomValues");
 
         command.CommandType = CommandType.Text;
         command.Parameters.AddWithValue("@TicketID", ticketID);
+        //Fill(command);
         Fill(command,"", false);
       }
     }
