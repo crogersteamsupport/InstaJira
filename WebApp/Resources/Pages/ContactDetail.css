@@ -23,7 +23,9 @@
 
 .userProperties .fa-external-link { margin-left: 10px; }
 
-#tblNotes, #tblProducts, #tblFiles i {cursor:pointer;}
+#tblNotes, #tblProducts, #tblNotesAdditional, #tblFiles i {
+    cursor: pointer;
+}
 .note-list{
     margin-top: 10px;
     /*border-bottom: 3px solid #DDDDDD;*/
@@ -153,7 +155,13 @@ div[data-toggle="collapse"] .ui-icon {
 
 #modalTaskComment {top: 100px;}
 
-.activity-file{    cursor: pointer;    color: blue;}.noteAttachmentName{
+.activity-file{
+    cursor: pointer;
+    color: blue;
+}
+
+.noteAttachmentName
+{
     margin-right: 10px;
 }
 

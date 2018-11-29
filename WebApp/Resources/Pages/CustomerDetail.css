@@ -375,7 +375,13 @@ tr.over-due > td > span > i, .over-due > td > a {
         cursor: pointer;
     }
 
-    .activity-file{    cursor: pointer;    color: blue;}    .noteAttachmentName    {
+    .activity-file{
+    cursor: pointer;
+    color: blue;
+}
+
+    .noteAttachmentName
+    {
         margin-right: 10px;
     }
 
