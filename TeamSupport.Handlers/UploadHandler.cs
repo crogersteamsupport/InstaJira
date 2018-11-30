@@ -30,6 +30,9 @@ namespace TeamSupport.Handlers
 
         public void ProcessRequest(HttpContext context)
         {
+            if (ProcessImportUploadRequest(context))
+                return;
+
             context.Response.ContentType = "text/html";
             try
             {
@@ -52,6 +55,45 @@ namespace TeamSupport.Handlers
             }
 
             context.Response.End();
+        }
+
+        public static string RemoveSpecialCharacters(string text)
+        {
+            return Path.GetInvalidFileNameChars().Aggregate(text, (current, c) => current.Replace(c.ToString(), "_"));
+        }
+
+        public bool ProcessImportUploadRequest(HttpContext context)
+        {
+            context.Response.ContentType = "text/html";
+            try
+            {
+                string path = ModelAPI.AttachmentAPI.ImportFileUploadPath(context);
+                if (String.IsNullOrEmpty(path))
+                    return false;
+
+                HttpFileCollection files = context.Request.Files;
+                List<UploadResult> result = new List<UploadResult>();
+                for (int i = 0; i < files.Count; i++)
+                {
+                    if (files[i].ContentLength > 0)
+                    {
+                        string fileName = RemoveSpecialCharacters(DataUtils.VerifyUniqueUrlFileName(path, Path.GetFileName(files[i].FileName)));
+                        files[i].SaveAs(Path.Combine(path, fileName));
+                        result.Add(new UploadResult(fileName, files[i].ContentType, files[i].ContentLength));
+                    }
+                }
+
+                context.Response.Clear();
+                context.Response.ContentType = "text/html";
+                context.Response.Write(DataUtils.ObjectToJson(result.ToArray()));
+            }
+            catch (Exception ex)
+            {
+                context.Response.Write(ex.Message);
+            }
+
+            context.Response.End();
+            return true;
         }
 
 
