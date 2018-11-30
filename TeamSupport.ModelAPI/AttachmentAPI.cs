@@ -41,12 +41,9 @@ namespace TeamSupport.ModelAPI
 
                 using (ConnectionContext connection = new ConnectionContext())
                 {
-                    // not really an attachment
-                    HttpFileCollection files = context.Request.Files;
-
-
                     // valid ID to add attachment
                     IAttachmentDestination model = ClassFactory(connection, pathMap._refType, refID);
+                    HttpFileCollection files = context.Request.Files;
                     result = new List<AttachmentProxy>();
                     for (int i = 0; i < files.Count; i++)
                     {
@@ -153,7 +150,7 @@ namespace TeamSupport.ModelAPI
                 case AttachmentProxy.References.WaterCooler: return new WatercoolerMsgModel(connection, refID);
                 default:
                     if (System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Break();
-                    return null;
+                    throw new Exception($"bad ReferenceType {refType}");
             }
         }
 
@@ -369,8 +366,9 @@ namespace TeamSupport.ModelAPI
                 segments.Add(segment.ToLower().Trim().Replace("/", ""));
 
             // id
-            if(int.TryParse(segments[segments.Count - 1], out id))
-                segments.RemoveAt(segments.Count - 1);
+            if (!int.TryParse(segments[segments.Count - 1], out id))
+                throw new Exception($"Bad attachment id {segments[segments.Count - 1]}");
+            segments.RemoveAt(segments.Count - 1);
 
             // _ratingImage
             if (segments[segments.Count - 1] == "ratingpositive" || segments[segments.Count - 1] == "ratingneutral" || segments[segments.Count - 1] == "ratingnegative")
