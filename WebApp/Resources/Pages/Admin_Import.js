@@ -37,9 +37,14 @@ ImportPage = function () {
                     if (imports[i].IsRolledBack) {
                         logFileName = imports[i].ImportID + '-rolledback.txt'
                     }
-                    var logFileLink = '<a href="../../../dc/1/importlog/' + imports[i].ImportID + '" title="Log File">' + logFileName + '</a>';
-                    if (!imports[i].IsRolledBack && imports[i].RefType != 56) {
-                        logFileLink += "<a href='' id='" + imports[i].ImportID + "' data-refType='" + imports[i].RefType + "' class='rollback' title='Rollback'><span class='fa fa-undo'></span></a>";
+
+                    var logFileLink = '';
+
+                    if (imports[i].IsDone) {
+                        logFileLink = '<a href="../../../dc/1/importlog/' + imports[i].ImportID + '" title="Log File">' + logFileName + '</a>';
+                        if (!imports[i].IsRolledBack && imports[i].RefType != 56) {
+                            logFileLink += "<a href='' id='" + imports[i].ImportID + "' data-refType='" + imports[i].RefType + "' class='rollback' title='Rollback'><span class='fa fa-undo'></span></a>";
+                        }
                     }
 
                     var dateStarted = null;
@@ -55,10 +60,19 @@ ImportPage = function () {
                             logFileLink = 'Expired';
                         }
                     }
-                    var status = 0;
-                    if (imports[i].CompletedRows > 0) {
-                        status = (imports[i].CompletedRows / imports[i].TotalRows) * 100;
+
+                    var status = '';
+                    if (imports[i].IsDone)
+                        status = 'Complete';
+                    else {
+                        if (imports[i].IsRunning) {
+                            status = 'Running';
+                        }
+                        else {
+                            status = 'Not Running';
+                        }
                     }
+
 
                     var tr = $('<tr>')
                             .attr('id', imports[i].ImportID)
@@ -66,7 +80,7 @@ ImportPage = function () {
                     <td>' + imports[i].FileName + '</td>\
                     <td>' + imports[i].RefTypeString + '</td>\
                     <td>' + dateStarted + '</td>\
-                    <td>' + status + '%</td>\
+                    <td>' + status + '</td>\
                     <td>' + logFileLink + '</td>')
                             .appendTo('#tblImports > tbody:last');
                 }
