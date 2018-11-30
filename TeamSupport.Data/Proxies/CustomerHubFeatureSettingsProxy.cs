@@ -44,7 +44,7 @@ namespace TeamSupport.Data
     [DataMember] public bool EnableCustomFieldModification { get; set; }
     [DataMember] public bool EnableProductFamilyFiltering { get; set; }
     [DataMember] public int ChatGroupID { get; set; }
-    [DataMember] public bool? EnableAnonymousTicketingRecaptcha { get; set; }
+    [DataMember] public bool EnableAnonymousTicketingRecaptcha { get; set; }
           
   }
   

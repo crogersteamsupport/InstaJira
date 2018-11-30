@@ -52,13 +52,13 @@ namespace TeamSupport.Data
       set { Row["ModifierID"] = CheckValue("ModifierID", value); }
     }
     
-    public bool? EnableAnonymousTicketingRecaptcha
+
+    
+    public bool EnableAnonymousTicketingRecaptcha
     {
-      get { return Row["EnableAnonymousTicketingRecaptcha"] != DBNull.Value ? (bool?)Row["EnableAnonymousTicketingRecaptcha"] : null; }
+      get { return (bool)Row["EnableAnonymousTicketingRecaptcha"]; }
       set { Row["EnableAnonymousTicketingRecaptcha"] = CheckValue("EnableAnonymousTicketingRecaptcha", value); }
     }
-    
-
     
     public int ChatGroupID
     {
