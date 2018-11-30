@@ -52,6 +52,12 @@ namespace TeamSupport.Data
       set { Row["ModifierID"] = CheckValue("ModifierID", value); }
     }
     
+    public bool? EnableAnonymousTicketingRecaptcha
+    {
+      get { return Row["EnableAnonymousTicketingRecaptcha"] != DBNull.Value ? (bool?)Row["EnableAnonymousTicketingRecaptcha"] : null; }
+      set { Row["EnableAnonymousTicketingRecaptcha"] = CheckValue("EnableAnonymousTicketingRecaptcha", value); }
+    }
+    
 
     
     public int ChatGroupID
@@ -314,7 +320,7 @@ namespace TeamSupport.Data
 		updateCommand.Connection = connection;
 		//updateCommand.Transaction = transaction;
 		updateCommand.CommandType = CommandType.Text;
-		updateCommand.CommandText = "SET NOCOUNT OFF; UPDATE [dbo].[CustomerHubFeatureSettings] SET     [CustomerHubID] = @CustomerHubID,    [EnableKnowledgeBase] = @EnableKnowledgeBase,    [EnableProducts] = @EnableProducts,    [EnableTicketCreation] = @EnableTicketCreation,    [EnableMyTickets] = @EnableMyTickets,    [EnableOrganizationTickets] = @EnableOrganizationTickets,    [EnableWiki] = @EnableWiki,    [EnableTicketGroupSelection] = @EnableTicketGroupSelection,    [EnableTicketProductSelection] = @EnableTicketProductSelection,    [EnableTicketProductVersionSelection] = @EnableTicketProductVersionSelection,    [DefaultTicketTypeID] = @DefaultTicketTypeID,    [DefaultGroupTypeID] = @DefaultGroupTypeID,    [EnableCustomerProductAssociation] = @EnableCustomerProductAssociation,    [EnableChat] = @EnableChat,    [EnableCommunity] = @EnableCommunity,    [EnableScreenRecording] = @EnableScreenRecording,    [EnableVideoRecording] = @EnableVideoRecording,    [DateModified] = @DateModified,    [ModifierID] = @ModifierID,    [EnableTicketSeverity] = @EnableTicketSeverity,    [EnableTicketSeverityModification] = @EnableTicketSeverityModification,    [RestrictProductVersions] = @RestrictProductVersions,    [EnableTicketNameModification] = @EnableTicketNameModification,    [KnowledgeBaseSortTypeID] = @KnowledgeBaseSortTypeID,    [CommunitySortTypeID] = @CommunitySortTypeID,    [EnableAnonymousProductAssociation] = @EnableAnonymousProductAssociation,    [EnableCustomerSpecificKB] = @EnableCustomerSpecificKB,    [EnableCustomFieldModification] = @EnableCustomFieldModification,    [EnableProductFamilyFiltering] = @EnableProductFamilyFiltering,    [ChatGroupID] = @ChatGroupID  WHERE ([CustomerHubFeatureSettingID] = @CustomerHubFeatureSettingID);";
+		updateCommand.CommandText = "SET NOCOUNT OFF; UPDATE [dbo].[CustomerHubFeatureSettings] SET     [CustomerHubID] = @CustomerHubID,    [EnableKnowledgeBase] = @EnableKnowledgeBase,    [EnableProducts] = @EnableProducts,    [EnableTicketCreation] = @EnableTicketCreation,    [EnableMyTickets] = @EnableMyTickets,    [EnableOrganizationTickets] = @EnableOrganizationTickets,    [EnableWiki] = @EnableWiki,    [EnableTicketGroupSelection] = @EnableTicketGroupSelection,    [EnableTicketProductSelection] = @EnableTicketProductSelection,    [EnableTicketProductVersionSelection] = @EnableTicketProductVersionSelection,    [DefaultTicketTypeID] = @DefaultTicketTypeID,    [DefaultGroupTypeID] = @DefaultGroupTypeID,    [EnableCustomerProductAssociation] = @EnableCustomerProductAssociation,    [EnableChat] = @EnableChat,    [EnableCommunity] = @EnableCommunity,    [EnableScreenRecording] = @EnableScreenRecording,    [EnableVideoRecording] = @EnableVideoRecording,    [DateModified] = @DateModified,    [ModifierID] = @ModifierID,    [EnableTicketSeverity] = @EnableTicketSeverity,    [EnableTicketSeverityModification] = @EnableTicketSeverityModification,    [RestrictProductVersions] = @RestrictProductVersions,    [EnableTicketNameModification] = @EnableTicketNameModification,    [KnowledgeBaseSortTypeID] = @KnowledgeBaseSortTypeID,    [CommunitySortTypeID] = @CommunitySortTypeID,    [EnableAnonymousProductAssociation] = @EnableAnonymousProductAssociation,    [EnableCustomerSpecificKB] = @EnableCustomerSpecificKB,    [EnableCustomFieldModification] = @EnableCustomFieldModification,    [EnableProductFamilyFiltering] = @EnableProductFamilyFiltering,    [ChatGroupID] = @ChatGroupID,    [EnableAnonymousTicketingRecaptcha] = @EnableAnonymousTicketingRecaptcha  WHERE ([CustomerHubFeatureSettingID] = @CustomerHubFeatureSettingID);";
 
 		
 		tempParameter = updateCommand.Parameters.Add("CustomerHubFeatureSettingID", SqlDbType.Int, 4);
@@ -534,13 +540,27 @@ namespace TeamSupport.Data
 		  tempParameter.Scale = 10;
 		}
 		
+		tempParameter = updateCommand.Parameters.Add("EnableAnonymousTicketingRecaptcha", SqlDbType.Bit, 1);
+		if (tempParameter.SqlDbType == SqlDbType.Float)
+		{
+		  tempParameter.Precision = 255;
+		  tempParameter.Scale = 255;
+		}
+		
 
 		SqlCommand insertCommand = connection.CreateCommand();
 		insertCommand.Connection = connection;
 		//insertCommand.Transaction = transaction;
 		insertCommand.CommandType = CommandType.Text;
-		insertCommand.CommandText = "SET NOCOUNT OFF; INSERT INTO [dbo].[CustomerHubFeatureSettings] (    [CustomerHubID],    [EnableKnowledgeBase],    [EnableProducts],    [EnableTicketCreation],    [EnableMyTickets],    [EnableOrganizationTickets],    [EnableWiki],    [EnableTicketGroupSelection],    [EnableTicketProductSelection],    [EnableTicketProductVersionSelection],    [DefaultTicketTypeID],    [DefaultGroupTypeID],    [EnableCustomerProductAssociation],    [EnableChat],    [EnableCommunity],    [EnableScreenRecording],    [EnableVideoRecording],    [DateModified],    [ModifierID],    [EnableTicketSeverity],    [EnableTicketSeverityModification],    [RestrictProductVersions],    [EnableTicketNameModification],    [KnowledgeBaseSortTypeID],    [CommunitySortTypeID],    [EnableAnonymousProductAssociation],    [EnableCustomerSpecificKB],    [EnableCustomFieldModification],    [EnableProductFamilyFiltering],    [ChatGroupID]) VALUES ( @CustomerHubID, @EnableKnowledgeBase, @EnableProducts, @EnableTicketCreation, @EnableMyTickets, @EnableOrganizationTickets, @EnableWiki, @EnableTicketGroupSelection, @EnableTicketProductSelection, @EnableTicketProductVersionSelection, @DefaultTicketTypeID, @DefaultGroupTypeID, @EnableCustomerProductAssociation, @EnableChat, @EnableCommunity, @EnableScreenRecording, @EnableVideoRecording, @DateModified, @ModifierID, @EnableTicketSeverity, @EnableTicketSeverityModification, @RestrictProductVersions, @EnableTicketNameModification, @KnowledgeBaseSortTypeID, @CommunitySortTypeID, @EnableAnonymousProductAssociation, @EnableCustomerSpecificKB, @EnableCustomFieldModification, @EnableProductFamilyFiltering, @ChatGroupID); SET @Identity = SCOPE_IDENTITY();";
+		insertCommand.CommandText = "SET NOCOUNT OFF; INSERT INTO [dbo].[CustomerHubFeatureSettings] (    [CustomerHubID],    [EnableKnowledgeBase],    [EnableProducts],    [EnableTicketCreation],    [EnableMyTickets],    [EnableOrganizationTickets],    [EnableWiki],    [EnableTicketGroupSelection],    [EnableTicketProductSelection],    [EnableTicketProductVersionSelection],    [DefaultTicketTypeID],    [DefaultGroupTypeID],    [EnableCustomerProductAssociation],    [EnableChat],    [EnableCommunity],    [EnableScreenRecording],    [EnableVideoRecording],    [DateModified],    [ModifierID],    [EnableTicketSeverity],    [EnableTicketSeverityModification],    [RestrictProductVersions],    [EnableTicketNameModification],    [KnowledgeBaseSortTypeID],    [CommunitySortTypeID],    [EnableAnonymousProductAssociation],    [EnableCustomerSpecificKB],    [EnableCustomFieldModification],    [EnableProductFamilyFiltering],    [ChatGroupID],    [EnableAnonymousTicketingRecaptcha]) VALUES ( @CustomerHubID, @EnableKnowledgeBase, @EnableProducts, @EnableTicketCreation, @EnableMyTickets, @EnableOrganizationTickets, @EnableWiki, @EnableTicketGroupSelection, @EnableTicketProductSelection, @EnableTicketProductVersionSelection, @DefaultTicketTypeID, @DefaultGroupTypeID, @EnableCustomerProductAssociation, @EnableChat, @EnableCommunity, @EnableScreenRecording, @EnableVideoRecording, @DateModified, @ModifierID, @EnableTicketSeverity, @EnableTicketSeverityModification, @RestrictProductVersions, @EnableTicketNameModification, @KnowledgeBaseSortTypeID, @CommunitySortTypeID, @EnableAnonymousProductAssociation, @EnableCustomerSpecificKB, @EnableCustomFieldModification, @EnableProductFamilyFiltering, @ChatGroupID, @EnableAnonymousTicketingRecaptcha); SET @Identity = SCOPE_IDENTITY();";
 
+		
+		tempParameter = insertCommand.Parameters.Add("EnableAnonymousTicketingRecaptcha", SqlDbType.Bit, 1);
+		if (tempParameter.SqlDbType == SqlDbType.Float)
+		{
+		  tempParameter.Precision = 255;
+		  tempParameter.Scale = 255;
+		}
 		
 		tempParameter = insertCommand.Parameters.Add("ChatGroupID", SqlDbType.Int, 4);
 		if (tempParameter.SqlDbType == SqlDbType.Float)
@@ -864,7 +884,7 @@ namespace TeamSupport.Data
     {
       using (SqlCommand command = new SqlCommand())
       {
-        command.CommandText = "SET NOCOUNT OFF; SELECT [CustomerHubFeatureSettingID], [CustomerHubID], [EnableKnowledgeBase], [EnableProducts], [EnableTicketCreation], [EnableMyTickets], [EnableOrganizationTickets], [EnableWiki], [EnableTicketGroupSelection], [EnableTicketProductSelection], [EnableTicketProductVersionSelection], [DefaultTicketTypeID], [DefaultGroupTypeID], [EnableCustomerProductAssociation], [EnableChat], [EnableCommunity], [EnableScreenRecording], [EnableVideoRecording], [DateModified], [ModifierID], [EnableTicketSeverity], [EnableTicketSeverityModification], [RestrictProductVersions], [EnableTicketNameModification], [KnowledgeBaseSortTypeID], [CommunitySortTypeID], [EnableAnonymousProductAssociation], [EnableCustomerSpecificKB], [EnableCustomFieldModification], [EnableProductFamilyFiltering], [ChatGroupID] FROM [dbo].[CustomerHubFeatureSettings] WHERE ([CustomerHubFeatureSettingID] = @CustomerHubFeatureSettingID);";
+        command.CommandText = "SET NOCOUNT OFF; SELECT [CustomerHubFeatureSettingID], [CustomerHubID], [EnableKnowledgeBase], [EnableProducts], [EnableTicketCreation], [EnableMyTickets], [EnableOrganizationTickets], [EnableWiki], [EnableTicketGroupSelection], [EnableTicketProductSelection], [EnableTicketProductVersionSelection], [DefaultTicketTypeID], [DefaultGroupTypeID], [EnableCustomerProductAssociation], [EnableChat], [EnableCommunity], [EnableScreenRecording], [EnableVideoRecording], [DateModified], [ModifierID], [EnableTicketSeverity], [EnableTicketSeverityModification], [RestrictProductVersions], [EnableTicketNameModification], [KnowledgeBaseSortTypeID], [CommunitySortTypeID], [EnableAnonymousProductAssociation], [EnableCustomerSpecificKB], [EnableCustomFieldModification], [EnableProductFamilyFiltering], [ChatGroupID], [EnableAnonymousTicketingRecaptcha] FROM [dbo].[CustomerHubFeatureSettings] WHERE ([CustomerHubFeatureSettingID] = @CustomerHubFeatureSettingID);";
         command.CommandType = CommandType.Text;
         command.Parameters.AddWithValue("CustomerHubFeatureSettingID", customerHubFeatureSettingID);
         Fill(command);
