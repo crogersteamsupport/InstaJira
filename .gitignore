@@ -37,3 +37,4 @@ _ReSharper*/
 
 /BusinessObjectGenerator/.vs/BusinessObjectGenerator/v15/Server/sqlite3
 /.vs
+/packages
