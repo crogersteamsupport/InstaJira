@@ -151,6 +151,7 @@ namespace TeamSupport.ModelAPI
                 default:
                     if (System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Break();
                     throw new Exception($"bad ReferenceType {refType}");
+
             }
         }
 
@@ -366,9 +367,8 @@ namespace TeamSupport.ModelAPI
                 segments.Add(segment.ToLower().Trim().Replace("/", ""));
 
             // id
-            if (!int.TryParse(segments[segments.Count - 1], out id))
-                throw new Exception($"Bad attachment id {segments[segments.Count - 1]}");
-            segments.RemoveAt(segments.Count - 1);
+            if (int.TryParse(segments[segments.Count - 1], out id))
+                segments.RemoveAt(segments.Count - 1);
 
             // _ratingImage
             if (segments[segments.Count - 1] == "ratingpositive" || segments[segments.Count - 1] == "ratingneutral" || segments[segments.Count - 1] == "ratingnegative")
