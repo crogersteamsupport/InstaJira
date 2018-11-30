@@ -4234,7 +4234,7 @@ function FetchPinned() {
         if (returned.length > 0) {
             var pinned = returned[0];
             pinned.pinning = 'yes';
-            var template = Handlebars.templates['action2'];
+            var template = Handlebars.templates['action'];
             var html = template(pinned);
             $(html).find('a').attr('target', '_blank');
             $("#pinned-placeholder").html(html);
@@ -4251,7 +4251,7 @@ function FetchTimeLineItems(start) {
             $('.results-loading').hide();
             $('.results-done').show();
         } else {
-            _compiledActionTemplate = Handlebars.templates['action2'];
+            _compiledActionTemplate = Handlebars.templates['action'];
             var isPublicFiltered = $('.filter-public').hasClass('bgcolor-darkgray');
             var isPrivateFiltered = $('.filter-private').hasClass('bgcolor-darkgray');
             var isWCFiltered = $('.filter-wc').hasClass('bgcolor-darkgray');
