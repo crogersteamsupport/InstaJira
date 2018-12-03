@@ -635,9 +635,9 @@ namespace TeamSupport.Data
 			  if (insertCommand.Parameters["Identity"].Value != DBNull.Value)
 				action.Row["ActionID"] = (int)insertCommand.Parameters["Identity"].Value;
 
-              try { BusinessObjects.ActionToAnalyze.QueueForWatsonToneAnalysis(action, connection, LoginUser); }
+			  try { BusinessObjects.ActionToAnalyze.QueueForWatsonToneAnalysis(action, connection, LoginUser); }
 			  catch(Exception) { }
-              AfterRowInsert(action);
+			  AfterRowInsert(action);
 			}
             break;
 
