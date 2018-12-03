@@ -85,10 +85,16 @@ namespace TeamSupport.Handlers
                                 NameValueCollection values = HttpUtility.ParseQueryString(requestContent);
                                 try
                                 {
+									if (IsReCaptchaVerified(values))
+									{
                                     User user = ProcessSignUp(context, values);
                                     string url = string.Format("{0}://{1}/{2}?userid={3}", context.Request.UrlReferrer.Scheme, context.Request.UrlReferrer.Host, GetValueString(values["success"]), user.UserID.ToString());
                                     context.Response.Redirect(url, false);
-
+									}
+									else
+									{
+										context.Response.Redirect(GetErrorUrl(context, values), false);
+									}
                                 }
                                 catch (Exception ex)
                                 {
