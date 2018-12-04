@@ -928,8 +928,6 @@ Namespace TeamSupport
                 postParameters.Add("ZOHO_DATE_FORMAT", "MM/dd/yyyy HH:mm:ss")
                 postParameters.Add("ZOHO_FILE", byteData)
 
-				File.WriteAllBytes("C:\Development\Repositories\Victor\ts-app\TeamSupport.ServiceTestApplication\bin\Debug\Logs\13679\reports.csv", byteData)
-
                 Try
                     Using response As HttpWebResponse = WebHelpers.MultipartFormDataPost(zohoUri, Client, postParameters)
 
