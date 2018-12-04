@@ -74,6 +74,13 @@ namespace TeamSupport.Data
                 command.Parameters.AddWithValue("@ProductFamilyID", productFamilyID);
                 productFamilies.ExecuteNonQuery(command, "Products");
 
+                command.CommandText = "UPDATE Attachments SET ProductFamilyID = null WHERE ProductFamilyID = @ProductFamilyID AND OrganizationID = @OrganizationID";
+                command.CommandType = CommandType.Text;
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@ProductFamilyID", productFamilyID);
+                command.Parameters.AddWithValue("@OrganizationID", loginUser.OrganizationID);
+                productFamilies.ExecuteNonQuery(command, "Attachments");
+
                 command.CommandText = "DELETE ProductFamilies WHERE ProductFamilyID = @ProductFamilyID AND OrganizationID = @OrganizationID";
                 command.CommandType = CommandType.Text;
                 command.Parameters.Clear();
