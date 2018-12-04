@@ -178,7 +178,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                 command.CommandText = command.CommandText + " ORDER BY [" + sortField + (isDesc ? "] DESC" : "] ASC");
             }
 
-            AddReportTicketsViewTempTable(command);
+            AddReportTicketsViewTempTable(command, useUserFilter);
 
             return command;
         }
@@ -228,12 +228,12 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                 command.CommandText = command.CommandText + " ORDER BY [" + sortField + (isDesc ? "] DESC" : "] ASC");
             }
 
-            AddReportTicketsViewTempTable(command);
+            AddReportTicketsViewTempTable(command, useUserFilter);
 
             return command;
         }
 
-        private void AddReportTicketsViewTempTable(SqlCommand command)
+        private void AddReportTicketsViewTempTable(SqlCommand command, bool useUserFilter)
         {
             if (!_summaryReportSql.IsOrganizationID ||   // not Parent organizationID report
                 (_report.ReportDefType == ReportType.Custom) ||   // not a custom report
@@ -241,7 +241,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                 return;
 
             _summaryReport = JsonConvert.DeserializeObject<SummaryReport>(_report.ReportDef);
-            _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _summaryReport);
+            _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _summaryReport, useUserFilter);
             string tempTable = _reportTicketsView.ToSql();
             if (!String.IsNullOrEmpty(tempTable))
                 command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");

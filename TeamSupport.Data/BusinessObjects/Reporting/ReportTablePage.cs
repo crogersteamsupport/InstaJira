@@ -247,7 +247,7 @@ WHERE RowNum BETWEEN @From AND @To";
                 command.CommandText = string.Format(query, command.CommandText, sortField, isDesc ? "DESC" : "ASC");
             }
 
-            AddReportTicketsViewTempTable(command);
+            AddReportTicketsViewTempTable(command, useUserFilter);
 
             return command;
         }
@@ -293,7 +293,7 @@ WHERE RowNum BETWEEN @From AND @To";
             if (table.Columns.Contains("RowNum"))
                 table.Columns.Remove("RowNum");
 
-            AddReportTicketsViewTempTable(command);
+            AddReportTicketsViewTempTable(command, useUserFilter);
 
             return table;
         }
@@ -334,7 +334,7 @@ WHERE RowNum BETWEEN @From AND @To";
             return command;
         }
 
-        private void AddReportTicketsViewTempTable(SqlCommand command)
+        private void AddReportTicketsViewTempTable(SqlCommand command, bool useUserFilter)
         {
             if (!_tabularReportSql.IsOrganizationID ||   // not Parent organizationID report
                 (_report.ReportDefType == ReportType.Custom))   // not a custom report
@@ -344,7 +344,7 @@ WHERE RowNum BETWEEN @From AND @To";
                 return;
 
             _tabularReport = JsonConvert.DeserializeObject<TabularReport>(_report.ReportDef);
-            _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _tabularReport);
+            _reportTicketsView = new ReportTicketsViewTempTable(_report.Collection.LoginUser, _tabularReport, useUserFilter);
             string tempTable = _reportTicketsView.ToSql();
             if (!String.IsNullOrEmpty(tempTable))
                 command.CommandText = (tempTable + command.CommandText).Replace("ReportTicketsView", "#ReportTicketsView");
