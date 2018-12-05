@@ -195,6 +195,11 @@ namespace TeamSupport.Data.Quarantine
             return Path.Combine(AttachmentPath.GetImageCachePath(LoginUser.Anonymous), "Avatars\\" + organizationID.ToString());
         }
 
+        public static string GetTempImageCachePath(LoginUser loginUser)
+        {
+            return Path.Combine(AttachmentPath.GetPath(loginUser, loginUser.OrganizationID, AttachmentPath.Folder.TempImages, 3));
+        }
+
         public static string[] GetFiles(LoginUser loginUser)
         {
             return Directory.GetFiles(AttachmentPath.GetPath(loginUser, loginUser.OrganizationID, AttachmentPath.Folder.TicketTypeImages), "*.*", SearchOption.TopDirectoryOnly);

@@ -30,29 +30,6 @@ namespace TeamSupport.WebUtils
             get
             {
                 return TSAuthentication.GetLoginUser();
-                //if (HttpContext.Current.Session["LoginUser"] == null)
-                //{
-                //    HttpContext.Current.Session.Remove("PostAuthToken");
-                //    if (HttpContext.Current.User.Identity is FormsIdentity)
-                //    {
-                //        FormsAuthenticationTicket ticket = (HttpContext.Current.User.Identity as FormsIdentity).Ticket;
-                //        string[] userData = ticket.UserData.Split('|');
-                //        if (userData.Length > 1)
-                //        {
-                //            int userID = int.Parse(userData[0]);
-                //            int organizationID = int.Parse(userData[1]);
-                //            //LoginUser loginUser = new LoginUser(ConnectionString, userID, organizationID, new WebDataCache());
-                //            //HttpContext.Current.Session["LoginUser"] = loginUser;
-                //            return TSAuthentication.GetLoginUser();
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    return (LoginUser)HttpContext.Current.Session["LoginUser"];
-                //}
-
-                //return null;
             }
         }
 
@@ -93,39 +70,21 @@ namespace TeamSupport.WebUtils
 
         public static void RefreshCurrentUserInfo()
         {
-            //HttpContext.Current.Session.Remove("CurrentUserInfo");
+
         }
 
         public static void RefreshPostAuthToken()
         {
-            //HttpContext.Current.Session.Remove("PostAuthToken");
+
         }
 
         public static void RefreshLoginUser()
         {
-            //HttpContext.Current.Session.Remove("LoginUser");
+
         }
 
         private static bool IsSessionValid()
         {
-            /*
-
-            if ((HttpContext.Current.Session != null && HttpContext.Current.Session.IsNewSession))
-            {
-              string cookie = HttpContext.Current.Request.Headers["Cookie"];
-              if (cookie != null && cookie.IndexOf("ASP.NET_SessionId") >= 0)
-              {
-                HttpContext.Current.Session.Abandon();
-                return false;
-              }
-            }
-
-            if (HttpContext.Current.Session["LoginUser"] == null)
-            {
-              HttpContext.Current.Session.Abandon();
-              return false;
-            }
-            */
             return true;
         }
 
@@ -133,11 +92,6 @@ namespace TeamSupport.WebUtils
         {
             get
             {
-                //if (HttpContext.Current.Session["PostAuthToken"] == null)
-                //{
-                //    HttpContext.Current.Session["PostAuthToken"] = Guid.NewGuid().ToString();
-                //}
-                //return (string)HttpContext.Current.Session["PostAuthToken"];
                 return "";
             }
         }
@@ -145,27 +99,15 @@ namespace TeamSupport.WebUtils
         public static int GetID(string key)
         {
             return -1;
-            //return HttpContext.Current.Session[key] == null ? -1 : (int)HttpContext.Current.Session[key];
         }
 
         public static void SetID(string key, int id)
         {
-            //HttpContext.Current.Session[key] = id;
         }
 
         private static object GetValue(string key)
         {
             return null;
-            //if (HttpContext.Current.Session != null && HttpContext.Current.Session[key] != null)
-            //{
-            //    return HttpContext.Current.Session[key];
-            //}
-            //else
-            //{
-            //    //HttpContext.Current.Response.Redirect("~/Login.aspx");
-            //    return null;
-
-            //}
         }
 
     }
