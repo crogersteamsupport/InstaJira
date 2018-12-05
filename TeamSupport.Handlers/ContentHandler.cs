@@ -795,11 +795,11 @@ namespace TeamSupport.Handlers
 
                 AttachmentProxy attachment = Model_API.Read<AttachmentProxy>(id);
 
-            //User user = null;
-            bool isAuthenticated = UserRights.CanOpenAttachment(TSAuthentication.GetLoginUser(), attachment);
+                //User user = null;
+                bool isAuthenticated = UserRights.CanOpenAttachment(TSAuthentication.GetLoginUser(), attachment);
 
 
-                if (isAuthenticated)
+            if (isAuthenticated)
                 {
                     // not used
                     //user = Users.GetUser(attachment.Collection.LoginUser, TSAuthentication.UserID);
