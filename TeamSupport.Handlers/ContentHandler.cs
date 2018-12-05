@@ -34,6 +34,7 @@ using System.Dynamic;
 using PusherServer;
 using TeamSupport.ModelAPI;
 using TeamSupport.IDTree;
+using TeamSupport.Permissions;
 
 
 namespace TeamSupport.Handlers
@@ -794,8 +795,8 @@ namespace TeamSupport.Handlers
 
                 AttachmentProxy attachment = Model_API.Read<AttachmentProxy>(id);
 
-                //User user = null;
-                bool isAuthenticated = attachment.OrganizationID == TSAuthentication.OrganizationID;
+            //User user = null;
+            bool isAuthenticated = UserRights.CanOpenAttachment(TSAuthentication.GetLoginUser(), attachment);
 
 
                 if (isAuthenticated)
