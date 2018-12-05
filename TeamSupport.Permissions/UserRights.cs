@@ -53,7 +53,7 @@ namespace TeamSupport.Permissions
 
         static bool TryGetParentID(DataContext db, AttachmentProxy attachment, out int parentID)
         {
-            string query = $"SELECT ParentID FROM Attachments att JOIN Organizations o on att.OrganizationID=o.OrganizationID WHERE att.AttachmentID={attachment.OrganizationID}";
+            string query = $"SELECT ParentID FROM Attachments att JOIN Organizations o on att.OrganizationID=o.OrganizationID WHERE att.AttachmentID={attachment.AttachmentID}";
             parentID = db.ExecuteQuery<int>(query).Min();
             return parentID != 1;   // attachment creator org have ParentID?
         }
@@ -66,8 +66,8 @@ namespace TeamSupport.Permissions
 
             // attachment in parent organization
             int parentID;
-            if (TryGetParentID(loginUser, out parentID))
-                return (attachment.OrganizationID == parentID);
+            if (TryGetParentID(loginUser, out parentID) && (attachment.OrganizationID == parentID))
+                return true;
 
             // User in PARENT Organization can see attachments created by a user from:
             //     * same parent organization
