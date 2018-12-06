@@ -35,27 +35,6 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             _userRights = new UserRights(loginUser);
         }
 
-        void FilterToCustomFieldID(ReportFilter[] filters, List<int> customFieldID)
-        {
-            foreach (ReportFilter filter in filters)
-            {
-                FilterToCustomFieldID(filter, customFieldID);
-                FilterToCustomFieldID(filter.Filters, customFieldID);   // recurse
-            }
-        }
-
-        void FilterToCustomFieldID(ReportFilter filter, List<int> customFieldID)
-        {
-            foreach(ReportFilterCondition condition in filter.Conditions)
-            {
-                if (!condition.IsCustom)
-                    continue;
-
-                CustomField customField = TeamSupport.Data.CustomFields.GetCustomField(_userRights._loginUser, condition.FieldID);
-                customFieldID.Add(customField.CustomFieldID);
-            }
-        }
-
         public void GetTabularSql(SqlCommand command, TabularReport tabularReport, bool inlcudeHiddenFields, bool isSchemaOnly, int? reportID, bool useUserFilter, string sortField = null, string sortDir = null)
         {
             LoginUser loginUser = _userRights._loginUser;
@@ -75,10 +54,6 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                 }
 
                 Report.GetWhereClause(loginUser, command, builder, tabularReport.Filters, primaryTableKeyFieldName);
-
-                List<int> customFieldID = new List<int>();
-                FilterToCustomFieldID(tabularReport.Filters, customFieldID);
-
                 if (useUserFilter && reportID != null)
                 {
                     Report report = Reports.GetReport(loginUser, (int)reportID, loginUser.UserID);
@@ -252,9 +227,6 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                 else
                 {
                     ReportTableField tableField = tableFields.FindByReportTableFieldID(field.FieldID);
-
-                    //if (tableField.FieldName.Equals("CreatorName"))
-                    //    tableField = tableFields.FindByReportTableFieldID(13);  // CreatorID
 
                     ReportTable table = tables.FindByReportTableID(tableField.ReportTableID);
                     string fieldName = table.TableName + "." + tableField.FieldName;
