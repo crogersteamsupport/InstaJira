@@ -437,7 +437,7 @@ namespace TeamSupport.Data
                 builder.Append(")");
             }
         }
-        static int _CreatorIDFieldID = 0;
+        static int _CreatorID_ReportTableFieldID = 0;
 
         private static void WriteFilter(LoginUser loginUser, SqlCommand command, StringBuilder builder, ReportFilter filter, string primaryTableKeyName = null)
         {
@@ -473,9 +473,9 @@ namespace TeamSupport.Data
             using (DataContext db = new DataContext(connection))
             {
                 // FieldID = 13
-                if (_CreatorIDFieldID == 0)
-                    _CreatorIDFieldID = db.ExecuteQuery<int>("SELECT ReportTableFieldID AS FieldID FROM ReportTableFields WHERE FieldName = 'CreatorID'").Min();
-                condition1.FieldID = _CreatorIDFieldID;
+                if (_CreatorID_ReportTableFieldID == 0)
+                    _CreatorID_ReportTableFieldID = db.ExecuteQuery<int>("SELECT ReportTableFieldID AS FieldID FROM ReportTableFields WHERE FieldName = 'CreatorID'").Min();
+                condition1.FieldID = _CreatorID_ReportTableFieldID;
 
                 // Value1
                 switch (condition.Comparator)
