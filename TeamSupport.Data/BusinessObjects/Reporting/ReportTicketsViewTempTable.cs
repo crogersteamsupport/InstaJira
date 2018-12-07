@@ -8,7 +8,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 {
     public class ReportTicketsViewTempTable
     {
-        public static bool Enable { get; set; }
+        public static bool Enable { get; private set; }
 
         static Dictionary<EField, EJoin> _mapFieldToJoin;
         Dictionary<int, EField> _mapIdToField;    // update in case DB changes
