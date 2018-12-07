@@ -163,12 +163,7 @@ $(document).ready(function () {
 				displayMessage = chat.Description;
 			}
 
-            $(this).html('<p class="userName">' + innerString + '</p>' +
-                             '<p>Email:  ' + chat.InitiatorEmail + '</p>' +
-                             '<p>Time:  ' + moment(chat.DateCreated).format(dateFormat + ' hh:mm A') + '</p>' +
-				'<p>Message:  ' + displayMessage + '</p>')
-                             .append(acceptBtn)
-                             .addClass('open-request');
+            $(this).html('<p class="userName">' + innerString + '</p>' + '<p>Email:  ' + chat.InitiatorEmail + '</p>' + '<p>Time:  ' + moment(chat.DateCreated).format(dateFormat + ' hh:mm A') + '</p>' + '<p>Message:  ' + displayMessage + '</p>').append(acceptBtn).addClass('open-request');
         });
 
         $('#chats-requests').append(anchor);
@@ -267,8 +262,7 @@ $(document).ready(function () {
         if (messageData.ChatID == _activeChatID && !isAgentAcceptedInvitation) {
             var chatUserLeft = ((messageData.CreatorID !== null) ? messageData.CreatorID.toString() : 'customer');
 
-            if ((messageData.HasLeft && !$("#" + chatUserLeft + 'HasLeft').length > 0)
-				|| (!messageData.HasLeft)) {
+            if ((messageData.HasLeft && !$("#" + chatUserLeft + 'HasLeft').length > 0) || (!messageData.HasLeft)) {
 				var displayMessage = $("<div>").text(messageData.Message).html();
 
 				var containsProhibitedText = false;
@@ -279,21 +273,12 @@ $(document).ready(function () {
 					i++;
 				}
 
-				if ((messageData.Message.trim().indexOf("<img ") == 0 && !containsProhibitedText)
-					|| (messageData.Message.trim().indexOf("/chatattachments/") > 0 && !containsProhibitedText)
-					|| (messageData.Message.trim().indexOf('<a target="_blank" href=') >= 0 && !containsProhibitedText)) {
+				if ((messageData.Message.trim().indexOf("<img ") == 0 && !containsProhibitedText) || (messageData.Message.trim().indexOf("/chatattachments/") > 0 && !containsProhibitedText) || (messageData.Message.trim().indexOf('<a href=') >= 0 && !containsProhibitedText)) {
 					displayMessage = messageData.Message;
 				}
 
                 var messageTemplate = $("#message-template").html();
-                var compiledTemplate = messageTemplate
-                                        .replace('{{MessageDirection}}', 'left')
-                                        .replace('{{UserName}}', messageData.CreatorDisplayName)
-                                        .replace('{{Avatar}}', (messageData.CreatorID !== null)
-                                                                        ? '../../../dc/' + chatInfoObject.OrganizationID + '/UserAvatar/' + messageData.CreatorID + '/48/1470773158079'
-                                                                        : '../images/blank_avatar.png')
-                                        .replace('{{Message}}', displayMessage)
-                                        .replace('{{Date}}', moment(messageData.DateCreated).format(dateFormat + ' hh:mm A'));
+                var compiledTemplate = messageTemplate.replace('{{MessageDirection}}', 'left').replace('{{UserName}}', messageData.CreatorDisplayName).replace('{{Avatar}}', (messageData.CreatorID !== null) ? '../../../dc/' + chatInfoObject.OrganizationID + '/UserAvatar/' + messageData.CreatorID + '/48/1470773158079' : '../images/blank_avatar.png').replace('{{Message}}', displayMessage).replace('{{Date}}', moment(messageData.DateCreated).format(dateFormat + ' hh:mm A'));
 
                 if (messageData.HasLeft) {
                     compiledTemplate = compiledTemplate.replace('{{HasLeftChat}}', 'id=' + chatUserLeft + 'HasLeft');
@@ -310,28 +295,22 @@ $(document).ready(function () {
                     CustomerMessageSound(false);
                 }
             }
-        }
-		else if (isAgentAcceptedInvitation && messageData != null && messageData.info != null && messageData.info.chatId != null && messageData.info.chatId == _activeChatID) {
+        } else if (isAgentAcceptedInvitation && messageData != null && messageData.info != null && messageData.info.chatId != null && messageData.info.chatId == _activeChatID) {
 			var displayMessage = messageData.info.name;
 
-			if (messageData.Message.trim().indexOf("<img ") != 0) {
+			if ((messageData.Message.trim().indexOf("<img ") != 0) || (messageData.Message.trim().indexOf('<a href=') >= 0)) {
 				displayMessage = $("<div>").text(messageData.info.name).html();
 			}
 
             var messageTemplate = $("#message-template").html();
             var dateTimeString = new Date().toLocaleString();
             dateTimeString = dateTimeString.replace(",", "");
-            var compiledTemplate = messageTemplate
-                                    .replace('{{MessageDirection}}', 'left')
-                                    .replace('{{UserName}}', messageData.info.name)
-                                    .replace('{{Avatar}}', (messageData.id !== null)
-                                                                    ? '../../../dc/' + chatInfoObject.OrganizationID + '/UserAvatar/' + messageData.id + '/48/1470773158079'
-                                                                    : '../images/blank_avatar.png')
-                                    .replace('{{Message}}', displayMessage + " has joined the chat.")
-                                    .replace('{{Date}}', dateTimeString);
+            var compiledTemplate = messageTemplate.replace('{{MessageDirection}}', 'left').replace('{{UserName}}', messageData.info.name).replace('{{Avatar}}', (messageData.id !== null) ? '../../../dc/' + chatInfoObject.OrganizationID + '/UserAvatar/' + messageData.id + '/48/1470773158079' : '../images/blank_avatar.png').replace('{{Message}}', displayMessage + " has joined the chat.").replace('{{Date}}', dateTimeString);
 
             $('.media-list').append(compiledTemplate);
-            if (scrollView) ScrollMessages(true);
+            if (scrollView) {
+                ScrollMessages(true);
+            }
         } else {
             //No active chat, but one of the accepted chats
             $('#active-chat_' + messageData.ChatID).addClass('list-group-item-info');
@@ -404,10 +383,11 @@ $(document).ready(function () {
     }
 
     function ScrollMessages(animated) {
-        if (animated)
+        if (animated) {
             $(".current-chat-area").animate({ scrollTop: $('.current-chat-area').prop("scrollHeight") }, 1000);
-        else
+        } else {
             $(".current-chat-area").scrollTop($('.current-chat-area').prop("scrollHeight"));
+        }
     }
 
     $("#message-form").submit(function (e) {
@@ -517,7 +497,6 @@ $(document).ready(function () {
                         }
                         var ticket = result[0];
                         var actions = result[1];
-
                         var html = '<div>';
 
                         if (actions.length == 0) {
@@ -530,21 +509,17 @@ $(document).ready(function () {
                         html = html + '</div>';
 
                         parent.Ts.Services.Chat.AddAgentMessage('presence-' + _activeChatID, html, _activeChatID, function (data) {
-                            ;
                         });
 
                         top.Ts.System.logAction('Chat - Suggested Solution Inserted');
                     }, function () {
                         alert('There was an error inserting your suggested solution ticket.');
                     });
-                }
-                else {
+                } else {
                     top.Ts.Services.Admin.GetHubURLwithCName(function (url) {
                         var link = "https://" + url + "/knowledgeBase/" + ticketID;
                         var html = '<a href="' + link + '" target="_blank">' + link + '</a></br>';
-
                         parent.Ts.Services.Chat.AddAgentMessage('presence-' + _activeChatID, html, _activeChatID, function (data) {
-
                         });
                         top.Ts.System.logAction('Chat - Suggested Solution Link Inserted');
                     });
@@ -650,7 +625,7 @@ $(document).ready(function () {
         $('#SuggestedSolutionsModal').modal('show');
         $('#SuggestedSolutionsModal').on('shown.bs.modal', function () {
             $("#dialog-select-ticket2-input").focus();
-        })
+        });
         if (execSuggestedSolutions) {
             return;
         }
@@ -694,20 +669,17 @@ $(document).ready(function () {
 
         $('#InsertSuggestedSolutions').click(function (e) {
             e.preventDefault();
-
             if ($(".dialog-select-ticket2 input").data('item')) {
                 callback($(".dialog-select-ticket2 input").data('item').data, true);
                 $('#SuggestedSolutionsModal').modal('hide');
                 top.Ts.System.logAction('Inserted kb');
-            }
-            else {
+            } else {
                 var id = document.getElementById("SuggestedSolutionsIFrame").contentWindow.GetSelectedID();
                 if (id) {
                     callback(id, true);
                     $('#SuggestedSolutionsModal').modal('hide');
                     top.Ts.System.logAction('Inserted suggested solution');
-                }
-                else {
+                } else {
                     alert('Select a knowledgebase article.');
                 }
             }
@@ -715,20 +687,17 @@ $(document).ready(function () {
 
         $('#InsertSuggestedSolutionsLink').click(function (e) {
             e.preventDefault();
-
             if ($(".dialog-select-ticket2 input").data('item')) {
                 callback($(".dialog-select-ticket2 input").data('item').data, false);
                 $('#SuggestedSolutionsModal').modal('hide');
                 top.Ts.System.logAction('Inserted kb');
-            }
-            else {
+            } else {
                 var id = document.getElementById("SuggestedSolutionsIFrame").contentWindow.GetSelectedID();
                 if (id) {
                     callback(id, false);
                     $('#SuggestedSolutionsModal').modal('hide');
                     top.Ts.System.logAction('Inserted suggested solution');
-                }
-                else {
+                } else {
                     alert('Select a knowledgebase article.');
                 }
             }
@@ -740,8 +709,6 @@ $(document).ready(function () {
     $('#message').keydown(function (e) {
         if (e.which == 13) {
             $("#message-form").submit();
-        } else {
-            //nothing here for now
         }
     });
 });
