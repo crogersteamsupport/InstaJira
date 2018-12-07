@@ -19,7 +19,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
         static ReportTicketsViewTempTable()
         {
-            Enable = true;
+            Enable = false;
 
             // WARNING - Update this if ReportTicketsView changes
             _mapFieldToJoin = new Dictionary<EField, EJoin>()
