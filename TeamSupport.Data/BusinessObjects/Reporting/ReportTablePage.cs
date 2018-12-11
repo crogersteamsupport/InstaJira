@@ -364,6 +364,9 @@ WHERE RowNum BETWEEN @From AND @To";
                 case ReportType.TicketView:
                     _tabularReportSql.GetTabularSql(command, JsonConvert.DeserializeObject<TabularReport>(_report.ReportDef), inlcudeHiddenFields, isSchemaOnly, _report.ReportID, useUserFilter, sortField, sortDir);
                     break;
+                case ReportType.Custom: // not really a table report
+                    CustomReportSql.GetCustomSql(_report.Collection.LoginUser, command, isSchemaOnly, useUserFilter, _report);
+                    break;
                 default:
                     break;
             }
