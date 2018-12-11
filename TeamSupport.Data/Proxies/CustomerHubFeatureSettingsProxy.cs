@@ -44,6 +44,7 @@ namespace TeamSupport.Data
     [DataMember] public bool EnableCustomFieldModification { get; set; }
     [DataMember] public bool EnableProductFamilyFiltering { get; set; }
     [DataMember] public int ChatGroupID { get; set; }
+    [DataMember] public bool EnableAnonymousTicketingRecaptcha { get; set; }
           
   }
   
@@ -52,6 +53,7 @@ namespace TeamSupport.Data
     public CustomerHubFeatureSettingProxy GetProxy()
     {
       CustomerHubFeatureSettingProxy result = new CustomerHubFeatureSettingProxy();
+      result.EnableAnonymousTicketingRecaptcha = this.EnableAnonymousTicketingRecaptcha;
       result.ChatGroupID = this.ChatGroupID;
       result.EnableProductFamilyFiltering = this.EnableProductFamilyFiltering;
       result.EnableCustomFieldModification = this.EnableCustomFieldModification;
