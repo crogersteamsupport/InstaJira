@@ -55,20 +55,20 @@ namespace TeamSupport.UnitTest
             // run the query
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            ReportTicketsViewTempTable.Enable = false;
+            //ReportTicketsViewTempTable.Enable = false;
             if (TryGet(loginUser, report, out DataTable original)) // if original query does throw, don't try optimized
             {
                 // run it a second time using temp table #ReportTicketsView
                 Debug.WriteLine("");
                 Debug.Write($"{reportID},{stopwatch.ElapsedMilliseconds / 1000f},");
-                stopwatch.Restart();
-                ReportTicketsViewTempTable.Enable = true;
-                TryGet(loginUser, report, out DataTable optimized);
-                Debug.WriteLine($", {stopwatch.ElapsedMilliseconds / 1000f}");
+                //stopwatch.Restart();
+                //ReportTicketsViewTempTable.Enable = true;
+                //TryGet(loginUser, report, out DataTable optimized);
+                //Debug.WriteLine($", {stopwatch.ElapsedMilliseconds / 1000f}");
 
-                // same results?
-                if (!ObjectCompare.AreEqual(original, optimized))
-                    Debugger.Break();
+                //// same results?
+                //if (!ObjectCompare.AreEqual(original, optimized))
+                //    Debugger.Break();
             }
 
             return true;

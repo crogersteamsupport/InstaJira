@@ -18,7 +18,7 @@ namespace TeamSupport.Permissions
         {
             switch (attachment.RefType)
             {
-                case AttachmentProxy.References.Actions: 
+                case AttachmentProxy.References.Actions:
                 case AttachmentProxy.References.Tasks:
                 case AttachmentProxy.References.Organizations:
                     return OrganizationOrParentOrganization(loginUser, attachment);
@@ -28,20 +28,30 @@ namespace TeamSupport.Permissions
 
                 case AttachmentProxy.References.UserPhoto:
                 case AttachmentProxy.References.CustomerHubLogo:
+                case AttachmentProxy.References.Assets:
+                case AttachmentProxy.References.ChatAttachments:
+                case AttachmentProxy.References.CompanyActivity:
+                case AttachmentProxy.References.ContactActivity:
+                case AttachmentProxy.References.Contacts:
+                case AttachmentProxy.References.Users:
+                case AttachmentProxy.References.WaterCooler:
                 default:
                     return true;  // no authentication required (HubLogo...)
             }
         }
 
-        static bool TryGetParentID(LoginUser loginUser, out int parentID)
+        static bool TryGetParentID(DataContext db, LoginUser loginUser, out int parentID)
         {
-            using (SqlConnection connection = new SqlConnection(loginUser.ConnectionString))
-            using (DataContext db = new DataContext(connection))
-            {
-                string query = $"SELECT ParentID FROM Organizations WHERE OrganizationID={loginUser.OrganizationID}";
-                parentID = db.ExecuteQuery<int>(query).Min();
-            }
+            string query = $"SELECT ParentID FROM Organizations WHERE OrganizationID={loginUser.OrganizationID}";
+            parentID = db.ExecuteQuery<int>(query).Min();
             return parentID != 1;   // no parent organization?
+        }
+
+        static bool TryGetParentID(DataContext db, AttachmentProxy attachment, out int parentID)
+        {
+            string query = $"SELECT ParentID FROM Attachments att JOIN Organizations o on att.OrganizationID=o.OrganizationID WHERE att.AttachmentID={attachment.AttachmentID}";
+            parentID = db.ExecuteQuery<int>(query).Min();
+            return parentID != 1;   // attachment creator org have ParentID?
         }
 
         static bool OrganizationOrParentOrganization(LoginUser loginUser, AttachmentProxy attachment)
@@ -50,10 +60,23 @@ namespace TeamSupport.Permissions
             if (attachment.OrganizationID == loginUser.OrganizationID)
                 return true;
 
-            // attachment in parent organization
-            int parentID;
-            if (TryGetParentID(loginUser, out parentID))
-                return (attachment.OrganizationID == parentID);
+            // User in PARENT Organization can see attachments created by a user from:
+            //     * same parent organization
+            //     * any child organizations
+            // User in child organization can see attachments created by a user from:
+            //     * their organization
+            //     * in some cases those in the parent organization
+            using (SqlConnection connection = new SqlConnection(loginUser.ConnectionString))
+            using (DataContext db = new DataContext(connection))
+            {
+                // attachment in parent organization
+                if (TryGetParentID(db, loginUser, out int parentID) && (attachment.OrganizationID == parentID))
+                    return true;
+
+                // loginUser in parent organization
+                if (TryGetParentID(db, attachment, out parentID))   // attachment created by user from child organization
+                    return (loginUser.OrganizationID == parentID);
+            }
 
             return false;
         }
