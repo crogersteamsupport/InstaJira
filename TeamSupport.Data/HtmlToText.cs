@@ -738,8 +738,7 @@ namespace TeamSupport.Data
                     {
                       // named entity?
                       int code;
-                      object o = _entityValue[entity.ToString()];
-                      if (o == null)
+                      if(!_entityValue.TryGetValue(entity.ToString(), out code))
                       {
                         // nope
                         sb.Append("&" + entity + ";");
@@ -747,7 +746,6 @@ namespace TeamSupport.Data
                       else
                       {
                         // we found one
-                        code = (int)o;
                         sb.Append(System.Convert.ToChar(code));
                       }
                     }
