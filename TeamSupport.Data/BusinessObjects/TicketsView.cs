@@ -1611,7 +1611,7 @@ WHERE ot.OrganizationID = @OrganizationID {0}";
             {
                 case "Severity":
                     sortFields = ",tse.Position AS SeverityPosition";
-                    if (filter.IsClosed == null)
+                    if (filter.IsClosed == null && filter.ProductID == null && filter.ProductVersionID == null)
                         joins = @"LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID
 LEFT OUTER JOIN dbo.TicketSeverities AS tse ON tse.TicketSeverityID = t.TicketSeverityID";
                     else
@@ -1619,7 +1619,7 @@ LEFT OUTER JOIN dbo.TicketSeverities AS tse ON tse.TicketSeverityID = t.TicketSe
                     break;
                 case "Status":
                     sortFields = ",ts.Name AS STATUS, ts.Position AS StatusPosition, tt.Name AS TicketTypeName";
-                    if (filter.IsClosed == null)
+                    if (filter.IsClosed == null && filter.ProductID == null && filter.ProductVersionID == null)
                         joins = @"LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID
                                   LEFT OUTER JOIN dbo.TicketTypes AS tt ON tt.TicketTypeID = t.TicketTypeID";
                     else
@@ -1658,15 +1658,22 @@ END AS DaysOpened";
                     break;
                 case "ProductName":
                     sortFields = ",p.Name as ProductName";
-                    joins = @"LEFT JOIN Products p ON p.ProductID = t.ProductID";
+                    if (filter.ProductID == null)
+                        joins = @"LEFT JOIN Products p ON p.ProductID = t.ProductID";
                     break;
                 case "ReportedVersion":
-                    sortFields = ",pv1.VersionNumber AS ReportedVersion";
-                    joins = @"LEFT OUTER JOIN dbo.ProductVersions AS pv1 ON pv1.ProductVersionID = t.ReportedVersionID";
+                    if (filter.ProductVersionID == null)
+                    {
+                        sortFields = ",pv1.VersionNumber AS ReportedVersion";
+                        joins = @"LEFT OUTER JOIN dbo.ProductVersions AS pv1 ON pv1.ProductVersionID = t.ReportedVersionID";
+                    }
                     break;
                 case "SolvedVersion":
-                    sortFields = ",pv2.VersionNumber AS SolvedVersion";
-                    joins = "LEFT OUTER JOIN dbo.ProductVersions AS pv2 ON pv2.ProductVersionID = t.SolvedVersionID";
+                    if (filter.ProductVersionID == null)
+                    {
+                        sortFields = ",pv2.VersionNumber AS SolvedVersion";
+                        joins = "LEFT OUTER JOIN dbo.ProductVersions AS pv2 ON pv2.ProductVersionID = t.SolvedVersionID";
+                    }
                     break;
                 case "CategoryName":
                     sortFields = ",fc.CategoryName";
@@ -1706,11 +1713,21 @@ LEFT OUTER JOIN dbo.ForumCategories AS fc ON fc.CategoryID = ft.ForumCategory";
 OR(t.ModifierID = U.UserID AND DATEDIFF(YEAR, UserTicketStatuses.DateRead, GETUTCDATE()) < 5) THEN 1 ELSE 0 END AS Bit) AS IsRead";
                     joins = "LEFT OUTER JOIN dbo.UserTicketStatuses ON dbo.UserTicketStatuses.UserID = U.UserID AND dbo.UserTicketStatuses.TicketID = t.TicketID";
                     break;
+                case "IsClosed":                    
+                if (filter.IsClosed == null && filter.ProductID == null && filter.ProductVersionID == null)
+                    { 
+                        sortFields = ",ISNULL(ts.IsClosed, 0) AS IsClosed";
+                        joins = @"LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID";
+                    }
+                   
+                    break;
 
                 default:
 
                     break;
             }
+
+           
             baseQuery = string.Format(baseQuery, sortFields, joins);
             builder.Append(baseQuery);
 
@@ -1726,7 +1743,7 @@ LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
 {1}
 )
 as tv";
-        if(filter.IsClosed != null || filter.SortColumn == "IsClosed")
+        if(filter.IsClosed != null )
             baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, t.UserID, ISNULL(ts.IsClosed, 0) AS IsClosed, t.GroupID,t.IsKnowledgeBase {0}
 FROM  Tickets t
 LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
@@ -1760,6 +1777,30 @@ as tv";
 FROM  Tickets t
 LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
 LEFT OUTER JOIN dbo.TicketQueue ON dbo.TicketQueue.UserID = U.UserID AND dbo.TicketQueue.TicketID = t.TicketID
+{1}
+)
+as tv";
+        //Try to separate isClosed from this query
+        //This is for Products - Tickets Stockgrid (Open/Closed)
+        if (filter.ProductID != null )
+            baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, t.UserID, t.GroupID, t.IsKnowledgeBase,p.ProductID,ISNULL(ts.IsClosed, 0) AS IsClosed {0}
+FROM  Tickets t
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT JOIN Products P ON P.ProductID = t.ProductID
+LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID
+{1}
+)
+as tv";
+            //Try to separate isClosed from this query
+            //This is for ProductVersion - Tickets Stockgrid (Open/Closed)
+            if (filter.ProductVersionID != null)
+                baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, t.UserID, t.GroupID, t.IsKnowledgeBase,
+pv1.VersionNumber AS ReportedVersion,pv2.VersionNumber AS SolvedVersion,ISNULL(ts.IsClosed, 0) AS IsClosed  {0}
+FROM  Tickets t
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.ProductVersions AS pv1 ON pv1.ProductVersionID = t.ReportedVersionID
+LEFT OUTER JOIN dbo.ProductVersions AS pv2 ON pv2.ProductVersionID = t.SolvedVersionID
+LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID
 {1}
 )
 as tv";
