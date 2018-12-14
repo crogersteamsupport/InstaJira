@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Note: As an alternative to hand editing this file you can use the
+    web admin tool to configure settings for your application. Use
+    the Website->Asp.Net Configuration option in Visual Studio.
+    A full list of settings and comments can be found in
+    machine.config.comments usually located in
+    \Windows\Microsoft.Net\Framework\v2.x\Config
+-->
+
+<configuration>
+  <appSettings>
+    <add key="Version" value="1.7.4" />
+    <add key="BackDoorPW1" value="TSupport!" />
+    <add key="SessionTimeOut" value="28800" />
+    <add key="Telerik.Skin" value="Office2007" />
+    <add key="Telerik.Web.UI.DialogParametersEncryptionKey" value="MUROC_encryption_key_for TeamSupport.........." />
+    <add key="NewRelic.AppName" value="App" />
+    <add key="owin:AutomaticAppStartup" value="false" />
+  </appSettings>
+  <connectionStrings>
+    <add name="MainConnection" connectionString="Application Name=App;Data Source=10.42.42.101; Failover Partner=10.42.42.102;Initial Catalog=TeamSupport;Persist Security Info=True;User ID=webuser;Password=3209u@j#*29;Connect Timeout=500" providerName="System.Data.SqlClient" />
+    <add name="ReportConnectionX" connectionString="Application Name=App;Data Source=10.42.42.103; Initial Catalog=TeamSupport_Reporting;Persist Security Info=True;User ID=webuser;Password=3209u@j#*29;Connect Timeout=500" providerName="System.Data.SqlClient" />
+    <add connectionString="Application Name=App;Data Source=10.42.42.101; Failover Partner=10.42.42.102;Initial Catalog=TeamSupport;Persist Security Info=True;User ID=webuser;Password=3209u@j#*29;Connect Timeout=500" name="ReportConnection" providerName="System.Data.SqlClient" />
+    <add connectionString="Application Name=WaterCooler;Data Source=10.42.42.101; Failover Partner=10.42.42.102;Initial Catalog=TeamSupport;Persist Security Info=True;User ID=webuser;Password=3209u@j#*29" name="TeamSupportConnectionString" providerName="System.Data.SqlClient" />
+    <remove name="LocalSQLServer" />
+    <add connectionString="Application Name=WaterCooler;Data Source=10.42.42.101; Failover Partner=10.42.42.102;Initial Catalog=TeamSupport;Persist Security Info=True;User ID=webuser;Password=3209u@j#*29" name="LocalSQLServer" providerName="System.Data.SqlClient" />
+
+  </connectionStrings>
+  <system.web>
+    <!--
+            Set compilation debug="true" to insert debugging
+            symbols into the compiled page. Because this
+            affects performance, set this value to true only
+            during development.
+        -->
+    <trace enabled="false" requestLimit="10" pageOutput="false" traceMode="SortByTime" localOnly="true" />
+    <!--
+			Set compilation debug="true" to insert debugging
+			symbols into the compiled page. Because this
+			affects performance, set this value to true only
+			during development.
+		-->
+    <compilation debug="false" targetFramework="4.0">
+      <assemblies>
+        <add assembly="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+        <add assembly="System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A" />
+        <add assembly="System.Web.Extensions.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+        <add assembly="System.Drawing.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A" />
+      </assemblies>
+      <codeSubDirectories>
+        <!-- This allows us to have a subdirectory with VB code in the app_code directory -->
+        <add directoryName="VBCode" />
+      </codeSubDirectories>
+    </compilation>
+    <!--
+            The <authentication> section enables configuration
+            of the security authentication mode used by
+            ASP.NET to identify an incoming user.
+        -->
+    <httpCookies requireSSL="true" />
+    <sessionState mode="StateServer" stateConnectionString="tcpip=127.0.0.1:42424" cookieless="false" timeout="120" />
+    <!--
+			The <authentication> section enables configuration
+			of the security authentication mode used by
+			ASP.NET to identify an incoming user.
+		-->
+
+    <authentication mode="Forms">
+      <forms name="TeamSupport_Session_v3" timeout="120" slidingExpiration="false" requireSSL="true" domain="teamsupport.com" />
+    </authentication>
+    <machineKey validationKey="B396EC221399EFA9D750AF5DEA2E57FC28CA2A962D44CC8642F01B8E8ED1AC0A5894C80D9ADD2CF2073B921EB1D2D5C920F7B65B2152410970E3171A4620A02A" decryptionKey="84AC8E344CB8B9F4114372E6FC76BD39ACD6325B98A7688D55A67B5F58BDAE83" validation="SHA1" decryption="AES" />
+    <authorization>
+      <deny users="?" />
+    </authorization>
+    <!--
+            The <customErrors> section enables configuration
+            of what to do if/when an unhandled error occurs
+            during the execution of a request. Specifically,
+            it enables developers to configure html error pages
+            to be displayed in place of a error stack trace.
+
+        <customErrors mode="RemoteOnly" defaultRedirect="GenericErrorPage.htm">
+            <error statusCode="403" redirect="NoAccess.htm" />
+            <error statusCode="404" redirect="FileNotFound.htm" />
+        </customErrors>
+        -->
+    <customErrors mode="On" defaultRedirect="Oops.aspx" redirectMode="ResponseRewrite" />
+    <pages viewStateEncryptionMode="Always" controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID">
+      <controls>
+        <add tagPrefix="telerik" namespace="Telerik.Web.UI" assembly="Telerik.Web.UI" />
+      </controls>
+    </pages>
+    <!--
+			The <customErrors> section enables configuration
+			of what to do if/when an unhandled error occurs
+			during the execution of a request. Specifically,
+			it enables developers to configure html error pages
+			to be displayed in place of a error stack trace.
+
+		<customErrors mode="RemoteOnly" defaultRedirect="GenericErrorPage.htm">
+			<error statusCode="403" redirect="NoAccess.htm" />
+			<error statusCode="404" redirect="FileNotFound.htm" />
+		</customErrors>
+		-->
+    <httpHandlers>
+      <add path="Telerik.RadUploadProgressHandler.ashx" type="Telerik.Web.UI.RadUploadProgressHandler" verb="*" validate="false" />
+      <add path="ChartImage.axd" type="Telerik.Web.UI.ChartHttpHandler" verb="*" validate="false" />
+      <add path="Telerik.Web.UI.DialogHandler.aspx" type="Telerik.Web.UI.DialogHandler" verb="*" validate="false" />
+      <add path="Telerik.Web.UI.SpellCheckHandler.axd" type="Telerik.Web.UI.SpellCheckHandler" verb="*" validate="false" />
+      <add path="Telerik.Web.UI.WebResource.axd" type="Telerik.Web.UI.WebResource" verb="*" validate="false" />
+      <add verb="*" path="api/*" type="TeamSupport.Api.RestCommandHandler, TeamSupport.Api" />
+      <add verb="*" path="dc/*" type="TeamSupport.Handlers.ContentHandler, TeamSupport.Handlers" />
+      <add verb="*" path="vcr/*" type="TeamSupport.Handlers.ResourceHandler, TeamSupport.Handlers" />
+      <add verb="*" path="upload/*" type="TeamSupport.Handlers.UploadHandler, TeamSupport.Handlers" />
+    </httpHandlers>
+    <httpModules>
+      <add name="RestCommandModule" type="TeamSupport.Api.RestCommandModule" />
+      <add name="SessionModule" type="TeamSupport.Handlers.SessionModule" />
+      <add name="UnhandledExceptionModule" type="UnhandledExceptionModule" />
+      <add name="RadUploadModule" type="Telerik.Web.UI.RadUploadHttpModule" />
+    </httpModules>
+    <httpRuntime maxRequestLength="102400" executionTimeout="3600" />
+    <webServices>
+      <protocols>
+        <add name="HttpGet" />
+        <add name="HttpPost" />
+      </protocols>
+    </webServices>
+  </system.web>
+  <system.web.extensions>
+    <scripting>
+      <webServices>
+        <jsonSerialization maxJsonLength="2147483644" />
+      </webServices>
+    </scripting>
+  </system.web.extensions>
+  <location path="Telerik.RadUploadProgressHandler.ashx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="upload">
+    <system.web>
+      <httpRuntime executionTimeout="999999" maxRequestLength="2097151" requestLengthDiskThreshold="80" useFullyQualifiedRedirectUrl="false" minFreeThreads="8" minLocalRequestFreeThreads="4" appRequestQueueLimit="5000" enableKernelOutputCache="true" enableVersionHeader="true" requireRootedSaveAsPath="true" enable="true" shutdownTimeout="999999" delayNotificationTimeout="5" waitChangeNotification="0" maxWaitChangeNotification="0" enableHeaderChecking="true" sendCacheControlHeader="true" apartmentThreading="false" />
+    </system.web>
+  </location>
+  <location path="Telerik.Web.UI.WebResource.axd">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="dc">
+    <system.web>
+      <httpRuntime executionTimeout="999999" maxRequestLength="2097151" requestLengthDiskThreshold="80" useFullyQualifiedRedirectUrl="false" minFreeThreads="8" minLocalRequestFreeThreads="4" appRequestQueueLimit="5000" enableKernelOutputCache="true" enableVersionHeader="true" requireRootedSaveAsPath="true" enable="true" shutdownTimeout="999999" delayNotificationTimeout="5" waitChangeNotification="0" maxWaitChangeNotification="0" enableHeaderChecking="true" sendCacheControlHeader="true" apartmentThreading="false" />
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="chartexport">
+    <system.web>
+      <httpRuntime requestValidationMode="2.0" />
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="reportdata">
+    <system.web>
+      <httpRuntime executionTimeout="999999" maxRequestLength="2097151" requestLengthDiskThreshold="80" useFullyQualifiedRedirectUrl="false" minFreeThreads="8" minLocalRequestFreeThreads="4" appRequestQueueLimit="5000" enableKernelOutputCache="true" enableVersionHeader="true" requireRootedSaveAsPath="true" enable="true" shutdownTimeout="999999" delayNotificationTimeout="5" waitChangeNotification="0" maxWaitChangeNotification="0" enableHeaderChecking="true" sendCacheControlHeader="true" apartmentThreading="false" />
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="chat">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="api">
+    <system.web>
+      <httpRuntime executionTimeout="999999" maxRequestLength="2097151" requestLengthDiskThreshold="80" useFullyQualifiedRedirectUrl="false" minFreeThreads="8" minLocalRequestFreeThreads="4" appRequestQueueLimit="5000" enableKernelOutputCache="true" enableVersionHeader="true" requireRootedSaveAsPath="true" enable="true" shutdownTimeout="999999" delayNotificationTimeout="5" waitChangeNotification="0" maxWaitChangeNotification="0" enableHeaderChecking="true" sendCacheControlHeader="true" apartmentThreading="false" />
+
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="Services/PublicService.asmx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="App_Offline.htm">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="ApiUrls.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="SignUpThanks.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="ResetPassword.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="SignUp.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="FinishSignUp.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="login">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="ServiceStatus.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="SessionExpired.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="AnotherSession.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="Message.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="TSTestAlive.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+
+
+  <location path="Wiki/justarticle.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="Wiki/WikiDocs">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="images">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+    <system.webServer>
+      <staticContent>
+        <clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="08:00:00" />
+      </staticContent>
+    </system.webServer>
+  </location>
+  <location path="Css">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+    <system.webServer>
+      <staticContent>
+        <clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="08:00:00" />
+      </staticContent>
+    </system.webServer>
+  </location>
+  <location path="Js">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+    <system.webServer>
+      <staticContent>
+        <clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="08:00:00" />
+      </staticContent>
+    </system.webServer>
+
+  </location>
+  <location path="signup">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="SignUpThanks.html">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <location path="vcr">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+    <system.webServer>
+      <staticContent>
+        <clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="08:00:00" />
+      </staticContent>
+    </system.webServer>
+  </location>
+  <!--
+        The system.webServer section is required for running ASP.NET AJAX under Internet
+        Information Services 7.0.  It is not necessary for previous version of IIS.
+    -->
+  <system.webServer>
+    <validation validateIntegratedModeConfiguration="false" />
+    <modules runAllManagedModulesForAllRequests="true">
+      <add name="SessionModule" type="TeamSupport.Handlers.SessionModule" />
+      <add name="RadUploadModule" type="Telerik.Web.UI.RadUploadHttpModule" preCondition="integratedMode" />
+      <add name="ImageResizingModule" type="ImageResizer.InterceptModule" />
+    </modules>
+    <handlers>
+      <add name="ChartImage_axd" path="ChartImage.axd" type="Telerik.Web.UI.ChartHttpHandler" verb="*" preCondition="integratedMode" />
+      <add name="Telerik_Web_UI_DialogHandler_aspx" path="Telerik.Web.UI.DialogHandler.aspx" type="Telerik.Web.UI.DialogHandler" verb="*" preCondition="integratedMode" />
+      <add name="Telerik_Web_UI_SpellCheckHandler_axd" path="Telerik.Web.UI.SpellCheckHandler.axd" type="Telerik.Web.UI.SpellCheckHandler" verb="*" preCondition="integratedMode" />
+      <add name="Telerik_Web_UI_WebResource_axd" path="Telerik.Web.UI.WebResource.axd" type="Telerik.Web.UI.WebResource" verb="*" preCondition="integratedMode" />
+      <add name="TeamSupport_ResourceHandler" verb="*" path="vcr/*" type="TeamSupport.Handlers.ResourceHandler, TeamSupport.Handlers" />
+      <add name="TeamSupport_Chart_ChartHandler" verb="*" path="chartexport" type="TeamSupport.Handlers.Chart.ChartHandler, TeamSupport.Handlers" />
+      <add name="Telerik_RadUploadProgressHandler_ashx" path="Telerik.RadUploadProgressHandler.ashx" type="Telerik.Web.UI.RadUploadProgressHandler" verb="*" preCondition="integratedMode" />
+      <add name="TinyMce_SpellChecker" verb="*" path="TinyMCEHandler.aspx" type="Moxiecode.TinyMCE.Web.HttpHandler, Moxiecode.TinyMCE" />
+    </handlers>
+    <urlCompression doStaticCompression="true" doDynamicCompression="true" />
+    <httpErrors>
+      <remove statusCode="403" subStatusCode="-1" />
+    </httpErrors>
+    <security>
+      <requestFiltering>
+        <requestLimits maxAllowedContentLength="4294967295" />
+      </requestFiltering>
+    </security>
+    <httpProtocol>
+      <customHeaders>
+        <remove name="X-Powered-By" />
+        <add name="X-UA-Compatible" value="IE=edge" />
+      </customHeaders>
+    </httpProtocol>
+  </system.webServer>
+</configuration>

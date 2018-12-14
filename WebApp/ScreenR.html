@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <script src="https://teamsupport.viewscreencasts.com/api/recorder" type="text/javascript"></script>
+
+  <script type="text/javascript" language="javascript">
+    function record(params, onComplete, onCancel) {
+      if (!params) {
+        params = new Object();
+        params.userName = top.Ts.System.User.FirstName + ' ' + top.Ts.System.User.LastName;
+        params.userEmail = top.Ts.System.User.Email;
+        params.hideAllFields = true;
+        params.maxTimeLimit = 300;
+      }
+
+      params.id = "b67bdeab7c084032bc4f37e5308eae1e";
+      var recorder = Screenr.Recorder({ id: "b67bdeab7c084032bc4f37e5308eae1e", hideAllFields: true, maxTimeLimit: 300 }); // this.WndScreenR.contentWindow.Screenr.Recorder(params);
+      if (onComplete) recorder.setOnComplete(onComplete);
+      if (onCancel) recorder.setOnCancel(onCancel);
+
+
+      recorder.record();
+    }
+  
+  
+  </script>
+</head>
+<body>
+</body>
+</html>

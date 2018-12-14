@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- href attribute contains relative path;
+     codebase attribute not specified --><jnlp href="launch.jnlp">
+    <information>
+        <title>TeamSupport Screen Recorder</title>
+        <vendor>TeamSupport</vendor>
+    </information>
+    <resources>
+        <!-- Application Resources -->
+        <j2se version="1.8+"/>
+        <jar href="Launch.jar" main="true"/>
+    </resources>
+<security>
+     <all-permissions/>
+</security>
+    <applet-desc height="100" main-class="com.bixly.pastevid.driver.Launch" name="TeamSupport Screen Recorder Applet" width="200">
+     </applet-desc>
+     <update check="background"/>
+	 <script>
+
+</script>
+
+</jnlp>

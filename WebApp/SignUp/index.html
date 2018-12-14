@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>TeamSupport - Sign Up</title>
+  <link href="../vcr/100/Css/ts-signup.bootstrap.css" rel="stylesheet" type="text/css" />
+  <link href="../vcr/100/Css/ts-signup.css" rel="stylesheet" type="text/css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+  <script src="../vcr/100/Js/ts-signup.js" type="text/javascript"></script>
+  <script src="/frontend/library/tsm.js" type="text/javascript"></script>
+</head>
+<body>
+  <div class="row">
+    <div class="col-xs-8 main-column">
+      <form role="form" class="form-horizontal" action="../signup/fn/post" method="post">
+        <input type="hidden" name="success" id="success" value="../signup/success/index.html" />
+        <div class="form-group">
+          <label for="name" class="col-xs-4 control-label">Name <span class="required">*<span></label><div class="col-xs-8"><input type="text" class="form-control required" name="name" id="name" placeholder="Enter your first and last name"><div class="help-block">Please enter your first and last name.</div></div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="col-xs-4 control-label">Email <span class="required">*<span></label><div class="col-xs-8"><input type="text" class="form-control required" name="email" id="email" placeholder="Enter your email address"><div class="help-block">Please enter a valid company email address.</div></div>
+        </div>
+        <div class="form-group">
+          <label for="company" class="col-xs-4 control-label">Company <span class="required">*<span></label><div class="col-xs-8"><input type="text" class="form-control required" name="company" id="company" placeholder="Enter your company name"><div class="help-block"></div></div>
+        </div>
+        <div class="form-group">
+          <label for="phone" class="col-xs-4 control-label">Phone</label><div class="col-xs-8"><input type="text" class="form-control required" name="phone" id="phone" placeholder="Enter your phone number"></div>
+        </div>
+        <div class="form-group">
+          <label for="product" class="col-xs-4 control-label">Product</label><div class="col-xs-8"><select name="product" id="product" class="form-control"><option value="2" selected="selected">Enterprise</option><option value="1">Support Desk</option></select></div>
+        </div>
+        <div class="form-group">
+          <label for="promo" class="col-xs-4 control-label">Promo Code</label><div class="col-xs-8"><input type="text" class="form-control" name="promo" id="promo" placeholder="Enter your promo code"></div>
+        </div>
+        <div class="form-group">
+          <label for="promo" class="col-xs-4 control-label">Password</label><div class="col-xs-8"><input type="password" class="form-control" name="password" id="password" placeholder="Enter your promo code"></div>
+        </div>
+        <div class="form-group">
+          <label for="promo" class="col-xs-4 control-label">confirm</label><div class="col-xs-8"><input type="password" class="form-control" name="confirm" id="confirm" placeholder="Enter your promo code"></div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-offset-4 col-xs-8"><button id="submit" type="submit" class="btn">Sign Up</button><img class="img-busy" src="http://www.teamsupport.com/images/dots64.gif" /></div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-offset-4 col-xs-8">
+            <p>
+              By clicking Sign Up, you agree to the <a href="http://www.teamsupport.com/help-desk-subscription-use-service-terms/"
+                                                       target="TSTermsOfService">Terms of Service</a> & <a href="http://www.teamsupport.com/privacy/"
+                                                                                                           target="TSPrivacyPolicy">Privacy Policy</a>
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-xs-4 right-column">
+      <div class="callout">
+        <h3>No Credit Card Required</h3>
+        <p>Before your trial expires, we will notify you by email at which time you may elect
+          to sign up and pay for your account. Otherwise, your account will expire 14 days
+          from today. </p>
+        <blockquote>
+          <p>"I've used lots of different ticketing tools and I can say hands down that TeamSupport
+            is the best I've used. If you're looking for quick and easy setup, flexibility and
+            overall ease of use for support reps TeamSupport is for you." </p>
+          <small><cite>Sean Wilson - PrintFleet Inc</cite></small> </blockquote>
+        <blockquote>
+          <p>"Delight your customers with excellent service using TeamSupport - it's customer
+            support software done right!" </p>
+          <small><cite>Eric Pita - ClinicSource</cite></small> </blockquote>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

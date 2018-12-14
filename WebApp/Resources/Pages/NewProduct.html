@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../Css/jquery-ui-bs3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+  	<link href="../Css/ts.editor.css" rel="stylesheet" />
+    <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+      <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/respond.js" type="text/javascript"></script>
+    <script src="../../../tinymce/tinymce.min.js?1512863055" type="text/javascript"></script>
+    <script src="../../../tinymce/jquery.tinymce.min.js?1512863055" type="text/javascript"></script>
+    <script src="/frontend/library/moment.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap-datetimepicker.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.layout.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.numeric.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.maskedinput.min.js" type="text/javascript"></script>
+    <script src="NewProduct.js" type="text/javascript"></script>
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+  </head>
+<body>
+    <div class="pageheader ui-layout-north">
+        <div class="col-md-12 ">
+            <ul class="nav nav-tabs" id="productTabs">
+                <li><a href="#product-content" data-toggle="tab">New Product</a></li>
+                <li><a href="#product-version-content" data-toggle="tab">New Product Version</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+  <div class="maincontainer ui-layout-center">
+    <div class="tab-content">
+      <div class="tab-pane fade in active" id="product-content">
+        <div class="row">
+          <div class="col-xs-12">
+            <form class="form-horizontal" id="productForm">
+              <div class="box">
+                <div class="box-header"><h3>Basic Information</h3></div>
+                <div class="box-content">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="col-md-2">
+                          <label for="inputName" class="col-md-4 control-label">Name</label>
+                        </div>
+                        <div class="col-md-10">
+                          <input class="col-md-10 form-control" name="inputName" id="inputName" placeholder="Name of item">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <label for="Description" class="col-md-2 control-label">Description</label>
+                        <div class="col-md-8">
+                          <textarea class="form-control" id="Description" placeholder="Description"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="form-group" id="productFamilyRow" style="display:none">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label for="ddlProductFamily" class="col-md-2 control-label">Line</label>
+                                <div class="col-md-8">
+                                    <select class="form-control" id="ddlProductFamily">
+                                        <option value="-1">Unassigned</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  <div class="form-group" id="jiraProjectKeyRow" style="display:none">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <label for="ddlJiraProjectKey" class="col-md-2 control-label">Jira Project Key</label>
+                        <div class="col-md-8">
+                          <input class="col-md-8 form-control" name="inputJiraProjectKey" id="inputName" placeholder="Jira Project Key">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="box" id="productCustomInfoBox">
+                <div class="box-header"><h3>Additional Information</h3></div>
+                <div class="box-content" id="productCustomInfo">
+
+                </div>
+              </div>
+              <div class="mt20">
+                  <button class="btn btn-large btn-primary" id="productSaveBtn">Save</button>
+                  <button id="productCancelBtn" class="btn btn-default">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane face" id="product-version-content">
+        <div class="row">
+          <div class="col-xs-12">
+            <form class="form-horizontal" id="versionForm">
+              <div class="box">
+                <div class="box-header"><h3>Basic Information</h3></div>
+                  <div class="box-content">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="col-md-2">
+                            <label for="inputVersionNumber" class="col-md-4 control-label">Version Number</label>
+                          </div>
+                          <div class="col-md-10">
+                            <input type="text" class="col-md-10 form-control required" name="inputVersionNumber" id="inputVersionNumber" placeholder="Version Number">
+                          </div>
+                        </div>
+                        <div id="productsList" class="col-md-6">
+                          <div class="col-md-2">
+                            <label for="ddlProduct" class="col-md-4 control-label">Product</label>
+                          </div>
+                          <div class="col-md-10">
+                            <select class="form-control" id="ddlProduct"></select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="col-md-2">
+                            <label for="ddlStatus" class="col-md-4 control-label">Status</label>
+                          </div>
+                          <div class="col-md-10">
+                            <select class="form-control" id="ddlStatus"></select>
+                          </div>
+                        </div>
+                        <div class="col-md-6" id="trExpectedRelease">
+                          <div class="col-md-2">
+                            <label for="inputExpectedRelease" class="col-md-4 control-label">Expected Release</label>
+                           </div>
+                          <div class="col-md-10">
+                            <input class="col-md-10 form-control" id="inputExpectedRelease" placeholder="Expected Release">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-2">
+                              <label for="cbReleased" class="col-md-4 control-label">Released</label>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                  <label>
+                                    <input id="cbReleased" type="checkbox" checked >
+                                  </label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group" id="productVersionJiraProjectKeyRow" style="display:none">
+                      <div class="row">
+                        <div class="col-md-6" id="trJiraProjectKey">
+                          <div class="col-md-2">
+                            <label for="inputProductVersionJiraProjectKey" class="col-md-4 control-label">Jira Project Key</label>
+                          </div>
+                          <div class="col-md-8">
+                            <input class="col-md-8 form-control" id="inputProductVersionJiraProjectKey" placeholder="Jira Project Key">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-11">
+                      <div class="col-md-2">
+                        <label for="inputDescription" class="col-md-1 control-label">Description</label>
+                      </div>
+                      <div class="col-md-10">
+                        <textarea class="col-md-3 form-control" id="inputDescription"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <div class="box" id="versionCustomInfoBox">
+                <div class="box-header"><h3>Additional Information</h3></div>
+                <div class="box-content" id="versionCustomInfo">
+
+                </div>
+              </div>
+
+              <div class="mt20">
+                <button id="productVersionSaveBtn" class="btn btn-large btn-primary">Save</button>
+                <button id="productVersionCancelBtn" class="btn btn-default">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

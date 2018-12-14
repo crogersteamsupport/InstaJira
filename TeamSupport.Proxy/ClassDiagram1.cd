@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TeamSupport.Data.AttachmentProxy">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="TeamSupport.Data.AttachmentProxy.References" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>AttachmentProxy.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAkAAAAAgAANCAAAAIERAAAAgRCQAAAAFAQFAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.ActionAttachmentProxy" Collapsed="true">
+    <Position X="12.25" Y="8.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.OrganizationAttachmentProxy" Collapsed="true">
+    <Position X="3.75" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.ContactAttachmentProxy" Collapsed="true">
+    <Position X="12.25" Y="7" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.WaterCoolerAttachmentProxy" Collapsed="true">
+    <Position X="3.25" Y="7" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.AssetAttachmentProxy" Collapsed="true">
+    <Position X="0.5" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.ChatAttachmentProxy" Collapsed="true">
+    <Position X="9.75" Y="8.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.CompanyActivityAttachmentProxy" Collapsed="true">
+    <Position X="6.5" Y="10.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.ContactActivityAttachmentProxy" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.CustomerHubLogoAttachmentProxy" Collapsed="true">
+    <Position X="6.25" Y="7" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.ProductVersionAttachmentProxy" Collapsed="true">
+    <Position X="3.25" Y="10.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.TaskAttachmentProxy" Collapsed="true">
+    <Position X="9.75" Y="10.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.UserPhotoAttachmentProxy" Collapsed="true">
+    <Position X="6.75" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.UserAttachmentProxy" Collapsed="true">
+    <Position X="9.75" Y="7" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.ImportsAttachmentProxy" Collapsed="true">
+    <Position X="0.5" Y="7" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.Data.NoneAttachmentProxy" Collapsed="true">
+    <Position X="12.25" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachmentProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

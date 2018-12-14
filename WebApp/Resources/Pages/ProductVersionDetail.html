@@ -1,0 +1,429 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../Css/jquery-ui-bs3.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+	<link href="../Css/ts.editor.css" rel="stylesheet" />
+  <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <link href="ProductVersionDetail.css" rel="stylesheet" type="text/css" />
+  <script src="/frontend/library/jquery-1.11.0.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/respond.js" type="text/javascript"></script>
+  <script src="/frontend/library/highcharts.js"></script>
+  <script src="/frontend/library/highcharts-more.js"></script>
+  <script src="/frontend/library/jquery.placeholder.js" type="text/javascript"></script>
+  <script src="../../../tinymce/tinymce.min.js?1512863055" type="text/javascript"></script>
+  <script src="../../../tinymce/jquery.tinymce.min.js?1512863055" type="text/javascript"></script>
+  <script src="/frontend/library/moment.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap-datetimepicker.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.layout.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.iframe-transport.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.fileupload.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.maskedinput.min.js" type="text/javascript"></script>
+  <script src="ProductVersionDetail.js" type="text/javascript"></script>
+</head>
+<body>
+  <div class="ui-layout-north">
+    <div class="pageheader">
+      <div class="header-nav productVersionProperties">
+        <div class="pull-right">
+          <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+              <button class="btn btn-primary product-version-tooltip" type="button" title="Edit this product version" id="productVersionEdit">
+                <i class="fa fa-pencil"></i>
+                &nbsp;Edit
+              </button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-default product-version-tooltip" type="button" title="Refresh this product version" id="productVersionRefresh"><i class="fa fa-refresh"></i></button>
+              <button class="btn btn-default product-version-tooltip" type="button" title="Delete" id="productVersionDelete"><i class="fa fa-trash-o"></i></button>
+            </div>
+          </div>
+        </div>
+        <span id="productVersionNumber" class="editable"></span>
+      </div>
+      <div class="main-nav">
+        <ul class="nav nav-tabs" id="productVersionTabs">
+          <li><a href="#product-version-overview" data-toggle="tab">Details</a></li>
+          <li><a href="#product-version-customers" data-toggle="tab">Customers</a></li>
+          <li><a href="#product-version-tickets" data-toggle="tab">Tickets</a></li>
+          <li><a href="#product-version-kb" data-toggle="tab">Knowledge Base</a></li>
+          <li><a href="#product-version-attachments" data-toggle="tab">Files</a></li>
+          <!--<li><a href="#product-version-watercooler" data-toggle="tab">Watercooler</a></li>-->
+          <li><a href="#product-version-inventory" data-toggle="tab">Inventory</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="ui-layout-center">
+    <div class="maincontainer">
+      <div class="tab-content">
+        <div class="tab-pane fade in active" id="product-version-overview">
+          <div class="row">
+            <div class="col-xs-8">
+              <div class="box">
+                <div class="box-header"></div>
+                <div class="box-content">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-horizontal">
+                        <div class="row">
+                          <div id="openChart" class="col-xs-6">
+                          </div>
+                          <div id="closedChart" class="col-xs-6">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="box">
+                <div class="box-header">
+                  <h3>Description</h3>
+                </div>
+                <div class="box-content" id="descriptionForm" style="display:none;">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <form class="form-horizontal">
+                      <div class="form-group">
+                        <div class="col-md-12">
+                          <textarea class="col-md-3 form-control" id="fieldDesc"></textarea>
+                        </div>
+                      </div>
+                      <button id="btnDescriptionSave" class="btn btn-primary">Save</button>
+                      <button id="btnDescriptionCancel" class="btn btn-default">Cancel</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="box-content" id="descriptionContent">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-12 productVersionProperties">
+                                <p class="form-control-static editable w-wrap" id="fieldDescription"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div id="customPropRow">
+                <div class="box">
+                  <div class="box-header">
+                    <h3>Custom Fields</h3>
+                  </div>
+                  <div class="box-content">
+                    <div class="row">
+                      <form class="form-horizontal">
+                      <div class="col-xs-6">
+                        <div id="customPropertiesL" class="customProperties">
+                        </div>
+                      </div>
+                      <div class="col-xs-6">
+                        <div id="customPropertiesR" class="customProperties">
+                        </div>
+                      </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="box mb10">
+                <div class="box-header" style="padding-bottom: 10px;">
+                  <h3>History</h3>
+                  <div class="box-actions">
+                    <a id="historyToggle" data-toggle="collapse" data-target="#historyContent" href="#"><i class="fa fa-chevron-down"></i></a>
+                    <a id="historyRefresh" href="#"><i class="fa fa-refresh"></i></a>
+                  </div>
+                </div>
+                <div class="box-content collapse" id="historyContent">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <table class="table table-hover" id="tblHistory">
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th>Author</th>
+                            <th>Description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="box">
+                <div class="box-header"><h3>Recent Ticket History</h3><h3 class="pull-right" id="openTicketCount"></h3></div>
+                <div class="box-content">
+                  <div id="openTickets" class="tickets"></div>
+                </div>
+              </div>  
+              <div class="box">
+                <div class="box-header">
+                  <h3>Version Info</h3>
+                </div>
+                <div class="box-content">
+                  <div>
+                    <div class="form-horizontal">
+                      <div class="productVersionProperties">
+                        <div class="form-group">
+                          <label for="fieldProduct" class="col-md-4 control-label">Product</label>
+                          <div class="col-md-8">
+                            <p class="form-control-static link" id="fieldProduct"></p>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="fieldStatus" class="col-md-4 control-label">Status</label>
+                          <div class="col-md-8">
+                            <p class="form-control-static editable" id="fieldStatus"></p>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="fieldReleased" class="col-md-4 control-label">Released</label>
+                          <div class="col-md-8">
+                            <p class="form-control-static editable w-wrap" id="fieldReleased"></p>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="fieldReleaseDate" class="col-md-4 control-label">Release Date</label>
+                          <div class="col-md-8">
+                            <p class="form-control-static editable" id="fieldReleaseDate"></p>
+                          </div>
+                        </div>
+                        <div id="jiraIntegrationBox" class="form-group" style="display: none;">
+                          <label for="fieldJiraProjectKey" class="col-md-4 control-label">Jira Project Key</label>
+                          <div class="col-md-8">
+                            <p class="form-control-static editable" id="fieldJiraProjectKey"></p>
+                          </div>
+                        </div>
+                          <div id="TFSIntegrationBox" class="form-group" style="display: none;">
+                              <label for="fieldTFSProjectName" class="col-md-4 control-label">TFS Project Name</label>
+                              <div class="col-md-8">
+                                  <p class="form-control-static editable" id="fieldTFSProjectName"></p>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="product-version-customers">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="box" id="customerForm" style="display: none;">
+                <div class="box-header">
+                </div>
+                <div class="box-content">
+                  <form class="form-horizontal">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="inputCustomer" class="col-md-4 control-label">Customer:</label>
+                        <div class="col-md-8">
+                          <input class="col-md-10 form-control" id="inputCustomer" placeholder="Enter partial name then select name from list">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <label class="col-md-2 control-label" for="supportExpiration">Warranty Expiration</label>
+                        <div class="col-md-8">
+                          <input id="supportExpiration" class="col-md-10 form-control datepicker">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="hidden" id="productCustomer">
+                  <div id="customProductsControls">
+                  </div>
+                  </form>
+                  <input type="hidden" id="fieldOrganizationProductID" value="-1" />
+                  <button id="btnCustomerSave" class="btn btn-primary col-md-offset-1">Save</button>
+                  <button id="btnCustomerCancel" class="btn btn-default">Cancel</button>
+                </div>
+              </div>
+              <div class="box">
+                <div class="box-header">
+                  <button id="customerToggle" class="btn btn-primary">Associate Customer</button>
+                  <button id="associateAllToggle" class="btn btn-primary">Associate All Customers</button>
+                  <button id="unAssociateAllToggle" class="btn btn-primary">Unassociate All Customers</button>
+                  <div class="pull-right">
+                    <div class="btn-toolbar" role="toolbar">
+                      <div class="btn-group">
+                        <button class="btn btn-default product-tooltip dropdown-toggle"  data-toggle="dropdown" type="button" title="Export this table"><i class="fa fa-download"></i></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                          <li><a href="#" class="product-version-customers-export-csv">Export as Comma Separated Values</a></li>
+                          <li><a href="#" class="product-version-customers-export-excel">Export as Excel</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="box-content">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <table class="table table-hover" id="tblCustomers">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th></th>
+                            <th><a href="#" class="customerHeader">Customer</a></th>
+                            <th><a href="#" class="customerHeader">Support Expiration</a></th>
+                            <th><a href="#" class="customerHeader">Status</a></th>
+                            <th><a href="#" class="customerHeader">Released</a></th>
+                            <th><a href="#" class="customerHeader">Released Date</a></th>
+                            <th><a href="#" class="customerHeader">Date Created<i class="fa fa-sort-desc"></i></a></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                      <div class="customers-loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading...</div>
+                      <div class="customers-done" hidden>There are no more customers.</div>
+                      <div class="customers-empty" hidden>This product has no customers.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="product-version-tickets">
+          <div class="checkBoxesBar">
+            <div class="checkbox-inline">
+              <label class="checkBoxLabel">
+                <input type="checkbox" id="cbReported" checked> Reported Tickets
+              </label>
+            </div>
+            <div class="checkbox-inline">
+              <label class="checkBoxLabel">
+                <input type="checkbox" id="cbResolved" checked> Resolved Tickets
+              </label>
+            </div>          
+          </div>
+          <iframe id="ticketIframe" frameborder="0" scrolling="no" src="" width="100%" style="height: 96%;
+            position: absolute"></iframe>
+        </div>
+        <div class="tab-pane fade" id="product-version-kb">
+          <div class="checkBoxesBar">
+            <div class="checkbox-inline">
+              <label class="checkBoxLabel">
+                <input type="checkbox" id="cbReportedKB" checked> Reported Tickets
+              </label>
+            </div>
+            <div class="checkbox-inline">
+              <label class="checkBoxLabel">
+                <input type="checkbox" id="cbResolvedKB" checked> Resolved Tickets
+              </label>
+            </div>          
+          </div>
+          <iframe id="kbIframe" frameborder="0" scrolling="no" src="" width="100%" style="height: 96%;
+            position: absolute"></iframe>
+        </div>
+        <div class="tab-pane fade" id="product-version-attachments">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="box" id="fileForm" style="display: none;">
+                <div class="box-header">
+                </div>
+                <div class="box-content">
+                  <form class="form-horizontal file-upload" action="Upload/Actions/555" method="POST"
+                  enctype="multipart/form-data" title="You can drag and drop your attachments here.">
+                  <div class="form-group">
+                    <label for="inputName" class="col-md-1 control-label">File</label>
+                    <div class="col-md-10">
+                      <input class="hiddenfile" type="file" name="file[]">
+                      <p class="form-control-static"><a class="ui-state-default ts-link" href="#" title="You can drag and drop your attachments here.">
+                        Click to select your file or drag and drop files here.</a></p>
+                      <ul class="upload-queue"></ul>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputName" class="col-md-1 control-label">Description</label>
+                    <div class="col-md-10">
+                      <textarea class="col-md-3 form-control" id="attachmentDescription"></textarea>
+                    </div>
+                  </div>
+                  </form>
+                  <button id="btnFilesSave" class="btn btn-primary col-md-offset-1">Upload</button>
+                  <button id="btnFilesCancel" class="btn btn-default">Cancel</button>
+                </div>
+              </div>
+              <div class="box">
+                <div class="box-header">
+                  <button id="fileToggle" class="btn btn-primary">Add Files</button>
+                </div>
+                <div class="box-content">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <table class="table table-hover" id="tblFiles">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>File Name</th>
+                            <th>Description</th>
+                            <th>Attached By</th>
+                            <th>Date Attached</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="product-watercooler">
+          <iframe id="watercoolerIframe" frameborder="0" scrolling="no" src="" width="100%"
+            height="850"></iframe>
+        </div>
+        <div class="tab-pane fade" id="product-version-inventory">
+          <div class="row">
+              <div class="col-xs-12">
+                  <div class="box">
+                <div class="box-header">
+                </div>
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                          <!--<button class="btn btn-primary asset-action-assign" data-toggle="modal" data-target="#modalAssign" >Assign Asset</button>-->
+                          <div class="list-group assetList">
+                          </div>
+                          <div class="inventory-loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading...</div>
+                          <div class="inventory-done" hidden>There are no more assets.</div>
+                          <div class="inventory-empty" hidden>This product has no assets.</div>
+                        </div>
+                      </div>
+                  </div>   
+              </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="maincontainerx">
+        <a href="#" class="scrollup">Scroll</a>
+        <div class="row">
+            <div>
+                <div class="row">
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

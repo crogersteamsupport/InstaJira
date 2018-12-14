@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8F3F388C-10F5-45D4-9F4C-471236DC14C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TeamSupport.Proxy</RootNamespace>
+    <AssemblyName>TeamSupport.Proxy</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionsProxy.cs" />
+    <Compile Include="RefType\CustomFieldCategoriesProxy.cs" />
+    <Compile Include="RefType\CustomValuesProxy.cs" />
+    <Compile Include="RefType\PhoneNumbersViewProxy.cs" />
+    <Compile Include="RefType\ActionLogsProxy.cs" />
+    <Compile Include="RefType\ActionLogsViewProxy.cs" />
+    <Compile Include="RefType\AddressesProxy.cs" />
+    <Compile Include="RefType\AssetAssignmentsViewProxy.cs" />
+    <Compile Include="RefType\AssetHistoryProxy.cs" />
+    <Compile Include="RefType\AssetHistoryViewProxy.cs" />
+    <Compile Include="RefType\CalendarRefProxy.cs" />
+    <Compile Include="RefType\CustomFieldsProxy.cs" />
+    <Compile Include="RefType\CustomFieldsViewProxy.cs" />
+    <Compile Include="RefType\DeletedIndexItemsProxy.cs" />
+    <Compile Include="RefType\EmailAddressesProxy.cs" />
+    <Compile Include="RefType\ImportFieldsProxy.cs" />
+    <Compile Include="RefType\ImportFieldsViewProxy.cs" />
+    <Compile Include="RefType\AttachmentProxy.cs" />
+    <Compile Include="ContactProxy.cs" />
+    <Compile Include="CustomerProxy.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RefType\ImportsProxy.cs" />
+    <Compile Include="RefType\MiscellaneousLogProxy.cs" />
+    <Compile Include="RefType\NotesProxy.cs" />
+    <Compile Include="RefType\NotesViewProxy.cs" />
+    <Compile Include="RefType\PhoneNumbersProxy.cs" />
+    <Compile Include="RefType\RecentlyViewedItemsProxy.cs" />
+    <Compile Include="RefType\ReportTablesProxy.cs" />
+    <Compile Include="RefType\SearchResultsProxy.cs" />
+    <Compile Include="RefType\SubscriptionProxy.cs" />
+    <Compile Include="RefType\TagLinksProxy.cs" />
+    <Compile Include="RefType\TaskAssociationsProxy.cs" />
+    <Compile Include="RefType\RemindersProxy.cs" />
+    <Compile Include="RefType\SimpleImportFieldsViewProxy.cs" />
+    <Compile Include="RefType\TaskAssociationsViewProxy.cs" />
+    <Compile Include="RefType\WatercoolerAttachmentsProxy.cs" />
+    <Compile Include="RefType\ReportsProxy.cs" />
+    <Compile Include="TicketRelationshipsProxy.cs" />
+    <Compile Include="TicketsProxy.cs" />
+    <Compile Include="RefType\UserNoteSettingsProxy.cs" />
+    <Compile Include="UsersProxy.cs" />
+    <Compile Include="RefType\WebHooksPendingProxy.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y "$(TargetDir)Teamsupport.Proxy.dll" "$(ProjectDir)..\..\ts-support-hub\TeamSupport.Hub\dependencies\"
+xcopy /y "$(TargetDir)Teamsupport.Proxy.dll" "$(ProjectDir)..\..\ts-support-hub\TeamSupport.Authentication\dependencies\"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

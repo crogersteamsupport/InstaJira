@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+  <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+  <style type="text/css">
+    body { background: #fff; padding-top: 15px;}
+    .nav > li > a { padding: 2px 15px; }
+    .report-valid a { color:Lime; font-weight: bold;}
+    .report-bad a { color:Red; font-weight: bold;}
+    .alert { display:none;}
+    .report-list { height: 500px; overflow:auto;}
+    .report-stock { font-weight:bold;}
+  </style>
+
+  <script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+      top.Ts.Services.Reports.AdminGetReports(function (reports) {
+        var list = $('.report-list ul');
+        for (var i = 0; i < reports.length; i++) {
+          var item = $('<li>').data('report', reports[i]).attr('data-id', reports[i].ReportID);
+          $('<a>')
+            .attr('href', '#')
+            .text(reports[i].ReportID + ' (' + (reports[i].OrganizationID ? reports[i].OrganizationID : 'Stock') + ') - ' + reports[i].Name)
+            .appendTo(item)
+            .addClass(reports[i].OrganizationID == null ? 'report-stock' : '')
+            .click(function (e) {
+              e.preventDefault();
+              loadReport($(this).closest('li'));
+            });
+          list.append(item);
+        }
+
+        loadReport($('.report-list li:first'));
+
+      });
+
+      function loadReport(li) {
+        $('.report-list li').removeClass('active');
+        var report = li.addClass('active').data('report');
+        $('.alert-danger').hide();
+        $('.alert-success').hide();
+        top.Ts.Services.Reports.AdminGetReport(report.ReportID, function (result) {
+          li.data('report', result);
+          $('.title').text(result.Name);
+          $('#query').val(result.Query);
+          if ($('#autotest').prop('checked')) {
+            testQuery(result.ReportID, '');
+          }
+        });
+      }
+
+      $('.btn-save').click(function (e) {
+        e.preventDefault();
+        var report = $('.report-list li.active').data('report');
+        top.Ts.Services.Reports.AdminUpdateQuery(report.ReportID, $('#query').val())
+      });
+
+
+      $('.btn-clone').click(function (e) {
+        e.preventDefault();
+        var report = $('.report-list li.active').data('report');
+        var name = prompt("Enter a new report name", report.Name + ' Copy');
+        if (name != null) {
+          top.Ts.Services.Reports.AdminCloneReport(report.ReportID, name, function (id) {
+            alert('Cloned.  Refresh to see it.');
+          });
+        }
+      });
+
+      $('.btn-rename').click(function (e) {
+        e.preventDefault();
+        var report = $('.report-list li.active').data('report');
+        var name = prompt("Enter a new report name", report.Name);
+        if (name != null) {
+          top.Ts.Services.Reports.AdminRenameReport(report.ReportID, name, function () {
+            alert('Renamed.  Refresh to see it.');
+          })
+        }
+      });
+
+      $('.btn-org').click(function (e) {
+        e.preventDefault();
+        var report = $('.report-list li.active').data('report');
+        var oldID = report.OrganizationID ? report.OrganizationID : 'ALL';
+        var orgID = prompt('Enter a new organization id or "ALL"', oldID);
+        if (orgID != null) {
+          top.Ts.Services.Reports.AdminChangeOrg(report.ReportID, orgID, function () {
+            alert('Renamed.  Refresh to see it.');
+          })
+        }
+      });
+
+
+
+      $('.btn-test').click(function (e) {
+        e.preventDefault();
+        var li = $('.report-list li.active');
+        var report = li.data('report');
+        testQuery(report.ReportID, $('#query').val());
+      });
+
+      function testQuery(reportID, query) {
+        var li = $('li[data-id="' + reportID + '"]');
+        top.Ts.Services.Reports.AdminTestQuery(reportID, query,
+        function () {
+          li.addClass('report-valid').removeClass('report-bad');
+          $('.alert-danger').hide();
+          $('.alert-success').show();
+        },
+        function (response) {
+          li.addClass('report-bad').removeClass('report-valid');
+          $('.alert-success').hide();
+          $('.message').html(response.get_message());
+          $('.stack').html(response.get_stackTrace());
+          $('.alert-danger').show();
+
+        });
+      }
+
+    });  
+  </script>
+
+</head>
+<body>
+  <div class="frame-container container">
+    <div class="row">
+      <div class="col-xs-4">
+        <div class="report-list">
+        <ul class="nav nav-pills nav-stacked">
+        </ul>
+        </div>
+      </div>
+      <div class="col-xs-8">
+      <form>
+      <h3 class="title"></h3>
+      <button class="btn-test btn btn-primary">Test</button>
+      <button class="btn-clone btn btn-default">Clone</button>
+      <button class="btn-rename btn btn-default">Rename</button>
+      <button class="btn-org btn btn-default">Change Organization</button>
+      <button class="btn-save btn btn-default pull-right">Save</button>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="autotest">
+          Auto Test</label>
+      </div>
+      <div class="form-group">
+        <label for="query">Query</label>
+        <textarea id="query" class="form-control" rows="20"></textarea>
+      </div>
+      </form>
+      <div class="alert alert-danger">
+        <div><strong>Message: </strong><span class="message"></span></div>
+        <div><strong>Stack Trace: </strong><p class="stack"></p></div>
+      </div>
+      <div class="alert alert-success">
+        Successful!
+      </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

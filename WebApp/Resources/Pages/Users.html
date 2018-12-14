@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../Css/standards.css" rel="stylesheet" type="text/css" />
+    <link href="Tasks.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/jquery-ui-bs3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+    <link href="/frontend/css/pages/users.css" rel="stylesheet" type="text/css" />
+    <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+    <!--<script src="..//frontend/library/dialogs.js" type="text/javascript"></script>-->
+    <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/respond.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.placeholder.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.layout.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.iframe-transport.js" type="text/javascript"></script>
+    <script src="/frontend/library/handlebars.js" type="text/javascript"></script>
+    <script src="Users.js" type="text/javascript"></script>
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+</head>
+<body>
+    <div class="ui-layout-west">
+        <div class="input-group customers-search mb20">
+            <input type="text" placeholder="Search users." id="searchString" class="form-control search">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default report-clear-search">
+                    <i class="fa fa-search">
+                    </i>
+                </button>
+            </span>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" id="cbActive"> Hide Inactive
+            </label>
+        </div>
+        <ul class="list-group user-container"></ul>
+
+    </div>
+
+    <div class="ui-layout-center p0 bg-bluewood">
+        <div class="maincontainer">
+            <div class="main-nav">
+                <div>
+                    <span class="userName" id="userName" style="display:none;"></span>
+                    <div class="pull-right">
+                        <div role="toolbar" class="btn-toolbar">
+                            <div class="btn-group">
+                                <button id="userNew" title="" type="button" class="btn btn-default user-tooltip" data-original-title="Add a New User"><i class="fa fa-plus"></i></button>
+                                <button id="userDelete" title="" type="button" class="btn btn-default user-tooltip" data-original-title="Delete This User"><i class="fa fa-trash-o"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav nav-pills nav-curiousblue" id="userTabs" style="margin-bottom:30px;padding:10px;">
+                    <li class="active"><a href="#user-information" data-toggle="tab">User Information</a></li>
+                    <li><a href="#user-open" data-toggle="tab">Open</a></li>
+                    <li><a href="#user-closed" data-toggle="tab">Closed</a></li>
+                    <li><a href="#user-all" data-toggle="tab">All Tickets</a></li>
+                    <li><a href="#user-queue" data-toggle="tab">Ticket Queue</a></li>
+                    <li id="historyTab"><a href="#user-history" data-toggle="tab">History</a></li>
+                    <li id="ratingsTab"><a href="#user-ratings" data-toggle="tab">Ratings</a></li>
+                    <li id="taskTab"><a href="#user-tasks" data-toggle="tab">Tasks</a></li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="user-information">
+                    <iframe id="infoIframe" scrolling="no" src="" frameborder="0" onload="autoResize();" width="100%"></iframe>
+                </div>
+                <div class="tab-pane fade in" id="user-open">
+                    <iframe id="openIframe" scrolling="no" src="" frameborder="0" height="750px" width="100%"></iframe>
+                </div>
+                <div class="tab-pane fade in" id="user-closed">
+                    <iframe id="closedIframe" scrolling="no" src="" frameborder="0" height="750px" width="100%"></iframe>
+                </div>
+                <div class="tab-pane fade in" id="user-all">
+                    <iframe id="allIframe" scrolling="no" src="" frameborder="0" height="750px" width="100%"></iframe>
+                </div>
+                <div class="tab-pane fade in" id="user-queue">
+                    <iframe id="queueIframe" scrolling="no" src="" frameborder="0" height="750px" width="100%"></iframe>
+                </div>
+                <div class="tab-pane fade in" id="user-history">
+                    <iframe id="historyIframe" scrolling="no" src="" frameborder="0" height="750px" width="100%"></iframe>
+                </div>
+                <div class="tab-pane fade" id="user-ratings">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <!--<div class="row productLineRowLabel" style="display:none">
+                                        <label for="ddlRatingProductFamily" class="col-md-2 control-label">Product Line</label>
+                                    </div>-->
+                                    <div class="row productLineRow" style="display:none">
+                                        <div class="col-md-6">
+                                            <select class="form-control" id="ddlRatingProductFamily">
+                                                <option value="-1">All Product Lines</option>
+                                                <option value="0">Without Product Line</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-1">
+                                            <p class="percent" id="positivePercent">0%</p>
+                                            <a href="#"><img id="positiveImage" src="../Images/face-positive.png" style="width:50px;height:50px" /></a>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <p class="percent" id="neutralPercent">0%</p>
+                                            <a href="#"><img id="neutralImage" src="../Images/face-neutral.png" style="width:50px;height:50px" /></a>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <p class="percent" id="negativePercent">0%</p>
+                                            <a href="#"><img id="negativeImage" src="../Images/face-negative.png" style="width:50px;height:50px" /></a>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <a href="#" id="viewAll">View All</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-content">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-hover" id="tblRatings">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="col-xs-1">Ticket</th>
+                                                        <th class="col-xs-2">Agents</th>
+                                                        <th class="col-xs-1">Reported By</th>
+                                                        <th class="col-xs-1">Company</th>
+                                                        <th class="col-xs-1">Date Reported</th>
+                                                        <th class="col-xs-1">Rating</th>
+                                                        <th class="col-xs-4">Comments</th>
+                                                        <th class="col-xs-1"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="user-tasks">
+                    <div class="row">
+                        <div class="col-xs-12" id="taskContainer">
+                            <div class="box">
+                                <div class="box-header">
+                                    <button class="btn btn-primary task-action-add">Add Task</button>
+                                </div>
+                                <div class="box-content">
+                                    <div class="row">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Name</td>
+                                                    <td>Assigned To</td>
+                                                    <td>Due</td>
+                                                    <td>Reminder Date</td>
+                                                    <td>Associations</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tasks"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalTaskComment">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Would you like to add a comment to complete this task?</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="comments" class="col-md-2 control-label">Comments:</label>
+                            <div class="col-md-10">
+                                <textarea class="col-md-12 form-control" id="taskCompleteComment" placeholder="Comment about completing this task."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnTaskCompleteComment">Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+</body>
+</html>
+<script id="user-tasks-template" type="text/x-handlers-template">
+    {{#taskList}}
+    test
+    <tr class="{{formatRow this}}">
+        <td>
+            <input {{taskComplete IsComplete}} type="checkbox" class="change-task-status" data-taskid="{{TaskID}}" />
+        </td>
+        <td>
+            <a href="#" class="tasklink" id="cb{{TaskID}}" data-taskid="{{TaskID}}">
+                {{Name}}
+            </a>
+        </td>
+        <td>{{AssignedTo}}</td>
+        <td>{{formatDate DueDate}}</</td>
+        <td>{{formatDate ReminderDueDate}}</td>
+        <td>
+            {{#Associations}}
+            {{mapAssociation this}}
+            {{/Associations}}
+        </td>
+        </td>
+    </tr>
+    <!--{{#SubTasks}}
+    <tr class="">
+        <td>
+            Poop
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    {{/SubTasks}}-->
+    {{/taskList}}
+</script>

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{11C7D899-BCAA-408F-8B85-35593AB7E617}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TeamSupport.IDTree</RootNamespace>
+    <AssemblyName>TeamSupport.IDTree</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AttachmentModel.cs" />
+    <Compile Include="ActionModel.cs" />
+    <Compile Include="AssetModel.cs" />
+    <Compile Include="AssetTicketModel.cs" />
+    <Compile Include="AttachmentFile.cs" />
+    <Compile Include="AuthenticationModel.cs" />
+    <Compile Include="ChatModel.cs" />
+    <Compile Include="NoteModel.cs" />
+    <Compile Include="ProductModel.cs" />
+    <Compile Include="ProductVersionModel.cs" />
+    <Compile Include="TaskModel.cs" />
+    <Compile Include="TicketQueueModel.cs" />
+    <Compile Include="TSDataTable.cs" />
+    <Compile Include="TicketRelationshipModel.cs" />
+    <Compile Include="UserModel.cs" />
+    <Compile Include="UserTicketModel.cs" />
+    <Compile Include="ConnectionContext.cs" />
+    <Compile Include="OrganizationTicketModel.cs" />
+    <Compile Include="IDReader.cs" />
+    <Compile Include="IDNode.cs" />
+    <Compile Include="OrganizationModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TicketReminderModel.cs" />
+    <Compile Include="SubscriptionModel.cs" />
+    <Compile Include="TagLinkModel.cs" />
+    <Compile Include="TagModel.cs" />
+    <Compile Include="TaskAssociationModel.cs" />
+    <Compile Include="TicketModel.cs" />
+    <Compile Include="WatercoolerMsgModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TeamSupport.Proxy\TeamSupport.Proxy.csproj">
+      <Project>{8f3f388c-10f5-45d4-9f4c-471236dc14c0}</Project>
+      <Name>TeamSupport.Proxy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

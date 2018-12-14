@@ -1,0 +1,489 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+  <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <link href="reports_edit.css" rel="stylesheet" type="text/css" />
+  <link href="ReportFilters.css" rel="stylesheet" type="text/css" />
+  <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.numeric.js" type="text/javascript"></script>
+  <script src="/frontend/library/moment.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap-datepicker.js" type="text/javascript"></script>
+  <script src="/frontend/library/highcharts.js" type="text/javascript"></script>
+  <script src="reports_edit.js" type="text/javascript"></script>
+  <script src="ReportFilters.js" type="text/javascript"></script>
+  <script src="ReportCharts.js" type="text/javascript"></script>
+  <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+  <title>Edit Report</title>
+  <style>
+    body { background-color: #fff; }
+
+    .report-section { display: none; }
+    .action-save { display: none; }
+    .action-cancel { float: right; }
+
+    .form-actions { text-align: center; }
+    .report-type ul { list-style: none outside none; margin: 0 20px; padding: 10px 0; }
+    .report-charttype ul { list-style: none outside none; margin: 0 20px; padding: 10px 0; }
+    .report-type input { margin: 3px 15px 0 0; }
+    .report-type label { font-size: 16px; color: #676767; }
+    .report-fields-selected li { cursor: url(../cursors/move.cur), pointer; margin: 10px 0; }
+    .report-fields-selected li i { opacity: 0; filter: alpha(opacity=0); padding-right: 7px; }
+    .report-fields-selected li:hover i { opacity: 0.5; filter: alpha(opacity=50); }
+    li.ui-sortable-helper { cursor: url(../cursors/grab.cur), move !important; }
+    .wrap { padding-bottom: 30px; }
+    .reports-header { font-size: 18px; padding: 20px 0 10px 10px; color: #555; margin-right: 25px; }
+
+    .summary-fields li { padding: 5px 0; }
+    .summary-fields li .form-control { display: inline-block; }
+    .summary-fields li input, .summary-fields li select { width: 175px; }
+    .summary-fields li .summary-calc-val1, .summary-fields li .summary-calc-val2 { width: 75px; }
+    .summary-fields li .summary-calc-comp { width: 150px; }
+
+    .summary-fields li a { opacity: 0; filter: alpha(opacity=0); padding-left: 10px; transition: opacity .25s ease-in-out; -moz-transition: opacity .25s ease-in-out; -webkit-transition: opacity .25s ease-in-out; }
+    .summary-fields li:hover a { opacity: 0.5; filter: alpha(opacity=50); }
+    .summary-fields li:first-child a { display: none; }
+    .chart-summary-desc-fields .summary-fields li:hover a { opacity: 0.5; filter: alpha(opacity=50); }
+    .chart-summary-desc-fields .summary-fields li:first-child a { display: inline; }
+    .chart-summary-desc-fields .summary-fields li:nth-child(2) a { display: none; }
+    .chart-display label { margin-right: 10px;}
+    .filter-field, .filter-comp { margin-right: 15px; }
+
+
+  </style>
+</head>
+<body>
+  <div class="container frame-container">
+    <div class="wrap">
+      <div class="reports-header">
+        <i class="fa"></i>&nbsp;&nbsp;<span class="report-title"></span>
+      </div>
+      <form role="form">
+      <div class="report-section report-setup report-class-chart report-class-summary report-class-tabular report-class-external">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Setup your report</h3>
+          </div>
+          <div class="panel-body">
+            <fieldset>
+              <div class="form-group">
+                <label>Report Name</label>
+                <input class="form-control report-name" type="text" placeholder="Enter report name…"
+                  data-title="Report Name" data-placement="top" data-content="You must enter a report name before moving on."
+                  data-trigger="manual">
+              </div>
+              <div class="form-group report-class-item report-class-tickets-privacy">
+                <label>Private Report</label>
+                <select class="form-control report-privacy">
+                    <option value=false>Everyone Can See It</option>
+                    <option value=true>Only I Can See It</option>
+                </select>
+              </div>
+              <div class="form-group report-class-item report-class-chart report-class-summary report-class-tabular">
+                <label>Primary Table</label>
+                <select id="selectCat" class="form-control"></select>
+              </div>
+              <div class="form-group report-class-item report-class-chart report-class-summary report-class-tabular">
+                <label>Secondary Table</label>
+                <select id="selectSubCat" class="form-control"></select>
+              </div>
+            </fieldset>
+            <div class="form-group report-class-item report-class-external">
+              <label>External URL</label>
+              <input id="external-url" class="form-control" type="text" placeholder="Enter a website's url…"
+                data-title="External URL" data-placement="bottom" data-content="You must enter a website's url before moving on."
+                data-trigger="manual">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="report-section report-fields report-class-tabular report-class-tickets report-fields-primary">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#primaryCollapse" aria-expanded="true" aria-controls="primaryCollapse"> Primary Table </a>
+            </h3>
+          </div>
+            <div id="primaryCollapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body report-fields-available report-fields-primary">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <ul class="list-unstyled report-fields-1">
+                                <li></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="list-unstyled report-fields-2">
+                                <li></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="list-unstyled report-fields-3">
+                                <li></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+          <div class="report-section report-fields report-fields-primary-cf">
+              <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <h3 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#primaryCollapseCF" aria-expanded="true" aria-controls="primaryCollapseCF"> Primary Table (CF) </a></h3>
+                  </div>
+                  <div id="primaryCollapseCF" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                      <div class="panel-body report-fields-available report-fields-primary-cf">
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <ul class="list-unstyled report-fields-1">
+                                      <li></li>
+                                  </ul>
+                              </div>
+                              <div class="col-md-4">
+                                  <ul class="list-unstyled report-fields-2">
+                                      <li></li>
+                                  </ul>
+                              </div>
+                              <div class="col-md-4">
+                                  <ul class="list-unstyled report-fields-3">
+                                      <li></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+          </div>
+          <div class="report-section report-fields report-fields-secondary">
+              <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <h3 class="panel-title">
+                          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#secondaryCollapse" aria-expanded="true" aria-controls="secondaryCollapse"> Secondary Table </a>
+                      </h3>
+                  </div>
+                  <div id="secondaryCollapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                      <div class="panel-body report-fields-available report-fields-secondary">
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <ul class="list-unstyled report-fields-1">
+                                      <li></li>
+                                  </ul>
+                              </div>
+                              <div class="col-md-4">
+                                  <ul class="list-unstyled report-fields-2">
+                                      <li></li>
+                                  </ul>
+                              </div>
+                              <div class="col-md-4">
+                                  <ul class="list-unstyled report-fields-3">
+                                      <li></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+          </div>
+          <div class="report-section report-fields report-fields-secondary-cf">
+              <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <h3 class="panel-title">
+                          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#secondaryCollapseCF" aria-expanded="true" aria-controls="secondaryCollapseCF"> Secondary Table (CF)</a>
+                      </h3>
+                  </div>
+                  <div id="secondaryCollapseCF" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                      <div class="panel-body report-fields-available report-fields-secondary-cf">
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <ul class="list-unstyled report-fields-1">
+                                      <li></li>
+                                  </ul>
+                              </div>
+                              <div class="col-md-4">
+                                  <ul class="list-unstyled report-fields-2">
+                                      <li></li>
+                                  </ul>
+                              </div>
+                              <div class="col-md-4">
+                                  <ul class="list-unstyled report-fields-3">
+                                      <li></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+          </div>
+      <div class="report-section report-summary-fields report-class-summary">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">What data do you want to report on?</h3>
+          </div>
+          <div class="panel-body">
+            <fieldset>
+              <div class="form-group">
+                <label>Descriptive Fields</label>
+                <ul class="summary-fields summary-desc list-unstyled">
+                  <li>
+                    <select class="form-control summary-field summary-desc-field"></select>
+                    <select class="form-control summary-desc-val1">
+                      <option value="year">Year</option>
+                      <option value="qtryear">Quarter &amp; Year</option>
+                      <option value="monthyear">Month &amp; Year</option>
+                      <option value="weekyear">Week &amp; Year</option>
+                      <option value="date">Date</option>
+                      <option value="qtr">Quarter</option>
+                      <option value="month">Month</option>
+                      <option value="week">Week</option>
+                      <option value="dayweek">Day of Week</option>
+                      <option value="daymonth">Day of Month</option>
+                      <option value="hourday">Hour of Day</option>
+                    </select>
+                    <a href="#"><i class="fa fa-times"></i></a></li>
+                </ul>
+                <button class="btn btn-primary summary-add-field summary-add-descfield">Add Field</button>
+              </div>
+              <div class="form-group">
+                <label>Calculated Fields</label>
+                <ul class="summary-fields summary-calc list-unstyled">
+                  <li>
+                    <select class="form-control summary-calc-field summary-field list-unstyled"></select>
+                    <select class="form-control summary-calc-arg">
+                      <option value="sum">Sum</option>
+                      <option value="max">Maximum</option>
+                      <option value="min">Minimum</option>
+                      <option value="avg">Average</option>
+                      <option value="stdev">Standard Deviation</option>
+                      <option value="var">Variance</option>
+                      <option value="count">Count</option>
+                      <option value="countdistinct">Distinct Count</option>
+                    </select>
+                    <select class="form-control summary-calc-text-arg">
+                      <option value="count">Count</option>
+                      <option value="countdistinct">Distinct Count</option>
+                    </select>
+                    <select class="form-control summary-calc-comp">
+                      <option value="none">No Limits</option>
+                      <option value="lt">Less Than</option>
+                      <option value="gt">Greater Than</option>
+                      <option value="bet">Between</option>
+                      <option value="eq">Equals</option>
+                    </select>
+                    <input type="text" class="form-control summary-calc-val1" />
+                    <input type="text" class="form-control summary-calc-val2" />
+                    <a href="#"><i class="fa fa-times"></i></a></li>
+                </ul>
+                <button class="btn btn-primary summary-add-field summary-add-calcfield">Add Field</button>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <div class="report-section report-filters report-class-summary report-class-tabular report-class-tickets">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Filter your data</h3>
+              </div>
+              <div class="panel-body">
+                <div class="report-filter">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="report-section report-chartproperties report-class-chart">
+        <div class="row">
+          <div class="col-xs-2 chart-options">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Chart Properties</h3>
+              </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <label for="chart-type">Chart Type</label>
+                  <select class="form-control input-sm" id="chart-type">
+                    <option value="line">Line</option>
+                    <option value="area">Area</option>
+                    <option value="stackedarea">Stacked Area</option>
+                    <option value="bar">Bar</option>
+                    <option value="stackedbar">Stacked Bar</option>
+                    <option value="column">Column</option>
+                    <option value="stackedcolumn">Stacked Column</option>
+                    <option value="pie">Pie</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="chart-title">Title</label>
+                  <input type="text" class="form-control input-sm" id="chart-title" placeholder="Enter title">
+                </div>
+                <div class="form-group">
+                  <label for="chart-subtitle">Subtitle</label>
+                  <input type="text" class="form-control input-sm" id="chart-subtitle" placeholder="Enter subtitle">
+                </div>
+                <div class="form-group">
+                  <label for="chart-series-title">Y Axis Title</label>
+                  <input type="text" class="form-control input-sm" id="chart-series-title" placeholder="Enter Y axis title">
+                </div>
+                <div class="form-group">
+                  <label for="chart-tip-suffix">Tool Tip Suffix</label>
+                  <input type="text" class="form-control input-sm" id="chart-tip-suffix" placeholder="Enter suffix">
+                </div>
+                <div class="form-group">
+                  <label for="chart-legend-layout">Legend Layout</label>
+                  <select class="form-control input-sm" id="chart-legend-layout">
+                    <option value="vertical">Vertical</option>
+                    <option value="horizontal">Horizontal</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="chart-legend-align">Legend Align</label>
+                  <select class="form-control input-sm" id="chart-legend-align">
+                    <option value="right">Right</option>
+                    <option value="left">Left</option>
+                    <option value="center">Center</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="chart-legend-valign">Legend Vertical Align</label>
+                  <select class="form-control input-sm" id="chart-legend-valign">
+                    <option value="middle">Middle</option>
+                    <option value="top">Top</option>
+                    <option value="bottom">Bottom</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="chart-data-labels">Show Data Labels</label>
+                  <select class="form-control input-sm" id="chart-data-labels">
+                    <option value=true>True</option>
+                    <option value=false>False</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-10 chart-display">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Chart Data</h3>
+              </div>
+              <div class="panel-body">
+                <fieldset>
+                  <div class="form-group chart-summary-desc-fields">
+                    <ul class="summary-fields summary-desc list-unstyled">
+                      <li>
+                        <label>X Axis</label>
+                        <select class="form-control input-sm summary-field summary-desc-field"></select>
+                        <select class="form-control input-sm summary-desc-val1">
+                          <option value="year">Year</option>
+                          <option value="qtryear">Quarter &amp; Year</option>
+                          <option value="monthyear">Month &amp; Year</option>
+                          <option value="weekyear">Week &amp; Year</option>
+                          <option value="date">Date</option>
+                          <option value="qtr">Quarter</option>
+                          <option value="month">Month</option>
+                          <option value="week">Week</option>
+                          <option value="dayweek">Day of Week</option>
+                          <option value="daymonth">Day of Month</option>
+                          <option value="hourday">Hour of Day</option>
+                        </select>
+                        <a href="#"><i class="fa fa-times"></i></a></li>
+                    </ul>
+                    <button class="btn btn-default summary-add-field summary-add-descfield">Add Series</button>
+                  </div>
+                  <div class="form-group">
+                    <ul class="summary-fields summary-calc list-unstyled">
+                      <li>
+                        <label>Y Axis</label>
+                        <select class="form-control input-sm summary-calc-field summary-field list-unstyled">
+                        </select>
+                        <select class="form-control input-sm summary-calc-arg">
+                          <option value="sum">Sum</option>
+                          <option value="max">Maximum</option>
+                          <option value="min">Minimum</option>
+                          <option value="avg">Average</option>
+                          <option value="stdev">Standard Deviation</option>
+                          <option value="var">Variance</option>
+                          <option value="count">Count</option>
+                          <option value="countdistinct">Distinct Count</option>
+                        </select>
+                        <select class="form-control input-sm summary-calc-text-arg">
+                          <option value="count">Count</option>
+                          <option value="countdistinct">Distinct Count</option>
+                        </select>
+                        <select class="form-control input-sm summary-calc-comp">
+                          <option value="none">No Limits</option>
+                          <option value="lt">Less Than</option>
+                          <option value="gt">Greater Than</option>
+                          <option value="bet">Between</option>
+                          <option value="eq">Equals</option>
+                        </select>
+                        <input type="text" class="form-control input-sm summary-calc-val1" />
+                        <input type="text" class="form-control input-sm summary-calc-val2" />
+                        <a href="#"><i class="fa fa-times"></i></a></li>
+                    </ul>
+                    <button class="btn btn-primary chart-apply-data">Preview Data</button>
+                    <button class="btn btn-primary chart-apply-filter">Filter Data</button>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Preview</h3>
+              </div>
+              <div class="panel-body">
+                <div class="chart-container">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions clearfix">
+        <button class="btn btn-default action-back disabled" disabled><i class="fa fa-long-arrow-left">
+        </i>&nbsp;Back</button>
+        <button class="btn btn-primary action-next">Next&nbsp;<i class="fa fa-long-arrow-right"></i></button>
+        <button class="btn btn-primary action-save">Save</button>
+        <label class="checkbox-inline checkbox-stock hidden">
+          <input type="checkbox" id="cbStock" value="stock">
+          Save as a stock report </label>
+        <button class="btn btn-default action-cancel">Cancel</button>
+      </div>
+
+      </form>
+    </div>
+  </div>
+  <div class="modal filter-modal" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="modalFilterLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="modalFilterLabel">Report Filters</h4>
+        </div>
+        <div class="modal-body">
+          <div class="filter-container" id="chartFilter">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</body>
+</html>

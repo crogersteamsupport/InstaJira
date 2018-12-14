@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../Css/bootstrap3.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="../SlickGrid/slick.grid.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+  <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <link href="ReportFilters.css" rel="stylesheet" type="text/css" />
+  <link href="reports_view_tickets.css" rel="stylesheet" type="text/css" />
+  <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.numeric.js" type="text/javascript"></script>
+  <script src="/frontend/library/moment.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap-datepicker.js" type="text/javascript"></script>
+  <script src="../SlickGrid/lib/jquery.event.drag-2.2.js" type="text/javascript"></script>
+  <script src="../SlickGrid/lib/jquery.jsonp-2.4.min.js" type="text/javascript"></script>
+  <script src="../SlickGrid/slick.core.js" type="text/javascript"></script>
+  <script src="../SlickGrid/slick.formatters.js" type="text/javascript"></script>
+  <script src="../SlickGrid/plugins/slick.rowselectionmodel.js" type="text/javascript"></script>
+  <script src="../SlickGrid/plugins/slick.rowmovemanager.js" type="text/javascript"></script>
+  <script src="../SlickGrid/slick.grid.js" type="text/javascript"></script>
+  <script src="../Js/Ts/ts.datamodel.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.layout.min.js" type="text/javascript"></script>
+  <script src="../Js/Ts/ts.utils.js" type="text/javascript"></script>
+  <script src="reports_view_tickets.js" type="text/javascript"></script>
+  <script src="ReportFilters.js" type="text/javascript"></script>
+  <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+  <title>View Tabular Report</title>
+</head>
+<body>
+  <div id="reports-tabview-layout">
+    <div class="pane ui-layout-center">
+      <div id="reports-tabview-grid-container">
+      </div>
+    </div>
+    <div class="reports-toolbar pane ui-layout-north">
+      <div class="reports-header">
+        <i class="fa"></i>&nbsp&nbsp<span class="report-title"></span>
+      </div>
+      <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+          <button class="btn btn-default reports-edit btn-tooltip" type="button"
+            title="Edit"><i class="fa fa-pencil"></i></button>
+
+          <div class="btn-group reports-export">
+            <button type="button" class="btn btn-default btn-tooltip dropdown-toggle" data-toggle="dropdown" title="Export"><i class="fa fa-download"></i></button>
+            <ul class="dropdown-menu">
+              <li><a href="#" class="reports-export-csv">Export as Comma Separated Values</a></li>
+              <li><a href="#" class="reports-export-excel">Export as Excel</a></li>
+            </ul>
+          </div>
+
+          <button class="btn btn-default reports-fav btn-tooltip" type="button" title="Add to starred">
+            <i class="fa fa-star-o"></i></button>
+		  	<button class="btn btn-default reports-schedule" type="button" data-toggle="tooltip" title="Schedule this report">
+		  		<i class="fa fa-clock-o"></i>
+		  	</button>
+          <button class="btn btn-default reports-filter btn-tooltip" type="button"
+            title="Filter"><i class="fa fa-filter"></i></button>
+          <button class="btn btn-default reports-refresh btn-tooltip" type="button"
+            title="Refresh"><i class="fa fa-refresh"></i></button>
+        </div>
+      </div>
+      <div class="reports-count"></div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal filter-modal" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="modalFilterLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="modalFilterLabel">Report Filters</h4>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-filter-user" data-toggle="tab">User Filters</a></li>
+            <li class="global-filter-tab"><a href="#tab-filter-global" data-toggle="tab">Report Filters</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-filter-user">
+              <div class="filter-container" id="filter-user">
+              </div>
+              <div class="well well-sm">
+                These filters are defined here, by you.&nbsp;&nbsp;If you make changes, only you
+                will see them.</div>
+            </div>
+            <div class="tab-pane" id="tab-filter-global">
+              <div class="filter-container" id="filter-global">
+              </div>
+              <div class="well well-sm">
+                These filters are defined when you create a report.&nbsp;&nbsp;If you make changes,
+                everyone will see them.</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary filter-save">Save changes</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</body>
+</html>

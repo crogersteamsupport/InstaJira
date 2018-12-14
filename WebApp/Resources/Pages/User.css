@@ -1,0 +1,148 @@
+
+#ts-user-rail,#userProfile{float:left;}
+#ts-user-rail{margin-right:2em;}
+
+#userPhotoContainer{ width:140px; height:73px;  margin-top:1em; float: left; text-align: center}
+#userPhotoContainer img { margin-bottom: 1em; }
+#user-top-info {float:left; margin-left: 20px; width: 70%}
+
+    form.file-upload { position: relative; overflow: hidden; direction: ltr; cursor: pointer; color: #333; width: 15em; height: 16px; line-height: 16px; float:left; margin-top: 0em; }
+    form.file-upload input { position: absolute; top: 0; right: 0; margin: 0; border: 300px solid transparent; opacity: 0; -ms-filter: 'alpha(opacity=0)'; filter: alpha(opacity=0); -o-transform: translate(-300px, -300px) scale(10); -moz-transform: translate(-800px, 0) scale(10); cursor: pointer; height: 100%; }
+
+
+.ts-section {
+    background-color:rgba(200,200,200,0.1);
+    box-shadow:1px 1px 0px rgba(0,0,0,0.1);
+}
+.title {
+    margin-bottom:10px;
+    font-size:14px;
+    font-weight:bold;
+}
+.user-name-value {
+    line-height:16px;
+    clear:both;
+    padding:5px;
+    border-top:1px solid rgba(100,100,100,0.1);
+}
+
+
+
+.property {  font-weight:bold; float:left; white-space:nowrap; width: 150px; margin-right: 1em}
+.property-wide {  font-weight:bold; float:left; white-space:nowrap; width: 350px; margin-right: 1em}
+.user-name-value .value, #userPhoneList .value {  float:left;  /*margin-left: .5em;*/}
+.user-name-value img { padding-top: 1px; margin-left: .5em; float:left; display:none;}
+.user-name-value .ts-icon-saved { margin-top: 1px; margin-left: .5em; float:left; display:none;}
+.user-name-value .ticket-name-value-noproperty { margin-left: 0;}
+
+.user-cutstom-edit input, span{float:left;}
+.user-cutstom-edit {width: 50%;}
+.user-cutstom-edit .ts-icon{margin-left: 0.5em;}
+
+#customProperties {margin-bottom: .5em;}
+
+#userAddressList,#userPhoneList, #userGroups{padding:0 .75em .5em 0; float:left; width: 250px}
+.user-address div, .user-address h3, .user-phone{line-height:16px; clear: both;}
+.user-address-desc {font-weight: bold;}
+.user-address {margin: 0 0 1em 0; /*float: left*/}
+.address-delete { color: Red; font-weight: bold; margin-left: .5em; cursor: pointer}
+
+.user-profile-edit { float: right;}
+
+.user-displayname {float:left; margin: 0 !important; vertical-align: top}
+.user-name-edit input { float:left; width:50%; }
+.user-name-edit .ts-icon { float:left; margin-left: .5em; cursor:pointer; }
+
+.edit-info {margin-left: 1em}
+.userInfo {color: #0057C2;}
+.user-info-edit {float:left; margin: 0 !important; vertical-align: top; width: 50%}
+.user-info-edit textarea { float:left; width:80%; }
+.user-info-edit .ts-icon { float:left; margin-left: .5em; cursor:pointer; }
+
+.user-title-edit {float:left; margin: 0 !important; vertical-align: top; width: 50%}
+.user-title-edit input { float:left; width:50%; }
+.user-title-edit .ts-icon { float:left; margin-left: .5em; cursor:pointer; }
+
+.edit-email {margin-left: 1em}
+.user-email-edit {float:left; margin: 0 !important; vertical-align: top; width: 50%}
+.user-email-edit input { float:left; width:50%; }
+.user-email-edit .ts-icon { float:left; margin-left: .5em; cursor:pointer; }
+
+.user-linkedin-edit {float:left; margin: 0 !important; vertical-align: top; width: 50%}
+.user-linkedin-edit input { float:left; width:50%; }
+.user-linkedin-edit .ts-icon { float:left; margin-left: .5em; cursor:pointer; }
+
+
+.user-phone-edit {float:left; margin: 0 !important; vertical-align: top; width: 50%}
+.user-phone-edit input { float:left; width:50%; }
+.user-phone-edit .ts-icon { float:left; margin-left: .5em; cursor:pointer; }
+.phone-delete { color: Red; font-weight: bold; margin-left: .5em; cursor: pointer}
+
+.user-group { clear: both }
+.group-delete { color: Red; font-weight: bold; margin-left: .5em; cursor: pointer}
+.group-name {float: left}
+.ui-widget .ui-autocomplete-input, .ui-autocomplete-input, input.text{ width: 500px !important; }
+
+.link-strong {font-weight: bold !important; float: left}
+.inline {display: inline;}
+.center {text-align: center;}
+.line {
+    background-color: #D2D2D2;
+    border: 0;
+    height: 1px;
+    margin: 20px 0 20px 0;
+    }
+.ts-section .ts-icon-edit, .ts-icon-edit { display:none; font-size:14px; }
+
+.fa-pencil {
+    display:none;
+    margin:0px 0px 0px 5px;
+    padding:0px;
+    font-size: 20px !important;
+}
+
+.fa-pencil:hover {
+    cursor: pointer;
+}
+
+.fa-check-square, .fa-window-close {
+    margin:0px 0px 0px 5px;
+    padding:0px;
+    font-size: 20px !important;
+}
+
+
+.ts-section .collapsable .ui-icon-triangle-1-s, .ts-section .collapsable .ui-icon-triangle-1-e { float:left;}
+    /*.ts-icon {margin-left: .1em}*/
+
+    h3 { font-size: 1em; border-bottom: 0px solid #ddd; padding:0; margin: 1em 0 0 0; clear:both;}
+
+    h1.no-margin{ margin: 0px 0px 1em 0px; }
+
+.fleft { float: left}
+.clearfix { clear:both; }
+
+.disabledlink{text-decoration:none; cursor:default }
+    a.disabledlink:hover   { text-decoration: none }
+#user-top-info img { display:none;}
+#user-top-info .ts-icon-saved {display: none;}
+
+#divMenuItems .checkbox input { line-height: 20px; float:left; margin-left: -20px; vertical-align:middle; width:auto;}
+#divMenuItems label.checkbox { display:block; margin-bottom: 5px; min-height: 20px; padding-left: 20px; font-weight: normal; vertical-align:middle; line-height: 20px;}
+#divMenuItems ul { list-style: none;}
+
+#divMenuItems .user-name-value { height: 1.5em;}
+#divMenuItems .property-wide { line-height: 1.5em;}
+#divMenuItems .user-name-value .value  { line-height: 1.5em;}
+
+#divActionForm img {display:block}
+.userSignature-form img {display:block;}
+.userSignature-form {background-color: red;}
+#user-top-info .mceIcon img {display:block;}
+#userSignature img {display:block;}
+
+ #divAddCustomer,#divAddProductFamily { margin: 1em 0;}
+ #divAddCustomer input { padding: .3em .3em; margin-right: .5em; width: 200px !important;}
+ #divAddProductFamily input { padding: .3em .3em; margin-right: .5em; width: 200px !important;}
+ .mce-i-image{ color: #BA55D3 !important}
+ .iti-flag {background-image: url("../Css/images/flags.png") !important;}

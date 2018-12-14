@@ -1,0 +1,84 @@
+﻿    body { background-color: #fff; }
+    
+
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 40px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 10px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+    .ts-loading {
+      background-color: transparent;
+      background-image: url('../images/loading/loading2.gif');
+      background-repeat: no-repeat;
+      background-position: 50% 25%;
+      height: 100%;
+      min-height: 200px;
+    }
+
+/* Sidebar navigation */
+.wiki-sidebar {
+  margin-right: -21px;
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.wiki-sidebar > li > a { padding:5px 20px 5px 20px; color: #444; }
+.wiki-sidebar > li > a.active,
+.wiki-sidebar > li > a.active:hover,
+.wiki-sidebar > li > a.active:focus { font-weight: bold; color: #428BCA; }
+.wiki-sidebar-subitem {
+    padding-left:20px; 
+    font-size: 10px;
+    font-weight: 400;
+    color: #444;
+    display:none;
+}
+.wiki-sidebar-subitem > li > a { padding: 5px 20px 5px 10px;  color: #444; }
+.wiki-sidebar-subitem > li > a.active,
+.wiki-sidebar-subitem > li > a.active:hover,
+.wiki-sidebar-subitem > li > a.active:focus {  color: #428BCA; }
+.wiki-sidebar-caret { float:right; margin-top: 7px; }
+.wiki-sidebar-caret-right { border-left: 4px solid; border-bottom: 4px solid transparent; border-top: 4px solid transparent; }
+
+#wiki-view-toolbar > span {margin-right:15px; margin-top:4px;}
+#wiki-edit-toolbar > div {margin-right:15px; margin-top:4px;}  
+.wiki-edit-footer { border-top: 2px solid #eee; padding-top: 10px; margin-top:10px; margin-bottom:10px; }
+
+.wiki-title { position: relative; top: 4px; font-weight:400; font-size:17px;}
+.wiki-title-edit {position: relative; top: 4px;}
+
+/*Wiki Editor Styles*/
+#WikiEditArea { display:none; }
+.wiki-edit-toolbar { margin-top: 5px; height: 40px; border-bottom: 2px solid #eee; }
+.wiki-privacy-checkbox { margin-top: 5px; margin-bottom: 5px; }
+
+.fa-paste   { color: #5CB85C !important}
+.fa-book    { color: #3276B1 !important}
+.fa-ticket  { color: #FEC21E !important}
+.mce-i-image{ color: #BA55D3 !important}
+.fa-dropbox { color: #3d9ae8 !important}
+.fa-circle  { color: #D9534F !important}
+
+    #deployJavaPlugin
+    {
+        position: absolute;    left: -10px;
+    }
+
+    .divScreenRecorderMessages
+    {
+      border-radius: 5px;
+      background: #e6e6e6;
+      padding: 5px; 
+      font-family: inherit;
+      font-style: inherit;
+    }

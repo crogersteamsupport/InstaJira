@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+  <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+
+  <style type="text/css">
+    body { background-color: #fff; }
+    .container { padding-top: 15px;}
+  </style>
+
+
+  <script language="javascript" type="text/javascript">
+
+    $(document).ready(function () {
+      var _ticket = null;
+
+      $('#btnGetTicketByNumber').click(function (e) {
+        e.preventDefault();
+        if ($('#textTicketID').val().length > 0) {
+          top.Ts.Services.Tickets.AdminGetTicketByID($('#textTicketID').val(), loadTicket);
+        }
+        else {
+          top.Ts.Services.Tickets.AdminGetTicketByNumber($('#textOrgID').data('itemID'), $('#textTicketNumber').val(), loadTicket);
+        }
+      });
+
+      $('#linkCleanEmail').click(function (e) {
+        e.preventDefault();
+        top.Ts.Services.Tickets.AdminCleanAllEmailActions(_ticket.TicketID, function () { alert('Email actions cleaned.'); });
+      });
+
+      $('#linkProcessEmails').click(function (e) {
+        e.preventDefault();
+        top.Ts.Services.Tickets.AdminProcessEmails(_ticket.TicketID, function () { alert('word.'); });
+      });
+
+
+      $('#linkCleanAll').click(function (e) {
+        e.preventDefault();
+        top.Ts.Services.Tickets.AdminCleanAllActions(_ticket.TicketID, function () { alert('All actions cleaned.'); });
+      });
+
+      var execGetOrganization = null;
+      function getOrganizations(request, response) {
+        if (execGetOrganization) { execGetOrganization._executor.abort(); }
+        execGetOrganization = top.Ts.Services.Organizations.AdminGetOrganizations(request.term, function (result) { response(result); });
+      }
+
+      $('#textOrgID').autocomplete({
+        minLength: 2,
+        source: getOrganizations,
+        select: function (event, ui) {
+          $(this).data('itemID', ui.item.id);
+        }
+
+      });
+
+
+      function loadTicket(ticket) {
+        ticket = JSON.parse(ticket);
+        _ticket = ticket;
+        if (!ticket) {
+          $('.ticket-details').addClass('invisible');
+          alert('Unable to find the ticket.');
+          return;
+
+        }
+
+        $('.ticket-details').removeClass('invisible');
+        var properites = $('#divProperties').empty();
+        for (var key in ticket) {
+            if (ticket.hasOwnProperty(key)) {
+                $('<div>').text(key + ': ' + ticket[key]).appendTo(properites);
+            }
+
+        }
+
+        top.Ts.Services.Tickets.AdminGetActions(ticket.TicketID, function (actions) {
+          var html = '<table class="table table-striped">'
+          for (var i = 0; i < actions.length; i++) {
+            html = html + '<tr>'
+            html = html + '<td><a href="#" onclick="top.Ts.Services.Tickets.AdminCleanAction(' + actions[i].ActionID + ', function(){ alert(\'Action cleaned.\');}); return false;">Clean</a></td>';
+            html = html + '<td>' + actions[i].ActionID + '</td>';
+            html = html + '<td>' + actions[i].ActionType + '</td>';
+            html = html + '<td>' + actions[i].Name + '</td>';
+            html = html + '</tr>'
+          }
+          $('#divActions').html(html);
+        });
+
+        top.Ts.Services.Tickets.AdminGetSlaInfo(ticket.TicketID, function (sla) {
+          alert(sla);
+        });
+      }
+
+
+    });  
+  </script>
+
+
+</head>
+<body>
+<div class="container  frame-container">
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Find a Ticket</h3>
+    </div>
+    <div class="panel-body">
+      <form class="form-inline">
+      <div class="form-group">
+        <input class="form-control" type="text" id="textTicketID" placeholder="TicketID" />
+      </div>
+      <div class="form-group">
+        <label>Or </label>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" id="textTicketNumber" placeholder="Ticket Number" />
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" id="textOrgID" placeholder="Organization" />
+      </div>
+      <button id="btnGetTicketByNumber" class="btn btn-default">Get Ticket</button>
+      </form>
+    </div>
+  </div>
+  
+  <div class="ticket-details invisible">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Properties</h3>
+      </div>
+      <div class="panel-body">
+          <div id="divProperties">
+          </div>
+      </div>
+    </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Actions</h3>
+      </div>
+      <div class="panel-body">
+          <button id="linkCleanEmail" class="btn btn-default">Clean All Email Actions</button>
+          <button id="linkCleanAll" class="btn btn-default">Clean All Actions</button>
+          <button id="linkProcessEmails" class="btn btn-default">Process Waiting Emails</button>
+          <div id="divActions">
+          </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">SLA</h3>
+      </div>
+      <div class="panel-body">
+          <div id="divSla">
+          </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ab23ccbd-367d-49a7-a778-a96ec7651c63" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?WSDL" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AppointmentDeleteException.xsd" MetadataType="Schema" ID="87ef386f-fa10-4a58-84cc-60bb78cb605e" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/activities/activitiesService/AppointmentDeleteException.xsd" />
+    <MetadataFile FileName="oracle-webservices-async-fault-11_0.xsd" MetadataType="Schema" ID="14f5189a-5b4b-49d1-aeb2-ffa3fa4b5c1e" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/META-INF/oracle-webservices-async-fault-11_0.xsd" />
+    <MetadataFile FileName="TransientAssignee.xsd" MetadataType="Schema" ID="ecfc50dc-51f2-4022-8cec-de74cb20838d" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/activities/activitiesService/TransientAssignee.xsd" />
+    <MetadataFile FileName="TransientNote.xsd" MetadataType="Schema" ID="3dd00405-0b1d-423c-8153-377f24c84fdc" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/activities/activitiesService/TransientNote.xsd" />
+    <MetadataFile FileName="TransientAppointment.xsd" MetadataType="Schema" ID="80ebc214-2ae7-42c3-bca1-44709c87336e" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/activities/activitiesService/TransientAppointment.xsd" />
+    <MetadataFile FileName="sdoJava.xsd" MetadataType="Schema" ID="db9ec115-d6d6-484e-867d-69924b6dbea9" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/xml/sdoJava.xsd" />
+    <MetadataFile FileName="TransientContact.xsd" MetadataType="Schema" ID="c7cfce6e-e2b1-47ce-ab80-e77aa158f0dd" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/activities/activitiesService/TransientContact.xsd" />
+    <MetadataFile FileName="ActivityAssignee.xsd" MetadataType="Schema" ID="045e1bd9-7178-4060-8cb0-79107b34758c" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/activities/activitiesService/ActivityAssignee.xsd" />
+    <MetadataFile FileName="datagraph.xsd" MetadataType="Schema" ID="c81ef373-8fe3-4307-9f72-193248f40200" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/xml/datagraph.xsd" />
+    <MetadataFile FileName="NoteDFF.xsd" MetadataType="Schema" ID="07b05442-2f2b-45a0-a230-994af217686f" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/notes/flex/noteDff/NoteDFF.xsd" />
+    <MetadataFile FileName="ServiceException.xsd" MetadataType="Schema" ID="b5ea5383-65ca-4cce-b016-6fb50094df4a" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/META-INF/wsdl/ServiceException.xsd" />
+    <MetadataFile FileName="ActivityAppointmentService.xsd" MetadataType="Schema" ID="696d94e2-90a7-43b5-8025-f8d1c3c347ae" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/activities/activitiesService/ActivityAppointmentService.xsd" />
+    <MetadataFile FileName="ActivityContact.xsd" MetadataType="Schema" ID="91a9c5d1-a90c-4803-8dc7-e0e8b0df607f" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/activities/activitiesService/ActivityContact.xsd" />
+    <MetadataFile FileName="ServiceException.wsdl" MetadataType="Wsdl" ID="9f583c12-2532-41a0-a626-635aa962f605" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?WSDL=/META-INF/wsdl/ServiceException.wsdl" />
+    <MetadataFile FileName="ActivityCategory.xsd" MetadataType="Schema" ID="e1677cca-20cc-4604-9626-164ac9675a33" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/activities/activitiesService/ActivityCategory.xsd" />
+    <MetadataFile FileName="TransientCategory.xsd" MetadataType="Schema" ID="c6a61e65-690c-4853-875f-666078b3e8f3" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/activities/activitiesService/TransientCategory.xsd" />
+    <MetadataFile FileName="sdoXML.xsd" MetadataType="Schema" ID="944d805a-067e-413a-8fbc-adbf7c250b9f" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/xml/sdoXML.xsd" />
+    <MetadataFile FileName="CommonAttachments.xsd" MetadataType="Schema" ID="25d115a5-56f7-49ad-9567-a49c751776f8" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/objects/objectsService/CommonAttachments.xsd" />
+    <MetadataFile FileName="Appointment.xsd" MetadataType="Schema" ID="c4cacf44-b420-45af-a07a-16e541a192cb" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/activities/activitiesService/Appointment.xsd" />
+    <MetadataFile FileName="ActivityAppointmentService.wsdl" MetadataType="Wsdl" ID="afa7fd9f-9cf1-496a-8c98-657ca61a0b30" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?WSDL" />
+    <MetadataFile FileName="Note.xsd" MetadataType="Schema" ID="e452eaee-85e3-40ff-9660-768c5c1687a0" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/oracle/apps/crmCommon/notes/noteService/Note.xsd" />
+    <MetadataFile FileName="BC4JService.xsd" MetadataType="Schema" ID="3b785038-9b7b-4da4-bea0-ce884eacfe56" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/META-INF/wsdl/BC4JService.xsd" />
+    <MetadataFile FileName="sdoModel.xsd" MetadataType="Schema" ID="19d9e166-1a74-48da-9699-60f49a2ca073" SourceId="1" SourceUrl="https://crm-aufsn4x0gka.oracleoutsourcing.com/appCmmnCompActivities/ActivityAppointmentService?XSD=/xml/sdoModel.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

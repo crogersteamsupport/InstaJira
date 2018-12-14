@@ -1,0 +1,20 @@
+﻿body { background: #efefef; color: #494A4C; }
+body, span, div, html, form { font-size:14px; font-family:Arial, Arial, Helvetica, sans-serif; }
+h3 { margin-top: 5px; font-size:16px;}
+h2 { margin-top: 5px; font-size:20px;}
+img { border: 0;}
+.chat-messages { font-size:14px; color:#000; }
+.chat-messages p { margin:5px; }
+.chat-notification  { color:#333399; }
+.chat-name { font-weight:bold;}
+.chat-message-user .chat-name { color:#333399;}
+.chat-message-client .chat-name  { color:#696969; }
+.chat-content em {color: #ED9E00;}
+.chat-content {background:#fff; border: solid 1px #B8B8B8; margin: 10px 10px; padding: 5px 10px;}
+.chat-header { vertical-align:top; height: 38px; background: transparent url('../images/chat_header_bg.gif') repeat-x; }
+.chat-logo {  background: #fff url('../images/chat_logo.jpg') no-repeat; height: 250px; width: 105px; border: solid 1px #B8B8B8;}
+a.chat-button {display:block; background: transparent url('../images/chat_buttons.png') no-repeat; }
+a.chat-button-close { background-position: -0px -60px; height: 30px; width: 78px; }
+a.chat-button-close:hover { background-position: -107px -60px; }
+a.chat-button-send { background-position: -3px -4px; height: 52px; width: 102px; }
+a.chat-button-send:hover { background-position: -110px -4px; }

@@ -1,0 +1,28 @@
+<div id="ticket-tfsfields" class="form-horizontal">
+    <div id="workItemTitle" class="flexbox">
+        <div class="flex1">
+            <div class="form-label" for="workItemTitleValue">Work Item Title:</div>
+        </div>
+        <div class="flex2">
+            <div id="ticket-workItemTitle-container" class="ticket-input-container" style="padding-top:6px;">
+                <span id="workItemTitleValue"></span>
+                <i id="tfsUnlink" class="glyphicon glyphicon-remove" style="font-size:10px;cursor:pointer;position:relative;left:5px;"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="enterWorkItemTitle" style="display:none;">
+        <div class="ticket-tfs-workItem">
+            <label>Existing TFS Work Item ID:</label>
+            <input id="workItemIDInput" type="text" class="form-control" style="margin-bottom:5px;" />
+        </div>
+        <div class="flexbox" style="text-align:right;">
+            <div class="flex1" style="padding:5px;"><button id="saveWorkItemTitleButton" class="btn btn-sm btn-default">Save</button></div>
+            <div class="flex1" style="padding:5px;"><button id="cancelWorkItemTitleButton" class="btn btn-sm btn-default">Cancel</button></div>
+        </div>
+    </div>
+    <div class="ts-tfs-buttons-container flexbox">
+        <div class="flex1" style="padding:5px;"><button id="newTFSWorkItem" class="btn btn-default btn-block">New TFS Item</button></div>
+        <div class="flex1" style="padding:5px;"><button id="existingTFSWorkItem" class="btn btn-default btn-block">Existing TFS Item</button></div>
+    </div>
+</div>

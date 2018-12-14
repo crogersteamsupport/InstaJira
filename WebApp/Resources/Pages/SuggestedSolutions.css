@@ -1,0 +1,122 @@
+﻿#suggested-solutions-summary {
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-bottom: -3px;
+}
+
+.resultItem {
+  border-bottom: 1px solid #dedede;
+   
+  clear:both; 
+
+  padding-top:    10px;
+  padding-bottom: 20px;
+}
+
+.resultItem-left {
+  float: left;
+}
+
+.resultItem-icon {
+  float: left;
+  width: 45px;
+
+  text-align: center;
+}
+
+/*#search-results-pane-container {
+  position:absolute;
+    top:    57px;
+    left:   10px;
+    right:  10px;
+    bottom: 10px;
+
+  overflow: hidden !important;
+}*/
+
+#suggested-solutions-pane {
+  background:     white;
+  border-radius:  10px;
+
+  position:relative;
+    /*top:        55px;*/
+    right:      10px;
+
+    /*
+      The left property is ignored when used along the right property on this div.
+      The bottom property is also ignored.
+      This is probably due to a layout setting being applied to the ui-layout-content class.
+      To workaround the margin was used instead.
+    */
+    margin-left:    20px;
+    margin-bottom:  10px;
+}
+
+#suggested-solutions-loading {
+  text-align: center;
+
+  position: relative;
+    top: 33%;
+}
+
+.ui-layout-pane {
+  border:           0px solid !important;
+  border-color:     #EEEEEE !important;
+  /*border-radius:    20px !important;
+
+  background-color: #EEEEEE !important;*/
+
+  font-family:      "Lucida Grande" ,Helvetica,Arial,Verdana,sans-serif; 
+  font-size:        12px; 
+  color:            #15428B;
+}
+
+/*.ui-layout-pane-east {
+  border-left-width: 0px !important;
+}
+
+.ui-layout-resizer-east {
+  background-color: rgb(198,220,247) !important;
+}
+
+.ui-layout-toggler-east {
+  background-color: #2a3f54 !important;
+}*/
+
+
+a.ts-link
+, a.ts-link:link
+, a.ts-link:active
+, a.ts-link:visited {
+  text-decoration:  none; 
+  color:            #15428B; 
+  outline:          0; 
+}
+
+a.ts-link:hover { 
+  text-decoration: underline; 
+}
+
+h1 {
+  font-size:      1.2em; 
+  margin-bottom:  -7px;
+}
+
+h2 { 
+  font-size:      1em; 
+  font-weight:    normal; 
+  color:          #777; 
+  margin-bottom:  -7px;
+
+}
+
+.selected {
+    background-color: #c6dcf7;
+}
+
+.resultsSummary {
+    font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #333;
+}

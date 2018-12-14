@@ -1,0 +1,13 @@
+﻿body
+{
+  font-family: Verdana;
+  font-size: 12px;
+  color: #626262;  
+  background-color:White;
+}
+
+:focus
+{
+  -moz-outline-style: none;
+}
+

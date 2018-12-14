@@ -1,0 +1,243 @@
+
+
+
+#page {
+    border:none;
+    overflow:auto;
+    position:absolute;
+    left:0px;
+    right:0px;
+    width:100%;
+    max-width:100%;
+    min-height:100%;
+}
+
+#page .label {
+    font-weight:normal !important;
+}
+
+
+
+
+
+#primary .spacer {
+    padding:10px;
+}
+#primary .paper {
+    background-color:white;
+    box-shadow:1px 1px 0px rgba(0,0,0,0.1);
+}
+#primary .spinner {
+    width:75px;
+}
+#primary .input-group-btn-vertical {
+    position: relative;
+    white-space: nowrap;
+    width: 1%;
+    vertical-align: middle;
+    display: table-cell;
+}
+#primary .input-group-btn-vertical .btn {
+    display:block;
+    float:none;
+    width: 100%;
+    max-width: 100%;
+    padding: 8px;
+    margin-left: -1px;
+    position: relative;
+    border-radius: 0;
+}
+#primary .input-group-btn-vertical .btn:first-child {
+    border-top-right-radius: 4px;
+}
+#primary .input-group-btn-vertical .btn:last-child {
+    margin-top: -2px;
+    border-bottom-right-radius: 4px;
+}
+#primary .input-group-btn-vertical i {
+    position: absolute;
+    top: 0;
+    left: 4px;
+}
+#primary .upload-area {
+    margin:0px 0px 30px 20px;
+}
+#primary #box-tinymce {
+    border-top:1px solid rgba(0,0,0,0.1);
+    border-bottom:1px solid rgba(0,0,0,0.1);
+    border-left:none;
+    border-right:none;
+}
+
+#primary #box-tinymce .mce-path {
+    display:none;
+}
+
+
+
+
+#sidebar {
+    padding-bottom:100px;
+    min-width:300px;
+    min-height:100%;
+    background-color:rgba(255,255,255,0.7);
+}
+#sidebar .form-group {
+    margin:0px 0px 10px;
+    min-height:30px;
+    width:100%;
+}
+#sidebar .form-horizontal .form-label,
+#sidebar .form-horizontal label {
+    width:100px;
+    padding:0px;
+    font-size:12px;
+    text-align:left;
+    text-transform:capitalize;
+    color:rgba(0,0,0,0.6);
+    font-weight: normal !important;
+}
+#sidebar .form-horizontal .form-input {
+    padding:0px 0px 0px 5px;
+    height:25px;
+}
+#sidebar input {
+    border:none;
+    padding:0px !important;
+    vertical-align:top;
+    outline:0;
+    box-shadow:none;
+    background:none;
+}
+#sidebar input:focus {
+    border:none;
+    padding:0px !important;
+    vertical-align:top;
+    outline:0;
+    box-shadow:none;
+}
+#sidebar .selectize-input {
+    padding:0px 0px 0px 0px;
+    border:0px;
+    background:none;
+    min-height: inherit;
+}
+#sidebar .selectize-input.focus,
+#sidebar .selectize-input .item,
+#sidebar .selectize-input .option,
+#sidebar .selectize-input input {
+    padding:0px !important;
+    min-height:20px !important;
+    line-height:15px !important;
+    font-size:12px !important;
+    font-family: 'Roboto' !important;
+    border-radius:0px;
+    box-shadow:none !important;
+    outline:none;
+    border:none !important;
+    vertical-align:top;
+    /* width:100% !important; */
+}
+#sidebar .selectize-input input {
+    min-width:100px;
+}
+#sidebar .selectize-control.single .selectize-input:after {
+    content:none;
+}
+
+
+
+
+
+#ticket-properties-area {
+    padding:15px;
+    width:300px;
+    margin-bottom:20px;
+}
+#ticket-properties-area hr {
+    margin:10px auto 20px;
+    width:100%;
+    border-top:1px solid #d9d9d9;
+}
+#ticket-properties-area input::-webkit-input-placeholder {
+    /* color:#428bca; */
+    color:rgba(0,0,0,0.5);
+    opacity:1;
+    vertical-align:top;
+    /*text-decoration:underline;*/
+}
+#ticket-properties-area .tagContainer input::-webkit-input-placeholder {
+    padding:3px;
+    color:#428bca;
+    opacity:1;
+    vertical-align:middle;
+    /*text-decoration:underline;*/
+}
+#ticket-properties-area .hasError .form-label,
+#ticket-properties-area .hasError .form-label label {
+    color:#a94442 !important;
+}
+#ticket-properties-area .hasError .form-input,
+#ticket-properties-area .hasError .tagContainer {
+    border:1px solid #a94442 !important;
+    border-radius:5px;
+}
+
+#ticket-duedate-container {
+    margin:0px;
+    padding:0px;
+    min-height:30px;
+    width:160px;
+}
+#ticket-duedate-container a {
+    margin:0px;
+    padding:0px;
+    min-height:30px;
+    width:160px;
+    display:inline-block;
+    text-align:left;
+}
+#ticket-duedate-container .fa {
+    display:block;
+}
+
+
+
+
+
+.mce-i-awesome.fa-paste {
+    color:#5CB85C !important;
+}
+.mce-i-awesome.fa-book {
+    color:#3276B1 !important;
+}
+.mce-i-awesome.fa-ticket {
+    color:#FEC21E !important;
+}
+.mce-i-image {
+    color:#BA55D3 !important;
+}
+.mce-i-awesome.fa-dropbox {
+    color:#3d9ae8 !important;
+}
+.mce-i-awesome.fa-circle {
+    color:#D9534F !important;
+}
+.mce-path {
+    display:none !important;
+}
+.note-btn > .fa-paste {
+    color:#5CB85C !important;
+}
+.note-btn > .fa-book {
+    color:#3276B1 !important;
+}
+.note-btn > .fa-ticket {
+    color:#FEC21E !important;
+}
+.note-btn > .fa-image {
+    color:#BA55D3 !important;
+}
+.note-btn > .fa-dropbox {
+    color:#3d9ae8 !important;
+}

@@ -1,0 +1,328 @@
+﻿/* TeamSupport Colors Light Blue: #F8FAFE  Background: #EAF1F8  Header Blue: #2882CC  */
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Thin-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Thin-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Thin-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Thin-webfont.svg#robotoregular') format('svg');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Light-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Light-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Light-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Light-webfont.svg#robotolight') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Regular-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Regular-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Medium-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Medium-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Medium-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Medium-webfont.svg#robotoregular') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Bold-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Bold-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Bold-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Bold-webfont.svg#robotoregular') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+body, html { font-family: 'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+body { background-color: #EEEEEE; }
+
+/* This fixes the scrolling for the iframes */
+html, body { height: 100%; margin: 0px; padding: 0px; overflow: hidden; }
+.frame-container { border: none; overflow: auto; height: 100%; position:relative; }
+.container { width: 100% !important;}
+/* This fixes the max width for large screens in bootstrap */
+@media (min-width: 1200px) { .container { max-width: 1920px; } }
+@media (min-width: 992px) { .container { max-width: 1920px; } }
+@media (min-width: 768px) { .container { max-width: 1920px; }}
+
+@media (max-width: 720px) { img { max-width: 100%; height: auto; } }
+
+
+/* Box styles */
+.box { margin-top: 15px; background-color:#fff; border: 1px solid #fff;   border-top: 5px solid #fff; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; }
+.box .box-header { padding: 15px 15px 0 15px;text-shadowx: 0 1px 0 #1E7DCC; }
+.box .box-header h3 { color: #444; display: inline-block; line-height: 18px; margin: 0; font-size: 18px; font-weight:300;  }
+.box .box-header h3 > i { margin-right: 10px; }
+.box .box-content { background: none repeat scroll 0 0 #FFFFFF; padding: 15px; }
+.box form { margin: 0; }
+.box form .form-actions { background: none repeat scroll 0 0 #F8FAFE; border-top-color: #E3ECF5; margin: 0 -15px -15px -15px; padding-left: 20px; padding-right: 20px; }
+.box .box-header .box-actions { display: inline-block; float: right; line-height: 18px; }
+.box .box-header .box-actions > a { font-size: 14px; margin: 0 0 0 5px; opacity: 0.9; transition: all 0.25s ease 0s; }
+.box .box-header .box-actions > a:hover { opacity: 1; text-decoration: none; }
+.box .box-header .box-actions > a > i { display: inline-block; }
+.box .box-header .box-actions > a.btn, .box .box-header .box-actions > .btn-group { margin-top: -5px; }
+.box .box-header .box-actions > .progress { margin-top: 7px; }
+.box .box-header .box-actions a:active, .box .box-header .box-actions a:focus, .box .box-header .box-actions a:visited, .box .box-header .box-actions a:link { text-decoration: none; }
+.box .form-actions:before, .form-actions:after { content: ""; display: table; line-height: 0; }
+.box .form-actions:after { clear: both; }
+.box .form-actions:before, .form-actions:after { content: ""; display: table; line-height: 0; }
+.box .form-horizontal .form-actions { padding-left: 190px; }
+.box .form-actions { background-color: #F5F5F5; border-top: 1px solid #E5E5E5; margin-bottom: 20px; margin-top: 20px; padding: 19px 20px 20px; }
+
+.ts-text-icon { border-radius: 2px; display: inline-block; font-style: normal; font-weight: normal; line-height: 1; padding:  0 2px; }
+
+.color-red { color: #F44336; }
+.color-blue { color: #3276B1; }
+.color-green { color: #4CAF50; }
+.color-amber { color: #FFC107; }
+.color-orange { color: #FF9800; }
+.color-white { color: #FFFFFF; }
+.color-black { color: #000000; }
+.color-darkgray { color: #777; }
+.color-gray { color: #999; }
+.color-lightgray { color: #e5e5e5; }
+
+/*Do not use the colors below*/
+.color-pink { color: #E91E63; }
+.color-magenta { color: #BA55D3; }
+.color-purple { color: #9C27B0; }
+.color-darkpurple { color: #673AB7; }
+.color-indigo { color: #3F51B5; }
+.color-lightblue { color: #03A9F4; }
+.color-cyan { color: #00BCD4; }
+.color-teal { color: #009688; }
+.color-lightgreen { color: #8BC34A; }
+.color-lime { color: #CDDC39; }
+.color-yellow { color: #FFEB3B; }
+.color-darkorange { color: #FF5722; }
+.color-brown { color: #795548; }
+.color-bluegray { color: #607D8B; }
+
+.bgcolor-red { background-color: #F44336; }
+.bgcolor-blue { background-color: #2c9ecf; }
+.bgcolor-green { background-color: #4CAF50; }
+.bgcolor-amber { background-color: #FFC107; }
+.bgcolor-orange { background-color: #FF9800; }
+.bgcolor-white { background-color: #FFFFFF; }
+.bgcolor-black { background-color: #000000; }
+.bgcolor-darkgray { background-color: #777; }
+.bgcolor-gray { background-color: #999; }
+.bgcolor-lightgray { background-color: #e5e5e5; }
+
+/*Do not use the colors below*/
+.bgcolor-pink { background-color: #E91E63; }
+.bgcolor-magenta { background-color: #BA55D3; }
+.bgcolor-purple { background-color: #9C27B0; }
+.bgcolor-darkpurple { background-color: #673AB7; }
+.bgcolor-indigo { background-color: #3F51B5; }
+.bgcolor-lightblue { background-color: #03A9F4; }
+.bgcolor-cyan { background-color: #00BCD4; }
+.bgcolor-teal { background-color: #009688; }
+.bgcolor-lightgreen { background-color: #8BC34A; }
+.bgcolor-lime { background-color: #CDDC39; }
+.bgcolor-yellow { background-color: #FFEB3B; }
+.bgcolor-darkorange { background-color: #FF5722; }
+.bgcolor-brown { background-color: #795548; }
+.bgcolor-bluegray { background-color: #607D8B; }
+
+img.user-avatar { border-radius: 50%; -webkit-border-radius: 50%;}
+
+/* Twitter TypeAhead styles */
+.twitter-typeahead { width: 100%; position: relative; }
+.twitter-typeahead .tt-query, .twitter-typeahead .tt-hint { margin-bottom: 0; width: 100%; height: 34px; position: absolute; top: 0; left: 0; }
+.twitter-typeahead .tt-hint { color: #a1a1a1; z-index: 1; padding: 6px 12px; border: 1px solid transparent; }
+.twitter-typeahead .tt-query { z-index: 2; border-radius: 4px !important; /* add these 2 statements if you have an appended input group *     border-top-right-radius: 0!important;     border-bottom-right-radius: 0!important;*/ /* add these 2 statements if you have an prepended input group */ /*  border-top-left-radius: 0!important;     border-bottom-left-radius: 0!important; */ }
+.tt-dropdown-menu { min-width: 160px; margin-top: 2px; padding: 5px 0; background-color: #fff; border: 1px solid #ccc; border: 1px solid rgba(0,0,0,.2); border-right-width: 2px; border-bottom-width: 2px; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2); -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2); box-shadow: 0 5px 10px rgba(0,0,0,.2); -webkit-background-clip: padding-box; -moz-background-clip: padding; background-clip: padding-box; }
+.tt-suggestion { display: block; padding: 3px 20px; }
+.tt-suggestion.tt-is-under-cursor { color: #fff; background-color: #428BCA; border-color: #357EBD; }
+.tt-suggestion.tt-is-under-cursor a { color: #fff; }
+.tt-suggestion p { margin: 0; }
+
+/* remove underline from icons in links */
+a:active > i, a:focus > i, a:visited > i, a:link > i { text-decoration: none; }
+
+/* remove outline from tabs when active */
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover {  outline: 0; }
+.nav > .active > a, .nav > .active > a:hover {  outline: 0; }
+.active > a, .active > a:hover, .btn, .btn:active, .btn:focus {  outline: 0; }
+
+/* jqueryui ui-menu to boostrap dropdown */
+
+.ui-helper-hidden-accessible { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+
+.ui-menu { position: absolute; top: 100%; left: 0; z-index: 1000; display: none; float: left; min-width: 160px; padding: 5px 0; margin: 2px 0 0; list-style: none; font-size: 14px; background-color: #ffffff; border: 1px solid #cccccc; border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 4px; -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); background-clip: padding-box; }
+.ui-menu .ui-menu { margin-top: -3px; position: absolute; }
+.ui-menu .ui-menu-item { margin: 0; padding: 0; width: 100%; /* support: IE10, see #8844 */ list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7); }
+.ui-menu .ui-menu-divider { height: 1px; margin: 9px 0; overflow: hidden; background-color: #e5e5e5; }
+.ui-menu .ui-menu-item a { display: block; padding: 3px 20px; clear: both; font-weight: normal; line-height: 1.428571429; color: #333333; white-space: nowrap; }
+.ui-menu .ui-menu-item a.ui-state-focus, .ui-menu .ui-menu-item a.ui-state-active { background-color: #F5F5F5; color: #262626; text-decoration: none; }
+.ui-menu .ui-state-disabled { font-weight: normal; margin: .4em 0 .2em; line-height: 1.5; }
+.ui-menu .ui-state-disabled a { color: #999999; }
+.ui-menu-icons { position: relative; }
+.ui-menu-icons .ui-menu-item a { position: relative; padding-left: 2em; }
+.ui-menu .ui-icon { position: absolute; top: .2em; left: .2em; }
+.ui-menu .ui-menu-icon { position: static; float: right; }
+
+.datepicker { z-index: 1050; }
+
+/* default button, make gray */
+
+.btn-default {
+  color: #6f6f6f;
+  background-color: #f3f3f3;
+  border-color: #dadada;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+  color: #444444;
+  background-color: #f6f6f6;
+  border-color: #c6c6c6;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  text-decoration: none;
+  color: #444444;
+  background-color: #eee;
+}
+
+.btn-default.disabled,
+.btn-default[disabled],
+fieldset[disabled] .btn-default,
+.btn-default.disabled:hover,
+.btn-default[disabled]:hover,
+fieldset[disabled] .btn-default:hover,
+.btn-default.disabled:focus,
+.btn-default[disabled]:focus,
+fieldset[disabled] .btn-default:focus,
+.btn-default.disabled:active,
+.btn-default[disabled]:active,
+fieldset[disabled] .btn-default:active,
+.btn-default.disabled.active,
+.btn-default[disabled].active,
+fieldset[disabled] .btn-default.active {
+  background-color: #f3f3f3;
+  border-color: #dadada;
+}
+
+
+
+
+
+
+
+
+
+/* Needs comments */
+.maincontainer { margin-left: auto; margin-right: auto; border: none; overflow: auto; height: 100%; position: relative; }
+.maincontainer .row {margin-left:0px !important; margin-right: 0px !important}
+.h85 {height: 89% !important;}
+.pageheader { background: none repeat scroll 0 0 #FFFFFF; border-bottom: 1px solid #DDDDDD; /*min-height: 55px;*/ padding: 10px 0px 0px 10px; position: relative; height: inherit !important; }
+.pageheader h1 { color: #0866C6; font-size: 32px; font-weight: normal; margin: 0; }
+.pageheader h5 { color: #999999; font-size: 11px; font-weight: normal; margin: 0; text-transform: uppercase; }
+.pageicon { color: #0866C6; display: inline-block; float: left; font-size: 35px; text-align: center; }
+.pagetitle { margin-left: 50px; }
+.m0 { margin: 0px; }
+.mt0 { margin-top: 0px; }
+.mt20 { margin-top: 20px;}
+.mb10 {margin-bottom: 10px;}
+.mb20 {margin-bottom: 20px;}
+.pt0 {padding-top: 0px !important;}
+.pl0 {padding-left: 0px !important;}
+.p0 {padding: 0px !important;}
+/* Added default border and bold red for error labels*/
+input.error {
+    border-color: #a94442;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+label.error {
+    color: #a94442;
+    font-weight: bold;
+}
+
+.maincontainer .nav-tabs > li.active > a, .maincontainer .nav-tabs > li.active > a:hover, .maincontainer .nav-tabs > li.active > a:focus{
+    color:white;
+    background-color: #1E7DCC;
+}
+
+.ui-layout-north .nav-tabs > li.active > a, .ui-layout-north .nav-tabs > li.active > a:hover, .ui-layout-north .nav-tabs > li.active > a:focus{
+    color:white;
+    background-color: #1E7DCC;
+}
+
+.pageheader .nav-tabs {
+    border-bottom: medium none !important;
+}
+.maincontainer .form-group {
+    margin-bottom: 5px !important;
+}
+.img-responsive
+{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 35px;
+    width: 176px;
+}
+
+/*.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: #428BCA !important;
+    border: medium none;
+    color: #FFFFFF !important;
+}*/
+
+.chart-header{
+    color: #274B6D;
+    fill: #274B6D;
+    font-family: 'Roboto';
+    font-size: 14px;
+}
+
+
+.mce-tinymce .mce-panel { background: #fcfdfd; filter:none;}
+.mce-tinymce.mce-container { border: 1px solid rgba(0,0,0,0.1); }
+.mce-tinymce .mce-edit-area { border: 0px solid #fcfdfd;}
+.mce-tinymce .mce-toolbar-grp { padding-bottom: 5px;}
+.mce-tinymce .mce-btn { background: #f3f3f3; border-color: #dadada; box-shadow: none; filter:none;}
+.mce-tinymce .mce-btn i { text-shadow: none; }
+.mce-tinymce .mce-btn button { line-height:normal; padding: 5px 5px; }
+.mce-tinymce .mce-menubtn span { line-height:normal; }
+.mce-tinymce .mce-btn button, .mce-tinymce .mce-btn button .mce-ico { color: #888;}
+.mce-tinymce .mce-btn:hover, .mce-tinymce .mce-btn:focus { background: #f6f6f6; filter:none; }
+.mce-tinymce .mce-btn:hover button, .mce-tinymce .mce-btn:focus button,
+.mce-tinymce .mce-btn:hover button .mce-ico , .mce-tinymce .mce-btn:focus button .mce-ico  { color: #444444;}
+.mce-tinymce .mce-btn-group .mce-first, .mce-tinymce .mce-btn-group .mce-last { border-color: #dadada; }
+.mce-tinymce .fa { font-family: "FontAwesome"; line-height:1;}
+.mce-tinymcex .mce-toolbar { margin-bottom: 5px;}

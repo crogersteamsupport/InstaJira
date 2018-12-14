@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel='stylesheet' href='../Css/fullcalendar.css' />
+    <link href="../Css/ts.ui.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/tsbs.css" rel="stylesheet" />
+    <link href="../Css/standards.css" rel="stylesheet" />
+    <link href="Calendar.css" rel="stylesheet" />
+    <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+    <script src='/frontend/library/jquery-latest.min.js'></script>
+    <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+    <script src='/frontend/library/moment.min.js'></script>
+    <script src='/frontend/library/fullcalendar.js'></script>
+    <script src="/frontend/library/jquery.layout.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.iframe-transport.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.data-selector.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap-datetimepicker.js"></script>
+    <script src="../Js/Ts/ts.utils.js" type="text/javascript"></script>
+    <script src='calendar.js'></script>
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+</head>
+<body>
+    <div class="ui-layout-center">
+        <div id='calendar'></div>
+    </div>
+
+    <div id="subscribeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="modalBody" class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="subscribeURL" placeholder="You custom calandar url" />
+                            </div>
+                            <!--<div class="col-sm-3">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="subscribeEnable" /> Enable Sharing
+                                    </label>
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                This is the link to add your calendar feed to an external calendar application.
+
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-curiousblue" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="fullCalModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                    <h4 id="modalTitle" class="modal-title">Event</h4>
+                </div>
+                <div id="modalBody" class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="inputTitle" placeholder="Title" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control datetimepicker" id="inputStartTime" placeholder="Start Time" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control datetimepicker" id="inputEndTime" placeholder="End Time" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="checkbox allDayCheckbox">
+                                    <label>
+                                        <input type="checkbox" id="inputAllDay" /> All Day Event
+                                    </label>
+                                </div>
+                                <div class="checkbox isHolidayCheckbox">
+                                    <label>
+                                        <input type="checkbox" id="inputIsHoliday" /> Holiday
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="form-group">
+                            <div class="col-sm-6">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="inputRecurring" /> Recurring Event
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="checkbox">
+                                    <label>
+                                        <select class="form-control" id="recurringTime">
+                                            <option value="1">Every Day</option>
+                                            <option value="2">Every Week</option>
+                                            <option value="3">Every Month</option>
+                                            <option value="4">Every Year</option>
+
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <textarea id="inputDescription" rows="5" class="form-control" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+                        <!--<div class="form-group">
+                            <div class="col-sm-12">
+                                <select class="form-control" id="calAssociation">
+                                    <option value="-1">Event Association</option>
+                                    <option value="0">Ticket</option>
+                                    <option value="1">User</option>
+                                    <option value="2">Company</option>
+                                    <option value="3">Group</option>
+                                    <option value="4">Product</option>
+                                </select>
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <span data-toggle="tooltip" data-original-title="Associate Ticket" class="addticket" title="Associate Ticket"></span>
+                                <span data-toggle="tooltip" data-original-title="Associate User" class="adduser" title="Associate User"></span>
+                                <span data-toggle="tooltip" data-original-title="Associate Company" class="addcustomer" title="Associate Company"></span>
+                                <span data-toggle="tooltip" data-original-title="Associate Group" class="addgroup" title="Associate Group"></span>
+                                <span data-toggle="tooltip" data-original-title="Associate Product" class="addproduct" title="Associate Product"></span>
+                                <div style="left: 7px;" class="arrow-up"></div>
+
+                            </div>
+                        </div>
+                        <div class="form-group" id="searchGroup">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="associationSearch" placeholder="Search..." />
+                            </div>
+                        </div>
+                        <div id="associationQueue">
+                            <div class="ticket-queue"></div>
+                            <div class="user-queue"></div>
+                            <div class="group-queue"></div>
+                            <div class="customer-queue"></div>
+                            <div class="product-queue"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-curiousblue" data-dismiss="modal">Close</button>
+                    <button id="btnSaveEvent" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

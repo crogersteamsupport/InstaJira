@@ -1,0 +1,22 @@
+<$ItemCollection$>FieldMap.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace TeamSupport.Data
+{
+  
+  public partial class <$CollectionName$>
+  {
+    protected override void BuildFieldMap()
+    {
+      _fieldMap = new FieldMap();
+      <$BeginFields=[All]$>_fieldMap.AddMap("<$FieldName$>", "<$FieldName$>", false, false, false);
+      <$EndFields$>      
+    }
+  }
+  
+}

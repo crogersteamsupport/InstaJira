@@ -1,0 +1,198 @@
+.ui-layout-west {
+    min-width:200px;
+}
+
+
+.ui-layout-resizer {
+    background: #8AAEDE;
+}
+
+.tab-content {
+    background-color: #EEEEEE;
+    height: 88%;
+}
+
+.tab-content #user-ratings {
+    overflow: auto;
+    height: 100%;
+}
+
+.user-container>li {
+    border-bottom: 1px solid #EEEEEE;
+    list-style: none outside none;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.user-container>li>.active {
+    background-color: #EEEEEE;
+}
+
+.user-container i {
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.user {
+    cursor: pointer;
+}
+
+.box-content {
+    font-size: 12px;
+}
+
+.avatar {
+    height: 25px;
+    width: 25px;
+    overflow: hidden;
+    float: left;
+    margin-top: 3px;
+}
+
+.avatar img {
+    width: 25px;
+    height: 25px;
+}
+
+.main-nav {
+    padding: 10px 10px 0px 10px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.nav-tabs {
+    margin-top: 10px;
+    border-bottom: none !important;
+}
+
+.user-tooltip {
+    padding-left: 10px;
+}
+
+.userName {
+    font-size: 25px;
+    margin: 0px 0px 10px 0px;
+}
+
+.maincontainer {
+    overflow: hidden;
+}
+
+.imgsm {
+    width: 20px;
+    height: 20px;
+}
+
+.percent {
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.ts-icon {
+    background-image: none;
+    display: block;
+}
+
+.ts-icon-online-small {
+    background-image: none !important;
+    text-indent: 0 !important;
+    font-size: 15px;
+    display: inline-block !important;
+    margin-left: 5px;
+    cursor: pointer;
+    color: #4CAF50;
+}
+
+.ts-icon-offline-small {
+    background-image: none !important;
+    text-indent: 0 !important;
+    font-size: 15px;
+    display: inline-block !important;
+    margin-left: 5px;
+    cursor: pointer;
+    color: #F44336;
+}
+
+.productLineRow {
+    margin-bottom: 20px;
+}
+
+#taskTab {
+    display: none;
+}
+
+.attIcon {
+    margin: 2px 2px;
+    width: 16px;
+    height: 16px;
+    float: left;
+    border: none;
+    background: none;
+    background-image: url('../Images/icons/Attachment.png');
+    cursor: pointer
+}
+
+.ticketIcon {
+    margin: 2px 2px;
+    width: 16px;
+    height: 16px;
+    float: left;
+    border: none;
+    background: none;
+    background-image: url('../Images/nav/16/Tickets.png');
+    cursor: pointer
+}
+
+.groupIcon {
+    margin: 2px 2px;
+    width: 16px;
+    height: 16px;
+    float: left;
+    border: none;
+    background: none;
+    background-image: url('../Images/nav/16/Groups.png');
+    cursor: pointer
+}
+
+.companyIcon {
+    margin: 2px 2px;
+    width: 16px;
+    height: 16px;
+    float: left;
+    border: none;
+    background: none;
+    background-image: url('../Images/nav/16/Customers.png');
+    cursor: pointer
+}
+
+.contactIcon {
+    margin: 2px 0px;
+    width: 16px;
+    height: 16px;
+    float: left;
+    border: none;
+    background: none;
+    background-image: url('../Images/nav/16/Contacts.png');
+    cursor: pointer
+}
+
+.productIcon {
+    margin: 2px 2px;
+    width: 16px;
+    height: 16px;
+    float: left;
+    border: none;
+    background: none;
+    background-image: url('../Images/nav/16/Products.png');
+    cursor: pointer
+}
+
+.userIcon {
+    margin: 2px 2px;
+    width: 16px;
+    height: 16px;
+    float: left;
+    border: none;
+    background: none;
+    background-image: url('../Images/nav/16/Users.png');
+    cursor: pointer
+}

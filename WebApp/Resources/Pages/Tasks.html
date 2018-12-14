@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../Css/standards.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap3.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+    <link href="Tasks.css" rel="stylesheet" type="text/css" />
+
+    <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/handlebars.js" type="text/javascript"></script>
+    <script src="/frontend/library/moment.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap-datetimepicker.js" type="text/javascript"></script>
+    <script src="../Js/Ts/ts.pendo.js"></script>
+    <script src="Tasks.js" type="text/javascript"></script>
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+</head>
+<body>
+    <div class="frame-container" >
+        <div class="container" style="overflow-y:auto;">
+            <div class="row">
+                <div style="margin-left:14px; margin-top:20px;">
+                    <div class="btn-group tabs" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default tab-assigned-tasks active">My Tasks</button>
+                        <button type="button" class="btn btn-default tab-created-tasks">Assigned Tasks</button>
+                        <button type="button" class="btn btn-default tab-closed-tasks">Completed Tasks</button>
+                    </div>
+                    <div class="pull-right btn-group" style="margin-right:10px;">
+                        <button type="button" id="tasks-Refresh" class="btn btn-default"><i class="fa fa-refresh"></i></button>
+                        <button class="action-new btn btn-primary"><i class="fa fa-plus"></i>&nbsp; New Task</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:20px;">
+                <div class="col-md-12 col-sm-12">
+                    <div class="results-loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading...</div>
+                    <div class="results">
+                        <div id="TaskList">
+                            <div id="handlebarsTaskList"></div>
+                        </div>
+                    </div>
+                    <div class="pull-right more-tasks" style="display:none;">
+                        <a class="load-more-tasks" href="#">Load more</a>
+                    </div>
+                    <div class="results-empty">
+                        <h3 class="">You currently have no tasks, click new task to get started!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalTaskComment">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Would you like to add a comment to complete this task?</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="comments" class="col-md-2 control-label">Comments:</label>
+                            <div class="col-md-10">
+                                <textarea class="col-md-12 form-control" id="taskCompleteComment" placeholder="Comment about completing this task."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnTaskCompleteComment">Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+</body>
+<script id="mytask-table-template" type="text/x-handlebars-template">
+    <div id="taskList"></div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td></td>
+                <td>Name</td>
+                <td>Due</td>
+                <td>Reminder Date</td>
+                <td>Associations</td>
+            </tr>
+        </thead>
+        <tbody id="my-tasks"></tbody>
+    </table>
+</script>
+<script id="mytasks-template" type="text/x-handlers-template">
+    {{#taskList}}
+    <tr class="{{formatRow this}}">
+        <td>
+            <input {{taskComplete DateCompleted}} type="checkbox" class="change-task-status" data-taskid="{{TaskID}}" />
+        </td>
+        <td>
+            <a href="#" class="tasklink" id="cb{{TaskID}}" data-taskid="{{TaskID}}">
+                {{Name}}
+            </a>
+        </td>
+        <td>{{formatDate DueDate}}</</td>
+        <td>{{formatDate ReminderDueDate}}</td>
+        <td class="associations">
+            {{#Associations}}
+            {{mapAssociation this}}
+            {{/Associations}}
+        </td>
+    </tr>
+    {{/taskList}}
+</script>
+<script id="assigned-table-template" type="text/x-handlebars-template">
+    <div id="taskList"></div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td></td>
+                <td>Name</td>
+                <td>Assigned To</td>
+                <td>Due</td>
+                <td>Reminder Date</td>
+                <td>Associations</td>
+            </tr>
+        </thead>
+        <tbody id="assigned-tasks"></tbody>
+    </table>
+</script>
+<script id="assigned-tasks-template" type="text/x-handlebars-template">
+    {{#taskList}}
+    <tr class="{{formatRow this}}">
+        <td>
+            <input {{taskComplete DateCompleted}} type="checkbox" class="change-task-status" data-taskid="{{TaskID}}" />
+        </td>
+        <td>
+            <a href="#" class="tasklink" id="cb{{TaskID}}" data-taskid="{{TaskID}}">
+                {{Name}}
+            </a>
+        </td>
+        <td>{{AssignedTo}}</td>
+        <td>{{formatDate DueDate}}</td>
+        <td>{{formatDate ReminderDueDate}}</td>
+        <td>
+            {{#Associations}}
+            {{mapAssociation this}}
+            {{/Associations}}
+        </td>
+    </tr>
+    {{/taskList}}
+</script>
+<script id="closed-table-template" type="text/x-handlebars-template">
+    <div id="taskList"></div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td></td>
+                <td>Name</td>
+                <td>Assigned To</td>
+                <td>Due</td>
+                <td>Reminder Date</td>
+                <td>Associations</td>
+                <td>Date Completed</td>
+            </tr>
+        </thead>
+        <tbody id="closed-tasks">
+        </tbody>
+    </table>
+</script>
+<script id="closed-tasks-template" type="text/x-handlebars-template">
+    {{#taskList}}
+    <tr class="{{formatRow this}}">
+        <td>
+            <input {{taskComplete IsComplete}} type="checkbox" class="change-task-status" data-taskid="{{TaskID}}" />
+        </td>
+        <td>
+            <a href="#" class="tasklink" id="cb{{TaskID}}" data-taskid="{{TaskID}}">
+                {{Name}}
+            </a>
+        </td>
+        <td>{{AssignedTo}}</td>
+        <td>{{formatDate DueDate}}</td>
+        <td>{{formatDate ReminderDueDate}}</td>
+        <td>
+            {{#Associations}}
+            {{mapAssociation this}}
+            {{/Associations}}
+        </td>
+        <td>{{formatDate DateCompleted}}</td>
+    </tr>
+    {{/taskList}}
+</script>
+</html>

@@ -1,0 +1,438 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Pragma" content="no-cache" />
+    <link href="../Css/frame.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/jquery.ui.combobox.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/jquery-ui-enhanced.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/ts.ui.css" rel="stylesheet" type="text/css" />
+
+    <!--[if IE 7]><link href="vcr/1_9_0/Css/ts.ui.ie7.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <!--[if IE 8]><link href="vcr/1_9_0/Css/ts.ui.ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <link href="Admin_Company.css" rel="stylesheet" type="text/css" />
+    <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+    <script src="/vcr/1_9_0/Js/ts/ts.jquery.ui.combobox.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.layout.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.ui.timepicker.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.iframe-transport.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.fileupload.js" type="text/javascript"></script>
+    <!--	<script src="../Js/jquery.minicolors.js"></script>
+        <link rel="stylesheet" href="../css/jquery.minicolors.css">  -->
+
+    <script src="../Js/Ts/ts.utils.js" type="text/javascript"></script>
+    <script src="Admin_Company.js" type="text/javascript"></script>
+    <style type="text/css">
+        .ts-rail-right {
+            margin-top: 1.5em;
+        }
+
+        textarea {
+            height: 100px;
+            width: 97%;
+        }
+
+        .portal-content {
+            margin: 1em 1em;
+        }
+
+        .ui-tabs.ui-widget-content {
+            background: none;
+        }
+
+        .ui-tabs li.ui-state-default {
+            background: none;
+            border: none;
+        }
+
+        .ui-tabs li.ui-state-active {
+            background: #fcfdfd;
+            border: none;
+        }
+
+        .ui-tabs li a {
+            font-weight: bold;
+        }
+
+        .ui-tabs .ui-tabs-panel {
+            background: #fcfdfd;
+        }
+
+        .portal-save-panel {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+            .portal-save-panel button {
+                margin-left: 1em;
+            }
+
+        .com-cat-container, .kb-cat-container {
+            margin: 1em 0;
+            border-top: 0;
+            border-bottom: 0;
+            border-left: 0;
+            border-right: 0;
+        }
+
+        .categories h1.ui-widget-content {
+            opacity: .75;
+            margin-right: 1em;
+            border-top: 0;
+            border-right: 0;
+            border-left: 0;
+        }
+
+        .categories .com-cats, .kb-cats {
+            margin-bottom: 1em;
+        }
+
+        .categories .com-cat-container a.com-new-sub, .kb-cat-container a.kb-new-sub {
+            margin-left: 2.5em;
+            line-height: 2em;
+        }
+
+        .categories .com-cat-container a.com-new-cat, .kb-cat-container a.kb-new-cat {
+            margin-left: 1.5em;
+            line-height: 2em;
+        }
+
+        .com-cat, .kb-cat {
+            cursor: pointer;
+            border: 1px solid transparent;
+            font-size: 1em;
+            padding: .25em 0 .25em .5em;
+            margin: 0 1em;
+        }
+
+        .categories .com-cat-main, .kb-cat-main {
+            font-weight: bold;
+        }
+
+        .categories .com-cat-sub, .kb-cat-sub {
+            margin-left: 2em;
+        }
+
+        .categories .ts-setting-field.two-column .ts-setting-field-content {
+            margin-left: 170px;
+        }
+
+        .categories .ts-setting-field.two-column .ts-setting-field-description {
+            width: 150px;
+        }
+
+        .categories .ts-setting-field {
+            border-style: dotted;
+        }
+
+        .categories .com-cat-save-panel, .kb-cat-save-panel {
+            margin: 2em auto;
+            text-align: center;
+            display: none;
+        }
+
+        .categories .com-cat-properties, .kb-cat-properties {
+            float: left;
+        }
+
+            .categories .com-cat-properties textarea, .kb-cat-properties textarea {
+                width: 400px;
+                height: 75px;
+            }
+
+        .categories .com-delete-cat, .kb-delete-cat {
+            line-height: 2em;
+        }
+
+        .cat-footer {
+            text-align: center;
+            margin 1em auto;
+            padding-top: 2em;
+            clear: both;
+        }
+
+        .ui-state-highlight.com-cat-sub, .ui-state-highlight.kb-cat-sub {
+            min-height: 2em;
+        }
+
+        .ui-state-highlight.com-cats, .ui-state-highlight.kb-cats {
+            min-height: 5em;
+        }
+    </style>
+    <title></title>
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+</head>
+<body>
+    <div class="portal-admin ui-widget ts-color-bg-accent ui-widget frame-content">
+        <div class="ts-section ui-widget-content ui-corner-all loading-section">
+            <div class="ts-loading">
+            </div>
+        </div>
+        <div class="portal-page" style="display: none;">
+            <div class="ts-content-wrapper-leftx">
+                <div class="ts-content-leftx">
+                    <div class="portal-content">
+                        <div id="tabs">
+                            <ul>
+                                <li><a href="#tabs-general" data-toggle="tab">Account Settings</a></li>
+                                <li><a href="#tabs-cdi" class="tabs-cdi" data-toggle="tab">CDI Rating</a></li>
+                                <li><a href="#tabs-agentrating" data-toggle="tab">Agent Ratings</a></li>
+                                <li><a href="#tabs-order" class="tabs-order" data-toggle="tab">Ticket Page Order</a></li>
+                                <li><a href="#tabs-import" class="tabs-order" data-toggle="tab">Import</a></li>
+
+                            </ul>
+                            <div id="tabs-general" class="tabs-modifiable">
+                                <iframe class="contentFrame" scrolling="no" src="../../../Frames/AdminCompany.aspx" frameborder="0" width="100%"></iframe>
+                            </div>
+                            <div id="tabs-cdi" class="tabs-modifiable">
+                                <div class="portal-save-panel"><button class="portal-save btn btn-primary">Save</button>&nbsp<button class="portal-cancel btn btn-danger">Cancel</button></div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        CDI Rating
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <p>The CDI (or Customer Distress Index) is a proactive tool you can use to quickly determine the overall health of your customers.  This is where you will weigh the metrics, and the results can be viewed on each customer record.  Detailed setup instructions can be found here. (<a href="http://www.teamsupport.com/documentation/1/en/topic/customer-distress-index-cdi">http://www.teamsupport.com/documentation/1/en/topic/customer-distress-index-cdi</a>)</p>
+                                        <p id="cdiStatus">The CDI runs once per day, and the last time your account processed was: NEVER.  To force an update now, please click the force update button below.</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Total Tickets Created in lifetime of account
+                                    </div>
+                                    <div class="ts-setting-field-content slider-container">
+                                        <div id="ttw-slider" class="slider"></div>
+                                        <p id="ttw-value">Overall Weight: 20%</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Tickets Created in the Last 30 Days
+                                    </div>
+                                    <div class="ts-setting-field-content slider-container">
+                                        <div id="last30-slider" class="slider"></div>
+                                        <p id="last30-value">Overall Weight: 20%</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Number of tickets currently open
+                                    </div>
+                                    <div class="ts-setting-field-content slider-container">
+                                        <div id="otw-slider" class="slider"></div>
+                                        <p id="otw-value">Overall Weight: 20%</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Average time open tickets have been open
+                                    </div>
+                                    <div class="ts-setting-field-content slider-container">
+                                        <div id="avgopen-weight" class="slider"></div>
+                                        <p id="acgopen-value">Overall Weight: 20%</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Average time closed tickets took to close
+                                    </div>
+                                    <div class="ts-setting-field-content slider-container">
+                                        <div id="avgclose-weight" class="slider"></div>
+                                        <p id="avgclose-value">Overall Weight: 20%</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Ticket Sentiment
+                                    </div>
+                                    <div class="ts-setting-field-content slider-container">
+                                        <div id="ticketSentiment-weight" class="slider"></div>
+                                        <p id="ticketSentiment-value">Overall Weight: 20%</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Action Count
+                                    </div>
+                                    <div class="ts-setting-field-content slider-container">
+                                        <div id="actionCount-weight" class="slider"></div>
+                                        <p id="actionCount-value">Overall Weight: 20%</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Ticket Severity
+                                    </div>
+                                    <div class="ts-setting-field-content slider-container">
+                                        <div id="ticketSeverity-weight" class="slider"></div>
+                                        <p id="ticketSeverity-value">Overall Weight: 20%</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Agent Ratings
+                                    </div>
+                                    <div class="ts-setting-field-content slider-container">
+                                        <div id="agentRatings-weight" class="slider"></div>
+                                        <p id="agentRatings-value">Overall Weight: 20%</p>
+                                    </div>
+                                </div>                                
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Total Weight
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <p id="cdi-total">Total Weight: 100%</p>
+                                        <p>The total weights must equal 100%</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <button id="recalculate-cdi" class="btn btn-primary">Force CDI Update</button>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Chart Green Upper Range
+                                    </div>
+                                    <div class="ts-setting-field-content slider-container">
+                                        <div id="cdi-green" class="range-slider"></div>
+                                        <p id="cdi-green-text">Upper Limit: 70</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Chart Yellow Upper Range
+                                    </div>
+                                    <div class="ts-setting-field-content slider-container">
+                                        <div id="cdi-yellow" class="range-slider"></div>
+                                        <p id="cd-yellow-text">Upper Limit: 85</p>
+                                    </div>
+                                </div>
+                                <div class="portal-save-panel"><button class="portal-save btn btn-primary">Save</button>&nbsp<button class="portal-cancel btn btn-danger">Cancel</button></div>
+                            </div>
+                            <div id="tabs-agentrating" class="tabs-modifiable">
+                                <div class="portal-save-panel"><button class="portal-save btn btn-primary">Save</button>&nbsp<button class="portal-cancel btn btn-danger">Cancel</button></div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Rating
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <!--                    <input type="checkbox" class="checkbox" id="agentrating-enabled" /><label class="checkbox"
+                                        for="agentrating-enabled">Enabled</label>-->
+                                        <p>The Rating system allows your team to get feedback from your customers about their satisfaction with how a ticket was handled. You will be able to see the results for each of your internal staff of users as well as on a customer basis.</p>
+                                        <p>*Feel free to upload your own image as a replacement. Please note the ideal image size is 50x50</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Positive Rating Text
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <textarea id="agentrating-positive" class="ui-corner-all ui-widget-content">We’re happy you had a great experience with our team!  Would you like to share any details?</textarea>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Positive Rating Image
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <form class="form-horizontal positive-file-upload" action="Upload/Actions/555" method="POST"
+                                              enctype="multipart/form-data" title="You can drag and drop your attachments here.">
+                                            <label for="inputName" class="col-md-1 control-label">Select new image</label>
+                                            <input class="hiddenfile-positive" type="file" name="file[]" />
+                                            <ul class="positive-upload-queue"></ul>
+                                        </form>
+                                        <img id="agentrating-positive-img" src="../Images/face-positive.png" alt="positive" />
+                                        <a href="#" id="resetPositiveImage">Restore to Default</a>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Neutral Rating Text
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <textarea id="agentrating-neutral" class="ui-corner-all ui-widget-content">We want to make sure each interaction you have with our team is great.  If we did OK and you’re happy, then we’re happy.  If you feel we could have done better, please tell us!</textarea>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Neutral Rating Image
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <form class="form-horizontal neutral-file-upload" action="Upload/Actions/555" method="POST"
+                                              enctype="multipart/form-data" title="You can drag and drop your attachments here.">
+                                            <label for="inputName" class="col-md-1 control-label">Select new image</label>
+                                            <input class="hiddenfile-neutral" type="file" name="file[]" />
+                                            <ul class="neutral-upload-queue"></ul>
+                                        </form>
+                                        <img id="agentrating-neutral-img" src="../Images/face-neutral.png" alt="neutral" />
+                                        <a href="#" id="resetNeutralImage">Restore to Default</a>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Negative Rating Text
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <textarea id="agentrating-negative" class="ui-corner-all ui-widget-content">We’re very sorry you had a bad experience with our team.  Please help us improve our service by telling us what went wrong.</textarea>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Negative Rating Image
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <form class="form-horizontal negative-file-upload" action="Upload/Actions/555" method="POST"
+                                              enctype="multipart/form-data" title="You can drag and drop your attachments here.">
+                                            <label for="inputName" class="col-md-1 control-label">Select new image</label>
+                                            <input class="hiddenfile-negative" type="file" name="file[]" />
+                                            <ul class="negative-upload-queue"></ul>
+                                        </form>
+                                        <img id="agentrating-negative-img" src="../Images/face-negative.png" alt="negative" />
+                                        <a href="#" id="resetNegativeImage">Restore to Default</a>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        Redirect URL
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <input type="text" id="agentrating-redirecturl" class="ui-widget-content ui-corner-all text" />
+                                        <p>This is where your users will go after they submit a successful rating.</p>
+                                    </div>
+                                </div>
+                                <div class="ts-setting-field two-column ui-widget-content">
+                                    <div class="ts-setting-field-description">
+                                        External URL
+                                    </div>
+                                    <div class="ts-setting-field-content">
+                                        <input type="text" id="agentrating-externalurl" class="ui-widget-content ui-corner-all text" />
+                                        <p>
+                                            If you are embedding your rating form into an iFrame on your site, you can identify
+                                            the External portal link location. This may be something like:http://www.your-company-website.com/rating.aspx
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="portal-save-panel"><button class="portal-save btn btn-primary">Save</button>&nbsp<button class="portal-cancel btn btn-danger">Cancel</button></div>
+                            </div>
+                            <div id="tabs-order" class="tabs-modifiable">
+                                <iframe class="contentFrame" scrolling="no" src="/vcr/1_9_0/Pages/Admin_TicketOrder.html" frameborder="0" width="100%"></iframe>
+                            </div>
+                            <div id="tabs-import" class="tabs-modifiable">
+                                <iframe class="contentFrame" scrolling="no" src="/vcr/1_9_0/Pages/Admin_Import.html" frameborder="0" width="100%"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="btnRefresh btn btn-primary" style="display: none; margin-left: 1em;">Refresh</button>
+        </div>
+    </div>
+</body>
+</html>

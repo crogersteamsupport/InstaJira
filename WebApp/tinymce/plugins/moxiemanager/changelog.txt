@@ -1,0 +1,128 @@
+Version 1.3.4 (2014-02-11)
+	Added filter options for the delete command. This allows you to block delete on specific file or directories.
+	Fixed bug where the thumbnails.enabled would still create thumbnail directory when moving/copying files.
+	Fixed bug where a copy of a file to an directory with an existing file with the same name would add a double dot.
+	Fixed bug where it wasn't possible to switch between file systems when the view option was passed in.
+	Fixed bug where it wasn't possible to switch view type if the view option was passed in.
+	Fixed bug where the remember_last_path option would cause issues when enabled while having multiple rootpaths.
+	Fixed bug where extension was not properly identified, could cause issues with thumbnails etc.
+	Fixed so options can be excluded from the web.config some users tends to reduce the web.config manually.
+Version 1.3.3 (2014-01-29)
+	Fixed bug where it wasn't possible to override the filesystem.rootpath using the SessionAuthenticator.
+	Fixed bug where url to file resolve logic would fail when having multiple root paths pointing to the same bucket.
+	Fixed so Azure/AmazonS3 config options can be overridden by the SessionAuthenticator using sessions.
+	Fixed so the urlprefix for AmazonS3 doesn't automatically add any bucket. So it needs to be specified correctly.
+Version 1.3.2 (2014-01-22)
+	Added insert_filter callback function that lets you override the JSON structure before it gets inserted into forms.
+	Added new cache-control config option for AmazonS3 buckets. This enables you to control the cache-control header for files uploaded.
+	Fixed so protocol relative urlprefixes can be used for converting file paths to urls. For example //tinymce.com/myfile.gif.
+Version 1.3.1 (2014-01-08)
+	Added basic CKEditor support. It replaces the "browse server" buttons in image/file dialogs.
+	Fixed bug where the client side configured extensions wasn't properly extended/inherited in upload dialog.
+	Fixed bug where extensions in directory names would change the icon from a folder to a file type.
+	Fixed so folders without any date returned for them will display a "-" instead for example on S3.
+	Fixed so the AmazonS3 urlprefix option can be used to handle custom domains. 
+Version 1.3.0 (2013-12-19)
+	Fixed bug where the last modification date for local file system wasn't converted to UTC.
+	Fixed bug where the last modification date for AmazonS3 wasn't properly parsed and converted to UTC.
+	Changed ICommand/ICommandHandler Execute method to use CommandArguments instead of a plain Dictionary.
+	Removed BaseHttpHandler and replaced it with IApiHandler that better supports unit testing.
+	Fixed bug where throbber wasn't working properly due to a CSS skin issue.
+	Fixed bug where modal block wasn't working properly due to a CSS skin issue.
+Version 1.2.1 (2013-11-29)
+	Added new date_format option that enables you to specify the format to be used for dates in JSON output.
+	Added new nameWithoutExtension and extension to file JSON output.
+	Normalized output for all API functions so that it's pure JSON and contains meta data.
+	Removed text for rotate/flip image buttons and replaced them with tooltips to fix i18n issues.
+	Fixed bug where some filter field expressions would cause an server exception to occur.
+	Fixed bug where the upload dialog extensions field wouldn't wrap if there where to many to fit one line.
+	Fixed so it's possible to move files on FTP file systems and between other file systems.
+	Fixed so the upload dialog filter out any extensions that isn't present in the client side extensions setting.
+Version 1.2.0 (2013-11-14)
+	Added new Azure Blob Storage support. Available for the Enterprise version only.
+	Added new filesystem.directories option that allows you to override configs based on path patterns.
+	Fixed bug where IE 8 wouldn't properly load images when rendered in quirks mode.
+	Fixed bug where IE 8 couldn't retrive the width/height of images properly when inserted from a non local file system.
+	Fixed bug where empty authenticator string caused issues and prevented this configuration mode.
+	Fixed bug where error messages wasn't thrown when deleting/copying/moving directories on S3 or Azure.
+	Fixed bug where urls wasn't properly resolved to files for Amazon S3.
+	Fixed bug where it wasn't possible to copy files between local file system and Amazon S3 file system.
+	Fixed bug where the uploaded file plugin wouldn't add files when autoformat plugin was enabled.
+	Fixed so the progress of uploads stays at 99% until fully completed for example when using S3 or Azure.
+Version 1.1.4 (2013-11-05)
+	Fixed bug where S3 couldn't be properly restricted to specified root path.
+	Fixed bug where column sort order wasn't properly synchronized between grid and sort menu button.
+	Fixed bug where the logout button would be displayed even if the authenticator(s) wasn't standalone.
+Version 1.1.3 (2013-10-31)
+	Added edit.encoding and edit.line_endings options to control input/output when editing text files.
+	Fixed bug where URLs generated for HTTPs would include the port number 443 even though this is redundant.
+	Fixed bug where the upload dialog wasn't able to pick files on IE 11.
+	Fixed bug where the layout of the upload dialog was incorrect on IE 11 due to sub pixel calculations.
+	Fixed bug where local overrides for filesystem.writable wouldn't allow files to be created/deleted.
+Version 1.1.2 (2013-10-17)
+	Fixed bug where sorting by date would thrown an server exception.
+	Fixed bug where delete/cut operation could take place on directories blocked by _ prefixed mc_access options.
+	Fixed bug where contextmenu wouldn't be shown due to a missing permission check.
+Version 1.1.1 (2013-10-10)
+	Fixed so it renders properly on legacy browsers IE 7/IE 8.
+	Fixed bug where the sort menu button wouldn't be in sync with the file list sorting.
+	Fixed bug where disabled_tools/hidden_tools global settings wouldn't work properly.
+	Fixed bug where the TinyMCE image dialog image dimensions wasn't updated properly on IE 10.
+	Fixed so view dialog displays only the selected images. Makes it easier to compare images.
+	Fixed bug where _ prefixed filesystem.readable/filesystem.writable would allow operations on directories.
+	Added new path and paths options to moxman.view API method call. 
+Version 1.1 (2013-09-10)
+	Added new infinite scroll feature for handling of large ammout of files.
+	Optimized thumbnail loading performance by loading thumbs directly when possible.
+	Fixed so thumbnails gets loaded directly from remote file systems like S3 when possible.
+	Fixed bug where closing a window in fullscreen mode would produce window scrollbars.
+	Fixed issue where AmazonS3 wouldn't list more than 1000 file/folders, limit set to 5000.
+Version 1.0.6 (2013-08-21)
+	Added new feature and option, thumbnail.mode, if set to "crop" will make thumbnails using crop instead of default resize.
+	Fixed bug where filter feature would throw js exception and not enable users to select files.
+	Fixed bug where the throbber for long operations wasn't activated correctly.
+	Fixed bug with S3 Plugin where files got Content-Disposition set when not needed.
+Version 1.0.5 (2013-08-06)
+	Added advanced debugging option, set general.debug to true and access /api.ashx?action=debug
+	Fixed bug where it would throw an Environment exception on Medium trust when accessing the temp directory.
+	Fixed bug where UNC paths wasn't handled handled properly.
+	Fixed bug where fullscreen mode wouldn't cover the whole viewport.
+	Fixed bug where it wasn't possible to select files that didn't match a valid mime type.C:\inetpub\wwwroot\moxiemanager-net\src\MoxieManager.Web.UI\changelog.txt
+	Fixed bug where images with 1 pixel width/height wouldn't scale down to proper thumbnails.
+	Fixed bug where save image didn't work on IE 9 since the Flash XHR fallback wasn't loading properly.
+	Fixed so you can override the auth user name from using the ExternalAuthenticator.
+Version 1.0.4 (2013-07-18)
+	Fixed bug where it wouldn't properly parse URLs without protocol like //domain/path.
+	Fixed bug where username in the session authenticator wouldn't update the user instance.
+	Fixed bug where all urls would get converted when having mixed file systems.
+	Fixed bug where urls wasn't properly produced when inserting files from AmazonS3.
+	Fixed bug where moving/renaming/copying images didn't move/rename/copy the thumbnail file as well.
+	Fixed bug with spaces not working on file names in Amazon S3.
+	Fixed bug where contextmenu would be positioned at an incorrect postion when scrolling the page.
+	Fixed so it's possible to edit any plain text file not just txt, html etc.
+	Fixed so the thumbnail_url meta item is properly populated on non local file systems.
+Version 1.0.3 (2013-06-26)
+	Fixed bug where detecting site wwwroot was case sensitive.
+	Fixed bug where editing of images with uppercase extensions didn't work.
+	Added view file support for non image types such as PDF and HTML files.
+	Added keep alive heartbeat logic to prevent session timeouts.
+Version 1.0.2 (2013-06-13)
+	Added new proxy option to Amazon S3 buckets (host:port), mostly for internal debugging.
+	Fixed bug with Apply button in image edit not working properly.
+	Fixed issue with Quota plugin running on remote filesystems.
+	Fixed issue with Amazon S3 integration causing connection errors.
+Version 1.0.1 (2013-06-11)
+	Added new sort_by and sort_order options to control default sorting.
+	Added new moxiemanager_<type>_settings option to TinyMCE plugin.
+	Fixed bug where SessionAuthenticator would produce exception on casting session key to bool.
+	Fixed bug where AutoFormat %f included the extension.
+	Fixed bug where ExternalAuthenticator would return false even if authorized.
+	Fixed bug where the config wasn't extended properly.
+	Fixed bug where config variables wasn't properly replaced.
+	Fixed bug where language pack wouldn't load when used with TinyMCE.
+	Fixed bug where sorting of dates could produce strange results.
+	Fixed bug where mc_access files couldn't include equal characters in it's values.
+	Fixed bug where MoxieManager wouldn't provide an error for urls on files outside the wwwroot.
+	Fixed issue with file extension not being automatically set on files on save in image editor.
+Version 1.0 (2013-06-05)
+	First public version of MoxieManager.NET.

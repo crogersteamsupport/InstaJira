@@ -1,0 +1,45 @@
+﻿body {  
+  font-family: 'Roboto';
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #333333;
+  background-color: #ffffff;
+}
+.ui-widget { font-family: 'Roboto'; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: 'Roboto'; }
+
+
+button::-moz-focus-inner { border: 0; }
+a:focus { outline: 0; }
+:focus { -moz-outline-style: none; outline:0; }
+img { border: 0; }
+/*.ui-button-text-only, .ui-button-text-only .ui-button-text { padding:.1em .4em; font-size: .75em; }
+.ui-button, .ui-widget .ui-button{ text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8); font-size: 1em; font-weight:normal; padding:0; }*/
+/*.ui-button, .ui-widget .ui-button{ text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8); }*/
+.ui-button:hover { -moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 0px 0px 8px rgba(212,212,212,1); box-shadow: 0px 0px 8px rgba(212,212,212,1); }
+.ui-datepicker .ui-datepicker-title { font-size: 1.2em; }	  
+.ui-datepicker { -moz-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); box-shadow: 0px 5px 10px rgba(0,0,0,0.8); padding: 0;}
+.ui-datepicker .ui-datepicker-header { -moz-border-radius-bottomleft: 0;  -moz-border-radius-bottomright: 0; -webkit-border-bottom-right-radius: 0;-webkit-border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border: 0 none; }	  
+.ui-datepicker .ui-timepicker-div, .ui-datepicker .ui-datepicker-buttonpane { margin-left: .3em; margin-right: .3em; }
+
+.ui-tabs { border: 0;}
+.ui-tabs .ui-tabs-nav { background: none; border: none; padding: 0;}
+/*
+.ui-tabs .ui-tabs-panel { border-width: 1px;  -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
+.ui-tabs .ui-tabs-nav > li { font-size: 1.2em; font-weight: bold; margin-right: 1px; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);}
+*/
+
+.ui-dialog .ui-dialog-titlebar { -moz-border-radius-bottomleft: 0;  -moz-border-radius-bottomright: 0; -webkit-border-bottom-right-radius: 0;-webkit-border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8); border-top:none; border-right:none; border-left:none; font-weight: bold; font-size: 1.4em;}
+.ui-dialog { padding: 0;  -moz-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); box-shadow: 0px 5px 10px rgba(0,0,0,0.8);}
+.ui-accordion-header, .ui-accordion-content{ -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;}
+.ui-accordion-header { font-size: 1.2em; font-weight:bold; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8); }
+
+.ts-tabs li.ts-tab { margin-right: 1px; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);}
+.ts-tabs li.ts-tab.ui-state-error { text-shadow: none;}
+
+
+.ui-panel .ui-panel-title { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8); } 
+.ui-panel .ui-panel-button-text { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8); } 
+
+
+

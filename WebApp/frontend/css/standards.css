@@ -1,0 +1,511 @@
+﻿
+@font-face {
+    font-family:'Roboto';
+    src:url('/frontend/fonts/roboto/Roboto-Thin-webfont.eot');
+    src:url('/frontend/fonts/roboto/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'), url('/frontend/fonts/roboto/Roboto-Thin-webfont.woff') format('woff'), url('/frontend/fonts/roboto/Roboto-Thin-webfont.ttf') format('truetype'), url('/frontend/fonts/roboto/Roboto-Thin-webfont.svg#robotoregular') format('svg');
+    font-weight:200;
+    font-style:normal;
+}
+
+@font-face {
+    font-family:'Roboto';
+    src:url('/frontend/fonts/roboto/Roboto-Light-webfont.eot');
+    src:url('/frontend/fonts/roboto/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'), url('/frontend/fonts/roboto/Roboto-Light-webfont.woff') format('woff'), url('/frontend/fonts/roboto/Roboto-Light-webfont.ttf') format('truetype'), url('/frontend/fonts/roboto/Roboto-Light-webfont.svg#robotolight') format('svg');
+    font-weight:300;
+    font-style:normal;
+}
+
+@font-face {
+    font-family:'Roboto';
+    src:url('/frontend/fonts/roboto/Roboto-Regular-webfont.eot');
+    src:url('/frontend/fonts/roboto/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('/frontend/fonts/roboto/Roboto-Regular-webfont.woff') format('woff'), url('/frontend/fonts/roboto/Roboto-Regular-webfont.ttf') format('truetype'), url('/frontend/fonts/roboto/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight:normal;
+    font-style:normal;
+}
+
+@font-face {
+    font-family:'Roboto';
+    src:url('/frontend/fonts/roboto/Roboto-Medium-webfont.eot');
+    src:url('/frontend/fonts/roboto/Roboto-Medium-webfont.eot?#iefix') format('embedded-opentype'), url('/frontend/fonts/roboto/Roboto-Medium-webfont.woff') format('woff'), url('/frontend/fonts/roboto/Roboto-Medium-webfont.ttf') format('truetype'), url('/frontend/fonts/roboto/Roboto-Medium-webfont.svg#robotoregular') format('svg');
+    font-weight:500;
+    font-style:normal;
+}
+
+@font-face {
+    font-family:'Roboto';
+    src:url('/frontend/fonts/roboto/Roboto-Bold-webfont.eot');
+    src:url('/frontend/fonts/roboto/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'), url('/frontend/fonts/roboto/Roboto-Bold-webfont.woff') format('woff'), url('/frontend/fonts/roboto/Roboto-Bold-webfont.ttf') format('truetype'), url('/frontend/fonts/roboto/Roboto-Bold-webfont.svg#robotoregular') format('svg');
+    font-weight:bold;
+    font-style:normal;
+}
+
+
+
+
+body {
+    background-color:#eeeeee;
+    font-size:12px;
+}
+div, p {
+    font-family:'Roboto';
+    font-size:12px;
+}
+textarea {
+    background-color:transparent !important;
+    border:1px solid rbga(0,0,0,0.1);
+    border-radius:0px;
+}
+input {
+    margin:0px !important;
+    border-radius:0px !important;
+    font-family:'Roboto' !important;
+    outline:none !important;
+    word-break:break-word;
+}
+
+
+
+
+
+
+
+body {
+    background-color:#eeeeee;
+}
+
+body.white, div.white {
+    background-color:white !important;
+}
+.bg-curiousblue {
+    background-color:#2C9ECF !important;
+}
+.bg-bluewood {
+    background-color:#33485e !important;
+}
+
+.text-white {
+    color:white !important;
+}
+
+.hover:hover {
+    cursor:pointer;
+}
+
+.dropdown-submenu {
+    position:relative;
+}
+.dropdown-submenu .dropdown-menu {
+    top:0;
+    left:100%;
+    margin-top:-1px;
+}
+
+
+
+<!-- HEADER // Tabs -->
+header, div.headerDiv {
+    position:relative;
+    width:100%;
+    height:75px;
+    box-shadow:0 2px 5px 0 rgba(0,0,0,0.26);
+    background:#2A3F54 !important;
+    font-size:30px;
+    font-weight:300;
+    color:rgb(242, 251, 253);
+    text-align:center;
+    line-height:75px;
+}
+
+div.header-tabs {
+    width:700% !important;
+    position:relative;
+    padding:0 .5em;
+    zoom:1;
+    border:none;
+    overflow-x:hidden;
+    margin-bottom:3px;
+    background-color:#2a3f54;
+}
+
+div.header-tabs li {
+    margin:0px 0px 30px 5px;
+    list-style:none;
+    float:left;
+    position:relative;
+    border:0 !important;
+    padding:0px 10px 0px 10px;
+    white-space:nowrap;
+    height:25px;
+    cursor:pointer;
+    background-color:#445c75 !important;
+    border-radius:5px;
+    vertical-align:middle;
+}
+
+ div.header-tabs li a {
+    font-family:'Roboto' !important;
+    float:left;
+    text-decoration:none;
+    display:block;
+    margin:0px;
+    text-align:center;
+    vertical-align:middle;
+    min-width:80px;
+    color:white !important;
+    line-height:27px;
+    letter-spacing:0.4px;
+}
+
+div.header-tabs li:hover {
+    background-color:#21779C !important;
+    text-decoration:none;
+}
+
+div.header-tabs li.ui-state-error {
+    background-color:#f2616e !important;
+}
+
+div.header-tabs li.ui-state-active,
+div.header-tabs li.ui-state-active ui-state-error {
+    background-color:#2c9ecf !important;
+}
+
+div.header-tabs li img {
+    -webkit-filter:brightness(9);
+    filter:brightness(9);
+}
+
+div.header-tabs li img.close {
+    margin:3px 0px 0px;
+    opacity:0;
+}
+
+div.header-tabs li:hover img.close {
+    opacity:0.7;
+}
+
+.header-tabs li.ui-state-active a,
+.header-tabs li.ui-state-disabled a,
+.header-tabs li.ui-state-processing a {
+    cursor:default;
+}
+
+.header-tabs-hide {
+    display:none !important;
+}
+
+.header-tabs .ts-icon {
+    float:left;
+    margin:.33em .33em 0 0;
+    padding:0;
+}
+
+.header-tabs .tab-image {
+    float:left;
+    display:block;
+    height:16px;
+    width:16px;
+    margin:.33em .25em 0 0;
+    padding:0;
+}
+
+.header-tabs .header-tab-content {
+    padding:0 16px;
+    float:left;
+}
+
+.header-tabs .ui-icon-close {
+    float:left;
+    cursor:pointer;
+    margin:.33em 0 0 0;
+    padding:0;
+    width:16px;
+}
+
+.header-tabs .ui-icon-close.ts-tabs-noclose {
+    background-position:-1000px -1000px;
+}
+
+.header-tabs .ui-state-hover .header-tab-content {
+    padding-right:0px;
+}
+
+.main-tab-item {
+    border-radius:10px;
+    background:none !important;
+    background-color:none !important;
+}
+
+
+div.main-header-new-ticket img:hover {
+    cursor:pointer;
+}
+
+
+<!-- SIDEBAR // Menutree -->
+div.sidebar-container {
+    background-color:#33485e !important;
+    color:white !important;
+}
+
+div.sidebar-container {
+    color:white !important;
+}
+
+li.ts-menutree-item {
+    color:white !important;
+    font-family:'Roboto' !important;
+    letter-spacing:0.4px;
+}
+
+li.ts-menutree-item a {
+    color:white !important;
+    opacity:0.5;
+}
+
+li.ts-menutree-item .ui-icon {
+    -webkit-filter:brightness(9);
+    filter:brightness(9);
+}
+
+li.ts-menutree-item:hover {
+    background-color:rgba(255,255,255,0.1);
+    color:white !important;
+    font-family:'Roboto';
+}
+
+li.ts-menutree-item:hover a {
+    opacity:0.8;
+}
+
+div.menutree-selected {
+    background-color:rgba(255,255,255,0.2) !important;
+}
+
+div.menutree-selected img,
+div.menutree-highlighted {
+    -webkit-filter:brightness(9);
+    filter:brightness(9);
+}
+
+div.menutree-selected a,
+div.menutree-highlighted a {
+    color:white !important;
+    opacity:1 !important;
+}
+
+#main-menutree::-webkit-scrollbar {
+    width:5px;
+    background-color:#33485e;
+    opacity:0.5;
+}
+
+#main-menutree::-webkit-scrollbar-thumb {
+    background-color:rgba(255,255,255,0.5);
+}
+
+
+/* Ts MenuTree */
+.ts-menutree {
+    border:none;
+    height:100%;
+    overflow:auto;
+    position:relative;
+}
+
+.ts-menutree > ul {
+    padding:0;
+    margin:.5em 0;
+}
+
+.ts-menutree li ul {
+    padding:0;
+    margin:0;
+}
+
+.ts-menutree li {
+    list-style:none;
+    position:relative;
+    cursor:pointer;
+    padding:2px 0;
+    margin:0;
+    overflow:hidden;
+}
+
+.ts-menutree li ul li {
+    padding-left:.5em;
+}
+
+.ts-menutree li a {
+    text-decoration:none;
+    height:20px;
+    overflow:hidden;
+    font-size:13px;
+    color:white;
+    font-family:'Roboto';
+}
+
+.ts-menutree li > div {
+    padding:.25em .1em;
+    height:20px;
+    line-height:20px;
+    overflow:hidden;
+    font-size:13px;
+    font-weight:normal;
+    font-family:'Roboto';
+}
+
+.ts-menutree .ts-icon {
+    float:left;
+    padding-right:.33em;
+}
+
+.ts-menutree .ui-icon {
+    float:right;
+    margin:0 5px 0 0;
+}
+
+.ts-menutree img {
+    float:left;
+    padding:0 7px;
+    height:20px;
+    width:20px;
+}
+
+.ts-menutree li.ts-menutree-item > div {
+    border:none;
+    background-image:none;
+}
+
+.tickets-tab-content {
+    height:100%;
+}
+
+.tickets-panel-footer {
+    border-bottom:none;
+    border-left:none;
+    border-right:none;
+}
+
+.ticket-grid-count {
+    font-weight:bold;
+    padding:.25em .5em;
+    float:right;
+}
+
+div.tickets-panel-tabs {
+    background-color:#33485e;
+}
+
+div.tickets-panel-tabs li {
+    margin:2px 0px 20px 5px;
+    list-style:none;
+    float:left;
+    position:relative;
+    border:0 !important;
+    padding:0 10px;
+    white-space:nowrap;
+    height:25px;
+    line-height:25px;
+    cursor:pointer;
+    background-color:#445c75;
+    border-radius:5px;
+}
+
+div.tickets-panel-tabs li a {
+    font-family:'Roboto' !important;
+    color:white !important;
+}
+
+div.tickets-panel-tabs li:hover {
+    background-color:#21779C !important;
+}
+
+div.tickets-panel-tabs li.ui-state-active {
+    background-color:#2c9ecf !important;
+}
+
+div.main-footer {
+    background-color:#2a3f54;
+}
+
+
+
+
+
+.nav-curiousblue > li > a {
+    margin-right:5px;
+    font-family:'Roboto';
+    color:white !important;
+    font-size:12px;
+    background-color:#445c75 !important;
+}
+
+.nav-curiousblue > li.active > a,
+.nav-curiousblue > li.active > a:focus,
+.nav-curiousblue > li.active > a:hover {
+    background-color:#2C9ECF !important;
+}
+
+.nav-curiousblue > li > a:hover {
+    background-color:#21779C !important;
+}
+
+
+
+.btn-curiousblue {
+    margin-right:5px;
+    font-family:'Roboto';
+    color:white !important;
+    font-size:12px;
+    background-color:#445c75 !important;
+}
+
+/*Icons*/
+.associations > i {
+    color:#2A3F54;
+    margin:0px 8px 0px 0px;
+    font-size:1.3em;
+}
+
+.associations > i:hover {
+    cursor:pointer;
+}
+
+.add-associations > i {
+    color:#95A0AB;
+    margin:0px 12px 0px 0px;
+    font-size:1.5em !important;
+}
+
+.add-associations > i:hover {
+    color:#2A3F54;
+    cursor:pointer;
+}
+
+
+
+
+
+
+
+
+.fa-check-square, .fa-window-close {
+    margin:0px 0px 0px 5px;
+    padding:0px;
+    font-size:20px !important;
+    color:black;
+}
+
+
+
+
+/* TINYMCE STANDARDS */
+
+.mce-container {
+    border:none !important;
+}
+
+.mce-path {
+    display:none;
+}

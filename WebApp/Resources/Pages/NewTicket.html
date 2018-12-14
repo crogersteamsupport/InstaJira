@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+  <link href="../Css/frame.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery.ui.combobox.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery.cluetip.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery-ui-enhanced.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/ts.ui.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="../Css/ts.editor.css" rel="stylesheet" />
+  <!--[if IE 7]><link href="../Css/ts.ui.ie7.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <!--[if IE 8]><link href="../Css/ts.ui.ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <link href="NewTicket.css" rel="stylesheet" type="text/css" />
+  <link href="Ticket.css" rel="stylesheet" type="text/css" />
+
+  <!--<script src="/frontend/library/deployJava.js" type="text/javascript"></script>-->
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.layout.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.hoverIntent.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.cluetip.js" type="text/javascript"></script>
+  <script src="/vcr/1_9_0/Js/ts/ts.jquery.ui.combobox.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.ui.timepicker.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.numeric.js" type="text/javascript"></script>
+  <script src="../../../tinymce/tinymce.min.js?1512863055" type="text/javascript"></script>
+  <script src="../../../tinymce/jquery.tinymce.min.js?1512863055" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.iframe-transport.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.fileupload.js" type="text/javascript"></script>
+  <script src="NewTicket.js" type="text/javascript"></script>
+  <script src="/frontend/library/browser.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.maskedinput.min.js" type="text/javascript"></script>
+  <script src="//static.opentok.com/v2/js/opentok.min.js"></script>
+  <script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropbox.js" id="dropboxjs" data-app-key="ebdoql1dhyy7l72"></script>
+
+  <style type="text/css">
+    .newticket-fields { padding: 0; margin: 0; clear: both; }
+      .custom-fields-container {
+          padding: 0;
+          margin: 0;
+          clear: both;
+      }
+    .new-ticket-save-buttons { margin: 1em 0; text-align:center; height: 21px;  }
+    .new-ticket-save-buttons button { margin-right: 1em;}
+    .new-ticket-save-buttons.saving { background: transparent url('../Images/loading/dots64.gif') no-repeat scroll 50% 50%; }
+    .new-ticket-save-buttons.saving button { display: none;}
+
+  </style>
+
+  <!--[if IE 7]>
+    <style type="text/css">
+      .ticket-removable-item { width: 250px;}
+      .ticket-rail h3 a { margin-top: -1.5em; margin-right: 1em;}
+      .ticket-removable-item-description { float:none; clear:left;}
+      .ticket-name-value { width: 250px;}
+      .newticket-fields { width: 100%; }
+      #divProduct .ts-icon-info { float:left; margin-left: .5em;}
+    </style>
+  <![endif]-->
+</head>
+<body class="">
+  <div class="ts-loading page-loading ui-helper-hidden">
+  </div>
+
+  <div class="ticket-panel-content ui-widget-content ts-color-bg-accent ui-widget">
+    <div class="ticket-content-wrapper">
+      <div class="ticket-content">
+        <div class="ui-widget-content ui-corner-all ticket-content-section ">
+          <div class="label-block" style="float: none; display: block;">
+            <span class="label">New Ticket Name</span>
+            <input type="text" class="ui-corner-all ui-widget-content text newticket-name" style="width: 99%" />
+          </div>
+
+          <div class="ui-helper-clearfix"></div>
+          <div class="divScreenRecorderMessages" style="display: none">
+            <p class="pAllowPluginsToRunInstructions">Please verify java is supported and allowed to run in your browser.</p>
+            <br />
+            <p>Finally, the first run of the screen recorder takes about 40 seconds to load on a 2 Mbps internet connection.</p>
+          </div>
+
+          <textarea class="newticket-desc" style="width: 100%; height: 50px;"></textarea>
+
+          <div style="margin-top: 10px;text-align: center;" id="recordVideoContainer">
+            <div id="statusText"></div>
+            <div id="publisher">
+            </div>
+
+            <button id="rcdtok" title="Record"><i class="fa fa-video-camera fa-2x"></i></button>
+            <button id="stoptok" title="Stop"><i class="fa fa-stop fa-2x"></i></button>
+            <button id="inserttok" title="Insert Video"><i class="fa fa-cloud-upload fa-2x"></i></button>
+            <button id="canceltok" title="Cancel"><i class="fa fa-eject fa-2x"></i></button>
+          </div>
+
+          <ul class="upload-queue"></ul>
+          <div class="ui-helper-clearfix"></div>
+
+          <form class="file-upload" action="Upload/Actions/555" method="POST" enctype="multipart/form-data" title="You can drag and drop your attachments here.">
+            <input type="file" name="file[]">
+            <a class="ui-state-default ts-link" href="#" title="You can drag and drop your attachments here.">Attach File >></a>
+          </form>
+          <div class="ui-helper-clearfix" style="clear:both;"></div>
+
+
+          <div class="label-block checkbox">
+            <input type="checkbox" class="newticket-portal"><label>Visible to Customers</label>
+          </div>
+          <div class="label-block checkbox new-ticket-div">
+            <input type="checkbox" class="newticket-kb"><label>Knowledgebase</label>
+          </div>
+          <div id="knowledgeBaseCategoryDiv" class="label-block">
+            <span class="label">KB Category</span>
+            <select class="newticket-kbCategory"></select>
+          </div>
+
+
+          <div class="clearfix"></div>
+          <div class="ticket-action-form-timespent">
+            <div class="label-block">
+              <span class="label">Date Work Started</span>
+              <input type="text" class="ui-corner-all ui-widget-content text ticket-action-form-date">
+            </div>
+            <div class="label-block">
+              <span class="label">Hours</span>
+              <input style="width: 50px;" class="ticket-action-form-hours">
+            </div>
+            <div class="label-block">
+              <span class="label">Minutes</span>
+              <input style="width: 50px;" class="ticket-action-form-minutes">
+            </div>
+            <div class="label-block checkbox">
+              <span class="ui-state-error ts-error-text ui-helper-hidden">Please enter the time you worked on this action.</span>
+            </div>
+            <div class="label-block">
+                <span class="label timerlabel">Start Timing</span>
+                <span class="timerbutton"></span>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="clearfix"></div>
+
+
+          
+          <div class="newticket-fields">
+            <div class="label-block">
+              <span class="label">Type</span>
+              <select class="newticket-type"></select>
+            </div>
+            <div class="label-block">
+              <span class="label">Status</span>
+              <select class="newticket-status"></select>
+            </div>
+            <div class="label-block">
+              <span class="label">Severity</span>
+              <select class="newticket-severity"></select>
+            </div>
+            <div class="label-block">
+              <span class="label">Assigned To</span>
+              <select class="newticket-user"></select>
+            </div>
+            <div class="label-block">
+              <span class="label">Group</span>
+              <select class="newticket-group"></select>
+            </div>
+            <div class="label-block">
+              <span class="label">Due Date</span>
+              <input type="text" class="ui-corner-all ui-widget-content text ticket-action-form-dueDate">
+            </div>
+            <div class="label-block community-block">
+              <span class="label">Community</span>
+              <select class="newticket-community"></select>
+            </div>
+            <div class="label-block  no-express no-helpdesk">
+              <span class="label">Product</span>
+              <select class="newticket-product"></select>
+            </div>
+            <div class="label-block no-express no-helpdesk">
+              <span class="label">Reported Version</span>
+              <select class="newticket-reported"></select>
+            </div>
+            <div class="label-block no-express no-helpdesk">
+              <span class="label">Resolved Version</span>
+              <select class="newticket-resolved"></select>
+            </div>
+          </div>
+          <div class="ui-helper-clearfix"></div>
+        </div>
+          <div class="ui-widget-content ui-corner-all ticket-content-section custom-fields">
+              <h3 class="category">Custom Fields</h3>
+              <div class="custom-fields-container"></div>
+          </div>
+          <div class="ui-widget-content ui-corner-all ticket-content-section">
+              <div class="new-ticket-save-buttons">
+                  <button class="newticket-save">Save</button>
+                  <button class="newticket-save-close">Save &amp Close</button>
+                  <button class="newticket-cancel">Cancel</button>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="ticket-rail-wrapper">
+      <div class="ticket-rail">
+          <div class="ticket-widget-customers ticket-widget ui-widget-content ui-corner-all no-express">
+            <h3 class="collapsable">Customers<a href="#" class="ticket-customer-add">Add</a><span class="separator"></span><a href="#" class="ticket-customer-new">New</a></h3>
+            <div id="divCustomers">
+              <div class="ticket-new-customer ui-helper-hidden">
+                <div class="label-block">
+                  <span class="label">First Name</span>
+                  <input type="text" class="text ui-corner-all ui-widget-content ticket-new-customer-first" />
+                </div>
+                <div class="label-block">
+                  <span class="label">Last Name</span>
+                  <input type="text" class="text ui-corner-all ui-widget-content ticket-new-customer-last" />
+                </div>
+                <div class="label-block">
+                  <span class="label">Email</span>
+                  <input type="text" class="text ui-corner-all ui-widget-content ticket-new-customer-email" />
+                </div>
+                <div class="label-block">
+                  <span class="label">Phone</span>
+                  <input type="text" class="text ui-corner-all ui-widget-content ticket-new-customer-phone" />
+                </div>
+                <div class="label-block">
+                  <span class="label">Organization</span>
+                  <input type="text" class="text ui-corner-all ui-widget-content ticket-new-customer-company" />
+                </div>
+                <div class="clearfix"></div>
+                <div style="text-align:center; padding: 1em 0;"><button class="ticket-new-customer-save">Save</button> <button class="ticket-new-customer-cancel">Cancel</button></div>
+              </div>         
+              <div class="ts-separator ui-widget-content"></div>   
+              <p class="newticket-noitems">There are no items to display.</p>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          
+          <div class="ticket-widget-assets ticket-widget ui-widget-content ui-corner-all">
+            <h3 class="collapsable">Inventory<a href="#" class="ticket-asset-add">Add</a></h3>
+            <div id="divAssets">
+              <div class="ts-separator ui-widget-content"></div>            
+              <p class="newticket-noitems">There are no items to display.</p>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="ticket-widget-tags ticket-widget ui-widget-content ui-corner-all">
+            <h3 class="collapsable">Tags<a href="#" class="ticket-tag-add">Add</a></h3>
+            <div id="divTags">
+              <div class="ts-separator ui-widget-content"></div>            
+              <p class="newticket-noitems">There are no items to display.</p>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="ticket-widget-reminders ticket-widget ui-widget-content ui-corner-all">
+            <h3 class="collapsable">Reminders<a href="#" class="ticket-reminder-add">Add</a></h3>
+            <div id="divReminders">
+              <div class="ts-separator ui-widget-content"></div>            
+              <p class="newticket-noitems">There are no items to display.</p>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="ticket-widget-related ticket-widget ui-widget-content ui-corner-all">
+            <h3 class="collapsable">Associated Tickets<a href="#" class="ticket-related-add">Add</a></h3>
+            <div id="divRelated">
+              <div class="ts-separator ui-widget-content"></div>            
+              <p class="newticket-noitems">There are no items to display.</p>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          
+          <div class="ticket-widget-queues ticket-widget ui-widget-content ui-corner-all">
+            <h3 class="collapsable">User Queues<a href="#" class="ticket-queue-add">Add</a></h3>
+            <div id="divQueues">
+              <div class="ts-separator ui-widget-content"></div>            
+              <p class="newticket-noitems">There are no items to display.</p>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="ticket-widget-subscribers ticket-widget ui-widget-content ui-corner-all">
+            <h3 class="collapsable">Subscribed Users<a href="#" class="ticket-subscriber-add">Add</a></h3>
+            <div id="divSubscribers">
+              <div class="ts-separator ui-widget-content"></div>            
+              <p class="newticket-noitems">There are no items to display.</p>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+    <div id="dialog" title="Alert Message">
+        <div id="modalAlertMessage"></div>
+                <input type="hidden" id="alertType" />
+                <input type="hidden" id="alertID" />
+    </div>
+</body>
+</html>
+
+

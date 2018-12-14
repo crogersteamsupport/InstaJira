@@ -1,0 +1,43 @@
+﻿body { background-color: #fff; }
+    
+
+.ts-loading {
+  background-color: transparent;
+  background-image: url('../images/loading/loading2.gif');
+  background-repeat: no-repeat;
+  background-position: 50% 25%;
+  height: 100%;
+  min-height: 200px;
+}
+
+#wiki-edit-toolbar > div {margin-right:15px; margin-top:4px;}  
+.wiki-edit-footer { border-top: 2px solid #eee; padding-top: 10px; margin-top:10px; margin-bottom:10px; }
+
+.wiki-title-edit {position: relative; top: 4px;}
+
+/*Wiki Editor Styles*/
+.wiki-edit-toolbar { margin-top: 5px; height: 40px; border-bottom: 2px solid #eee; }
+.wiki-privacy-checkbox { margin-top: 5px; margin-bottom: 5px; }
+
+
+  #deployJavaPlugin
+  {
+      position: absolute;    left: -10px;
+  }
+
+  .divScreenRecorderMessages
+  {
+    border-radius: 5px;
+    background: #e6e6e6;
+    padding: 5px; 
+    font-family: inherit;
+    font-style: inherit;
+  }
+
+     .mce-i-awesome.fa-paste   { color: #5CB85C !important}
+    .mce-i-awesome.fa-book    { color: #3276B1 !important}
+    .mce-i-awesome.fa-ticket  { color: #FEC21E !important}
+    .mce-i-image{ color: #BA55D3 !important}
+    .mce-i-awesome.fa-dropbox { color: #3d9ae8 !important}
+    .mce-i-awesome.fa-circle  { color: #D9534F !important}
+    .mce-path {display:none !important;}

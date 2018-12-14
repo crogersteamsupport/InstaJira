@@ -1,0 +1,187 @@
+<div class="action-new">
+
+    <div id="ticket-title-container" class="panel panel-default" style="border:none;margin-bottom:5px;">
+        <p id="ticket-title-label" style="padding:10px 10px 10px; text-align:center !important;"></p>
+        <div id="ticket-title-input-panel" style="padding:5px;position:relative;z-index:1;margin-bottom:10px;display:none;text-align:center;">
+            <input id="ticket-title-input" type="text" class="form-control" placeholder="Enter name for ticket..." style="margin-bottom:5px;">
+            <button id="ticket-title-save" class="btn btn-primary" type="button">Save</button>
+            <button id="ticket-title-cancel" class="btn btn-default" type="button">Cancel</button>
+        </div>
+    </div>
+
+    <div id="watson"></div>
+
+    <div class="action-new-area" style="display:none;">
+
+        <div class="divScreenRecorderMessages" style="display: none">
+            <p class="pAllowPluginsToRunInstructions">Please verify java is supported and allowed to run in your browser.</p>
+            <p>Finally, the first run of the screen recorder takes about 40 seconds to load on a 2 Mbps internet connection.</p>
+        </div>
+
+        <div id="public-badge" class="ticket-badge">
+            <div class="bgcolor-green"><span class="bgcolor-green">&nbsp;</span><a href="#" class="new-action-option-visible">Public</a></div>
+        </div>
+
+        <div id="private-badge" class="ticket-badge">
+            <div class="bgcolor-orange"><span class="bgcolor-orange">&nbsp;</span><a href="#" class="new-action-option-visible">Private</a></div>
+        </div>
+
+        <!--<textarea id="action-new-editor"></textarea>-->
+        <div id="action-new-editor"></div>
+
+        <div id="screenRecordDiv">
+            <div id="ourPubTest" style="position: absolute !important; z-index: -99;"></div>
+            <div id="ourPubTest2" style="position: absolute; left: -9999px;"></div>
+        </div>
+
+        <div style="text-align:center;display:none;" id="recordScreenContainer" class="action-new-toolbar">
+            <div id="statusTextScreen"></div>
+            <div id="tokScreenCountdown">0:00</div>
+            <button id="rcdtokScreen" class="btn btn-primary" title="Record Screen"><i class="fa fa-video-camera"></i></button>
+            <button id="muteTokScreen" class="btn btn-primary" title="Mute Audio"><i class="fa fa-microphone"></i></button>
+            <button id="unmuteTokScreen" class="btn btn-danger" title="Record Audio"><i class="fa fa-microphone-slash"></i></button>
+            <button id="stoptokScreen" class="btn btn-danger" title="Stop Screen Recording"><i class="fa fa-stop"></i></button>
+            <button id="canceltokScreen" title="Cancel Screen Recording" class="btn btn-danger"><i class="fa fa-eject"></i></button>
+        </div>
+
+        <div style="text-align:center;display:none;" id="recordVideoContainer" class="action-new-toolbar">
+            <div id="statusText"></div>
+            <div id="publisher"></div>
+            <button id="rcdtok" class="btn btn-primary" title="Record"><i class="fa fa-video-camera"></i></button>
+            <button id="stoptok" class="btn btn-danger" title="Stop"><i class="fa fa-stop"></i></button>
+            <button id="inserttok" class="btn btn-success" title="Insert Video"><i class="fa fa-cloud-upload"></i></button>
+            <button id="canceltok" title="Cancel" class="btn btn-danger"><i class="fa fa-eject"></i></button>
+        </div>
+
+
+
+        <div id="new-action-toolbar">
+
+            <div class="flexbox">
+                <div class="flexcell" style="width:200px;margin-right:5px;">
+                    <p for="action-new-date-started">Date Started</p>
+                    <div class='input-group date'>
+                        <input id="action-new-date-started" type='text' class="form-control" />
+                        <span id="action-new-timer" class="input-group-addon" data-hasstarted="false">
+                            <span class="fa fa-clock-o color-red"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="flexcell" style="width:100px;margin-right:5px;">
+                    <p for="action-new-hours">Hours</p>
+                    <div class="input-group spinner">
+                        <input id="action-new-hours" type="text" class="form-control" value="0">
+                        <div class="input-group-btn-vertical">
+                            <button class="btn btn-default"><i class="fa fa-caret-up"></i></button>
+                            <button class="btn btn-default"><i class="fa fa-caret-down"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flexcell" style="width:100px;margin-right:5px;">
+                    <p for="action-new-minutes">Minutes</p>
+                    <div class="input-group spinner">
+                        <input id="action-new-minutes" type="text" class="form-control" value="0">
+                        <div class="input-group-btn-vertical">
+                            <button class="btn btn-default"><i class="fa fa-caret-up"></i></button>
+                            <button class="btn btn-default"><i class="fa fa-caret-down"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flexcell" style="width:200px;margin-right:5px;">
+                    <p for="action-new-type">Type</p>
+                    <select id="action-new-type" class="form-control"></select>
+                </div>
+                <div class="flex push">
+                    <p for="action-new-KB">KB</p>
+                    <input id="action-new-KB" type="checkbox">
+                </div>
+            </div>
+
+            <div class="flexbox" style="margin-top:20px;width:100%;">
+                <div class="flex4">
+                    <div style="width:100%;">
+                        <form id="action-file-upload" class="file-upload" action="Upload/Actions/555" method="POST" enctype="multipart/form-data" title="You can drag and drop your attachments here.">
+                        <a id="file-browse" class="ts-link" href="#" title="You can drag and drop your attachments here.">Attach File? Click or Drop Here.</a>
+                        <input id="file-input" type="file" name="file[]">
+                        </form>
+                        <ul class="upload-queue"></ul>
+                    </div>
+                </div>
+                <div class="flex1" style="min-width:180px;">
+                    <div class="flexbox" style="margin-top:20px;width:100%;">
+                        <div class="flex push" style="padding-right:5px;">
+                            <div class="btn-group dropup action-save-group pull-right">
+                                <button id="action-new-save" type="button" class="btn btn-primary">Create</button>
+                                <button id="action-new-save-element" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span> <span class="sr-only">Toggle Dropdown</span></button>
+                                <ul id="action-new-saveoptions" class="dropdown-menu" role="menu"></ul>
+                            </div>
+                        </div>
+                        <div class="flex pull">
+                            <button id="action-new-cancel" type="button" class="btn btn-default pull-right">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="action-save-alert" class="alert alert-danger" role="alert" style="display:none;"></div>
+
+        </div>
+    </div>
+</div>
+
+<div id="watercooler-new-area" class="watercooler-new-area" style="display:none;padding-bottom:10px;">
+    <div class="ticket-badge">
+        <div class="bgcolor-blue">
+            <span class="bgcolor-blue">&nbsp;</span>
+            <label>WC</label>
+        </div>
+    </div>
+    <div class="container">
+        <div class="form-group">
+            <textarea id="inputDescription" rows="5" class="form-control autogrow" placeholder="Share To Watercooler"></textarea>
+        </div>
+        <div class="form-group add-associations">
+            <span data-toggle="tooltip" data-original-title="Associate Ticket" class="fa fa-ticket addticket hover" title="Associate Ticket"></span>
+            <span data-toggle="tooltip" data-original-title="Associate User" class="fa fa-user adduser hover" title="Associate User"></span>
+            <span data-toggle="tooltip" data-original-title="Associate Company" class="fa fa-building addcustomer hover" title="Associate Company"></span>
+            <span data-toggle="tooltip" data-original-title="Associate Group" class="fa fa-group addgroup hover" title="Associate Group"></span>
+            <span data-toggle="tooltip" data-original-title="Associate Product" class="fa fa-cube addproduct hover" title="Associate Product"></span>
+            <div style="left: 7px;" class="arrow-up"></div>
+            <input type="text" class="form-control" id="associationSearch" placeholder="Search..." style="width:250px;" />
+        </div>
+        <div class="form-group" style="margin-bottom: 0px;">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div id="associationQueue">
+                        <div class="wc-attachments"></div>
+                        <div class="ticket-queue"></div>
+                        <div class="user-queue"></div>
+                        <div class="group-queue"></div>
+                        <div class="customer-queue"></div>
+                        <div class="product-queue"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6">
+                    <form id="wc-file-upload" class="file-upload" action="Upload/Actions/555" method="POST" enctype="multipart/form-data" title="You can drag and drop your attachments here.">
+                        <input type="file" name="file[]">
+                        <a class="ts-link" href="#" title="You can drag and drop your attachments here.">Attach File >></a>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <span class="pull-right">
+                        <button id="newcomment" class="btn btn-primary">Save</button>
+                        <button id="newcommentcancel" type="button" class="btn btn-default">Cancel</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pinned-placeholder"></div>
+
+<div id="action-placeholder" class="hidden action-placeholder"></div>

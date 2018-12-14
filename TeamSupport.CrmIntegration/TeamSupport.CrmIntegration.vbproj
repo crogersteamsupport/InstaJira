@@ -1,0 +1,705 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{8B896B49-B127-450F-93D5-B8546E39C217}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>
+    </RootNamespace>
+    <AssemblyName>TeamSupport.CrmIntegration</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>TeamSupport.CrmIntegration.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>TeamSupport.CrmIntegration.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>TeamSupport.CrmIntegration.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\TeamSupport.CrmIntegration.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>TeamSupport.CrmIntegration.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\TeamSupport.CrmIntegration.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.vb</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.WorkItemTracking.WebApi">
+      <HintPath>..\packages\Microsoft.TeamFoundationServer.Client.15.112.1\lib\net45\Microsoft.TeamFoundation.WorkItemTracking.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="PusherServer, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PusherServer.3.0.0\lib\net35\PusherServer.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CrmPool.vb" />
+    <Compile Include="CrmProcessor.vb" />
+    <Compile Include="Integration.vb" />
+    <Compile Include="Integrations\BatchBook.vb" />
+    <Compile Include="Integrations\Highrise.vb" />
+    <Compile Include="Integrations\HubSpot.vb" />
+    <Compile Include="Integrations\Jira.vb" />
+    <Compile Include="Integrations\MailChimp.vb" />
+    <Compile Include="Integrations\Oracle.vb" />
+    <Compile Include="Integrations\SalesForce.vb" />
+    <Compile Include="Integrations\TFS.vb" />
+    <Compile Include="Integrations\Zoho.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Service References\OracleActivityAppointment\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\OracleSalesParty\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\sForce\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="WebHelpers.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Service References\OracleActivityAppointment\ActivityAppointmentService.wsdl" />
+    <None Include="Service References\OracleActivityAppointment\ActivityAppointmentService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\ActivityAssignee.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\ActivityCategory.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\ActivityContact.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\Appointment.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\AppointmentDeleteException.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\BC4JService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\CommonAttachments.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\datagraph.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\Note.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\NoteDFF.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\oracle-webservices-async-fault-11_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\OracleActivityAppointment.ActivityAssignee.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\OracleActivityAppointment.ActivityCategory.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\OracleActivityAppointment.ActivityContact.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\OracleActivityAppointment.AppointmentDeleteException.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\OracleActivityAppointment.CommonAttachments.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\OracleActivityAppointment.Note.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\OracleActivityAppointment.TransientAppointment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\sdoJava.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\sdoModel.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\sdoXML.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\ServiceException.wsdl" />
+    <None Include="Service References\OracleActivityAppointment\ServiceException.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\TransientAppointment.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\TransientAssignee.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\TransientCategory.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\TransientContact.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleActivityAppointment\TransientNote.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\AdditionalOrganizationName.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\AdditionalPartyId.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\AdditionalPersonName.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\BC4JService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\Certification.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\Citizenship.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\CodeAssignment.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\ContactPointInformation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\ContactPreference.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\CreditRating.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\datagraph.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\Edi.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\Education.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\Eft.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\Email.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\EmailDomain.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\EmploymentHistory.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\FinancialNumber.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\FinancialProfile.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\FinancialReport.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\InstantMessaging.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\MySalesAccount.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\oracle-webservices-async-fault-11_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\OracleSalesParty.MySalesAccount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleSalesParty\OracleSalesParty.OrganizationPartyResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleSalesParty\OracleSalesParty.PersonResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleSalesParty\OracleSalesParty.SalesAccount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleSalesParty\OracleSalesParty.SalesAccountResource.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleSalesParty\OracleSalesParty.SalesAccountResourceAccess.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleSalesParty\OracleSalesParty.SalesParty.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\OracleSalesParty\OrganizationContact.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\OrganizationContactInformation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\OrganizationContactRole.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\OrganizationInformation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\OrganizationParty.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\OrganizationProfile.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\OriginalSystemReference.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\PartyPreference.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\PartySite.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\PartySiteInformation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\PartySiteUse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\PartyUsageAssignment.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\Person.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\PersonInformation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\PersonInterest.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\PersonLanguage.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\PersonPartySite.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\PersonProfile.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\Phone.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\Relationship.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\RelationshipInformation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\SalesAccount.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\SalesAccountResource.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\SalesAccountResourceAccess.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\SalesAccountTerritory.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\SalesParty.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\SalesPartyService.wsdl" />
+    <None Include="Service References\OracleSalesParty\SalesPartyService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\sdoJava.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\sdoModel.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\sdoXML.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\ServiceException.wsdl" />
+    <None Include="Service References\OracleSalesParty\ServiceException.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\SourceSystemRefInformation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\Telex.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\Web.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\OracleSalesParty\WorkClass.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\sForce\DeleteResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\DeleteResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\DescribeGlobalResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\DescribeGlobalResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\DescribeLayoutResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\DescribeLayoutResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\DescribeSObjectResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\DescribeSObjectResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\DescribeSoftphoneLayoutResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\DescribeSoftphoneLayoutResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\DescribeTabSetResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\DescribeTabSetResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\EmptyRecycleBinResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\EmptyRecycleBinResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\GetDeletedResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\GetDeletedResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\GetServerTimestampResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\GetServerTimestampResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\GetUpdatedResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\GetUpdatedResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\GetUserInfoResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\GetUserInfoResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\InvalidateSessionsResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\InvalidateSessionsResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\LeadConvertResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\LeadConvertResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\LoginResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\LoginResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\MergeResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\MergeResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\partner.wsdl" />
+    <None Include="Web References\sForce\ProcessResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\ProcessResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\QueryResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\QueryResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
+    <None Include="Web References\sForce\ResetPasswordResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\ResetPasswordResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\SaveResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\SaveResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\SearchResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\SearchResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\SendEmailResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\SendEmailResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\SetPasswordResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\SetPasswordResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\sObject.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\sObject1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\UndeleteResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\UndeleteResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\UpsertResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\sForce\UpsertResult1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="D:\Users\vvillagomez\Documents\TeamSupport\Repositories\Main\trunk\TeamSupport.CrmIntegration\Web References\sForce\partner.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\sForce\</RelPath>
+      <UpdateFromURL>D:\Users\vvillagomez\Documents\TeamSupport\Repositories\Main\trunk\TeamSupport.CrmIntegration\Web References\sForce\partner.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>MySettings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SF_Text_App_2_sForce_SforceService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TeamSupport.Data\TeamSupport.Data.csproj">
+      <Project>{1943AC11-1F2D-4B85-9F0F-4D67284814BE}</Project>
+      <Name>TeamSupport.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.JIRA\TeamSupport.JIRA.csproj">
+      <Project>{a5e5fc71-6b6f-4e57-9bf0-8602f7a707ea}</Project>
+      <Name>TeamSupport.JIRA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.Proxy\TeamSupport.Proxy.csproj">
+      <Project>{8f3f388c-10f5-45d4-9f4c-471236dc14c0}</Project>
+      <Name>TeamSupport.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.ServiceLibrary\TeamSupport.ServiceLibrary.csproj">
+      <Project>{6AD9D48C-DDBA-4045-BFAA-362A1FCB0AA0}</Project>
+      <Name>TeamSupport.ServiceLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\OracleActivityAppointment\" />
+    <WCFMetadataStorage Include="Service References\OracleSalesParty\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OracleSalesParty\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OracleSalesParty\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OracleSalesParty\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OracleActivityAppointment\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OracleActivityAppointment\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\OracleActivityAppointment\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

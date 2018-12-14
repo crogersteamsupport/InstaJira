@@ -1,0 +1,45 @@
+﻿<root>
+  <modules>
+
+  </modules>
+  <tools name="CustomToolBar" enabled="true">
+    <tool name="InsertTicketLink" text="Insert Ticket Link" showtext="true" showicon="true"></tool>
+    <tool name="InsertKBTicket" text="Insert KB" showtext="true" showicon="true"></tool>
+    <tool name="LinkManager" />
+    <tool separator="true"/>
+    <tool name="AjaxSpellCheck"/>
+    <tool separator="true"/>
+    <tool name="Bold" />
+    <tool name="Italic" />
+    <tool name="Underline" />
+    <tool name="StrikeThrough" />
+    <tool separator="true"/>
+    <tool name="ForeColor" />
+    <tool name="BackColor"/>
+    <tool separator="true"/>
+    <tool name="FontName"/>
+    <tool name="FontSize"/>
+  </tools>
+
+
+  <symbols>
+
+  </symbols>
+  <fontNames>
+  </fontNames>
+  <fontSizes>
+  </fontSizes>
+
+  <colors>
+  </colors>
+  <classes>
+  </classes>
+
+  <paragraphs>
+  </paragraphs>
+
+  <dialogParameters>
+  </dialogParameters>
+  <languages>
+  </languages>
+</root>

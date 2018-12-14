@@ -1,0 +1,63 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BusinessObjectGenerator" GeneratedClassName="AppSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Host" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dev-sql</Value>
+    </Setting>
+    <Setting Name="OutputPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="TemplateFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Database" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TeamSupportVictor</Value>
+    </Setting>
+    <Setting Name="LastSchema" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="TableGridSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">286, 250</Value>
+    </Setting>
+    <Setting Name="TemplateGridSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">256, 277</Value>
+    </Setting>
+    <Setting Name="SchemaBarLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">3, 25</Value>
+    </Setting>
+    <Setting Name="FileBarLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">84, 25</Value>
+    </Setting>
+    <Setting Name="TemplateBarLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">196, 25</Value>
+    </Setting>
+    <Setting Name="CreatorIDField" Type="System.String" Scope="User">
+      <Value Profile="(Default)">CreatorID</Value>
+    </Setting>
+    <Setting Name="CreatedDateField" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DateCreated</Value>
+    </Setting>
+    <Setting Name="ModifierIDField" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ModifierID</Value>
+    </Setting>
+    <Setting Name="ModifiedDateField" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DateModified</Value>
+    </Setting>
+    <Setting Name="BaseItemClass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">BaseItem</Value>
+    </Setting>
+    <Setting Name="BaseCollectionClass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">BaseCollection</Value>
+    </Setting>
+    <Setting Name="DevelopmentPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Dev-Sql-WebApp</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TeamSupportDev</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

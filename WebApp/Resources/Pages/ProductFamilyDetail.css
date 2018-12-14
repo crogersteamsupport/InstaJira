@@ -1,0 +1,60 @@
+﻿body {
+}
+
+#productFamilyName{
+    margin: 0 0 0 15px;
+    font-size: 24px;
+}
+
+.header-nav { height: 40px; overflow:hidden; white-space:nowrap; }
+.pageheader .btn-toolbar { margin: 0 20px 0 0; }
+.pageheader {height: initial !important;}
+.main-nav { margin-top: 0; }
+
+.box-content {font-size: 12px}
+
+.form-group p.editable, .editable, .link {
+    color:#428BCA;
+    cursor:pointer;
+}
+
+.form-group p.editable, .editable {
+    color:#428BCA;
+    cursor:pointer;
+}
+
+.note-list{
+    border-bottom: 3px solid #DDDDDD;
+    max-height: 208px;
+    overflow: auto;
+}
+
+.progress {overflow:visible !important;margin-bottom: 0px !important;}
+
+#fieldDescription {padding-left: 10px;}
+
+.productList {padding-top: 30px;}
+
+#tblProducts i {cursor:pointer;}
+
+.scrollup{
+  width:40px;
+  height:40px;
+  opacity:0.3;
+  position:fixed;
+  bottom:50px;
+  right:100px;
+  display:none;
+  text-indent:-9999px;
+  background: url('../Images/icons/icon_top.png') no-repeat;
+  border-color: #EEEEEE;
+  outline-style:none !important;
+}
+
+.fa-sort-desc, .fa-sort-asc {
+    margin-left: 3px;
+}
+
+.expandCustomersContainer {
+    width: auto;
+}

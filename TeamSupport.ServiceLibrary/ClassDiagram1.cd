@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WatsonToneAnalyzer.ActionSentiment" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgAAAAAAAAgAAAAAAAAAAgAAAAAgAAAAAAFAAAQAAA=</HashCode>
+      <FileName>ActionSentiment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.ActionSentimentScore" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAgAAAAAAAAAAAAgCAAAAAgAAAAAAA=</HashCode>
+      <FileName>ActionSentimentScore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.ActionToAnalyze" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAgAAAQIAAAAggACAAAAgAAAAAlAAAQgAA=</HashCode>
+      <FileName>ActionToAnalyze.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.ActionsToAnalyzer" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="WatsonToneAnalyzer.ActionsToAnalyzer.ActionGetForWatson" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ActionsToAnalyzer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ActionsToAnalyzer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.OrganizationSentiment" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>RAEAABAAAABAAAAAAAEAAAAgAAAggAAAAAABAAAAAAA=</HashCode>
+      <FileName>OrganizationSentiment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.ProjectInstaller" Collapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>ProjectInstaller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.TicketSentiment" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RABAAABAAQBQRAAAAAECAAAAAgBgAAgQAAABAIAQAAA=</HashCode>
+      <FileName>TicketSentiment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.WatsonAnalyzer" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAMAAAAABABAAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WatsonAnalyzer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.Response">
+    <Position X="3" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAACAAAAAAAAAAAAAEAAQAAAAAAAAAAA=</HashCode>
+      <FileName>WatsonAnalyzer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.ToneList" Collapsed="true">
+    <Position X="3" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>WatsonAnalyzer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="utterances_tone" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.Utterance" Collapsed="true">
+    <Position X="3" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WatsonAnalyzer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="tones" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.Tones" Collapsed="true">
+    <Position X="3" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WatsonAnalyzer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.WatsonToneAnalyzerService" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAhAAIAEIAAACACAAAgAAAAAEAAAYAAAAA=</HashCode>
+      <FileName>WatsonToneAnalyzerService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WatsonToneAnalyzer.WatsonTransaction" Collapsed="true">
+    <Position X="3" Y="4.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="WatsonToneAnalyzer.WatsonTransaction.ESentiment" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>WatsonTransaction.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gAAAgEAAACBAAAQCAAACAAAEAAAAAAAAAAAIACAABAA=</HashCode>
+      <FileName>WatsonTransaction.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Struct Name="WatsonToneAnalyzer.ServiceStatus" Collapsed="true">
+    <Position X="7.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAggAAAAAAAAAAQAAAAAEQAAAAAIAAAAAQAA=</HashCode>
+      <FileName>WatsonToneAnalyzerService.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="WatsonToneAnalyzer.ServiceState" Collapsed="true">
+    <Position X="7.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAACBAAAAAIAAAAAAAACAAAgAAAAAEAAAAAA=</HashCode>
+      <FileName>WatsonToneAnalyzerService.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

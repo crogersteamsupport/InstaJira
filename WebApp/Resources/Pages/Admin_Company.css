@@ -1,0 +1,68 @@
+﻿.red{
+    color: red;
+}
+
+.face{
+    width: 90px;
+    height: 90px;
+}
+
+.rating-negative {
+    background: url('../Images/faces.png') no-repeat;
+    background-position: -180px -90px;
+    width: 90px;
+    height: 90px;
+}
+
+.rating-neutral {
+    background: url('../Images/faces.png') no-repeat;
+    background-position: -90px -90px;
+    width: 90px;
+    height: 90px;
+}
+
+.rating-postive {
+    background: url('../Images/faces.png') no-repeat;
+    background-position: 0 -90px;
+    width: 90px;
+    height: 90px;
+}
+
+form.positive-file-upload, form.neutral-file-upload, form.negative-file-upload { position: relative; overflow: hidden; direction: ltr; cursor: pointer; color: #333; width: 15em; height: 16px; line-height: 16px; float:left; margin-top: 0em; }
+form.positive-file-upload input, form.neutral-file-upload input, form.negative-file-upload input { position: absolute; top: 0; right: 0; margin: 0; border: 300px solid transparent; opacity: 0; -ms-filter: 'alpha(opacity=0)'; filter: alpha(opacity=0); -o-transform: translate(-300px, -300px) scale(10); -moz-transform: translate(-800px, 0) scale(10); cursor: pointer; height: 100%; }
+:root form.file-upload input { height: auto; }
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue { list-style: none; padding: .5em 0; margin:0;}
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue li { padding: 0; margin: 0; clear:both;}
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue .ts-color-bg-accent { margin-bottom: .25em; padding: .25em .25em; float:left; }
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue li .filename { line-height: 16px; float:left;}
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue li .progress { height: 7px; width: 100px; float:left; margin: 4px .25em 0 1em; }
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue li .ui-icon { float:left; padding: 0; cursor: pointer; margin-left: .25em;}
+
+#tabs-cdi .slider-container{
+    width: 400px;
+}
+
+#cdi-green .ui-slider-range { background: #8ae234; }
+
+#cdi-yellow .ui-slider-range { background: #ffd800; }
+
+.ui-slider-handle {
+    border: 1px solid lightgrey;
+    background-color: lightgrey;
+    font-weight: normal;
+    color: #2A3F54;
+}
+
+.ui-slider-handle:hover {
+    border: 1px solid darkgrey;
+    background-color: darkgrey;
+    font-weight: normal;
+    color: #2A3F54;
+}
+
+.ui-slider-range {
+    border: 1px solid #92b4de;
+    background: #21779C;
+    color: #154b8c;
+    font-weight: bold;
+}

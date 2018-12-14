@@ -1,0 +1,65 @@
+﻿(function executeRule(current, previous /*null when async*/) {
+	var status;
+	var requestBody;
+	var responseBody;
+	var request;
+
+	try {
+		var teamSupportURL = '';
+		var body = {};
+		body["incidentId"] = current.sys_id.getDisplayValue();
+		body["incidentNumber"] = current.number.getDisplayValue();
+		
+		for (var property in current) {
+			if (current.hasOwnProperty(property)
+				&& property.indexOf('url') >= 0
+				&& current[property].toLowerCase().indexOf('teamsupport.com') > 0
+				&& current[property].toLowerCase().indexOf('ticketnumber') > 0) {
+				teamSupportURL = current[property];
+			} else if (current[property].changes()
+				&& property != 'number'
+				&& property != 'comments'
+				&& property != 'work_notes') {
+				body[property] = current[property].getDisplayValue();
+			}
+		}
+		
+		if (teamSupportURL != '') {
+			var isCommentAdded = current.comments.changes();
+			var isWorkNoteAdded = current.work_notes.changes();
+			
+			if (isCommentAdded) {
+				var grJournalPublic = new GlideRecord('sys_journal_field');
+				grJournalPublic.addEncodedQuery("element_id=" + current.sys_id.getDisplayValue() + "^element=comments");
+				grJournalPublic.orderByDesc("sys_created_on");
+				grJournalPublic.query();
+				
+				while (grJournalPublic.next()) {
+					body["publicAction"] = { value: current.comments.getJournalEntry(1), id: grJournalPublic.sys_id.getDisplayValue() };
+					break;
+				}
+			}
+
+			if (isWorkNoteAdded) {
+				var grJournalPrivate = new GlideRecord('sys_journal_field');
+				grJournalPrivate.addEncodedQuery("element_id=" + current.sys_id.getDisplayValue() + "^element=work_notes");
+				grJournalPrivate.orderByDesc("sys_created_on");
+				grJournalPrivate.query();
+				
+				while (grJournalPrivate.next()) {
+					body["privateAction"] = { value: current.work_notes.getJournalEntry(1), id: grJournalPrivate.sys_id.getDisplayValue() };
+					break;
+				}
+			}
+			
+			var json = JSON.stringify(body);
+			request = new sn_ws.RESTMessageV2('TeamSupportIntegration', 'POST');
+			request.setRequestBody(json);
+			var response = request.executeAsync();
+		}
+	}
+	catch(ex) {
+		var message = ex.getMessage();
+		gs.error("TS business rule exception caught: ", ex);
+	}
+})(current, previous);

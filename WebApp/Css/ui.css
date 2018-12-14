@@ -1,0 +1,175 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body { font-family: 'Roboto'; font-size: 12px; color: #15428B; background-color: #EEEEEE; }
+a:focus { outline: 0; }
+:focus { -moz-outline-style: none; }
+
+td, th, span, form, body { font-family: 'Roboto'; font-size: 12px; color: #15428B; }
+
+a.ts-link, a.ts-link:link, a.ts-link:active, a.ts-link:visited { text-decoration: none; color: #15428B; outline: 0; }
+a.ts-link:hover { text-decoration: underline; }
+a.ts-link-button, a.ts-link-button:link, a.ts-link-button:active, a.ts-link-button:visited, a.ts-link-button:hover { font-weight: bold; text-decoration: none; font-size: 14px; padding: 5px 10px; position: relative; }
+a.mailLink, a.mailLink:link, a.mailLink:active, a.mailLink:visited{ background: transparent url(../images/icons/email.png) no-repeat; padding-left: 16px; margin-left: 3px; display:inline; text-decoration:none; }
+h1, h2, h3 { color: #15428B; }
+img { border: 0; }
+
+.ts-list-section { font-size: 14px; font-weight: bold; background-color: #E9F2FD; padding: 8px 0 7px 0; text-align: center; border-bottom: solid 1px #8AAEDE; }
+.ts-fieldset label.text { display: block; padding-bottom: 3px; }
+.ts-fieldset label { font-size: 1.4em; font-weight: bold; }
+.ts-fieldset p { margin: 5px 0 15px 0; }
+fieldset.ts-fieldset { padding: 0; border: 0; }
+
+input.text {  padding: .3em;  font-size: 1.2em;}
+
+.dialog .ts-fieldset label{ font-size: 1em; font-weight: normal;}
+.dialog {padding: 20px 20px;}
+
+span.value { font-size: 1.2em; font-weight: bold; }
+span.checkBox { display: block; padding: 0; margin: 0; }
+span.checkBox input { top: 0px; margin: 0 10px 0 0; padding: 0; }
+
+.labelColTD { width: 150px; }
+.inputColTD { width: 200px; }
+.customFieldValid { color:Red; padding-left: 2px; display: none;}
+
+/* Panel */
+.panel { margin: 10px 10px; }
+.panel-title { padding-left: 10px; line-height: 26px; font-weight: bold; float: left; display: block; width: 100px; white-space: nowrap; }
+.panel-caption { background: transparent url("../images/panel_header_bg.png") no-repeat; height: 26px; line-height: 26px; white-space: nowrap; }
+.panel-caption-cap { float: right; background: #DBE6F4 url("../images/panel_header_bg.png") no-repeat scroll top right; height: 26px; width: 13px; line-height: 26px; }
+.panel-body { border: solid 1px #A5BDD4; border-top: 0; background: #fff; padding: 10px 10px; }
+
+/* Panel Buttons */
+.panel-caption-buttons { float:right;}
+a.panel-caption-button{ color: #204d89; text-decoration: none; font-style: normal; font-size: 12px; font-family: 'Roboto'; background-color: Transparent; background-image: none; display: block; float: left; height: 26px; cursor: pointer; padding-right: 8px;}
+.panel-caption-button-contents {  background: none; height:26px; display:block; padding-left: 8px;}
+.panel-caption-button-text { display:block; float:left; padding-left:5px;}
+.panel-caption-button-icon { height: 16px; width:16px; margin-top: 5px; background-repeat:no-repeat; display:block; float:left;}
+a.panel-caption-button:hover { background: transparent url(../images/panel_caption_button_right.png) no-repeat scroll top right; }
+a.panel-caption-button:hover .panel-caption-button-contents { background: transparent url(../images/panel_caption_button_left.png) no-repeat; }
+
+
+.ts-icon { display: block; text-indent: -99999px; overflow: hidden; width: 16px; height: 16px; background: transparent url(../images/ts_icons_normal.png) no-repeat scroll 0 0; position: relative; cursor: pointer; }
+.ts-icon-container { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; }
+.ts-icon-container .ts-icon-text { display: block; font-size: 1em; padding: 0 0 0 2.2em; }
+.ts-icon-container .ts-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
+.ts-icon-online { background: transparent url(../images/icons/online.png) no-repeat; }
+.ts-icon-offline { background: transparent url(../images/icons/offline.png) no-repeat; }
+.ts-icon-triangle-n { background-position: 0 0; }
+.ts-icon-triangle-e { background-position: -16px 0; }
+.ts-icon-triangle-s { background-position: -32px 0; }
+.ts-icon-triangle-w { background-position: -48px 0; }
+.ts-icon-close-small { background-position: -464px -16px; }
+.ts-icon-close { background-position: -896px 0; }
+.ts-icon-open { background-position: -64px 0; }
+.ts-icon-top { background-position: -592px 0; }
+.ts-icon-add { background-position: -912px 0; }
+.ui-state-highlight a, .ui-state-highlight a:link, .ui-state-highlight a:visited { color: #363636; text-decoration: none; outline: none; }
+
+/* Panel List */
+.ts-panellist .ts-panellist-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; }
+.ts-panellist .ts-panellist-li-fix { display: inline; }
+.ts-panellist .ts-panellist-header-active { border-bottom: 0 !important; }
+.ts-panellist .ts-panellist-header a { display: block; font-size: 1em; padding: 0 0 0 2.2em; }
+.ts-panellist .ts-panellist-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
+.ts-panellist .ts-panellist-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; }
+.ts-panellist .ts-panellist-content-active { display: block; }
+.stretchContentHolderDiv { height: 100% !important; width: 100%; }
+.stretchContentHolderDiv > div { height: 100% !important; width: 100%; display: block !important; overflow: hidden; }
+div.NoRoundedCornerEnds, div.NoRoundedCornerEnds .rtbOuter, div.NoRoundedCornerEnds .rtbMiddle, div.NoRoundedCornerEnds .rtbInner, div.NoRoundedCornerEnds RadToolBar_Office2007 { border-width: 0px 0px 1px 0px; display: block; }
+
+/* Group Bars */
+.groupBarDiv { text-align: left; }
+.groupBarHeaderDiv { height: 36px; width: 100%; background-position: 0px 0px; background-repeat: no-repeat; color: #204D89; text-align: left; }
+.groupBarHeaderSpan { background-repeat: no-repeat; height: 36px; width: 20px; float: right; }
+.groupBarCaptionSpan { padding-left: 15px; line-height: 36px; height: 36px; font-size: 12px; font-weight: bold; text-align: left; color: #039; float: left; white-space:nowrap; width: 500px; overflow:hidden;}
+.groupBarButtonSpanWrapper { float: right; display: block; margin: 7px -20px 0 0; }
+.groupBarButtonsSpan { float: right; padding-right: 12px; }
+.groupBarBlue .groupBarHeaderDiv { background-image: url( '../images/bar_blue_left.gif' ); }
+.groupBarBlue .groupBarHeaderSpan { background-image: url( '../images/bar_blue_right.gif' ); }
+a.groupBarButtonLink, a.groupBarButtonLink:link {
+    color: #204d89;
+    text-decoration: none;
+    font-style: normal;
+    font-size: 12px;
+    font-family: 'Roboto';
+    background-color: Transparent;
+    background-image: none;
+    display: block;
+    float: left;
+    height: 36px;
+    margin-right: 0;
+    padding: 0 6px 0 0;
+    margin-top: 0px;
+    cursor: pointer;
+}
+a.groupBarButtonLink span.groupBarButtonSpan { text-decoration: none; background: none; height: 20px; line-height: 20px; padding: 0 0 5px 5px; display: block; }
+span.groupBarButtonSpan, a.groupBarButtonLink { display: block; }
+.groupBarButtonTextSpan { margin: -23px 0 0 20px; display: block; }
+.groupBarButtonImage { border: none; margin: 3px 5px 0 0; display: inline; }
+.groupBarImages { float: left; display: inline; margin: 10px 0px 0 15px; }
+.groupBarImage { border: none; margin-right: 5px; }
+.groupBarImages a { margin: 0; padding: 0; display: inline; float: none; color: Red; }
+.groupBarBlue a.groupBarButtonLink:hover { background: transparent url(../images/bar_button_blue_right.gif) no-repeat scroll top right; }
+.groupBarBlue a.groupBarButtonLink:hover span.groupBarButtonSpan { background: transparent url(../images/bar_button_blue_left.gif) no-repeat; }
+
+/* Groups */
+.groupDiv { text-align: left; }
+.groupHeaderDiv { height: 26px; width: 100%; background-position: 0px 0px; background-repeat: no-repeat; color: #204D89; text-align: left; }
+.groupHeaderSpan { background-repeat: no-repeat; height: 26px; width: 13px; float: right; }
+.groupCaptionSpan { padding-left: 10px; line-height: 26px; height: 26px; font-size: 12px; font-weight: bold; text-align: left; color: #15428B; }
+.groupButtonSpanWrapper { width: 100%; float: right; display: inline; margin-top: -24px; }
+.groupButtonsSpan { float: right; padding-right: 5px; }
+.groupBodyWrapperDiv { width: 100%; padding: 0; }
+.groupBodyDiv { border: none; margin-right: 0px; overflow: hidden; min-height: 20px; }
+.groupLightBlue .groupHeaderDiv { background-image: none; }
+.groupLightBlue .groupHeaderSpan { background-image: none; }
+a.groupButtonLink, a.groupButtonLink:link {
+    color: #15428B;
+    text-decoration: none;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    font-family: 'Roboto';
+    background-color: Transparent;
+    background-image: none;
+    display: block;
+    float: left;
+    margin-right: 5px;
+    padding: 0 8px 0 0;
+    margin-top: 0;
+    text-decoration: none;
+    cursor: pointer;
+}
+a.groupButtonLink span.groupButtonSpan { background: none; height: 23px; line-height: 23px; padding: 0 0 0 10px; display: block; }
+span.groupButtonSpan { display: block; }
+.groupButtonTextSpan { margin: -26px 0 0 25px; display: block; }
+.groupButtonImage { border: none; margin: 3px 5px 0 0; display: inline; }
+.groupLightBlue a.groupButtonLink:hover { background: none; }
+.groupLightBlue a.groupButtonLink:hover span.groupButtonSpan { background: none; }
+
+/* Button */
+.button { }
+.buttonLinkPadding { margin: 0 5px 0 5px; }
+a.buttonLink, a.buttonLink:link { font-style: normal; font-weight: bold; font-size: 14px; display: block; float: left; height: 27px; padding: 0 13px 0 0; text-decoration: none; cursor: pointer; }
+a.buttonLink span.buttonSpan { background: none; display: block; height: 27px; line-height: 27px; padding: 0 0 5px 10px; float: left; }
+.buttonTextSpan { margin: -1px 0 0 3px; display: block; text-decoration: none; position: relative; }
+.buttonIcon .buttonTextSpan { margin: -26px 0 0 45px; }
+.button img { border: none; margin: 3px 5px 0 0; display: inline; }
+.buttonBlue a.buttonLink { color: #15428B; text-decoration: none; background: transparent url(../images/button_blue_right.png) no-repeat scroll top right; }
+.buttonBlue a.buttonLink span.buttonSpan { background: transparent url(../images/button_blue_left.png) no-repeat; }
+.buttonBlue a.buttonLink:hover { background: transparent url(../images/button_blue_hover_right.png) no-repeat scroll top right; }
+.buttonBlue a.buttonLink:hover span.buttonSpan { color: #15428B; background: transparent url(../images/button_blue_hover_left.png) no-repeat; }
+
+/* Chat */
+.chat-messages { font-size:14px; color:#000; }
+.chat-messages p { margin:5px; }
+.chat-notification  { color:#333399; }
+.chat-name { font-weight:bold;}
+.chat-message-user .chat-name { color:#329938;}
+.chat-message-client .chat-name  { color:#333399; }
+.chat-message-self .chat-name { color:#696969;}
+
+.rtsUL {
+    min-width:1200px !important;
+}

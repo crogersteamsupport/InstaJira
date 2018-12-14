@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+  <link href="../Css/frame.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery.ui.combobox.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery.cluetip.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery-ui-enhanced.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/ts.ui.css" rel="stylesheet" type="text/css" />
+  <!--[if IE 7]><link href="vcr/1_9_0/Css/ts.ui.ie7.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <!--[if IE 8]><link href="vcr/1_9_0/Css/ts.ui.ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <link href="Reminders.css" rel="stylesheet" type="text/css" />
+  <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.hoverIntent.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.cluetip.js" type="text/javascript"></script>
+  <script src="Reminders.js" type="text/javascript"></script>
+  <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+
+  <style type="text/css">
+    .reminders-main { height:100%; overflow-x: hidden; overflow-y: auto; position:relative;}
+    .reminders { clear:both; margin-bottom: 2em; }
+    .reminders h2 { font-weight:normal;}
+    .reminders-main .ts-section {padding: 1em 1em;}
+    .reminders input, .reminders span { float:left; vertical-align: middle; margin: 0px; top:0; height: 16px; line-height: 16px;}
+    .dismissed span, .dismissed a{ text-decoration: line-through;}
+    .reminders span { margin-left: .5em;}
+    .reminder { clear:both; line-height: 16px; padding: .5em .5em;}
+    .past .reminder, .past h2 { color: Red;}
+    .no-reminders { text-align:center; display:none; padding: 5em 0;}
+  </style>
+
+  <!--[if IE 7]>
+    <style type="text/css">
+    </style>
+  <![endif]-->
+</head>
+<body class="">
+  <div class="ts-loading page-loading">
+  </div>
+  <div class="reminders-main ui-helper-hidden ui-widget-content ts-color-bg-accent ui-widget">
+    <button class="refresh">Refresh</button>
+    <div class="ts-section ui-widget-content ui-corner-all">
+      <h1 class="no-reminders">You do not have any reminders to display.</h1>
+      <div class="reminders past">
+        <h2>Past Due</h2>
+        <div class="ts-separator ui-widget-content"></div>
+      </div>
+
+      <div class="reminders today">
+        <h2>Today</h2>
+        <div class="ts-separator ui-widget-content"></div>
+      </div>
+
+      <div class="reminders tomorrow">
+        <h2>Tomorrow</h2>
+        <div class="ts-separator ui-widget-content"></div>
+      </div>
+
+      <div class="reminders thisweek">
+        <h2>This Week</h2>
+        <div class="ts-separator ui-widget-content"></div>
+      </div>
+
+      <div class="reminders nextweek">
+        <h2>Next Week</h2>
+        <div class="ts-separator ui-widget-content"></div>
+      </div>
+
+      <div class="reminders later">
+        <h2>Later</h2>
+        <div class="ts-separator ui-widget-content"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../Css/jquery-ui-bs3.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="../SlickGrid/slick.grid.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+  <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.numeric.js" type="text/javascript"></script>
+  <script src="/frontend/library/moment.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+  <script src="../SlickGrid/lib/jquery.event.drag-2.2.js" type="text/javascript"></script>
+  <script src="../SlickGrid/lib/jquery.jsonp-2.4.min.js" type="text/javascript"></script>
+  <script src="../SlickGrid/slick.core.js" type="text/javascript"></script>
+  <script src="../SlickGrid/slick.grid.js" type="text/javascript"></script>
+  <script src="../Js/Ts/ts.datamodels.example.js" type="text/javascript"></script>
+  <script src="GridExample.js" type="text/javascript"></script>
+  <title>View Tabular Report</title>
+<style>
+        #grid-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .cell-story {
+      white-space: normal !important;
+      line-height: 19px !important;
+    }
+
+    .loading-indicator {
+      display: inline-block;
+      padding: 12px;
+      background: white;
+      -opacity: 0.5;
+      color: black;
+      font-weight: bold;
+      z-index: 9999;
+      border: 1px solid red;
+      -moz-border-radius: 10px;
+      -webkit-border-radius: 10px;
+      -moz-box-shadow: 0 0 5px red;
+      -webkit-box-shadow: 0px 0px 5px red;
+      -text-shadow: 1px 1px 1px white;
+    }
+
+    .loading-indicator label {
+      padding-left: 20px;
+      background: url('../images/ajax-loader-small.gif') no-repeat center left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container frame-container">
+    <div id="grid-container">
+    
+    </div>
+  </div>
+</body>
+</html>

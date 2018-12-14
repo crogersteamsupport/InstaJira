@@ -1,0 +1,64 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Chat.master.cs" Inherits="Chat_Chat" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+  <title></title>
+  <link href="../Css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/chat.css" rel="stylesheet" type="text/css" />
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+  <style type="text/css">
+    body, html, form
+    {
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+      overflow: hidden;
+      font-size: 100.01%;
+    }
+    :focus
+    {
+      -moz-outline-style: none;
+    }
+    img
+    {
+      border: 0;
+    }
+
+  </style>
+  <asp:Literal ID="litStyle" runat="server"></asp:Literal>
+  <asp:ContentPlaceHolder ID="head" runat="server">
+  </asp:ContentPlaceHolder>
+</head>
+<body>
+  <form id="form1" runat="server">
+  <script type="text/javascript" language="javascript">
+    function CloseChat() { window.close(); }
+  </script>
+  <telerik:RadScriptManager ID="RadScriptManager1" runat="server" EnablePageMethods="true">
+  </telerik:RadScriptManager>
+  <telerik:RadSplitter ID="RadSplitter1" runat="server" Orientation="Horizontal" Height="100%"
+    Width="100%" BorderSize="0">
+    <telerik:RadPane ID="paneHeader" runat="server" Height="38px" Scrolling="None">
+      <div class="chat-header">
+        <div style="height: 28px; padding: 5px 0 0 7px; float:left;">
+          <a href="http://www.teamsupport.com" target="_blank">
+            <img alt="" src="../images/PoweredBy.jpg" /></a>
+        </div>
+        <div id="divHeaderButtons" runat="server" style="padding-top: 3px; float:right;" visible="false">
+          <a class="chat-button chat-button-close" href="#" onclick="CloseChat();"></a>
+        </div>
+      </div>
+    </telerik:RadPane>
+    <telerik:RadPane ID="paneContent" runat="server">
+      <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+      </asp:ContentPlaceHolder>
+    </telerik:RadPane>
+  </telerik:RadSplitter>
+  </form>
+</body>
+</html>

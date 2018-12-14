@@ -1,0 +1,29 @@
+<div id="ticket-jirafields" class="form-horizontal">
+    <div id="issueKey" class="flexbox">
+        <div class="flex1">
+            <div for="issueKeyValue" class="form-label">Jira Issue Key:</div>
+        </div>
+        <div class="flex2">
+            <div id="ticket-jirakey-container" class="ticket-input-container" style="padding-top: 6px;">
+                <span id="issueKeyValue"></span>
+                <i id="jiraUnlink" class="glyphicon glyphicon-remove" style="font-size:10px; cursor:pointer; position:relative; left:5px;"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="enterIssueKey" style="display:none;">
+        <div class="ticket-jira-issue">
+            <label>Existing Jira Issue Key:</label>
+            <input id="issueKeyInput" type="text" class="form-control" style="margin-bottom:5px;" />
+        </div>
+        <div style="text-align:right">
+            <button id="saveIssueKeyButton" class="btn btn-sm btn-default">Save</button>
+            <button id="cancelIssueyKeyButton" class="btn btn-sm btn-default">Cancel</button>
+        </div>
+    </div>
+
+    <div class="ts-jira-buttons-container flexbox">
+        <div class="flex1" style="padding:5px;"><button id="newJiraIssue" class="btn btn-default btn-block">New Jira</button></div>
+        <div class="flex1" style="padding:5px;"><button id="existingJiraIssue" class="btn btn-default btn-block">Existing Jira</button></div>
+    </div>
+</div>

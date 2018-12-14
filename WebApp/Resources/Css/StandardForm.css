@@ -1,0 +1,65 @@
+﻿body { background: #dfdfdf; font: normal 13px/21px Arial, Helvetica, sans-serif; color: #58595b }
+
+.pageDiv
+{
+  text-align: center;
+  margin: 0 auto;
+  width: 782px;
+  background: #fff;
+  padding-bottom: 20px;
+  box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.2);
+}
+
+.headerDivChristmas
+{
+  background: transparent url(  '../images/christmaslogo.png' ) no-repeat;
+  height: 128px;
+  padding-bottom: 20px;
+}
+
+
+.headerDiv {
+    background: #2A3F54;
+    padding: 20px 20px;
+}
+
+.headerLogo
+{
+  background: transparent url(  '../images/page_header.png' ) no-repeat;
+  height: 63px;
+  width: 252px;
+}
+
+.contentTopDiv
+{
+  background: transparent url(  '../images/page_body_top.png' ) no-repeat;
+  height: 24px;
+}
+
+.contentBottomDiv
+{
+  background: transparent url(  '../images/page_body_bottom.png' ) no-repeat;
+  height: 24px;
+}
+
+.pageDiv .contentCenterDiv
+{
+clear:both;
+  background: #fff;
+  min-height: 200px;
+  border:none;
+}
+
+.contentCenterDiv h1, h2, h3 { margin-top: 0;}
+
+.alertSpan
+{
+  border: Solid 1px #CC7F04;
+  color: #784B02;
+  background-color: #F2C885;
+  padding: 5px 10px 5px 10px;
+  font-weight:bold;
+  display:inline;
+}
+
+.ui-autocomplete-input { width: 250px;}

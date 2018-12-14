@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created on Thu, 07 May 2009 14:55:53 -0500 with P3PEdit - http://p3pedit.com -->
+<META xmlns="http://www.w3.org/2002/01/P3Pv1">
+  <POLICY-REFERENCES>
+    <EXPIRY max-age="86400"/>
+    <POLICY-REF about="#WebsitePolicy">
+      <INCLUDE>/*</INCLUDE>
+      <COOKIE-INCLUDE name="*.teamsupport.com"/>
+    </POLICY-REF>
+  </POLICY-REFERENCES>
+  <POLICIES>
+    <POLICY name="WebsitePolicy" discuri="http://www.teamsupport.com/PrivacyPolicy.htm" opturi="http://www.teamsupport.com/PrivacyPolicy.htm">
+      <ENTITY>
+        <DATA-GROUP>
+          <DATA ref="#business.name">Robert C. Johnson</DATA>
+          <DATA ref="#business.contact-info.postal.street">100 Highland Park Village, Ste 200</DATA>
+          <DATA ref="#business.contact-info.postal.city">Irving</DATA>
+          <DATA ref="#business.contact-info.postal.stateprov">TX</DATA>
+          <DATA ref="#business.contact-info.postal.postalcode">75205</DATA>
+          <DATA ref="#business.contact-info.postal.country">US</DATA>
+          <DATA ref="#business.contact-info.telecom.telephone">(800) 596-2820</DATA>
+          <DATA ref="#business.contact-info.online.email">RJohnson@TeamSupport.com</DATA>
+        </DATA-GROUP>
+      </ENTITY>
+      <ACCESS>
+        <none/>
+      </ACCESS>
+      <DISPUTES-GROUP>
+        <DISPUTES resolution-type="service" service="http://www.teamsupport.com/PrivacyPolicy.htm">
+          <REMEDIES>
+            <correct/>
+          </REMEDIES>
+        </DISPUTES>
+      </DISPUTES-GROUP>
+      <STATEMENT>
+        <CONSEQUENCE>Collecting your information simply allows us to authenticate your session so that you are allowed access to the customer portal.</CONSEQUENCE>
+        <PURPOSE>
+          <current/>
+          <tailoring required="always"/>
+          <pseudo-analysis required="always"/>
+          <individual-analysis required="always"/>
+          <individual-decision required="always"/>
+          <historical required="always"/>
+        </PURPOSE>
+        <RECIPIENT>
+          <ours>
+            <recipient-description>Information is only shared with Muroc clients.</recipient-description>
+          </ours>
+          <delivery required="always"/>
+          <same required="always"/>
+          <other-recipient required="always"/>
+          <unrelated required="always"/>
+        </RECIPIENT>
+        <RETENTION>
+          <stated-purpose/>
+        </RETENTION>
+        <DATA-GROUP>
+          <DATA ref="#user.name"/>
+          <DATA ref="#user.bdate"/>
+          <DATA ref="#user.gender"/>
+          <DATA ref="#user.employer"/>
+          <DATA ref="#user.department"/>
+          <DATA ref="#user.jobtitle"/>
+          <DATA ref="#user.home-info"/>
+          <DATA ref="#user.business-info"/>
+          <DATA ref="#thirdparty.name"/>
+          <DATA ref="#thirdparty.bdate"/>
+          <DATA ref="#thirdparty.gender"/>
+          <DATA ref="#thirdparty.employer"/>
+          <DATA ref="#thirdparty.department"/>
+          <DATA ref="#thirdparty.jobtitle"/>
+          <DATA ref="#thirdparty.home-info"/>
+          <DATA ref="#thirdparty.business-info"/>
+          <DATA ref="#dynamic.clickstream"/>
+          <DATA ref="#dynamic.http"/>
+          <DATA ref="#dynamic.clientevents"/>
+          <DATA ref="#dynamic.searchtext"/>
+          <DATA ref="#dynamic.interactionrecord"/>
+          <DATA ref="#dynamic.cookies">
+            <CATEGORIES>
+              <uniqueid/>
+            </CATEGORIES>
+          </DATA>
+        </DATA-GROUP>
+      </STATEMENT>
+    </POLICY>
+  </POLICIES>
+</META>

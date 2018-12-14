@@ -1,0 +1,92 @@
+Kevin,
+
+The following was sent over to my by my development staff, as they were not sure what would have been passed over in the license creation process.  It is the most up-to-date build which includes support for .NET 4.0
+
+http://www.quiksoft.com/download/updates/em.net/v4/emdotnet.4.zip
+
+Let us know if you have any questions about it.
+
+ 
+
+This is your invoice for products purchased through the automated ordering system on the Quiksoft web site.  Please print and save this document, as it is the only invoice you will receive.
+
+Please do not reply to this message.  For information on obtaining technical support, please visit our support area at http://www.quiksoftcorp.com/support.  If you require the assistance of our sales or accounting departments regarding this purchase, please contact sales@quiksoftcorp.com and reference order# 37622.
+  
+
+Want to increase your email deliverability and hit the inbox more frequently? Give SocketLabs Email On-Demand a try. SocketLabs Email On-Demand is a hosted SMTP server solution that is compatible with all Quiksoft products. Low monthly rates enable you to send your email through a fully managed, hosted SMTP server with top deliverability guaranteed! Web based reporting and API access give you control over your outbound email like never before. For more information visit http://www.socketlabs.com/od.
+
+Quiksoft Corporation
+700 Turner Industrial Way, Suite 100
+Aston, PA 19014 USA
+484-418-1281	
+INVOICE
+
+ 
+
+ 	Order Number	37622
+ 	
+Date
+
+6/16/2015 11:18:19 AM
+
+ 	Terms	Net 0
+ 
+
+Sold To:
+ 
+Kevin Jones
+Muroc Systems, Inc. 
+100 Highland Park Village
+Dallas, TX 75205
+United States
+ 
+
+Item	Price
+EasyMail .Net Security Plug-in Pack Single Developer License	$499.00
+EasyMail .Net Edition, SMTP Only Single Developer License QTY: 1	$249.00
+Adjustment	-$748.00
+ 
+
+ 	 	 
+ 	Total	
+$0.00
+
+ 	 	 
+ 	Balance Due	$0.00
+ 
+
+ 
+
+ 
+
+Thank you for your purchase.  This message contains your license key for the product purchased, which serves as your proof of license, and may be necessary to unlock the software.  If you ordered multiple products, you will be sent multiple license keys in separate e-mail messages.  An invoice for your entire purchase will also be sent in a separate e-mail message.
+ 
+Please do not reply to this message.  For information on obtaining technical support, please visit our support area at http://www.quiksoftcorp.com/support.  If you require the assistance of our sales or accounting departments regarding this purchase, please contact sales@quiksoftcorp.com and reference order# 37622.
+
+This e-mail transmission may have inserted line breaks in this message.  It is important that you remove any line breaks from your license key, or it will not function correctly.
+
+Product:  EasyMail .Net Security Plug-in Pack
+License Key: 
+Muroc Systems, Inc. (Single Developer)/9984652F406991896501FC33B3#02AE4B
+
+If you haven't already done so, you may download the EasyMail .Net Security Plug-in Pack from http://download.quiksoft.com/emdotnetsetup.exe.
+ 
+Quiksoft Sales
+sales@quiksoft.com
+
+ 
+
+Thank you for your purchase.  This message contains your license key for the product purchased, which serves as your proof of license, and may be necessary to unlock the software.  If you ordered multiple products, you will be sent multiple license keys in separate e-mail messages.  An invoice for your entire purchase will also be sent in a separate e-mail message.
+ 
+Please do not reply to this message.  For information on obtaining technical support, please visit our support area at http://www.quiksoftcorp.com/support.  If you require the assistance of our sales or accounting departments regarding this purchase, please contact sales@quiksoftcorp.com and reference order# 37622.
+
+This e-mail transmission may have inserted line breaks in this message.  It is important that you remove any line breaks from your license key, or it will not function correctly.
+
+Product:  EasyMail .Net Edition, SMTP Only
+License Key: 
+Muroc Systems, Inc. (Single Developer)/9983782F406978487783FBAA248A#E86A
+
+If you haven't already done so, you may download the EasyMail .Net Edition, SMTP Only from http://download.quiksoft.com/emdotnetsetup.exe.
+ 
+Quiksoft Sales
+sales@quiksoft.com

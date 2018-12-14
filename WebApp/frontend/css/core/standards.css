@@ -1,0 +1,38 @@
+textarea {
+    background-color:transparent !important;
+    border:1px solid rbga(0,0,0,0.1);
+    border-radius:0px;
+}
+input {
+    margin:0px !important;
+    border-radius:0px !important;
+    font-family:'Roboto' !important;
+    outline:none !important;
+    word-break:break-word;
+}
+
+
+.white {
+    background-color:white !important;
+}
+.bg-curiousblue {
+    background-color:#2C9ECF !important;
+}
+.bg-bluewood {
+    background-color:#33485e !important;
+}
+.text-white {
+    color:white !important;
+}
+.hover:hover {
+    cursor:pointer;
+}
+
+.dropdown-submenu {
+    position:relative;
+}
+.dropdown-submenu .dropdown-menu {
+    top:0;
+    left:100%;
+    margin-top:-1px;
+}

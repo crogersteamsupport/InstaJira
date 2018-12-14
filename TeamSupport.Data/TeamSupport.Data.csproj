@@ -1,0 +1,1117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1943AC11-1F2D-4B85-9F0F-4D67284814BE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TeamSupport.Data</RootNamespace>
+    <AssemblyName>TeamSupport.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\DatabaseTesting\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\TeamSupport.Data.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\TeamSupport.Data.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\TeamSupport.Data.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\TeamSupport.Data.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta|AnyCPU'">
+    <OutputPath>bin\Beta\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta|x64'">
+    <OutputPath>bin\x64\Beta\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta|x86'">
+    <OutputPath>bin\x86\Beta\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AntiXssLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\AntiXssLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CsQuery">
+      <HintPath>..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="dtSearchNetApi3, Version=1.0.4350.18713, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dtSearch\dtSearchNetApi3.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizer">
+      <HintPath>..\packages\HtmlSanitizer.2.0.5623.30465\lib\net40\HtmlSanitizer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="TidyNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TidyNet-1.0.1\TidyNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessObjects\ActionLinkToJira.cs" />
+    <Compile Include="BusinessObjects\ActionLinkToSnow.cs" />
+    <Compile Include="BusinessObjects\ActionLinkToTFS.cs" />
+    <Compile Include="BusinessObjects\ActionLogs.cs" />
+    <Compile Include="BusinessObjects\ActionLogsView.cs" />
+    <Compile Include="BusinessObjects\Actions.cs" />
+    <Compile Include="BusinessObjects\ActionsView.cs" />
+    <Compile Include="BusinessObjects\ActionToAnalyze.cs" />
+    <Compile Include="BusinessObjects\ActionTypes.cs" />
+    <Compile Include="BusinessObjects\ActivityTypes.cs" />
+    <Compile Include="BusinessObjects\Addresses.cs" />
+    <Compile Include="BusinessObjects\AgentRatings.cs" />
+    <Compile Include="BusinessObjects\AgentRatingsOptions.cs" />
+    <Compile Include="BusinessObjects\AgentRatingUsers.cs" />
+    <Compile Include="BusinessObjects\ApiLogs.cs" />
+    <Compile Include="BusinessObjects\AssetAssignments.cs" />
+    <Compile Include="BusinessObjects\AssetAssignmentsView.cs" />
+    <Compile Include="BusinessObjects\AssetHistory.cs" />
+    <Compile Include="BusinessObjects\AssetHistoryView.cs" />
+    <Compile Include="BusinessObjects\Assets.cs" />
+    <Compile Include="BusinessObjects\AssetsView.cs" />
+    <Compile Include="BusinessObjects\AttachmentDownloads.cs" />
+    <Compile Include="BusinessObjects\Attachments.cs" />
+    <Compile Include="BusinessObjects\BackdoorLogins.cs" />
+    <Compile Include="BusinessObjects\BillingInfo.cs" />
+    <Compile Include="BusinessObjects\CalendarEvents.cs" />
+    <Compile Include="BusinessObjects\CalendarRef.cs" />
+    <Compile Include="BusinessObjects\CDI_Settings.cs" />
+    <Compile Include="BusinessObjects\ChatClients.cs" />
+    <Compile Include="BusinessObjects\ChatClientsView.cs" />
+    <Compile Include="BusinessObjects\ChatMessages.cs" />
+    <Compile Include="BusinessObjects\ChatParticipants.cs" />
+    <Compile Include="BusinessObjects\ChatRequests.cs" />
+    <Compile Include="BusinessObjects\Chats.cs" />
+    <Compile Include="BusinessObjects\ChatSettings.cs" />
+    <Compile Include="BusinessObjects\ChatUserSettings.cs" />
+    <Compile Include="BusinessObjects\CompanyParentsView.cs" />
+    <Compile Include="BusinessObjects\ContactsView.cs" />
+    <Compile Include="BusinessObjects\CreditCards.cs" />
+    <Compile Include="BusinessObjects\CRMLinkErrors.cs" />
+    <Compile Include="BusinessObjects\CRMLinkFields.cs" />
+    <Compile Include="BusinessObjects\CRMLinkResults.cs" />
+    <Compile Include="BusinessObjects\CRMLinkSynchedOrganizations.cs" />
+    <Compile Include="BusinessObjects\CRMLinkTable.cs" />
+    <Compile Include="BusinessObjects\CustomerHubAuthentication.cs" />
+    <Compile Include="BusinessObjects\CustomerHubCustomViews.cs" />
+    <Compile Include="BusinessObjects\CustomerHubDisplaySettings.cs" />
+    <Compile Include="BusinessObjects\CustomerHubFeatureSettings.cs" />
+    <Compile Include="BusinessObjects\CustomerHubs.cs" />
+    <Compile Include="BusinessObjects\CustomerHubViews.cs" />
+    <Compile Include="BusinessObjects\CustomerRelationships.cs" />
+    <Compile Include="BusinessObjects\CustomFieldCategories.cs" />
+    <Compile Include="BusinessObjects\CustomFields.cs" />
+    <Compile Include="BusinessObjects\CustomFieldsView.cs" />
+    <Compile Include="BusinessObjects\CustomPortalColumns.cs" />
+    <Compile Include="BusinessObjects\CustomValues.cs" />
+    <Compile Include="BusinessObjects\DeflectionLog.cs" />
+    <Compile Include="BusinessObjects\Deflector.cs" />
+    <Compile Include="BusinessObjects\DeletedIndexItems.cs" />
+    <Compile Include="BusinessObjects\DeletedTickets.cs" />
+    <Compile Include="BusinessObjects\EMailActions.cs" />
+    <Compile Include="BusinessObjects\EmailAddresses.cs" />
+    <Compile Include="BusinessObjects\EMailAlternateInbound.cs" />
+    <Compile Include="BusinessObjects\EmailPostHistory.cs" />
+    <Compile Include="BusinessObjects\EmailPosts.cs" />
+    <Compile Include="BusinessObjects\Emails.cs" />
+    <Compile Include="BusinessObjects\EmailTemplateParameters.cs" />
+    <Compile Include="BusinessObjects\EmailTemplates.cs" />
+    <Compile Include="BusinessObjects\EmailTemplateTables.cs" />
+    <Compile Include="BusinessObjects\ExceptionLogs.cs" />
+    <Compile Include="BusinessObjects\ExceptionLogView.cs" />
+    <Compile Include="BusinessObjects\FacebookOptions.cs" />
+    <Compile Include="BusinessObjects\FilePaths.cs" />
+    <Compile Include="BusinessObjects\ForumCategories.cs" />
+    <Compile Include="BusinessObjects\ForumPermissions.cs" />
+    <Compile Include="BusinessObjects\ForumTickets.cs" />
+    <Compile Include="BusinessObjects\FullContactUpdates.cs" />
+    <Compile Include="BusinessObjects\GroupAssignmentHistory.cs" />
+    <Compile Include="BusinessObjects\HubAccounts.cs" />
+    <Compile Include="BusinessObjects\ImportFields.cs" />
+    <Compile Include="BusinessObjects\ImportFieldsView.cs" />
+    <Compile Include="BusinessObjects\ImportMaps.cs" />
+    <Compile Include="BusinessObjects\Imports.cs" />
+    <Compile Include="BusinessObjects\JiraInstanceProducts.cs" />
+    <Compile Include="BusinessObjects\KBRatings.cs" />
+    <Compile Include="BusinessObjects\KnowledgeBaseCategories.cs" />
+    <Compile Include="BusinessObjects\MiscellaneousLog.cs" />
+    <Compile Include="BusinessObjects\OrganizationEmails.cs" />
+    <Compile Include="BusinessObjects\OrganizationProductsView.cs" />
+    <Compile Include="BusinessObjects\Organizations.cs" />
+    <Compile Include="BusinessObjects\OrganizationSentiment.cs" />
+    <Compile Include="BusinessObjects\Plugins.cs" />
+    <Compile Include="BusinessObjects\ProductFamilies.cs" />
+    <Compile Include="BusinessObjects\RecentlyViewedItems.cs" />
+    <Compile Include="BusinessObjects\Reminders.cs" />
+    <Compile Include="BusinessObjects\ReportEmails.cs" />
+    <Compile Include="BusinessObjects\ReportFolders.cs" />
+    <Compile Include="BusinessObjects\Reporting\CustomReportSql.cs" />
+    <Compile Include="BusinessObjects\Reporting\ReportSummaryAll.cs" />
+    <Compile Include="BusinessObjects\Reporting\ReportTablePage.cs" />
+    <Compile Include="BusinessObjects\Reporting\ReportTicketsViewField.cs" />
+    <Compile Include="BusinessObjects\Reporting\ReportTicketsViewJoin.cs" />
+    <Compile Include="BusinessObjects\Reporting\ReportTicketsViewTempTable.cs" />
+    <Compile Include="BusinessObjects\Reporting\SummaryReportSql.cs" />
+    <Compile Include="BusinessObjects\Reporting\TabularReportSql.cs" />
+    <Compile Include="BusinessObjects\Reporting\UserRights.cs" />
+    <Compile Include="BusinessObjects\ReportTicketsView.cs" />
+    <Compile Include="BusinessObjects\ReportViews.cs" />
+    <Compile Include="BusinessObjects\ScheduledReports.cs" />
+    <Compile Include="BusinessObjects\SearchCustomFilters.cs" />
+    <Compile Include="BusinessObjects\SearchSorters.cs" />
+    <Compile Include="BusinessObjects\SearchStandardFilters.cs" />
+    <Compile Include="BusinessObjects\Services.cs" />
+    <Compile Include="BusinessObjects\ServiceSettings.cs" />
+    <Compile Include="BusinessObjects\SimpleImportFieldsView.cs" />
+    <Compile Include="BusinessObjects\SlaPausedDays.cs" />
+    <Compile Include="BusinessObjects\SlaPausedTimes.cs" />
+    <Compile Include="BusinessObjects\SlaTickets.cs" />
+    <Compile Include="BusinessObjects\SlaViolationHistory.cs" />
+    <Compile Include="BusinessObjects\TagLinks.cs" />
+    <Compile Include="BusinessObjects\Tags.cs" />
+    <Compile Include="BusinessObjects\TaskAssociations.cs" />
+    <Compile Include="BusinessObjects\TaskAssociationsView.cs" />
+    <Compile Include="BusinessObjects\TaskEmailPostHistory.cs" />
+    <Compile Include="BusinessObjects\TaskEmailPosts.cs" />
+    <Compile Include="BusinessObjects\TaskLogs.cs" />
+    <Compile Include="BusinessObjects\Tasks.cs" />
+    <Compile Include="BusinessObjects\TasksView.cs" />
+    <Compile Include="BusinessObjects\TicketAutomationActions.cs" />
+    <Compile Include="BusinessObjects\TicketAutomationHistory.cs" />
+    <Compile Include="BusinessObjects\TicketAutomationPossibleActions.cs" />
+    <Compile Include="BusinessObjects\TicketAutomationTriggerLogic.cs" />
+    <Compile Include="BusinessObjects\TicketAutomationTriggers.cs" />
+    <Compile Include="BusinessObjects\TicketAutomationTriggersView.cs" />
+    <Compile Include="BusinessObjects\TicketLinkToJira.cs" />
+    <Compile Include="BusinessObjects\TicketLinkToSnow.cs" />
+    <Compile Include="BusinessObjects\TicketLinkToTFS.cs" />
+    <Compile Include="BusinessObjects\TicketRelationships.cs" />
+    <Compile Include="BusinessObjects\TicketSentiment.cs" />
+    <Compile Include="BusinessObjects\TicketsView.cs" />
+    <Compile Include="BusinessObjects\TicketTemplates.cs" />
+    <Compile Include="BusinessObjects\TicketTimeLineView.cs" />
+    <Compile Include="BusinessObjects\TicketTypesView.cs" />
+    <Compile Include="BusinessObjects\TicketUserAssignment.cs" />
+    <Compile Include="BusinessObjects\TokStorage.cs" />
+    <Compile Include="BusinessObjects\Translate.cs" />
+    <Compile Include="BusinessObjects\UserDevices.cs" />
+    <Compile Include="BusinessObjects\UserNoteSettings.cs" />
+    <Compile Include="BusinessObjects\UserProducts.cs" />
+    <Compile Include="BusinessObjects\UserProductsView.cs" />
+    <Compile Include="BusinessObjects\UserTicketStatuses.cs" />
+    <Compile Include="BusinessObjects\WatercoolerAttachments.cs" />
+    <Compile Include="BusinessObjects\WatercoolerLikes.cs" />
+    <Compile Include="BusinessObjects\WatercoolerMsg.cs" />
+    <Compile Include="BusinessObjects\WaterCoolerView.cs" />
+    <Compile Include="BusinessObjects\WatsonScores.cs" />
+    <Compile Include="BusinessObjects\WebHooksPending.cs" />
+    <Compile Include="BusinessObjects\WebHooksToken.cs" />
+    <Compile Include="Classes\AccountClone.cs" />
+    <Compile Include="Classes\AttachmentPath.cs" />
+    <Compile Include="Classes\CheckSums.cs" />
+    <Compile Include="Classes\DataNamesAttribute.cs" />
+    <Compile Include="Classes\DataNamesMapper.cs" />
+    <Compile Include="Classes\HtmlUtility.cs" />
+    <Compile Include="Classes\IndexSearch.cs" />
+    <Compile Include="Classes\LogFile.cs" />
+    <Compile Include="Classes\HtmlCleaner.cs" />
+    <Compile Include="Classes\Importer.cs" />
+    <Compile Include="Classes\ImportLog.cs" />
+    <Compile Include="Classes\Logs.cs" />
+    <Compile Include="Classes\LookupField.cs" />
+    <Compile Include="Classes\NamedGZipStream.cs" />
+    <Compile Include="Classes\SqlExecutor.cs" />
+    <Compile Include="Classes\TeamSupportSync.cs" />
+    <Compile Include="Classes\TSEventLog.cs" />
+    <Compile Include="DataTransferObjects\Deflector.cs" />
+    <Compile Include="DataTransferObjects\Tasks.cs" />
+    <Compile Include="BusinessObjects\DeflectorAPI.cs" />
+    <Compile Include="FieldMaps\ActionLinkToJiraFieldMap.cs" />
+    <Compile Include="FieldMaps\ActionLinkToSnowFieldMap.cs" />
+    <Compile Include="FieldMaps\ActionLinkToTFSFieldMap.cs" />
+    <Compile Include="FieldMaps\ActivityTypesFieldMap.cs" />
+    <Compile Include="FieldMaps\AgentRatingsFieldMap.cs" />
+    <Compile Include="FieldMaps\AgentRatingsOptionsFieldMap.cs" />
+    <Compile Include="FieldMaps\AgentRatingUsersFieldMap.cs" />
+    <Compile Include="FieldMaps\ArticleStatsFieldMap.cs" />
+    <Compile Include="FieldMaps\AssetAssignmentsFieldMap.cs" />
+    <Compile Include="FieldMaps\AssetAssignmentsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\AssetHistoryFieldMap.cs" />
+    <Compile Include="FieldMaps\AssetHistoryViewFieldMap.cs" />
+    <Compile Include="FieldMaps\AssetsFieldMap.cs" />
+    <Compile Include="FieldMaps\AssetsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\AttachmentDownloadsFieldMap.cs" />
+    <Compile Include="FieldMaps\BackdoorLoginsFieldMap.cs" />
+    <Compile Include="FieldMaps\CalendarEventsFieldMap.cs" />
+    <Compile Include="FieldMaps\CalendarRefFieldMap.cs" />
+    <Compile Include="FieldMaps\CDI_SettingsFieldMap.cs" />
+    <Compile Include="FieldMaps\ChatClientsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\ChatUserSettingsFieldMap.cs" />
+    <Compile Include="FieldMaps\CompanyParentsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\CRMLinkErrorsFieldMap.cs" />
+    <Compile Include="FieldMaps\CRMLinkFieldsFieldMap.cs" />
+    <Compile Include="FieldMaps\CRMLinkSynchedOrganizationsFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomerHubAuthenticationFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomerHubCustomViewsFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomerHubDisplaySettingsFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomerHubFeatureSettingsFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomerHubsFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomerHubViewsFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomerRelationshipsFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomFieldCategoriesFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomFieldsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomPortalColumnsFieldMap.cs" />
+    <Compile Include="FieldMaps\DeflectionLogFieldMap.cs" />
+    <Compile Include="FieldMaps\DeletedIndexItemsFieldMap.cs" />
+    <Compile Include="FieldMaps\DeletedTicketsFieldMap.cs" />
+    <Compile Include="FieldMaps\EmailAddressesFieldMap.cs" />
+    <Compile Include="FieldMaps\EMailAlternateInboundFieldMap.cs" />
+    <Compile Include="FieldMaps\EmailPostHistoryFieldMap.cs" />
+    <Compile Include="FieldMaps\EmailTemplateParametersFieldMap.cs" />
+    <Compile Include="FieldMaps\EmailTemplatesFieldMap.cs" />
+    <Compile Include="FieldMaps\EmailTemplateTablesFieldMap.cs" />
+    <Compile Include="FieldMaps\FacebookOptionsFieldMap.cs" />
+    <Compile Include="FieldMaps\FilePathsFieldMap.cs" />
+    <Compile Include="FieldMaps\ForumCategoriesFieldMap.cs" />
+    <Compile Include="FieldMaps\ForumLogsFieldMap.cs" />
+    <Compile Include="FieldMaps\ForumPermissionsFieldMap.cs" />
+    <Compile Include="FieldMaps\ForumTicketsFieldMap.cs" />
+    <Compile Include="FieldMaps\FullContactUpdatesFieldMap.cs" />
+    <Compile Include="FieldMaps\GroupAssignmentHistoryFieldMap.cs" />
+    <Compile Include="FieldMaps\ImportFieldsFieldMap.cs" />
+    <Compile Include="FieldMaps\ImportFieldsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\ImportMapsFieldMap.cs" />
+    <Compile Include="FieldMaps\ImportsFieldMap.cs" />
+    <Compile Include="FieldMaps\JiraInstanceProductsFieldMap.cs" />
+    <Compile Include="FieldMaps\KBRatingsFieldMap.cs" />
+    <Compile Include="FieldMaps\KnowledgeBaseCategoriesFieldMap.cs" />
+    <Compile Include="FieldMaps\MiscellaneousLogFieldMap.cs" />
+    <Compile Include="FieldMaps\OrganizationEmailsFieldMap.cs" />
+    <Compile Include="FieldMaps\OrganizationProductsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\PhoneOptionsFieldMap.cs" />
+    <Compile Include="FieldMaps\PhoneQueueFieldMap.cs" />
+    <Compile Include="FieldMaps\PluginsFieldMap.cs" />
+    <Compile Include="FieldMaps\ProductFamiliesFieldMap.cs" />
+    <Compile Include="FieldMaps\RecentlyViewedItemsFieldMap.cs" />
+    <Compile Include="FieldMaps\RemindersFieldMap.cs" />
+    <Compile Include="FieldMaps\ReportEmailsFieldMap.cs" />
+    <Compile Include="FieldMaps\ReportFoldersFieldMap.cs" />
+    <Compile Include="FieldMaps\ReportTicketsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\ReportViewsFieldMap.cs" />
+    <Compile Include="FieldMaps\ScheduledReportsFieldMap.cs" />
+    <Compile Include="FieldMaps\ScheduledReportsRecurrencyFieldMap.cs" />
+    <Compile Include="FieldMaps\SearchCustomFiltersFieldMap.cs" />
+    <Compile Include="FieldMaps\SearchSortersFieldMap.cs" />
+    <Compile Include="FieldMaps\SearchStandardFiltersFieldMap.cs" />
+    <Compile Include="FieldMaps\ServiceSettingsFieldMap.cs" />
+    <Compile Include="FieldMaps\ServicesFieldMap.cs" />
+    <Compile Include="FieldMaps\SimpleImportFieldsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\SlaPausedDaysFieldMap.cs" />
+    <Compile Include="FieldMaps\SlaPausedTimesFieldMap.cs" />
+    <Compile Include="FieldMaps\SlaTicketsFieldMap.cs" />
+    <Compile Include="FieldMaps\SlaViolationHistoryFieldMap.cs" />
+    <Compile Include="FieldMaps\TagLinksFieldMap.cs" />
+    <Compile Include="FieldMaps\TagsFieldMap.cs" />
+    <Compile Include="FieldMaps\TaskAssociationsFieldMap.cs" />
+    <Compile Include="FieldMaps\TaskAssociationsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\TaskEmailPostHistoryFieldMap.cs" />
+    <Compile Include="FieldMaps\TaskEmailPostsFieldMap.cs" />
+    <Compile Include="FieldMaps\TaskLogsFieldMap.cs" />
+    <Compile Include="FieldMaps\TasksFieldMap.cs" />
+    <Compile Include="FieldMaps\TasksViewFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketAutomationActionsFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketAutomationHistoryFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketAutomationPossibleActionsFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketAutomationTriggerLogicFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketAutomationTriggersFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketAutomationTriggersViewFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketLinkToJiraFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketLinkToSnowFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketLinkToTFSFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketRelationshipsFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketTemplatesFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketTimeLineViewFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketTypesViewFieldMap.cs" />
+    <Compile Include="FieldMaps\TokStorageFieldMap.cs" />
+    <Compile Include="FieldMaps\TranslateFieldMap.cs" />
+    <Compile Include="FieldMaps\UserAssignmentHistoryFieldMap.cs" />
+    <Compile Include="FieldMaps\UserDevicesFieldMap.cs" />
+    <Compile Include="FieldMaps\UserNoteSettingsFieldMap.cs" />
+    <Compile Include="FieldMaps\UserProductsFieldMap.cs" />
+    <Compile Include="FieldMaps\UserProductsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\UserTicketStatusesFieldMap.cs" />
+    <Compile Include="FieldMaps\WatercoolerAttachmentsFieldMap.cs" />
+    <Compile Include="FieldMaps\WatercoolerLikesFieldMap.cs" />
+    <Compile Include="FieldMaps\WatercoolerMsgFieldMap.cs" />
+    <Compile Include="FieldMaps\WaterCoolerViewFieldMap.cs" />
+    <Compile Include="FieldMaps\WebHooksPendingFieldMap.cs" />
+    <Compile Include="FieldMaps\WebHooksTokenFieldMap.cs" />
+    <Compile Include="FieldMaps\WikiArticlesViewFieldMap.cs" />
+    <Compile Include="Generated\GeneratedActionLinkToJira.cs" />
+    <Compile Include="Generated\GeneratedActionLinkToSnow.cs" />
+    <Compile Include="Generated\GeneratedActionLinkToTFS.cs" />
+    <Compile Include="Generated\GeneratedActivityTypes.cs" />
+    <Compile Include="Generated\GeneratedAgentRatings.cs" />
+    <Compile Include="Generated\GeneratedAgentRatingsOptions.cs" />
+    <Compile Include="Generated\GeneratedAgentRatingUsers.cs" />
+    <Compile Include="Generated\GeneratedArticleStats.cs" />
+    <Compile Include="Generated\GeneratedAssetAssignments.cs" />
+    <Compile Include="Generated\GeneratedAssetAssignmentsView.cs" />
+    <Compile Include="Generated\GeneratedAssetHistory.cs" />
+    <Compile Include="Generated\GeneratedAssetHistoryView.cs" />
+    <Compile Include="Generated\GeneratedAssets.cs" />
+    <Compile Include="Generated\GeneratedAssetsView.cs" />
+    <Compile Include="Generated\GeneratedAttachmentDownloads.cs" />
+    <Compile Include="Generated\GeneratedBackdoorLogins.cs" />
+    <Compile Include="Generated\GeneratedCalendarEvents.cs" />
+    <Compile Include="Generated\GeneratedCalendarRef.cs" />
+    <Compile Include="Generated\GeneratedCDI_Settings.cs" />
+    <Compile Include="Generated\GeneratedChatClientsView.cs" />
+    <Compile Include="Generated\GeneratedChatUserSettings.cs" />
+    <Compile Include="BusinessObjects\Groups.cs" />
+    <Compile Include="BusinessObjects\Invoices.cs" />
+    <Compile Include="BusinessObjects\KBStats.cs" />
+    <Compile Include="BusinessObjects\LoginAttempts.cs" />
+    <Compile Include="BusinessObjects\LoginHistory.cs" />
+    <Compile Include="BusinessObjects\Notes.cs" />
+    <Compile Include="BusinessObjects\NotesView.cs" />
+    <Compile Include="BusinessObjects\OrganizationProducts.cs" />
+    <Compile Include="BusinessObjects\OrganizationSettings.cs" />
+    <Compile Include="BusinessObjects\OrganizationsView.cs" />
+    <Compile Include="BusinessObjects\PhoneNumbers.cs" />
+    <Compile Include="BusinessObjects\PhoneNumbersView.cs" />
+    <Compile Include="BusinessObjects\PhoneTypes.cs" />
+    <Compile Include="BusinessObjects\PortalLoginHistory.cs" />
+    <Compile Include="BusinessObjects\PortalOptions.cs" />
+    <Compile Include="BusinessObjects\Products.cs" />
+    <Compile Include="BusinessObjects\ProductVersions.cs" />
+    <Compile Include="BusinessObjects\ProductVersionStatuses.cs" />
+    <Compile Include="BusinessObjects\ProductVersionsView.cs" />
+    <Compile Include="BusinessObjects\ReportData.cs" />
+    <Compile Include="BusinessObjects\ReportFields.cs" />
+    <Compile Include="BusinessObjects\Reports.cs" />
+    <Compile Include="BusinessObjects\ReportSubcategories.cs" />
+    <Compile Include="BusinessObjects\ReportTableFields.cs" />
+    <Compile Include="BusinessObjects\ReportTables.cs" />
+    <Compile Include="BusinessObjects\SlaLevels.cs" />
+    <Compile Include="BusinessObjects\SlaNotifications.cs" />
+    <Compile Include="BusinessObjects\SlaTriggers.cs" />
+    <Compile Include="BusinessObjects\SlaTriggersView.cs" />
+    <Compile Include="BusinessObjects\SourceCommitLogs.cs" />
+    <Compile Include="BusinessObjects\Subscriptions.cs" />
+    <Compile Include="BusinessObjects\SystemSettings.cs" />
+    <Compile Include="BusinessObjects\TechDocs.cs" />
+    <Compile Include="BusinessObjects\TicketGridView.cs" />
+    <Compile Include="BusinessObjects\TicketNextStatuses.cs" />
+    <Compile Include="BusinessObjects\TicketQueue.cs" />
+    <Compile Include="BusinessObjects\TicketRatings.cs" />
+    <Compile Include="BusinessObjects\Tickets.cs" />
+    <Compile Include="BusinessObjects\TicketSeverities.cs" />
+    <Compile Include="BusinessObjects\TicketSlaView.cs" />
+    <Compile Include="BusinessObjects\TicketStatuses.cs" />
+    <Compile Include="BusinessObjects\TicketTypes.cs" />
+    <Compile Include="BusinessObjects\TSEMailIgnoreList.cs" />
+    <Compile Include="BusinessObjects\Users.cs" />
+    <Compile Include="BusinessObjects\UserSettings.cs" />
+    <Compile Include="BusinessObjects\UsersView.cs" />
+    <Compile Include="BusinessObjects\WaterCooler.cs" />
+    <Compile Include="BusinessObjects\WikiArticles.cs" />
+    <Compile Include="BusinessObjects\WikiArticlesView.cs" />
+    <Compile Include="BusinessObjects\WikiHistoryCollection.cs" />
+    <Compile Include="Classes\BaseCollection.cs" />
+    <Compile Include="Classes\DataUtils.cs" />
+    <Compile Include="Classes\EmailHtml.cs" />
+    <Compile Include="Classes\IDataCache.cs" />
+    <Compile Include="Classes\LoginUser.cs" />
+    <Compile Include="Classes\FieldMap.cs" />
+    <Compile Include="Classes\ReportCondition.cs" />
+    <Compile Include="FieldMaps\ActionLogsFieldMap.cs" />
+    <Compile Include="FieldMaps\ActionLogsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\ActionsFieldMap.cs" />
+    <Compile Include="FieldMaps\ActionsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\ActionTypesFieldMap.cs" />
+    <Compile Include="FieldMaps\AddressesFieldMap.cs" />
+    <Compile Include="FieldMaps\ApiLogsFieldMap.cs" />
+    <Compile Include="FieldMaps\AttachmentsFieldMap.cs" />
+    <Compile Include="FieldMaps\BillingInfoFieldMap.cs" />
+    <Compile Include="FieldMaps\ChatClientsFieldMap.cs" />
+    <Compile Include="FieldMaps\ChatMessagesFieldMap.cs" />
+    <Compile Include="FieldMaps\ChatParticipantsFieldMap.cs" />
+    <Compile Include="FieldMaps\ChatRequestsFieldMap.cs" />
+    <Compile Include="FieldMaps\ChatSettingsFieldMap.cs" />
+    <Compile Include="FieldMaps\ChatsFieldMap.cs" />
+    <Compile Include="FieldMaps\ContactsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\CreditCardsFieldMap.cs" />
+    <Compile Include="FieldMaps\CRMLinkResultsFieldMap.cs" />
+    <Compile Include="FieldMaps\CRMLinkTableFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomFieldsFieldMap.cs" />
+    <Compile Include="FieldMaps\CustomValuesFieldMap.cs" />
+    <Compile Include="FieldMaps\EmailActionsFieldMap.cs" />
+    <Compile Include="FieldMaps\EmailPostsFieldMap.cs" />
+    <Compile Include="FieldMaps\EmailsFieldMap.cs" />
+    <Compile Include="FieldMaps\ExceptionLogsFieldMap.cs" />
+    <Compile Include="FieldMaps\ExceptionLogViewFieldMap.cs" />
+    <Compile Include="FieldMaps\GroupsFieldMap.cs" />
+    <Compile Include="FieldMaps\InvoicesFieldMap.cs" />
+    <Compile Include="FieldMaps\KBStatsFieldMap.cs" />
+    <Compile Include="FieldMaps\LoginAttemptsFieldMap.cs" />
+    <Compile Include="FieldMaps\LoginHistoryFieldMap.cs" />
+    <Compile Include="FieldMaps\NotesFieldMap.cs" />
+    <Compile Include="FieldMaps\NotesViewFieldMap.cs" />
+    <Compile Include="FieldMaps\OrganizationProductsFieldMap.cs" />
+    <Compile Include="FieldMaps\OrganizationSettingsFieldMap.cs" />
+    <Compile Include="FieldMaps\OrganizationsFieldMap.cs" />
+    <Compile Include="FieldMaps\OrganizationsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\PhoneNumbersFieldMap.cs" />
+    <Compile Include="FieldMaps\PhoneNumbersViewFieldMap.cs" />
+    <Compile Include="FieldMaps\PhoneTypesFieldMap.cs" />
+    <Compile Include="FieldMaps\PortalLoginHistoryFieldMap.cs" />
+    <Compile Include="FieldMaps\PortalOptionsFieldMap.cs" />
+    <Compile Include="FieldMaps\ProductsFieldMap.cs" />
+    <Compile Include="FieldMaps\ProductVersionsFieldMap.cs" />
+    <Compile Include="FieldMaps\ProductVersionStatusesFieldMap.cs" />
+    <Compile Include="FieldMaps\ProductVersionsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\ReportDataFieldMap.cs" />
+    <Compile Include="FieldMaps\ReportFieldsFieldMap.cs" />
+    <Compile Include="FieldMaps\ReportsFieldMap.cs" />
+    <Compile Include="FieldMaps\ReportSubcategoriesFieldMap.cs" />
+    <Compile Include="FieldMaps\ReportTableFieldsFieldMap.cs" />
+    <Compile Include="FieldMaps\ReportTablesFieldMap.cs" />
+    <Compile Include="FieldMaps\SlaLevelsFieldMap.cs" />
+    <Compile Include="FieldMaps\SlaNotificationsFieldMap.cs" />
+    <Compile Include="FieldMaps\SlaTriggersFieldMap.cs" />
+    <Compile Include="FieldMaps\SlaTriggersViewFieldMap.cs" />
+    <Compile Include="FieldMaps\SourceCommitLogsFieldMap.cs" />
+    <Compile Include="FieldMaps\SystemSettingsFieldMap.cs" />
+    <Compile Include="FieldMaps\TechDocsFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketGridViewFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketNextStatusesFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketQueueFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketRatingsFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketSeveritiesFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketsFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketSlaViewFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketStatusesFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketsViewFieldMap.cs" />
+    <Compile Include="FieldMaps\TicketTypesFieldMap.cs" />
+    <Compile Include="FieldMaps\TSEMailIgnoreListFieldMap.cs" />
+    <Compile Include="FieldMaps\UserSettingsFieldMap.cs" />
+    <Compile Include="FieldMaps\UsersFieldMap.cs" />
+    <Compile Include="FieldMaps\UsersViewFieldMap.cs" />
+    <Compile Include="FieldMaps\WaterCoolerFieldMap.cs" />
+    <Compile Include="FieldMaps\WikiArticlesFieldMap.cs" />
+    <Compile Include="FieldMaps\WikiHistoryCollectionFieldMap.cs" />
+    <Compile Include="Generated\GeneratedActionLogs.cs" />
+    <Compile Include="Generated\GeneratedActionLogsView.cs" />
+    <Compile Include="Generated\GeneratedActions.cs" />
+    <Compile Include="Generated\GeneratedActionsView.cs" />
+    <Compile Include="Generated\GeneratedActionTypes.cs" />
+    <Compile Include="Generated\GeneratedAddresses.cs" />
+    <Compile Include="Generated\GeneratedApiLogs.cs" />
+    <Compile Include="Generated\GeneratedAttachments.cs" />
+    <Compile Include="Generated\GeneratedBillingInfo.cs" />
+    <Compile Include="Generated\GeneratedChatClients.cs" />
+    <Compile Include="Generated\GeneratedChatMessages.cs" />
+    <Compile Include="Generated\GeneratedChatParticipants.cs" />
+    <Compile Include="Generated\GeneratedChatRequests.cs" />
+    <Compile Include="Generated\GeneratedChats.cs" />
+    <Compile Include="Generated\GeneratedChatSettings.cs" />
+    <Compile Include="Generated\GeneratedCompanyParentsView.cs" />
+    <Compile Include="Generated\GeneratedContactsView.cs" />
+    <Compile Include="Generated\GeneratedCreditCards.cs" />
+    <Compile Include="Generated\GeneratedCRMLinkErrors.cs" />
+    <Compile Include="Generated\GeneratedCRMLinkFields.cs" />
+    <Compile Include="Generated\GeneratedCRMLinkResults.cs" />
+    <Compile Include="Generated\GeneratedCRMLinkSynchedOrganizations.cs" />
+    <Compile Include="Generated\GeneratedCRMLinkTable.cs" />
+    <Compile Include="Generated\GeneratedCustomerHubAuthentication.cs" />
+    <Compile Include="Generated\GeneratedCustomerHubCustomViews.cs" />
+    <Compile Include="Generated\GeneratedCustomerHubDisplaySettings.cs" />
+    <Compile Include="Generated\GeneratedCustomerHubFeatureSettings.cs" />
+    <Compile Include="Generated\GeneratedCustomerHubs.cs" />
+    <Compile Include="Generated\GeneratedCustomerHubViews.cs" />
+    <Compile Include="Generated\GeneratedCustomerRelationships.cs" />
+    <Compile Include="Generated\GeneratedCustomFieldCategories.cs" />
+    <Compile Include="Generated\GeneratedCustomFields.cs" />
+    <Compile Include="Generated\GeneratedCustomFieldsView.cs" />
+    <Compile Include="Generated\GeneratedCustomPortalColumns.cs" />
+    <Compile Include="Generated\GeneratedCustomValues.cs" />
+    <Compile Include="Generated\GeneratedDeflectionLog.cs" />
+    <Compile Include="Generated\GeneratedDeletedIndexItems.cs" />
+    <Compile Include="Generated\GeneratedDeletedTickets.cs" />
+    <Compile Include="Generated\GeneratedEmailActions.cs" />
+    <Compile Include="Generated\GeneratedEmailAddresses.cs" />
+    <Compile Include="Generated\GeneratedEMailAlternateInbound.cs" />
+    <Compile Include="Generated\GeneratedEmailPostHistory.cs" />
+    <Compile Include="Generated\GeneratedEmailPosts.cs" />
+    <Compile Include="Generated\GeneratedEmails.cs" />
+    <Compile Include="Generated\GeneratedEmailTemplateParameters.cs" />
+    <Compile Include="Generated\GeneratedEmailTemplates.cs" />
+    <Compile Include="Generated\GeneratedEmailTemplateTables.cs" />
+    <Compile Include="Generated\GeneratedExceptionLogs.cs" />
+    <Compile Include="Generated\GeneratedExceptionLogView.cs" />
+    <Compile Include="Generated\GeneratedFacebookOptions.cs" />
+    <Compile Include="Generated\GeneratedFilePaths.cs" />
+    <Compile Include="Generated\GeneratedForumCategories.cs" />
+    <Compile Include="Generated\GeneratedForumLogs.cs" />
+    <Compile Include="Generated\GeneratedForumPermissions.cs" />
+    <Compile Include="Generated\GeneratedForumTickets.cs" />
+    <Compile Include="Generated\GeneratedFullContactUpdates.cs" />
+    <Compile Include="Generated\GeneratedGroupAssignmentHistory.cs" />
+    <Compile Include="Generated\GeneratedGroups.cs" />
+    <Compile Include="Generated\GeneratedImportFields.cs" />
+    <Compile Include="Generated\GeneratedImportFieldsView.cs" />
+    <Compile Include="Generated\GeneratedImportMaps.cs" />
+    <Compile Include="Generated\GeneratedImports.cs" />
+    <Compile Include="Generated\GeneratedInvoices.cs" />
+    <Compile Include="Generated\GeneratedJiraInstanceProducts.cs" />
+    <Compile Include="Generated\GeneratedKBRatings.cs" />
+    <Compile Include="Generated\GeneratedKBStats.cs" />
+    <Compile Include="Generated\GeneratedKnowledgeBaseCategories.cs" />
+    <Compile Include="Generated\GeneratedLoginAttempts.cs" />
+    <Compile Include="Generated\GeneratedLoginHistory.cs" />
+    <Compile Include="Generated\GeneratedMiscellaneousLog.cs" />
+    <Compile Include="Generated\GeneratedNotes.cs" />
+    <Compile Include="Generated\GeneratedNotesView.cs" />
+    <Compile Include="Generated\GeneratedOrganizationEmails.cs" />
+    <Compile Include="Generated\GeneratedOrganizationProducts.cs" />
+    <Compile Include="Generated\GeneratedOrganizationProductsView.cs" />
+    <Compile Include="Generated\GeneratedOrganizations.cs" />
+    <Compile Include="Generated\GeneratedOrganizationSettings.cs" />
+    <Compile Include="Generated\GeneratedOrganizationsView.cs" />
+    <Compile Include="Generated\GeneratedPhoneNumbers.cs" />
+    <Compile Include="Generated\GeneratedPhoneNumbersView.cs" />
+    <Compile Include="Generated\GeneratedPhoneOptions.cs" />
+    <Compile Include="Generated\GeneratedPhoneQueue.cs" />
+    <Compile Include="Generated\GeneratedPhoneTypes.cs" />
+    <Compile Include="Generated\GeneratedPlugins.cs" />
+    <Compile Include="Generated\GeneratedPortalLoginHistory.cs" />
+    <Compile Include="Generated\GeneratedPortalOptions.cs" />
+    <Compile Include="Generated\GeneratedProductFamilies.cs" />
+    <Compile Include="Generated\GeneratedProducts.cs" />
+    <Compile Include="Generated\GeneratedProductVersions.cs" />
+    <Compile Include="Generated\GeneratedProductVersionStatuses.cs" />
+    <Compile Include="Generated\GeneratedProductVersionsView.cs" />
+    <Compile Include="Generated\GeneratedRecentlyViewedItems.cs" />
+    <Compile Include="Generated\GeneratedReminders.cs" />
+    <Compile Include="Generated\GeneratedReportData.cs" />
+    <Compile Include="Generated\GeneratedReportEmails.cs" />
+    <Compile Include="Generated\GeneratedReportFields.cs" />
+    <Compile Include="Generated\GeneratedReportFolders.cs" />
+    <Compile Include="Generated\GeneratedReports.cs" />
+    <Compile Include="Generated\GeneratedReportSubcategories.cs" />
+    <Compile Include="Generated\GeneratedReportTableFields.cs" />
+    <Compile Include="Generated\GeneratedReportTables.cs" />
+    <Compile Include="Generated\GeneratedReportTicketsView.cs" />
+    <Compile Include="Generated\GeneratedReportViews.cs" />
+    <Compile Include="Generated\GeneratedScheduledReports.cs" />
+    <Compile Include="Generated\GeneratedScheduledReportsRecurrency.cs" />
+    <Compile Include="Generated\GeneratedSearchCustomFilters.cs" />
+    <Compile Include="Generated\GeneratedSearchSorters.cs" />
+    <Compile Include="Generated\GeneratedSearchStandardFilters.cs" />
+    <Compile Include="Generated\GeneratedServices.cs" />
+    <Compile Include="Generated\GeneratedServiceSettings.cs" />
+    <Compile Include="Generated\GeneratedSimpleImportFieldsView.cs" />
+    <Compile Include="Generated\GeneratedSlaLevels.cs" />
+    <Compile Include="Generated\GeneratedSlaNotifications.cs" />
+    <Compile Include="Generated\GeneratedSlaPausedDays.cs" />
+    <Compile Include="Generated\GeneratedSlaPausedTimes.cs" />
+    <Compile Include="Generated\GeneratedSlaTickets.cs" />
+    <Compile Include="Generated\GeneratedSlaTriggers.cs" />
+    <Compile Include="Generated\GeneratedSlaTriggersView.cs" />
+    <Compile Include="Generated\GeneratedSlaViolationHistory.cs" />
+    <Compile Include="Generated\GeneratedSourceCommitLogs.cs" />
+    <Compile Include="Generated\GeneratedSystemSettings.cs" />
+    <Compile Include="Generated\GeneratedTagLinks.cs" />
+    <Compile Include="Generated\GeneratedTags.cs" />
+    <Compile Include="Generated\GeneratedTaskAssociations.cs" />
+    <Compile Include="Generated\GeneratedTaskAssociationsView.cs" />
+    <Compile Include="Generated\GeneratedTaskEmailPostHistory.cs" />
+    <Compile Include="Generated\GeneratedTaskEmailPosts.cs" />
+    <Compile Include="Generated\GeneratedTaskLogs.cs" />
+    <Compile Include="Generated\GeneratedTasks.cs" />
+    <Compile Include="Generated\GeneratedTasksView.cs" />
+    <Compile Include="Generated\GeneratedTechDocs.cs" />
+    <Compile Include="Generated\GeneratedTicketAutomationActions.cs" />
+    <Compile Include="Generated\GeneratedTicketAutomationHistory.cs" />
+    <Compile Include="Generated\GeneratedTicketAutomationPossibleActions.cs" />
+    <Compile Include="Generated\GeneratedTicketAutomationTriggerLogic.cs" />
+    <Compile Include="Generated\GeneratedTicketAutomationTriggers.cs" />
+    <Compile Include="Generated\GeneratedTicketAutomationTriggersView.cs" />
+    <Compile Include="Generated\GeneratedTicketGridView.cs" />
+    <Compile Include="Generated\GeneratedTicketLinkToJira.cs" />
+    <Compile Include="Generated\GeneratedTicketLinkToSnow.cs" />
+    <Compile Include="Generated\GeneratedTicketLinkToTFS.cs" />
+    <Compile Include="Generated\GeneratedTicketNextStatuses.cs" />
+    <Compile Include="Generated\GeneratedTicketQueue.cs" />
+    <Compile Include="Generated\GeneratedTicketRatings.cs" />
+    <Compile Include="Generated\GeneratedTicketRelationships.cs" />
+    <Compile Include="Generated\GeneratedTickets.cs" />
+    <Compile Include="Generated\GeneratedTicketSeverities.cs" />
+    <Compile Include="Generated\GeneratedTicketSlaView.cs" />
+    <Compile Include="Generated\GeneratedTicketStatuses.cs" />
+    <Compile Include="Generated\GeneratedTicketsView.cs" />
+    <Compile Include="Generated\GeneratedTicketTemplates.cs" />
+    <Compile Include="Generated\GeneratedTicketTimeLineView.cs" />
+    <Compile Include="Generated\GeneratedTicketTypes.cs" />
+    <Compile Include="Generated\GeneratedTicketTypesView.cs" />
+    <Compile Include="Generated\GeneratedTokStorage.cs" />
+    <Compile Include="Generated\GeneratedTranslate.cs" />
+    <Compile Include="Generated\GeneratedTSEMailIgnoreList.cs" />
+    <Compile Include="Generated\GeneratedUserAssignmentHistory.cs" />
+    <Compile Include="Generated\GeneratedUserDevices.cs" />
+    <Compile Include="Generated\GeneratedUserNoteSettings.cs" />
+    <Compile Include="Generated\GeneratedUserProducts.cs" />
+    <Compile Include="Generated\GeneratedUserProductsView.cs" />
+    <Compile Include="Generated\GeneratedUsers.cs" />
+    <Compile Include="Generated\GeneratedUserSettings.cs" />
+    <Compile Include="Generated\GeneratedUsersView.cs" />
+    <Compile Include="Generated\GeneratedUserTicketStatuses.cs" />
+    <Compile Include="Generated\GeneratedWaterCooler.cs" />
+    <Compile Include="Generated\GeneratedWatercoolerAttachments.cs" />
+    <Compile Include="Generated\GeneratedWatercoolerLikes.cs" />
+    <Compile Include="Generated\GeneratedWatercoolerMsg.cs" />
+    <Compile Include="Generated\GeneratedWaterCoolerView.cs" />
+    <Compile Include="Generated\GeneratedWebHooksPending.cs" />
+    <Compile Include="Generated\GeneratedWebHooksToken.cs" />
+    <Compile Include="Generated\GeneratedWikiArticles.cs" />
+    <Compile Include="Generated\GeneratedWikiArticlesView.cs" />
+    <Compile Include="Generated\GeneratedWikiHistoryCollection.cs" />
+    <Compile Include="Proxies\ActionLinkToSnowProxy.cs" />
+    <Compile Include="Proxies\ActionLinkToTFSProxy.cs" />
+    <Compile Include="Proxies\ActivityTypesProxy.cs" />
+    <Compile Include="Proxies\AttachmentsProxy.cs" />
+    <Compile Include="Proxies\BackdoorLoginsProxy.cs" />
+    <Compile Include="Proxies\CalendarEventsProxy.cs" />
+    <Compile Include="Proxies\CalendarRefProxy.cs" />
+    <Compile Include="Proxies\CompanyParentsViewProxy.cs" />
+    <Compile Include="Proxies\CustomerHubAuthenticationProxy.cs" />
+    <Compile Include="Proxies\CustomerHubCustomViewsProxy.cs" />
+    <Compile Include="Proxies\CustomerHubDisplaySettingsProxy.cs" />
+    <Compile Include="Proxies\CustomerHubFeatureSettingsProxy.cs" />
+    <Compile Include="Proxies\CustomerHubsProxy.cs" />
+    <Compile Include="Proxies\CustomerHubViewsProxy.cs" />
+    <Compile Include="Proxies\CustomerRelationshipsProxy.cs" />
+    <Compile Include="Proxies\CustomFieldsViewProxy.cs" />
+    <Compile Include="Proxies\CustomPortalColumnsProxy.cs" />
+    <Compile Include="Proxies\DeflectionLogProxy.cs" />
+    <Compile Include="Proxies\DeletedTicketsProxy.cs" />
+    <Compile Include="Proxies\EmailAddressesProxy.cs" />
+    <Compile Include="Proxies\FilePathsProxy.cs" />
+    <Compile Include="Proxies\FullContactUpdatesProxy.cs" />
+    <Compile Include="Proxies\GroupAssignmentHistoryProxy.cs" />
+    <Compile Include="Proxies\ImportFieldsProxy.cs" />
+    <Compile Include="Proxies\ImportFieldsViewProxy.cs" />
+    <Compile Include="Proxies\ImportMapsProxy.cs" />
+    <Compile Include="Proxies\ImportsProxy.cs" />
+    <Compile Include="Proxies\JiraInstanceProductsProxy.cs" />
+    <Compile Include="Proxies\KBRatingsProxy.cs" />
+    <Compile Include="Proxies\PluginsProxy.cs" />
+    <Compile Include="Proxies\ProductFamiliesProxy.cs" />
+    <Compile Include="Proxies\ScheduledReportsProxy.cs" />
+    <Compile Include="Proxies\ScheduledReportsRecurrencyProxy.cs" />
+    <Compile Include="Proxies\SimpleImportFieldsViewProxy.cs" />
+    <Compile Include="Proxies\SlaPausedDaysProxy.cs" />
+    <Compile Include="Proxies\SlaPausedTimesProxy.cs" />
+    <Compile Include="Proxies\SlaTicketsProxy.cs" />
+    <Compile Include="Proxies\SlaViolationHistoryProxy.cs" />
+    <Compile Include="Proxies\TaskAssociationsProxy.cs" />
+    <Compile Include="Proxies\TaskAssociationsViewProxy.cs" />
+    <Compile Include="Proxies\TaskEmailPostHistoryProxy.cs" />
+    <Compile Include="Proxies\TaskEmailPostsProxy.cs" />
+    <Compile Include="Proxies\TaskLogsProxy.cs" />
+    <Compile Include="Proxies\TasksProxy.cs" />
+    <Compile Include="Proxies\TasksViewProxy.cs" />
+    <Compile Include="Proxies\TicketLinkToSnowProxy.cs" />
+    <Compile Include="Proxies\TicketLinkToTFSProxy.cs" />
+    <Compile Include="Proxies\TicketTimeLineViewProxy.cs" />
+    <Compile Include="Proxies\TicketTypesViewProxy.cs" />
+    <Compile Include="Proxies\TokStorageProxy.cs" />
+    <Compile Include="Proxies\UserAssignmentHistoryProxy.cs" />
+    <Compile Include="HtmlToText.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Proxies\ActionLinkToJiraProxy.cs" />
+    <Compile Include="Proxies\ActionLogsProxy.cs" />
+    <Compile Include="Proxies\ActionLogsViewProxy.cs" />
+    <Compile Include="Proxies\ActionsProxy.cs" />
+    <Compile Include="Proxies\ActionsViewProxy.cs" />
+    <Compile Include="Proxies\ActionTypesProxy.cs" />
+    <Compile Include="Proxies\AddressesProxy.cs" />
+    <Compile Include="Proxies\AgentRatingsOptionsProxy.cs" />
+    <Compile Include="Proxies\AgentRatingsProxy.cs" />
+    <Compile Include="Proxies\AgentRatingUsersProxy.cs" />
+    <Compile Include="Proxies\ApiLogsProxy.cs" />
+    <Compile Include="Proxies\ArticleStatsProxy.cs" />
+    <Compile Include="Proxies\AssetAssignmentsProxy.cs" />
+    <Compile Include="Proxies\AssetAssignmentsViewProxy.cs" />
+    <Compile Include="Proxies\AssetHistoryProxy.cs" />
+    <Compile Include="Proxies\AssetHistoryViewProxy.cs" />
+    <Compile Include="Proxies\AssetsProxy.cs" />
+    <Compile Include="Proxies\AssetsViewProxy.cs" />
+    <Compile Include="Proxies\AttachmentDownloadsProxy.cs" />
+    <Compile Include="Proxies\BillingInfoProxy.cs" />
+    <Compile Include="Proxies\CDI_SettingsProxy.cs" />
+    <Compile Include="Proxies\ChatClientsProxy.cs" />
+    <Compile Include="Proxies\ChatClientsViewProxy.cs" />
+    <Compile Include="Proxies\ChatMessagesProxy.cs" />
+    <Compile Include="Proxies\ChatParticipantsProxy.cs" />
+    <Compile Include="Proxies\ChatRequestsProxy.cs" />
+    <Compile Include="Proxies\ChatSettingsProxy.cs" />
+    <Compile Include="Proxies\ChatsProxy.cs" />
+    <Compile Include="Proxies\ChatUserSettingsProxy.cs" />
+    <Compile Include="Proxies\ContactsViewProxy.cs" />
+    <Compile Include="Proxies\CreditCardsProxy.cs" />
+    <Compile Include="Proxies\CRMLinkErrorsProxy.cs" />
+    <Compile Include="Proxies\CRMLinkFieldsProxy.cs" />
+    <Compile Include="Proxies\CRMLinkResultsProxy.cs" />
+    <Compile Include="Proxies\CRMLinkSynchedOrganizationsProxy.cs" />
+    <Compile Include="Proxies\CRMLinkTableProxy.cs" />
+    <Compile Include="Proxies\CustomFieldCategoriesProxy.cs" />
+    <Compile Include="Proxies\CustomFieldsProxy.cs" />
+    <Compile Include="Proxies\CustomValuesProxy.cs" />
+    <Compile Include="Proxies\DeletedIndexItemsProxy.cs" />
+    <Compile Include="Proxies\EmailActionsProxy.cs" />
+    <Compile Include="Proxies\EMailAlternateInboundProxy.cs" />
+    <Compile Include="Proxies\EmailPostHistoryProxy.cs" />
+    <Compile Include="Proxies\EmailPostsProxy.cs" />
+    <Compile Include="Proxies\EmailsProxy.cs" />
+    <Compile Include="Proxies\EmailTemplateParametersProxy.cs" />
+    <Compile Include="Proxies\EmailTemplatesProxy.cs" />
+    <Compile Include="Proxies\EmailTemplateTablesProxy.cs" />
+    <Compile Include="Proxies\ExceptionLogsProxy.cs" />
+    <Compile Include="Proxies\ExceptionLogViewProxy.cs" />
+    <Compile Include="Proxies\FacebookOptionsProxy.cs" />
+    <Compile Include="Proxies\ForumCategoriesProxy.cs" />
+    <Compile Include="Proxies\ForumLogsProxy.cs" />
+    <Compile Include="Proxies\ForumPermissionsProxy.cs" />
+    <Compile Include="Proxies\ForumTicketsProxy.cs" />
+    <Compile Include="Proxies\GroupsProxy.cs" />
+    <Compile Include="Proxies\InvoicesProxy.cs" />
+    <Compile Include="Proxies\KBStatsProxy.cs" />
+    <Compile Include="Proxies\KnowledgeBaseCategoriesProxy.cs" />
+    <Compile Include="Proxies\KnowledgeBaseCategoryTicketsProxy.cs" />
+    <Compile Include="Proxies\LoginAttemptsProxy.cs" />
+    <Compile Include="Proxies\LoginHistoryProxy.cs" />
+    <Compile Include="Proxies\MiscellaneousLogProxy.cs" />
+    <Compile Include="Proxies\NotesProxy.cs" />
+    <Compile Include="Proxies\NotesViewProxy.cs" />
+    <Compile Include="Proxies\OrganizationEmailsProxy.cs" />
+    <Compile Include="Proxies\OrganizationProductsProxy.cs" />
+    <Compile Include="Proxies\OrganizationProductsViewProxy.cs" />
+    <Compile Include="Proxies\OrganizationSettingsProxy.cs" />
+    <Compile Include="Proxies\OrganizationsProxy.cs" />
+    <Compile Include="Proxies\OrganizationsViewProxy.cs" />
+    <Compile Include="Proxies\PhoneNumbersProxy.cs" />
+    <Compile Include="Proxies\PhoneNumbersViewProxy.cs" />
+    <Compile Include="Proxies\PhoneOptionsProxy.cs" />
+    <Compile Include="Proxies\PhoneQueueProxy.cs" />
+    <Compile Include="Proxies\PhoneTypesProxy.cs" />
+    <Compile Include="Proxies\PortalLoginHistoryProxy.cs" />
+    <Compile Include="Proxies\PortalOptionsProxy.cs" />
+    <Compile Include="Proxies\ProductsProxy.cs" />
+    <Compile Include="Proxies\ProductVersionsProxy.cs" />
+    <Compile Include="Proxies\ProductVersionStatusesProxy.cs" />
+    <Compile Include="Proxies\ProductVersionsViewProxy.cs" />
+    <Compile Include="Proxies\RecentlyViewedItemsProxy.cs" />
+    <Compile Include="Proxies\RemindersProxy.cs" />
+    <Compile Include="Proxies\ReportDataProxy.cs" />
+    <Compile Include="Proxies\ReportEmailsProxy.cs" />
+    <Compile Include="Proxies\ReportFieldsProxy.cs" />
+    <Compile Include="Proxies\ReportFoldersProxy.cs" />
+    <Compile Include="Proxies\ReportsProxy.cs" />
+    <Compile Include="Proxies\ReportSubcategoriesProxy.cs" />
+    <Compile Include="Proxies\ReportTableFieldsProxy.cs" />
+    <Compile Include="Proxies\ReportTablesProxy.cs" />
+    <Compile Include="Proxies\ReportTicketsViewProxy.cs" />
+    <Compile Include="Proxies\ReportViewsProxy.cs" />
+    <Compile Include="Proxies\SearchCustomFiltersProxy.cs" />
+    <Compile Include="Proxies\SearchResultsProxy.cs" />
+    <Compile Include="Proxies\SearchSortersProxy.cs" />
+    <Compile Include="Proxies\SearchStandardFiltersProxy.cs" />
+    <Compile Include="Proxies\ServiceSettingsProxy.cs" />
+    <Compile Include="Proxies\ServicesProxy.cs" />
+    <Compile Include="Proxies\SlaLevelsProxy.cs" />
+    <Compile Include="Proxies\SlaNotificationsProxy.cs" />
+    <Compile Include="Proxies\SlaTriggersProxy.cs" />
+    <Compile Include="Proxies\SlaTriggersViewProxy.cs" />
+    <Compile Include="Proxies\SourceCommitLogsProxy.cs" />
+    <Compile Include="Proxies\SystemSettingsProxy.cs" />
+    <Compile Include="Proxies\TagLinksProxy.cs" />
+    <Compile Include="Proxies\TagsProxy.cs" />
+    <Compile Include="Proxies\TechDocsProxy.cs" />
+    <Compile Include="Proxies\TicketAutomationActionsProxy.cs" />
+    <Compile Include="Proxies\TicketAutomationHistoryProxy.cs" />
+    <Compile Include="Proxies\TicketAutomationPossibleActionsProxy.cs" />
+    <Compile Include="Proxies\TicketAutomationTriggerLogicProxy.cs" />
+    <Compile Include="Proxies\TicketAutomationTriggersProxy.cs" />
+    <Compile Include="Proxies\TicketAutomationTriggersViewProxy.cs" />
+    <Compile Include="Proxies\TicketGridViewProxy.cs" />
+    <Compile Include="Proxies\TicketLinkToJiraProxy.cs" />
+    <Compile Include="Proxies\TicketNextStatusesProxy.cs" />
+    <Compile Include="Proxies\TicketQueueProxy.cs" />
+    <Compile Include="Proxies\TicketRatingsProxy.cs" />
+    <Compile Include="Proxies\TicketRelationshipsProxy.cs" />
+    <Compile Include="Proxies\TicketSeveritiesProxy.cs" />
+    <Compile Include="Proxies\TicketSlaViewProxy.cs" />
+    <Compile Include="Proxies\TicketsProxy.cs" />
+    <Compile Include="Proxies\TicketStatusesProxy.cs" />
+    <Compile Include="Proxies\TicketsViewProxy.cs" />
+    <Compile Include="Proxies\TicketTemplatesProxy.cs" />
+    <Compile Include="Proxies\TicketTypesProxy.cs" />
+    <Compile Include="Proxies\TranslateProxy.cs" />
+    <Compile Include="Proxies\TSEMailIgnoreListProxy.cs" />
+    <Compile Include="Proxies\UserDevicesProxy.cs" />
+    <Compile Include="Proxies\UserNoteSettingsProxy.cs" />
+    <Compile Include="Proxies\UserProductsProxy.cs" />
+    <Compile Include="Proxies\UserProductsViewProxy.cs" />
+    <Compile Include="Proxies\UserSettingsProxy.cs" />
+    <Compile Include="Proxies\UsersProxy.cs" />
+    <Compile Include="Proxies\UsersViewProxy.cs" />
+    <Compile Include="Proxies\UserTicketStatusesProxy.cs" />
+    <Compile Include="Proxies\WatercoolerAttachmentsProxy.cs" />
+    <Compile Include="Proxies\WatercoolerLikesProxy.cs" />
+    <Compile Include="Proxies\WatercoolerMsgProxy.cs" />
+    <Compile Include="Proxies\WaterCoolerProxy.cs" />
+    <Compile Include="Proxies\WaterCoolerViewProxy.cs" />
+    <Compile Include="Proxies\WebHooksPendingProxy.cs" />
+    <Compile Include="Proxies\WebHooksTokenProxy.cs" />
+    <Compile Include="Proxies\WikiArticlesProxy.cs" />
+    <Compile Include="Proxies\WikiArticlesViewProxy.cs" />
+    <Compile Include="Proxies\WikiHistoryCollectionProxy.cs" />
+    <Compile Include="Quarantine\ContentHandlerQ.cs" />
+    <Compile Include="Quarantine\HubAttachmentsQ.cs" />
+    <Compile Include="Quarantine\RestAttachmentsQ.cs" />
+    <Compile Include="Quarantine\RestCommand.cs" />
+    <Compile Include="Quarantine\RestException.cs" />
+    <Compile Include="Quarantine\ServiceLog.cs" />
+    <Compile Include="Quarantine\ServiceQ.cs" />
+    <Compile Include="Quarantine\UploadHandlerQ.cs" />
+    <Compile Include="Quarantine\UploadUtils.cs" />
+    <Compile Include="Quarantine\WebAppQ.cs" />
+    <Compile Include="WebHooks\Slack.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="bin\x86\Debug\TeamSupport.Data.dll.config" />
+    <None Include="BusinessObjects\Reporting\ClassDiagram1.cd" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\x86\Debug\dtSearchNetApi3.dll" />
+    <Content Include="bin\x86\Debug\HtmlAgilityPack.dll" />
+    <Content Include="bin\x86\Debug\HtmlAgilityPack.pdb" />
+    <Content Include="bin\x86\Debug\HtmlAgilityPack.xml" />
+    <Content Include="bin\x86\Debug\TeamSupport.Data.dll" />
+    <Content Include="bin\x86\Debug\TeamSupport.Data.pdb" />
+    <Content Include="bin\x86\Debug\TidyNet.dll" />
+    <Content Include="bin\x86\Debug\TidyNet.pdb" />
+    <Content Include="Database\StoredProcedures\OrganizationsViewGet.sql" />
+    <Content Include="Database\StoredProcedures\TicketsForZohoGet.sql" />
+    <Content Include="Database\StoredProcedures\TicketsMinutesSinceFirstSyncedGet.sql" />
+    <Content Include="Database\StoredProcedures\TicketsToJiraGet.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TeamSupport.Proxy\TeamSupport.Proxy.csproj">
+      <Project>{8f3f388c-10f5-45d4-9f4c-471236dc14c0}</Project>
+      <Name>TeamSupport.Proxy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y "$(TargetDir)Teamsupport.Data.dll" "$(ProjectDir)..\..\ts-support-hub\TeamSupport.Hub\dependencies\"
+xcopy /y "$(TargetDir)Teamsupport.Data.dll" "$(ProjectDir)..\..\ts-support-hub\TeamSupport.Authentication\dependencies\"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+***********************************************************************************************
+website.publishproj
+
+WARNING: DO NOT MODIFY this file, it is used for the web publish process.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+***********************************************************************************************
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ffcbaa67-fada-42ee-bf41-649bf0fd37b1}</ProjectGuid>
+    <SourceWebPhysicalPath>$(MSBuildThisFileDirectory)</SourceWebPhysicalPath>
+    <SourceWebVirtualPath>/WebApp</SourceWebVirtualPath>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <SourceWebProject>http://localhost:58276</SourceWebProject>
+    <SourceWebMetabasePath>/IISExpress/7.5/LM/W3SVC/2/ROOT</SourceWebMetabasePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- for VS2010 we need to use 10.5 but for VS2012+ we should use VisualStudioVersion -->
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)' =='' and '$(VisualStudioVersion)' == 10.0 ">10.5</WebPublishTargetsVersion>
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)'=='' ">$(VisualStudioVersion)</WebPublishTargetsVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(WebPublishTargetsVersion)</VSToolsPath>
+    <_WebPublishTargetsPath Condition=" '$(_WebPublishTargetsPath)'=='' ">$(VSToolsPath)</_WebPublishTargetsPath>
+    <AssemblyFileVersion Condition="'$(AssemblyFileVersion)' == ''">1.0.0.0</AssemblyFileVersion>
+    <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>$(AssemblyFileVersion)</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>$(AssemblyVersion)</Value>
+    </AssemblyAttributes>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SRC\ts-app\ts-app\TeamSupport.EFData\TeamSupport.EFData.csproj">
+      <Project>{9FAC467C-0138-4567-A3D7-89CA86261DFF}</Project>
+      <Name>TeamSupport.EFData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.Api\TeamSupport.Api.csproj">
+      <Project>{CC4D311A-D6EA-4113-B648-537824E3B5D7}</Project>
+      <Name>TeamSupport.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.DataAPI\TeamSupport.DataAPI.csproj">
+      <Project>{5C253014-D40C-4927-92F6-A91C2EFB49C5}</Project>
+      <Name>TeamSupport.DataAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.Data\TeamSupport.Data.csproj">
+      <Project>{1943AC11-1F2D-4B85-9F0F-4D67284814BE}</Project>
+      <Name>TeamSupport.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.Handlers\TeamSupport.Handlers.csproj">
+      <Project>{7B8AA298-9F29-4CB1-979B-18CC31DF76B1}</Project>
+      <Name>TeamSupport.Handlers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.IDTree\TeamSupport.IDTree.csproj">
+      <Project>{11C7D899-BCAA-408F-8B85-35593AB7E617}</Project>
+      <Name>TeamSupport.IDTree</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.JIRA\TeamSupport.JIRA.csproj">
+      <Project>{A5E5FC71-6B6F-4E57-9BF0-8602F7A707EA}</Project>
+      <Name>TeamSupport.JIRA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.Messaging\TeamSupport.Messaging.csproj">
+      <Project>{CC262E84-5002-4E7F-B078-7278E93F0C04}</Project>
+      <Name>TeamSupport.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.ModelAPI\TeamSupport.ModelAPI.csproj">
+      <Project>{7E2B2E07-518A-47A4-A39A-502654E8C8ED}</Project>
+      <Name>TeamSupport.ModelAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.Permissions\TeamSupport.Permissions.csproj">
+      <Project>{EA4D4D19-DBFA-45CA-BB1E-6BB676BD6F0F}</Project>
+      <Name>TeamSupport.Permissions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.Proxy\TeamSupport.Proxy.csproj">
+      <Project>{8F3F388C-10F5-45D4-9F4C-471236DC14C0}</Project>
+      <Name>TeamSupport.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TeamSupport.WebUtils\TeamSupport.WebUtils.csproj">
+      <Project>{7BEB5C4F-414E-4660-904C-6407A3BC3ACF}</Project>
+      <Name>TeamSupport.WebUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(_WebPublishTargetsPath)\Web\Microsoft.WebSite.Publishing.targets" />
+</Project>

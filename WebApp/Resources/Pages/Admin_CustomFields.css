@@ -1,0 +1,20 @@
+﻿.ts-icon { cursor: pointer;}
+.admin-cf-cat { min-height: 50px; }
+.admin-cf-cat-header {font-size:1.5em; font-weight:normal; margin-bottom: .5em;}
+.admin-cf-cat-header .ts-icon { float:left; margin-left: .5em;}
+.admin-cf-cat-header .caption { float:left; }
+.admin-cf-cat-edit { padding-bottom: .5em;}
+.admin-cf-cat-edit input, .admin-cf-cat-edit .ts-icon {float:left; }
+.admin-cf-cat-edit .ts-icon {margin: 10px 0 0 .5em;}
+.admin-cf-field { clear:both; padding: .5em 1em; line-height: 16px; height: 16px; min-height: 16px;}
+.admin-cf-fields { padding-bottom: 1em;}
+.admin-cf-field span {float:left; margin-left: .5em;}
+span.admin-cf-field-name { font-weight:bold; margin:0; }
+.admin-cf-cat-header .caption, span.admin-cf-field-name, span.admin-cf-field-type {cursor: url(../cursors/grab.cur), move !important;}
+.admin-cf-field .ts-icon { margin-left: .5em; }
+.admin-cf-reorders { float:right; vertical-align:middle; margin: 1.25em 1em 0 0;}
+.admin-cf-combos { float:left; vertical-align:middle; }
+.productFamilyCaption {float: left; margin-left: 5px; font-weight: normal !important; font-size: 85%; margin-top: 3px;}
+.text {line-height: 26px;}
+
+

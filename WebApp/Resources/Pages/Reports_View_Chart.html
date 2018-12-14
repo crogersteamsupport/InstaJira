@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+    <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/highcharts.js" type="text/javascript"></script>
+    <script src="/frontend/library/HighChartModules/exporting.js" type="text/javascript"></script>
+    <script src="reports_view_chart.js" type="text/javascript"></script>
+    <script src="ReportCharts.js?1522082299" type="text/javascript"></script>
+
+    <title>Chart Report</title>
+    <style>
+        body {
+            background-color: #fff;
+        }
+        .reports-toolbar {
+            padding: 10px 20px;
+        }
+        .reports-header {
+            font-size: 18px;
+            padding: 5px 0;
+            color: #555;
+        }
+        .btn-toolbar i {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .chart-container {
+            padding: 20px;
+        }
+    </style>
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container frame-container">
+        <div class="row">
+            <div class="reports-toolbar">
+                <div class="reports-header">
+                    <i class="fa fa-bar-chart-o color-green"></i>&nbsp&nbsp<span class="report-title">Report Title</span>
+                </div>
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group">
+                        <button class="btn btn-default reports-edit" type="button" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></button>
+                        <div class="btn-group reports-export">
+                            <button type="button" class="btn btn-default btn-tooltip dropdown-toggle" data-toggle="dropdown" title="Export"><i class="fa fa-download"></i></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="reports-export-png">Download PNG image</a></li>
+                                <li><a href="#" class="reports-export-jpg">Download JPEG image</a></li>
+                                <li><a href="#" class="reports-export-svg">Download SVG image</a></li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-default reports-fav" type="button" data-toggle="tooltip" title="Add to starred"><i class="fa fa-star-o"></i></button>
+                        <button class="btn btn-default reports-schedule" type="button" data-toggle="tooltip" title="Schedule this report"><i class="fa fa-clock-o"></i></button>
+                        <button class="btn btn-default reports-refresh" type="button" data-toggle="tooltip" title="Refresh"><i class="fa fa-refresh"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="chart-container"></div>
+        </div>
+    </div>
+</body>
+
+</html>

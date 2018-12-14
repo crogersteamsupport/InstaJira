@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta HTTP-EQUIV="Pragma" CONTENT="no-cache" />
+    <title>Ticket Item Order</title>
+    <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+    <link href="Admin_TicketOrder.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/frame.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../CodeMirror/codemirror.css">
+    <script src="../CodeMirror/codemirror.js"></script>
+    <script src="../CodeMirror/Mode/javascript/javascript.js"></script>
+    <script src="../CodeMirror/Mode/css/css.js"></script>
+    <script src="../CodeMirror/Mode/xml/xml.js"></script>
+    <script src="../CodeMirror/Mode/htmlmixed/htmlmixed.js"></script>
+
+    <title></title>
+</head>
+
+<body>
+    <div style="height: 100%; overflow:auto; padding-right: 15px;">
+        <div id="div-main" class="row">
+            <div class="col-md-6">
+                <div class="admin-to-content ui-sortable">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Ticket Page</div>
+                        <div class="panel-body">
+                            <div class="admin-ticket-page-fields ticket-page-sortable ui-sortable" style="min-height:25px;"></div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Available Fields for Ticket Page</div>
+                        <div class="panel-body">
+                            <div class="admin-ticket-page-fields-disabled ticket-page-sortable ui-sortable" style="min-height:25px;"></div>
+                            <div class="admin-panel-buttons">
+                                <button id="btnAddSpacerExistingTicket" type="button" class="btn btn-default">Add Spacer</button>
+                                <button id="btnAddTicketPlugin" type="button" class="btn btn-primary">Add Custom Widget</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="admin-to-content ui-sortable">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Create Ticket Page</div>
+                        <div class="panel-body">
+                            <div class="admin-newticket-page-fields newticket-page-sortable ui-sortable" style="min-height:25px;"></div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Available Fields for Create Ticket Page</div>
+                        <div class="panel-body">
+                            <div class="admin-newticket-page-fields-disabled newticket-page-sortable ui-sortable" style="min-height:25px;"></div>
+                            <div class="admin-panel-buttons">
+                                <button id="btnAddSpacerNewTicket" type="button" class="btn btn-default">Add Spacer</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="div-plugin" class="hidden">
+            <div class="row">
+                <div class="col-xs-9">
+                    <form>
+                        <div class="form-group">
+                            <label class="control-label" for="plugin-name">Name</label>
+                            <input type="text" class="form-control" id="plugin-name" placeholder="Please enter a name for your widget" />
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="control-label" for="plugin-name">Widget Type</label>
+                            <select class="form-control">
+                                <option selected>Ticket</option>
+                                <option>Company</option>
+                                <option>Contact</option>
+                                <option>Product</option>
+                                <option>Product Version</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="plugin-code">Widget Code</label>
+                            <textarea id="plugin-code"></textarea>
+                        </div>
+                    </form>
+                    <div class="form-group">
+                        <button type="button" id="btnPluginDelete" class="btn btn-danger">Delete</button>
+                        <div class="pull-right">
+                            <button type="button" id="btnPluginCancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" id="btnPluginSave" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xs-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Preview</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="textssss">Sample Ticket</label>
+                                    <input type="text" class="form-control" id="sampleTicketNo" placeholder="Enter a sample ticket number" />
+                                </div>
+                                <button type="button" id="btnPluginRefresh" class="btn btn-default">Refresh Preview</button>
+                                <div class="preview-wrapper">
+                                    <div class="preview" id="sample">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <row>
+                <a href="#" id="plugin-show-variables">Show Placeholders >></a>
+                <div id="plugin-variables" class="hidden">
+                    <p class="text-muted">Click to insert placeholder at cursor.  If you have text selected, it will be replaced.</p>
+                    <div class="panel-group" id="acc-template" role="tablist" aria-multiselectable="true">
+                    </div>
+                </div>
+            </row>
+
+        </div>
+
+    </div>
+
+    <div id="modal-plugin" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Custom Widget</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnPluginDelete" class="btn btn-danger pull-left">Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="btnPluginSave" class="btn btn-primary">Save</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/handlebars.js"></script>
+    <script src="Admin_TicketOrder.js" type="text/javascript"></script>
+    <script src="TicketWidget.js" type="text/javascript"></script>
+
+    <script id="entry-template" type="text/x-handlebars-template">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="{{heading}}">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#acc-template" href="#{{collapse}}" aria-expanded="false" aria-controls="{{collapse}}">
+                        {{title}}
+                    </a>
+                </h4>
+            </div>
+            <div id="{{collapse}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{heading}}">
+                <div class="panel-body">
+                    {{{content}}}
+                </div>
+            </div>
+        </div>
+    </script>
+
+</body>
+</html>

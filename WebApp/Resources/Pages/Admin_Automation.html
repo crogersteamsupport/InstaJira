@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <link href="../Css/frame.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery.ui.combobox.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery-ui-enhanced.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/ts.ui.css" rel="stylesheet" type="text/css" />
+	<link href="../Css/ts.editor.css" rel="stylesheet" />
+    <link href="../Css/font-awesome.min.css" rel="stylesheet" />
+  <!--[if IE 7]><link href="vcr/1_9_0/Css/ts.ui.ie7.css" rel="stylesheet" type="text/css" /><![endif]--><!--[if IE 8]><link href="vcr/1_9_0/Css/ts.ui.ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <link href="Admin_Automation.css" rel="stylesheet" type="text/css" />
+  <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+  <script src="/vcr/1_9_0/Js/ts/ts.jquery.ui.combobox.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.layout.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.ui.timepicker.js" type="text/javascript"></script>
+
+  <!--<script src="/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+  <script src="/tiny_mce/jquery.tinymce.js" type="text/javascript"></script>-->
+  <script src="../../../tinymce/tinymce.min.js?1512863055" type="text/javascript"></script>
+  <script src="../../../tinymce/jquery.tinymce.min.js?1512863055" type="text/javascript"></script>
+  <script src="../Js/Ts/ts.utils.js" type="text/javascript"></script>
+  <script src="Admin_Automation.js" type="text/javascript"></script>
+
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+
+  <title></title>
+</head>
+<body>
+  <div class="admin-auto-layout ts-layout-container ui-widget" style="height: 100%;">
+    <div class="admin-auto-center ui-widget-content ts-color-bg-accent ui-widget ts-content">
+        <div class="ts-loading"></div>
+        <div class="admin-auto-no-trigger ts-section ui-widget-content ui-corner-all ui-helper-hidden">
+          <h1>You don't have any triggers to display.</h1>
+          <h2>Would you like to create a new one?</h2>
+          <button class="trigger-new" >Create New Trigger</button>
+        </div>
+
+        <div class="admin-auto-trigger ui-helper-hidden">
+          <div class="admin-auto-title ui-widget-content ui-corner-all ts-section">
+          <h1>
+            Trigger Title</h1>
+            <input id="textName" type="text" class="form-control" />
+            <select id="cmbEnabled" style="width: 200px;">
+              <option value="0">This trigger is disabled.</option>
+              <option value="1">This trigger is enabled.</option>
+            </select>
+            <h4 id="executionsCountLabel" class="triggerDetails"></h4>
+            <h4 id="lastModifiedLabel" class="triggerDetails"></h4>
+          </div>
+
+          <div class="ts-section admin-auto-logic ts-section ui-widget-content ui-corner-all">
+            <h1>Tickets must meet <strong>ALL</strong> the following conditions:</h1>
+            <div class="conditions conditions-all ts-section">
+            </div>
+            <button id="btnAddAllCondition" class="btn btn-primary">Add Condition</button>
+            <h1>Tickets must meet <strong>ANY</strong> the following conditions:</h1>
+            <div class="conditions conditions-any ts-section">
+
+            </div>
+            <button id="btnAddAnyCondition" class="btn btn-primary">Add Condition</button>
+          </div>
+
+          <div class="ts-section admin-auto-actions ui-widget-content ui-corner-all">
+            <h1>Perform the following actions on the ticket:</h1>
+            <div class="actions ts-section">
+            </div>
+            <button id="btnAddAction" class="btn btn-primary">Add Action</button>
+          </div>
+        </div>
+
+
+
+    </div>
+    <div class="ts-toolbar admin-auto-north"></div>
+    <div class="admin-auto-west ui-widget-content">
+      <div class="admin-auto-save ui-widget ui-helper-hidden">
+        <button class="trigger-save ui-state-highlight" >Save</button>
+        <button class="trigger-cancel ui-state-highlight">Cancel</button>
+      </div>
+      <div class="triggers ui-widget"><ul></ul></div>
+    </div>
+    <div class="admin-auto-south ui-widget ui-state-highlight ui-helper-hidden">
+    </div>
+  </div>
+</body>
+</html>

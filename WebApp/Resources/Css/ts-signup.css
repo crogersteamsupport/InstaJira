@@ -1,0 +1,15 @@
+﻿.row * {box-sizing: border-box;}
+.callout { background-color: #f4f8fa; padding: 20px; }
+.callout h3 { color: #3a87ad; }
+label .required {color: #a94442; }
+.callout blockquote { border-color: #bce8f1; }
+.container { margin-top: 10px; }
+.errors { display: none; }
+.col-xs-offset-4 { margin-left: 33.333333%;}
+.form-group label { white-space: nowrap;}
+.btn, .btn:hover, .btn:focus, .btn:active { background-color: #B6311B; border-color: #B6311B; color: #FFFFFF; }
+body { color: #333333;}
+.callout blockquote { border-left: 5px solid #bce8f1; font-size: 17.5px; margin: 0 0 20px; padding: 10px 20px; background: none; }
+.help-block { margin-bottom:0; display:none;}
+.has-error .help-block { display:block;}
+.img-busy { display:none;}

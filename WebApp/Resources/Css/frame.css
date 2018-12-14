@@ -1,0 +1,3 @@
+﻿html, body, form { height: 100%; margin: 0px; padding: 0px; overflow: hidden; }
+.frame-content { border: none; overflow: auto; height: 100%; position:relative; }
+.frame-content-wrapper { }

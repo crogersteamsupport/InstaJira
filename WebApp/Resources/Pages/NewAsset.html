@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../Css/jquery-ui-bs3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+    <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <link href="NewAsset.css" rel="stylesheet" type="text/css" />
+    <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/respond.js" type="text/javascript"></script>
+    <script src="/frontend/library/moment.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap-datetimepicker.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.layout.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.numeric.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.maskedinput.min.js" type="text/javascript"></script>
+    <script src="NewAsset.js" type="text/javascript"></script>
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+</head>
+<body>
+  <!--<div class="pageheader ui-layout-north">
+    <div class="col-md-12 ">
+      <h3 class="pull-left">New Asset</h3>
+    </div>
+  </div>-->
+
+  <div class="maincontainer ui-layout-center">
+    <div class="tab-content">
+      <div class="tab-pane fade in active" id="asset-content">
+        <div class="row">
+          <div class="col-xs-12">
+            <form class="form-horizontal" id="assetForm">
+              <div class="box">
+                <div class="box-header"><h3>Basic Information</h3></div>
+                <div class="box-content">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="col-md-2">
+                          <label for="ddlProduct" class="col-md-4 control-label">Product</label>
+                        </div>
+                        <div class="col-md-10">
+                          <select class="form-control" id="ddlProduct"></select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="col-md-2">
+                          <label for="ddlProductVersion" class="col-md-4 control-label">Product Version</label>
+                        </div>
+                        <div class="col-md-10">
+                          <select class="form-control" id="ddlProductVersion"></select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="col-md-2">
+                          <label for="inputName" class="col-md-4 control-label">Name</label>
+                        </div>
+                        <div class="col-md-10">
+                          <input class="col-md-10 form-control" name="inputName" id="inputName" placeholder="Name of item">
+                        </div>
+                      </div>
+                      <div class="col-md-6" id="trSerialNumber">
+                        <div class="col-md-2">
+                          <label for="inputSerialNumber" class="col-md-4 control-label">Serial Number</label>
+                        </div>
+                        <div class="col-md-10">
+                          <input class="col-md-10 form-control" name="inputSerialNumber" id="inputSerialNumber" placeholder="Serial number">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-6" id="trWarrantyExpiration">
+                        <div class="col-md-2">
+                          <label for="inputWarrantyExpiration" class="col-md-4 control-label">Warranty Expiration</label>
+                        </div>
+                        <div class="col-md-10">
+                          <input class="col-md-10 form-control" id="inputWarrantyExpiration" placeholder="Warranty Expiration">
+                        </div>
+                      </div>
+                      <div class="col-md-6" id="trNotes">
+                        <div class="col-md-2">
+                          <label for="Notes" class="col-md-2 control-label">Notes</label>
+                        </div>
+                        <div class="col-md-10">
+                          <textarea class="form-control" id="Notes" placeholder="Notes about the item"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="box">
+                <div class="box-header"><h3>Additional Information</h3></div>
+                <div class="box-content" id="customerCustomInfo">
+
+                </div>
+              </div>
+              <div class="mt20">
+                  <button class="btn btn-large btn-primary" id="assetSaveBtn">Save</button>
+                  <button id="assetCancelBtn" class="btn btn-default">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane face" id="contact-content">
+                    <div class="row">
+                    <div class="col-xs-12">
+                    <form class="form-horizontal" id="contactForm">
+                        <div class="box">
+                          <div class="box-header"><h3>Basic Information</h3></div>
+                          <div class="box-content">
+
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="inputContactFname" class="col-md-4 control-label">First Name</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="col-md-10 form-control required" name="inputContactFname" id="inputContactFname" placeholder="First Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="inputContactMname" class="col-md-4 control-label">Middle Name</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" id="inputContactMname" placeholder="Middle Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="inputContactLname" class="col-md-4 control-label">Last Name</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control required" name="inputContactLname" id="inputContactLname" placeholder="Last Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="inputContactTitle" class="col-md-4 control-label">Title</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="col-md-10 form-control" id="inputContactTitle" placeholder="title" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="inputContactEmail" class="col-md-4 control-label">Email</label>
+                                            <div class="col-md-8">
+                                                <input type="email" class="col-md-10 form-control" name="inputContactEmail" id="inputContactEmail" placeholder="Email" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="inputContactCompany" class="col-md-4 control-label">Company</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="col-md-10 form-control" name="inputContactCompany" id="inputContactCompany" placeholder="Company" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4" id="contactActivePanel">
+                                            <label for="inputContactActive" class="col-md-4 control-label"></label>
+                                            <div class="col-md-8">
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input type="checkbox" id="inputContactActive"  checked>
+                                                    Active
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="inputContactBlockEmail" class="col-md-4 control-label"></label>
+                                            <div class="col-md-8">
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input type="checkbox" id="inputContactBlockEmail">
+                                                    Block all emails from sender
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" id="contactPortalUserPanel" hidden>
+                                            <label for="inputContactPortalUser" class="col-md-4 control-label"></label>
+                                            <div class="col-md-8">
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input type="checkbox" name="inputPortalUser" id="inputPortalUser">
+                                                    Portal User
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4" id="contactSysAdminPanel" hidden>
+                                            <label for="inputContactSysAdmin" class="col-md-4 control-label"></label>
+                                            <div class="col-md-8">
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input type="checkbox" id="inputContactSysAdmin">
+                                                    System Admin
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" id="contactFinanceAdminPanel" hidden>
+                                            <label for="inputContactFinancialAdmin" class="col-md-4 control-label"></label>
+                                            <div class="col-md-8">
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input type="checkbox" id="inputContactFinancialAdmin">
+                                                    Financial Admin
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="inputContactSyncAddress" class="col-md-4 control-label"></label>
+                                            <div class="col-md-8">
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input type="checkbox" id="inputContactSyncAddress">
+                                                    Sync Addresses with Company
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="inputContactSyncPhone" class="col-md-4 control-label"></label>
+                                            <div class="col-md-8">
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input type="checkbox" id="inputContactSyncPhone">
+                                                    Sync Phone numbers with Company
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" id="contactEmailPortalUser" hidden>
+                                            <label for="inputContactPortalEmail" class="col-md-4 control-label"></label>
+                                            <div class="col-md-8">
+                                                <div class="checkbox">
+                                                  <label>
+                                                    <input type="checkbox" id="inputContactPortalEmail">
+                                                    Email contact a password to the portal
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                          </div>
+                        </div>
+
+                        <div class="box" id="customInfoBox">
+                          <div class="box-header"><h3>Additional Information</h3></div>
+                          <div class="box-content" id="contactCustomInfo">
+
+                          </div>
+                        </div>
+
+                        <div class="mt20">
+                            <button id="contactSaveBtn" class="btn btn-large btn-primary">Save</button>
+                            <button id="contactCancelBtn" class="btn btn-default">Cancel</button>
+                        </div>
+                    </form>
+                        </div>
+                        </div>
+                </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

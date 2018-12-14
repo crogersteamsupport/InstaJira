@@ -1,0 +1,68 @@
+#health-properties {
+    padding:15px 20px;
+    border-top:1px solid rgba(0,0,0,0.1);
+    border-bottom:1px solid rgba(0,0,0,0.1);
+    background-color:rgba(200,200,200,0.2);
+}
+
+#health-properties.customer {
+    margin-top:20px;
+    border-left:1px solid rgba(0,0,0,0.1);
+    border-right:1px solid rgba(0,0,0,0.1);
+    background-color:rgba(255,255,255,1);
+}
+
+#health-ticket {
+    position:relative;
+    padding:2px;
+    background-color: #EEEEEE;
+    -webkit-box-shadow: inset 1px 1px 0px 0px rgba(0,0,0,0.05);
+    box-shadow: inset 1px 1px 0px 0px rgba(0,0,0,0.05);
+    border-radius:2px;
+    border:2px solid rgba(100,100,100,0.9);
+    max-width:100px;
+    height:29px;
+}
+
+#health-meter {
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    z-index:1000000;
+    background-color:rgba(0,0,0,0.2);
+    width:0px;
+}
+
+#health-message {
+    position:absolute;
+    z-index:1000001;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    padding:0px 3px;
+    line-height:24px;
+}
+
+#health-message.disabled {
+    color:rgba(0,0,0,0.5);
+    font-size:10px;
+    text-align:center;
+    vertical-align:middle;
+    text-shadow:1px 1px 0px rgba(0,0,0,0.1);
+}
+
+#health-message.enabled {
+    text-align:left;
+    font-size:14px;
+    vertical-align:middle;
+    color:rgba(255,255,255,0.9);
+}
+
+#health-emotions {
+    padding: 0px 0px;
+    font-size: 11px;
+    text-transform: capitalize;
+}

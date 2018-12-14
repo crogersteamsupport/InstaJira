@@ -1,0 +1,788 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache" />
+  <link href="../Css/frame.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery.ui.combobox.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery-ui-enhanced.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery.ui.timepicker.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/ts.ui.css" rel="stylesheet" type="text/css" />
+  <!--[if IE 7]><link href="vcr/1_9_0/Css/ts.ui.ie7.css" rel="stylesheet" type="text/css" /><![endif]--><!--[if IE 8]><link href="vcr/1_9_0/Css/ts.ui.ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <link href="Admin_Integration.css" rel="stylesheet" type="text/css" />
+    <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+  <script src="/vcr/1_9_0/Js/ts/ts.jquery.ui.combobox.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.layout.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.ui.timepicker.js" type="text/javascript"></script>
+  <script src="../Js/Ts/ts.utils.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap-modal.min.js"></script>
+  <script src="Admin_Integration.js" type="text/javascript"></script>
+
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+</head>
+<body>
+  <div class="ui-widget frame-content ts-color-bg-accent" style="position:relative;">
+  <button id="btnRefresh" style="display:none;">Refresh</button>
+    <ul class="int-list">
+      <li class="int-type ts-api">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/icons/TeamSupportLogo16.png" /><span>TeamSupport API</span></h1>
+        <div class="int-panel">
+          <h3>The TeamSupport API is a RESTful style API over HTTP using XML.</h3>
+          <p>Each object (Tickets, Customers, Products, etc...) in TeamSupport is treated as a resource. You can use four verbs (GET, POST, PUT, DELETE) to manipulate the data.  <a href="http://help.teamsupport.com/1/en/topic/api" target="_blank">Learn more >></a></p>
+          <p class="ui-helper-hidden">Try it out now.  Click the following link to view your users: <a class="int-api-link-users" target="_blank"></a></p>
+          <div id="int-api-active" class="ui-helper-hidden">
+                        <dl class="int-api-info ts-color-bg-accent ui-corner-all"></dl>
+            <p>
+              <button id="int-api-enable" class="btn btn-primary">Enable your API</button>
+              <button id="int-api-disable" class="btn btn-danger">Disable your API</button>
+              <button id="int-api-new">Generate a new API token</button>
+            </p>
+          </div>
+          <p id="int-api-inactive" class="ui-helper-hidden">
+            Your API account is NOT active.  Please contact <a class="int-support" href="#">support</a> to active your API.
+          </p>
+        </div>
+      </li>
+
+<!--      <li class="int-type batchbook">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/party3/batchbook.png" /><span>Batchbook</span></h1>
+        <div class="int-panel">
+          <h3>TeamSupport has native integration with BatchBlue's Batchbook.</h3>
+          <p>Company and contact information can by synced from your Batchbook account into your TeamSupport account, and ticket information can be sent back to Batchbook.  This integration allows your company to use best of breed solutions for sales, marketing and contact management as well as customer service and support!</p>
+          <label>Batchbook User Name</label>
+          <input type="text" class="text ui-widget-content ui-corner-all int-crm-user"/>
+          <label>Security Token</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token"/>
+          <label>Confirm Security Token</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token-confirm"/>
+          <label>Tag which identifies customer</label>
+          <input type="text" class="text ui-widget-content ui-corner-all int-crm-tag"/>
+          <span class="label">Default SLA</span>
+          <select class="int-defaultSla"></select>
+          <div>&nbsp</div>
+          <div class="checkboxes">
+            <input id="cb-batchbook" type="checkbox" class="checkbox int-crm-active"/>
+            <label for="cb-batchbook" class="checkbox">Synchronization Active</label>
+            <div class="clearfix"></div>
+            <input id="cb-batchbook-portal" type="checkbox" class="checkbox int-crm-portal" />
+            <label for="cb-batchbook-portal" class="checkbox">Give portal access to customers imported (advanced portal option required.  If you do not have the advanced portal, please email sales@teamsupport.com)</label>
+            <div class="clearfix"></div>
+            <input id="cb-batchbook-email" type="checkbox" class="checkbox int-crm-email" />
+            <label for="cb-batchbook-email" class="checkbox">Send welcome email to imported contacts</label>
+          </div>
+
+
+
+        </div>
+      </li>-->
+      <li class="int-type beanstalk">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/party3/beanstalk.png" /><span>Beanstalk</span></h1>
+        <div class="int-panel">
+        <h3>TeamSupport.com offers integration with BeanStalk, a hosted SVN source repository.</h3>
+        <p>
+        Once configured, when a new version is “committed” to BeanStalk, the tickets which that version addresses will have a new action associated
+        with them that shows the version of software the ticket was addressed in, and a link to view the actual changes in code which happened in that
+        version (note that you will have to have a BeanStalk account to view the code).
+        </p>
+        <a href="https://help.teamsupport.com/1/en/topic/beanstalk" target="_blank" class="ui-state-default ts-link">Get Started >></a>
+
+        </div>
+      </li>
+      <li class="int-type highrise">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/party3/highrise.png" /><span>Highrise</span></h1>
+        <div class="int-panel">
+          <h3>TeamSupport has native integration with Highrise.</h3>
+          <p>Company and contact information can by synced from your Highrise account into your TeamSupport account, and ticket information can be sent back to Highrise.  This integration allows your company to use best of breed solutions for sales, marketing and contact management as well as customer service and support!</p>
+          <label>Authentication Token</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token"/>
+          <label>Confirm Authentication Token</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token-confirm"/>
+          <label>Highrise Company Name</label>
+          <label>Highrise Company Name (Example: mycompany).  Do not include the .highrisehq.com.</label>
+          <input type="text" class="text ui-widget-content ui-corner-all int-crm-user"/>
+          <label>Tag which identifies customer</label>
+          <input type="text" class="text ui-widget-content ui-corner-all int-crm-tag"/>
+          <label>Default SLA</label>
+          <select class="int-defaultSla"></select>
+          <div>&nbsp</div>
+          <div class="checkboxes">
+            <input id="cb-highrise" type="checkbox" class="checkbox int-crm-active"/>
+            <label for="cb-highrise" class="checkbox">Synchronization Active</label>
+            <div class="clearfix"></div>
+            <input id="cb-highrise-push-tickets-as-account-comments" type="checkbox" class="checkbox int-crm-push-tickets-as-account-comments" />
+            <label for="cb-highrise-push-tickets-as-account-comments" class="checkbox">Push-Out Tickets As Account Notes</label>
+            <div class="clearfix"></div>
+            <input id="cb-highrise-portal" type="checkbox" class="checkbox int-crm-portal" />
+            <label for="cb-highrise-portal" class="checkbox">Give portal access to customers imported (advanced portal option required.  If you do not have the advanced portal, please email sales@teamsupport.com)</label>
+            <div class="clearfix"></div>
+            <input id="cb-highrise-email" type="checkbox" class="checkbox int-crm-email" />
+            <label for="cb-highrise-email" class="checkbox">Send welcome email to imported contacts</label>
+          </div>
+        </div>
+      </li>
+      <li class="int-type hubspot">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e" /></span><img src="../Images/party3/hubspot.png" /><span>HubSpot CRM</span></h1>
+        <div class="int-panel">
+          <h3>TeamSupport has native integration with HubSpot CRM.</h3>
+          <p>Company and contact information can by synced from your HubSpot CRM account into your TeamSupport account, and ticket information can be sent back to HubSpot CRM. This integration allows your company to use best of breed solutions for sales, marketing and contact management as well as customer service and support!</p>
+          <p>Please note, only contacts and companies assigned to the "Customer" lifecycle are synced into TeamSupport.</p>
+          <label>Authentication Token</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token" />
+          <label>Confirm Authentication Token</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token-confirm" />
+          <div>&nbsp</div>
+          <div class="checkboxes">
+            <input id="cb-hubspot" type="checkbox" class="checkbox int-crm-active" />
+            <label for="cb-hubspot" class="checkbox">Synchronization Active</label>
+            <div class="clearfix"></div>
+            <input id="cb-hubspot-push-tickets-as-account-comments" type="checkbox" class="checkbox int-crm-push-tickets-as-account-comments" />
+            <label for="cb-hubspot-push-tickets-as-account-comments" class="checkbox">Push-Out Tickets As Account Notes</label>
+          </div>
+        </div>
+      </li>
+      <li class="int-type jira">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/party3/Jira.png" /><span>Jira</span></h1>
+        <div class="int-panel">
+			<h3>TeamSupport has native integration with Jira.</h3>
+			<p>TeamSupport Tickets can be synced with new or existing Jira Issues.  This integration allows your company to use best of breed solutions for issues and bug tracking as well as customer service and support!</p>
+			<p><span style="font-weight: bold;color: Red;">Important:</span>  Before you setup your link to Jira, please <a href="http://www.teamsupport.com/documentation/1/en/topic/jira" target="_blank" style="font-weight: bold;text-decoration: underline;">read this important information</a> about how TeamSupport Tickets Types and Jira Issues Types are mapped, otherwise you may experience initial sync issues.</p>
+			<div class="int-content-wrapper">
+			  <div>
+				<div class ="label-block jiraInstancesName">
+				  <label id="InstancesLabel">Instances</label>
+				  <div id="JiraInstacesListWrapper" class="ts-clearfix" style="float: left;">
+					<select id="JiraInstances" class="int-jiraInstances"></select>
+				  </div>
+				  <span id="AddingInstanceLabel" class="addingInstanceLabel">Adding new instance</span>
+				</div>
+				<div class="label-block">
+				  <button type="button" id="NewInstance" class="btn btn-primary pull-right action-new" data-toggle="dropdown">New Instance</button>
+				</div>
+			  </div>
+			</div>
+		  	<div class="int-content-wrapper">
+		  		<div class="int-content-center">
+		  			<div class="mappings ui-helper-hidden">
+		  				<h2>Custom Field Mapping (Optional)</h2>
+		  				<div>
+		  					<div class="label-block">
+                                <label>Mapping Type</label>
+                                <select class="int-map-type"></select>
+                            </div>
+                            <div class="label-block">
+		  						<label>Jira Field</label>
+		  						<input type="text" class="int-jira-map-crmfield text ui-widget-content ui-corner-all" style="width: 200px;" />
+		  					</div>
+		  					<div class="label-block">
+		  						<label>TeamSupport Ticket Field</label>
+		  						<select class="int-jira-map-tsfield"></select>
+		  					</div>
+		  					<div class="label-block">
+		  						<button class="jira-map-add">Add Mapping</button>
+		  					</div>
+		  				</div>
+		  				<div class="ts-clearfix">
+		  				</div>
+		  				<div>
+		  					<h3>Ticket Mappings</h3>
+		  					<div class="ui-widget-content ts-separator">
+		  					</div>
+		  					<div class="map-ticket"></div>
+		  					<div class="ts-clearfix"></div>
+                                    <h3>Ticket Type Mappings</h3>
+                                    <div class="ui-widget-content ts-separator">
+                                    </div>
+                                    <div class="map-ticket-type"></div>
+                                    <div class="ts-clearfix"></div>
+		  				</div>
+		  			</div>
+		  			<div>&nbsp</div>
+		  		</div>
+		  	</div>
+            <div class="int-content-left">
+                <label>Instance Name</label>
+                <input id="InstanceName" type="text" class="text ui-widget-content ui-corner-all int-crm-instancename" />
+                <label>Jira Host Name</label>
+                <input type="text" class="text ui-widget-content ui-corner-all int-crm-host" />
+                <div class="basic-auth" style="border:solid; border-color:red; border-width: 2px; width: 250px; padding: 4px 14px 4px 14px; border-radius:10px; margin-bottom: 10px;">
+                    <p>
+                        <span style="font-weight: bold; color: red;">Jira changes for authentication needed before November 1, 2018</span>
+                    </p>
+                    <p>In order for your Jira integration to continue working you will need to obtain a Jira API token and enter it below.  More information about the change and where to obtain your token can be found <a href="https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-basic-auth-and-cookie-based-auth/" target="_blank">here.</a></p>
+                    <label>Jira User Name</label>
+                    <input type="text" class="text ui-widget-content ui-corner-all int-crm-user" />
+                    <label>Jira API Token</label>
+                    <input type="password" class="text ui-widget-content ui-corner-all int-crm-token" />
+                    <label>Confirm Jira API Token</label>
+                    <input type="password" class="text ui-widget-content ui-corner-all int-crm-token-confirm" />
+                    <label>Jira Password</label>
+                    <input type="password" class="text ui-widget-content ui-corner-all int-crm-password" />
+                    <label>Confirm Password</label>
+                    <input type="password" class="text ui-widget-content ui-corner-all int-crm-password-confirm" />
+                </div>
+                <label>Default Project KEY</label>
+                <input type="text" class="text ui-widget-content ui-corner-all int-crm-project" />
+                <span>Actions type to push to Jira as comments</span>
+                <select class="int-actionTypeToPush"></select>
+                <div>&nbsp</div>
+                <div class="checkboxes">
+                    <input id="Checkbox1" type="checkbox" class="checkbox int-crm-update-status" />
+                    <label for="cb-jira-update-status" class="checkbox">Update TeamSupport Tickets Statuses</label>
+
+                    <div class="clearfix"></div>
+                    <span id="ticketStatusExceptionSpan">Exclude the following</span>
+                    <select id="exclusionTicketStatusList" class="int-crm-ticketStatusToExclude" multiple=multiple size="5"></select>
+
+                    <div class="clearfix"></div>
+                    <input id="Checkbox5" type="checkbox" class="checkbox int-crm-update-type" />
+                    <label for="cb-jira-update-type" class="checkbox">Update TeamSupport Ticket Type</label>
+                    <div class="clearfix"></div>
+                    <input id="Checkbox2" type="checkbox" class="checkbox int-crm-active" />
+                    <label for="cb-jira" class="checkbox">Synchronization Active</label>
+                    <div class="clearfix"></div>
+                    <input id="Checkbox3" type="checkbox" class="checkbox int-crm-always-use-default-project-key" />
+                    <label for="cb-jira" class="checkbox">Always Use Default Project Key</label>
+                    <div class="clearfix"></div>
+                    <input id="Checkbox5" type="checkbox" class="checkbox int-crm-IncludeIssueNonRequired" />
+                    <label for="cb-jira" class="checkbox">Include Non-Required Fields On Issue Creation</label>
+                    <div class="clearfix"></div>
+                    <input id="Checkbox4" type="checkbox" class="checkbox int-crm-ticket-types" />
+                    <label for="cb-jira" class="checkbox">Use All Ticket Types</label>
+                    <div class="clearfix"></div>
+                    <select id="restrictedTicketTypesList" class="int-ticketTypeToPush" multiple=multiple size="5"></select>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+			<div style="clear:both;"></div>
+		</div>
+      </li>
+      <li class="int-type mailchimp">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/party3/mailchimp.png" /><span>MailChimp</span></h1>
+        <div class="int-panel">
+          <p>TeamSupport contacts can be synced up with a specific MailChimp list so that when you need to email your customers about product news, upgrades, maintenance, and so forth, you will know your list is always up to date.</p>
+          <label>Name of List to Sync</label>
+          <input type="text" class="text ui-widget-content ui-corner-all int-crm-user"/>
+          <label>API Key</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token"/>
+          <label>Confirm API Key</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token-confirm"/>
+          <div class="checkboxes">
+            <input id="cb-mailchimp" type="checkbox" class="checkbox int-crm-active"/>
+            <label for="cb-mailchimp" class="checkbox">Synchronization Active</label>
+            <div class="clearfix"></div>
+            <div class="ui-helper-hidden">
+            <input id="cb-mailchimp-portal" type="checkbox" class="checkbox int-crm-portal" />
+            <label for="cb-mailchimp-portal" class="checkbox">Give portal access to customers imported (advanced portal option required.  If you do not have the advanced portal, please email sales@teamsupport.com)</label>
+            <div class="clearfix"></div>
+            <input id="cb-mailchimp-email" type="checkbox" class="checkbox int-crm-email" />
+            <label for="cb-mailchimp-email" class="checkbox">Send welcome email to imported contacts</label>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="int-type nicereply">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/party3/nicereply.gif" /><span>Nicereply</span></h1>
+        <div class="int-panel">
+        <h3>Let your customers rate and comment on emails from you.</h3>
+        <p>How nice are your emails? Let your customers decide. Turn your email communication into customer satisfaction and feedback center.</p>
+        <p>
+          <a target="_blank" href="http://help.nicereply.com/article/57-setup-integration-with-teamsupport">Get Started >></a>
+        </p>
+
+
+        </div>
+      </li>
+      <li class="int-type oracle">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/party3/oracle.ico" /><span>Oracle Sales Cloud</span></h1>
+        <div class="int-panel">
+
+          <h3>TeamSupport has native integration with Oracle Sales Cloud.</h3>
+          <p>Company and contact information can by synced from your Oracle Sales Cloud account into your TeamSupport account.  This integration allows your company to use best of breed solutions for sales, marketing and contact management as well as customer service and support!</p>
+          <label>Host Name</label>
+          <input type="text" class="text ui-widget-content ui-corner-all int-crm-host" />
+          <label>User Name</label>
+          <input type="text" class="text ui-widget-content ui-corner-all int-crm-user" />
+          <label>Password</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-password" />
+          <label>Confirm Password</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-password-confirm" />
+          <div class="checkboxes">
+            <input id="cb-oracle-active" type="checkbox" class="checkbox int-crm-active" />
+            <label for="cb-oracle-active" class="checkbox">Synchronization Active</label>
+            <!--<div class="clearfix"></div>
+            <input id="cb-oracle-push-tickets-as-account-comments" type="checkbox" class="checkbox int-crm-push-tickets-as-account-comments" />
+            <label for="cb-oracle-push-tickets-as-account-comments" class="checkbox">Push-Out Tickets As Account Notes</label>-->
+          </div>
+        </div>
+      </li>
+      <li class="int-type salesforce">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/party3/salesforce.png" /><span>Salesforce</span></h1>
+        <div class="int-panel">
+
+          <h3>TeamSupport has native integration with Salesforce.com</h3>
+            <p>
+                Our integration will <u><strong>PULL</strong></u> in Salesforce "Accounts" & "Contacts" to TeamSupport as "Companies" & "Contacts", and this sync is
+                <u><strong>one-way</strong></u> from Salesforce to TeamSupport.  Company and Contact changes made in TeamSupport will be <u><strong>overwritten</strong></u> by your Salesforce account during each sync.
+                <br /><br />
+                We also offer a <u><strong>bi-directional</strong></u> sync between Salesforce Cases and TeamSupport Tickets.
+            </p>
+          <div class="int-content-wrapper">
+            <div class="int-content-center">
+              <div class="mappings ui-helper-hidden">
+                <h2>Custom Field Mapping (Optional)</h2>
+                <div>
+                  <div class="label-block">
+                    <label>Mapping Type</label>
+                    <select class="int-map-type"></select>
+                  </div>
+                  <div class="label-block">
+                    <label>SalesForce Field</label>
+                    <input type="text" class="int-map-crmfield text ui-widget-content ui-corner-all"
+                      style="width: 200px;" />
+                  </div>
+                  <div class="label-block">
+                    <label>TeamSupport Field</label>
+                    <select class="int-map-tsfield"></select>
+                  </div>
+                  <div class="label-block">
+                    <button class="map-add">Add Mapping</button>
+                  </div>
+                </div>
+                <div class="ts-clearfix">
+                </div>
+                <div>
+                  <h3>Account Mappings</h3>
+                  <div class="ui-widget-content ts-separator">
+                  </div>
+                  <div class="map-account"></div>
+                  <div class="ts-clearfix"></div>
+                  <h3>Contact Mappings</h3>
+                  <div class="ui-widget-content ts-separator">
+                  </div>
+                  <div class="map-contact"></div>
+                  <div class="ts-clearfix"></div>
+                  <h3>Ticket Mappings</h3>
+                  <div class="ui-widget-content ts-separator">
+                  </div>
+                  <div class="map-ticket"></div>
+                  <div class="ts-clearfix"></div>
+              </div>
+              </div>
+              <div>&nbsp</div>
+            </div>
+          </div>
+          <div class="int-content-left">
+            <label>Salesforce User Name</label>
+            <input type="text" class="text ui-widget-content ui-corner-all int-crm-user" />
+            <label>Salesforce Password</label>
+            <input type="password" class="text ui-widget-content ui-corner-all int-crm-password" />
+            <label>Confirm Password</label>
+            <input type="password" class="text ui-widget-content ui-corner-all int-crm-password-confirm" />
+            <label>Salesforce Security Token</label>
+            <input type="password" class="text ui-widget-content ui-corner-all int-crm-token" />
+            <label>Confirm Security Token</label>
+            <input type="password" class="text ui-widget-content ui-corner-all int-crm-token-confirm" />
+            <label>Account Type to Link to TeamSupport</label>
+            <input type="text" class="text ui-widget-content ui-corner-all int-crm-tag" />
+            <label>Default SLA</label>
+            <select class="int-defaultSla"></select>
+            <div>&nbsp</div>
+            <div class="checkboxes">
+              <input id="cb-salesforce" type="checkbox" class="checkbox int-crm-active" />
+              <label for="cb-salesforce" class="checkbox">Synchronization Active</label>
+              <div class="clearfix"></div>
+              <input id="cb-salesforce-pull-cases-as-tickets" type="checkbox" class="checkbox int-crm-pull-cases-as-tickets" />
+              <label for="cb-salesforce-pull-cases-as-tickets" class="checkbox">Pull-In Cases As Tickets</label>
+              <div class="clearfix"></div>
+              <input id="cb-salesforce-push-tickets-as-cases" type="checkbox" class="checkbox int-crm-push-tickets-as-cases" />
+              <label for="cb-salesforce-push-tickets-as-cases" class="checkbox">Push-Out Tickets As Cases</label>
+              <div class="clearfix"></div>
+              <input id="cb-salesforce-push-tickets-as-account-comments" type="checkbox" class="checkbox int-crm-push-tickets-as-account-comments" />
+              <label for="cb-salesforce-push-tickets-as-account-comments" class="checkbox">Push-Out Tickets As Account Notes</label>
+              <div class="clearfix"></div>
+              <input id="cb-salesforce-portal" type="checkbox" class="checkbox int-crm-portal" />
+              <label for="cb-salesforce-portal" class="checkbox">Give portal access to customers imported (advanced portal option required.  If you do not have the advanced portal, please email sales@teamsupport.com)</label>
+              <div class="clearfix"></div>
+              <input id="cb-salesforce-email" type="checkbox" class="checkbox int-crm-email" />
+              <label for="cb-salesforce-email" class="checkbox">Send welcome email to imported contacts</label>
+              <div class="clearfix"></div>
+              <input id="cb-salesforce-match-accounts-by-name" type="checkbox" class="checkbox int-crm-match-accounts-by-name" />
+              <label for="cb-salesforce-match-accounts-by-name" class="checkbox">Match accounts by name</label>
+              <div class="clearfix"></div>
+              <input id="cb-salesforce-use-sandbox-server" type="checkbox" class="checkbox int-crm-use-sandbox-server" />
+              <label for="cb-salesforce-use-sandbox-server" class="checkbox">Use sandbox server</label>
+            </div>
+          </div>
+          <div style="clear:both;"></div>
+        </div>
+      </li>
+		<li class="int-type servicenow">
+			<h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e" /></span><img src="../Images/party3/servicenow.png" /><span>ServiceNow</span></h1>
+			<div class="int-panel">
+				<h3>TeamSupport has native integration with ServiceNow.</h3>
+				<p>TeamSupport Tickets can be synced with new or existing ServiceNow Incidents.  This integration allows your company to use best of breed solutions for issues and bug tracking as well as customer service and support!</p>
+				<p><span style="font-weight: bold;color: Red;">Important:</span>  Before you setup your link to ServiceNow, please <a href="https://help.teamsupport.com/1/en/topic/servicenow" target="_blank" style="font-weight: bold;text-decoration: underline;">read this important information</a> about how TeamSupport Tickets and ServiceNow Incidents links are setup, otherwise you may experience initial sync issues.</p>
+
+				<label>TeamSupport WebHook</label>
+				<div>
+					<input type="text" class="ui-widget-content ui-corner-all int-crm-webhook" readonly="readonly" />
+					<button type="button" class="int-generate-token">Generate</button>
+				</div>
+				<div style="clear:both; font-weight: bold;">
+					<p>View <a href="https://docs.servicenow.com/bundle/jakarta-servicenow-platform/page/integrate/outbound-rest/task/t_ConfiguringARESTMessage.html" target="_blank" style="font-weight: bold;text-decoration: underline;">this help article</a> and <a href="https://docs.servicenow.com/bundle/jakarta-servicenow-platform/page/integrate/outbound-rest/task/t_DefineAnHTTPMethod.html" target="_blank" style="font-weight: bold;text-decoration: underline;">this one</a> on what to do with this WebHook.</p>
+				</div>
+				<div class="label-block" style="margin-top: 0;">
+					<button type="button" id="btnBusinessRule" class="btn btn-primary" style="margin-top: 0;" data-toggle="modal" data-target="#businessRuleModal">Get Business Rule (Required)</button>
+				</div>
+				<div style="clear:both;">
+					<p style="padding-top: 0; font-weight: bold;">
+						The ServiceNow integration operates based on instructions designed to work with a given partner. You must copy our defined business rule, then paste it into your ServiceNow Business rule setup.
+					<br />
+						View <a href="http://wiki.servicenow.com/index.php?title=Business_Rules#gsc.tab=0" target="_blank" style="font-weight: bold;text-decoration: underline;">this help article</a> about this business rule, and where to paste it in your ServiceNow account.
+					</p>
+				</div>
+				<div class="int-content-wrapper">
+					<div class="int-content-center">
+						<div class="mappings ui-helper-hidden">
+							<h2>Custom Field Mapping (Optional)</h2>
+							<div>
+								<div class="label-block">
+									<label>ServiceNow Field</label>
+									<input type="text" class="int-snow-map-crmfield text ui-widget-content ui-corner-all" style="width: 200px;" />
+								</div>
+								<div class="label-block">
+									<label>TeamSupport Ticket Field</label>
+									<select class="int-snow-map-field"></select>
+								</div>
+								<div class="label-block">
+									<button class="snow-map-add">Add Mapping</button>
+								</div>
+							</div>
+							<div class="ts-clearfix">
+							</div>
+							<div>
+								<h3>Ticket Mappings</h3>
+								<div class="ui-widget-content ts-separator">
+								</div>
+								<div class="map-ticket"></div>
+								<div class="ts-clearfix"></div>
+							</div>
+						</div>
+						<div>&nbsp</div>
+					</div>
+				</div>
+				<div class="int-content-left">
+					<label>Host Name</label>
+					<input type="text" class="text ui-widget-content ui-corner-all int-crm-host" />
+					<label>User Name</label>
+					<input type="text" class="text ui-widget-content ui-corner-all int-crm-user" />
+					<label>Password</label>
+					<input type="password" class="text ui-widget-content ui-corner-all int-crm-password" />
+					<label>Confirm Password</label>
+					<input type="password" class="text ui-widget-content ui-corner-all int-crm-password-confirm" />
+					<div class="clearfix"></div>
+
+					<label>Actions type to push to ServiceNow as comments</label>
+					<select class="int-actionTypeToPush"></select>
+					<div>&nbsp</div>
+					<div class="checkboxes">
+						<input id="cb-snow-update-status" type="checkbox" class="checkbox int-snow-update-status" />
+						<label for="cb-snow-update-status" class="checkbox">Update TeamSupport Tickets Statuses</label>
+
+						<div class="emptyDivider"></div>
+						<label id="snowTicketStatusExceptionSpan">Exclude the following</label>
+						<select id="snowExclusionTicketStatusList" class="int-crm-ticketStatusToExclude" multiple=multiple size="5"></select>
+
+						<!--<div class="clearfix"></div>
+						<input id="cb-snow-update-type" type="checkbox" class="checkbox int-crm-update-type" />
+						<label for="cb-snow-update-type" class="checkbox">Update TeamSupport Ticket Type</label>-->
+
+						<div class="clearfix"></div>
+						<input id="cb-snow-tickettypes" type="checkbox" class="checkbox int-snow-ticket-types" />
+						<label for="cb-snow-tickettypes" class="checkbox">Use All Ticket Types</label>
+						<div class="emptyDivider"></div>
+						<select id="restrictedTicketTypesListSnow" class="int-ticketTypeToPush" multiple=multiple size="5"></select>
+
+						<div class="clearfix"></div>
+						<input id="cb-servicenow-active" type="checkbox" class="checkbox int-crm-active" />
+						<label for="cb-servicenow-active" class="checkbox">Synchronization Active</label>
+					</div>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		</li>
+        <li class="int-type slackwebhook">
+            <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e" /></span><img src="../Images/party3/slack.png" /><span>Slack</span></h1>
+            <div class="int-panel">
+                <h3>TeamSupport allows posting of messages to Slack through Ticket Automation.</h3>
+                <label>Web Hook URL</label>
+                <input type="text" class="text ui-widget-content ui-corner-all int-crm-host" />
+                <div class="checkboxes">
+                    <input id="cb-slack" type="checkbox" class="checkbox int-crm-active" />
+                    <label for="cb-slack" class="checkbox">Synchronization Active</label>
+                </div>
+
+            </div>
+        </li>
+            <li class="int-type tfs">
+                <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"></span><img src="../Images/party3/TFS.png" /><span>Team Foundation Server</span></h1>
+            <div class="int-panel">
+                    <h3>TeamSupport has native integration with Team Foundation Server.</h3>
+                    <p>TeamSupport Tickets can be synced with new or existing TFS work items.  This integration allows your company to use best of breed solutions for issues and bug tracking as well as customer service and support!</p>
+                    <p><span style="font-weight: bold;color: Red;">Important:</span>  Before you setup your link to TFS, please <a href="https://help.teamsupport.com/1/en/topic/tfs" target="_blank" style="font-weight: bold;text-decoration: underline;">read this important information</a> about how TeamSupport Tickets Types and TFS Work Items Types are mapped, otherwise you may experience initial sync issues.</p>
+
+                    <!-- //vv Not now, until v2-->
+                    <!--<div class="int-content-wrapper">
+                        <div>
+                            <div class="label-block jiraInstancesName">
+                                <span id="InstancesLabel" class="label">Instances</span>
+                                <div id="JiraInstacesListWrapper" class="ts-clearfix" style="float: left;">
+                                    <select id="JiraInstances" class="int-jiraInstances"></select>
+                                </div>
+                                <span id="AddingInstanceLabel" class="addingInstanceLabel">Adding new instance</span>
+                            </div>
+                            <div class="label-block">
+                                <button type="button" id="NewInstance" class="btn btn-primary pull-right action-new" data-toggle="dropdown">New Instance</button>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="int-content-wrapper">
+                        <div class="int-content-center">
+                            <div class="mappings ui-helper-hidden">
+                                <h2>Custom Field Mapping (Optional)</h2>
+                                <div>
+                                    <div class="label-block">
+                                        <label>Mapping Type</label>
+                                        <select class="int-map-type"></select>
+                                    </div>
+                                    <div class="label-block">
+                                        <label>TFS Field</label>
+                                        <input type="text" class="int-tfs-map-crmfield text ui-widget-content ui-corner-all" style="width: 200px;" />
+                                    </div>
+                                    <div class="label-block">
+                                        <label>TeamSupport Field</label>
+                                        <select class="int-tfs-map-tsfield"></select>
+                                    </div>
+                                    <div class="label-block">
+                                        <button class="tfs-map-add">Add Mapping</button>
+                                    </div>
+                                </div>
+                                <div class="ts-clearfix">
+                                </div>
+                                <div>
+                                    <h3>Ticket Mappings</h3>
+                                    <div class="ui-widget-content ts-separator">
+                                    </div>
+                                    <div class="map-ticket"></div>
+                                    <div class="ts-clearfix"></div>
+                                    <h3>Ticket Type Mappings</h3>
+                                    <div class="ui-widget-content ts-separator">
+                                    </div>
+                                    <div class="map-ticket-type"></div>
+                                    <div class="ts-clearfix"></div>
+                                </div>
+                            </div>
+                            <div>&nbsp</div>
+                        </div>
+                    </div>
+                    <div class="int-content-left">
+                        <label>Instance Name</label>
+                        <input id="InstanceName" type="text" class="text ui-widget-content ui-corner-all int-crm-instancename" />
+
+                        <label>TFS Host Name</label>
+                        <input type="text" class="text ui-widget-content ui-corner-all int-crm-host" />
+                        <label>TFS User Name</label>
+                        <input type="text" class="text ui-widget-content ui-corner-all int-crm-user" />
+                        <label>TFS Password</label>
+                        <input type="password" class="text ui-widget-content ui-corner-all int-crm-password" />
+                        <label>Confirm Password</label>
+                        <input type="password" class="text ui-widget-content ui-corner-all int-crm-password-confirm" />
+                        <div class="checkboxes">
+                            <input id="cb-tfs-use-network-credentials" type="checkbox" class="checkbox int-crm-use-network-credentials" />
+                            <label for="cb-tfs-use-network-credentials" class="checkbox">Use Network Credentials</label>
+                            <div class="clearfix"></div>
+                        </div>
+                        <label>TFS API Token</label>
+                        <input type="password" class="text ui-widget-content ui-corner-all int-crm-token" />
+                        <label>Confirm TFS API Token</label>
+                        <input type="password" class="text ui-widget-content ui-corner-all int-crm-token-confirm" />
+
+                        <label>Default Project Name</label>
+                        <input type="text" class="text ui-widget-content ui-corner-all int-crm-project" />
+                        <label>Actions type to push to TFS as comments</label>
+                        <select class="int-actionTypeToPush"></select>
+                        <div>&nbsp</div>
+                        <div class="checkboxes">
+                            <input id="cb-tfs-update-status" type="checkbox" class="checkbox int-tfs-update-status" />
+                            <label for="cb-tfs-update-status" class="checkbox">Update TeamSupport Tickets Statuses</label>
+
+                            <div class="clearfix"></div>
+                            <span id="tfsTicketStatusExceptionSpan" class="label">Exclude the following</span>
+                            <select id="tfsExclusionTicketStatusList" class="int-crm-ticketStatusToExclude" multiple=multiple size="5"></select>
+
+                            <div class="clearfix"></div>
+                            <input id="cb-tfs-update-type" type="checkbox" class="checkbox int-crm-update-type" />
+                            <label for="cb-tfs-update-type" class="checkbox">Update TeamSupport Ticket Type</label>
+                            <div class="clearfix"></div>
+                            <input id="cb-tfs" type="checkbox" class="checkbox int-crm-active" />
+                            <label for="cb-tfs" class="checkbox">Synchronization Active</label>
+
+                            <div class="clearfix"></div>
+                            <input id="cb-tfs-AlwaysDefaultKey" type="checkbox" class="checkbox int-crm-always-use-default-project-key" />
+                            <label for="cb-tfs-AlwaysDefaultKey" class="checkbox">Always Use Default Project Name</label>
+
+                            <!--<div class="clearfix"></div>
+                            <input id="cb-tfs-nonrequired" type="checkbox" class="checkbox int-crm-IncludeWorkItemNonRequired" />
+                            <label for="cb-tfs-nonrequired" class="checkbox">Include Non-Required Fields On Work Item Creation</label>-->
+                            <div class="clearfix"></div>
+                            <input id="cb-tfs-tickettypes" type="checkbox" class="checkbox int-tfs-ticket-types" />
+                            <label for="cb-tfs-tickettypes" class="checkbox">Use All Ticket Types</label>
+                            <div class="clearfix"></div>
+                            <select id="restrictedTicketTypesListTFS" class="int-ticketTypeToPush" multiple=multiple size="5"></select>
+                            <div class="clearfix"></div>
+                </div>
+                    </div>
+                    <div style="clear:both;"></div>
+            </div>
+        </li>
+      <li class="int-type zohocrm">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/party3/zoho.png" /><span>Zoho</span></h1>
+        <div class="int-panel">
+          <h3>TeamSupport has native integration with Zoho.</h3>
+          <p>Company and contact information can by synced from your Zoho account into your TeamSupport account, and ticket information can be sent back to Zoho.  This integration allows your company to use best of breed solutions for sales, marketing and contact management as well as customer service and support!</p>
+
+          <div class="int-content-wrapper">
+            <div class="int-content-center">
+              <div class="mappings ui-helper-hidden">
+                <h2>Custom Field Mapping (Optional)</h2>
+                <div>
+                  <div class="label-block">
+                    <label>Mapping Type</label>
+                    <select class="int-zoho-map-type"></select>
+                  </div>
+                  <div class="label-block">
+                    <label>Zoho CRM Field</label>
+                    <input type="text" class="int-zoho-map-crmfield text ui-widget-content ui-corner-all"
+                      style="width: 200px;" />
+                  </div>
+                  <div class="label-block">
+                    <label>TeamSupport Field</label>
+                    <select class="int-zoho-map-tsfield"></select>
+                  </div>
+                  <div class="label-block">
+                    <button class="zoho-map-add">Add Mapping</button>
+                  </div>
+                </div>
+                <div class="ts-clearfix">
+                </div>
+                <div>
+                  <h3>Account Mappings</h3>
+                  <div class="ui-widget-content ts-separator">
+                  </div>
+                  <div class="map-account"></div>
+                  <div class="ts-clearfix"></div>
+                  <h3>Contact Mappings</h3>
+                  <div class="ui-widget-content ts-separator">
+                  </div>
+                  <div class="map-contact"></div>
+                  <div class="ts-clearfix"></div>
+              </div>
+              </div>
+              <div>&nbsp</div>
+            </div>
+          </div>
+
+          <div class="int-content-left">
+          <label>Zoho User Name</label>
+          <input type="text" class="text ui-widget-content ui-corner-all int-crm-user"/>
+          <label>Password</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-password"/>
+          <label>Confirm Password</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-password-confirm"/>
+          <label>Zoho CRM Authentication Token</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token"/>
+          <label>Confirm Zoho CRM Authentication Token</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token-confirm"/>
+          <label>Account Type to Link to TeamSupport</label>
+          <input type="text" class="text ui-widget-content ui-corner-all int-crm-tag"/>
+          <label>Default SLA</label>
+          <select class="int-defaultSla"></select>
+          <div>&nbsp</div>
+          <div class="checkboxes">
+            <input id="cb-zoho" type="checkbox" class="checkbox int-crm-active"/>
+            <label for="cb-zoho" class="checkbox">Synchronization Active</label>
+            <div class="clearfix"></div>
+            <input id="cb-zoho-pull-customer-products" type="checkbox" class="checkbox int-crm-pull-customer-products" />
+            <label for="cb-zoho-pull-customer-products" class="checkbox">Pull-In Customer Products</label>
+            <div class="clearfix"></div>
+            <input id="cb-zoho-portal" type="checkbox" class="checkbox int-crm-portal" />
+            <label for="cb-zoho-portal" class="checkbox">Give portal access to customers imported (advanced portal option required.  If you do not have the advanced portal, please email sales@teamsupport.com)</label>
+            <div class="clearfix"></div>
+            <input id="cb-zoho-email" type="checkbox" class="checkbox int-crm-email" />
+            <label for="cb-zoho-email" class="checkbox">Send welcome email to imported contacts!</label>
+            <div class="clearfix"></div>
+            <input id="cb-zoho-match-accounts-by-name" type="checkbox" class="checkbox int-crm-match-accounts-by-name" />
+            <label for="cb-zoho-match-accounts-by-name" class="checkbox">Match accounts by name</label>
+          </div>
+          </div>
+          <div style="clear:both;"></div>
+        </div>
+      </li>
+      <li class="int-type zohoreports">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/party3/zohoreports.png" /><span>Zoho Reports</span></h1>
+        <div class="int-panel">
+          <h3>TeamSupport has native integration with Zoho Reports.</h3>
+          <p>Zoho Reports is an Online Reporting and Business Intelligence service that helps you to easily analyze your business data and create insightful reports & dashboards for informed decision-making.</p>
+
+          <label>Zoho User Name</label>
+          <input type="text" class="text ui-widget-content ui-corner-all int-crm-user"/>
+          <label>Password</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-password"/>
+          <label>Confirm Password</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-password-confirm"/>
+          <label>Zoho Reports Authentication Token</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token"/>
+          <label>Confirm Zoho Reports Authentication Token</label>
+          <input type="password" class="text ui-widget-content ui-corner-all int-crm-token-confirm"/>
+            <label>Grid</label>
+            <select class="int-zohoreports-grid"></select>
+            <div class="clearfix"></div>
+          <div class="checkboxes">
+            <input id="cb-zohoreports" type="checkbox" class="checkbox int-crm-active"/>
+            <label for="cb-zohoreports" class="checkbox">Active</label>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </li>
+      <li class="int-type zapier">
+        <h1 class="collapsable"><span class="ui-icon ui-icon-triangle-1-e"/></span><img src="../Images/party3/zapier.png" /><span>Zapier</span></h1>
+        <div class="int-panel">
+          <h3>TeamSupport has native integration with Zapier.</h3>
+          <p>Zapier is a service which provides a middle ware for hundreds of applications to communicate with each other. In many cases, using Zapier can allow you to link TeamSupport with a product we may not have written a native integration for, and provide you with a way to connect your various business systems together.</p>
+          <p>Click <a target="_blank" href="https://zapier.com/developer/invite/3598/23369cb39edea14d434a879c5c8eb84e/">here</a>  to get started.</p>
+        </div>
+      </li>
+    </ul>
+
+  	<!-- ServiceNow Business Rule code Modal -->
+  	<div id="serviceNowBusinessRuleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="businessRuleModalLabel" aria-hidden="true">
+  		<div class="modal-dialog" role="document">
+  			<div class="modal-content">
+			  	<div class="modal-header">
+			  		<button type="button" class="closeModal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  		<h4 class="modal-title" id="MergeModalTitle" style="font-size: 18px;">Business Rule Script</h4>
+			  	</div>
+  				<div class="modal-body">
+  					<textarea id="businessRuleScript" name="businessRuleScriptTextArea" style="resize: none; overflow: auto; width: 99%; height: 350px;" readonly="readonly">Script here</textarea>
+  				</div>
+  				<div class="modal-footer ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+  					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  					<button id="copyBusinessRuleToClipboard" type="button" class="btn btn-primary">Copy To Clipboard</button>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+</body>
+</html>

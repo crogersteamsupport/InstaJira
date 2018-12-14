@@ -1,0 +1,44 @@
+﻿div.admin-auto-title input.text { width: 96%; font-size: 1em;}
+div.admin-auto-title .ui-combobox { margin: .5em 0; display:block; float:none; clear:both; }
+input.checkbox { margin-top: 3px; }
+div.admin-auto-west { border: none; padding:0;}
+div.admin-auto-south { border-left:none; border-right:none; text-align:right; padding-right: 1em;}
+div.admin-auto-north { border-top: none;}
+div.admin-auto-no-trigger { text-align:center; padding: 3em 0 3em 0; }
+.admin-auto-no-trigger h2 { text-align:center; padding-top: 1.5em; }
+.admin-auto-no-trigger button.trigger-new { padding: 1em 2em; margin-top: 2em; }
+div.admin-auto-trigger { padding-bottom: 150px; height: 100%;}
+.triggers { height: 100%; overflow-x: hidden; overflow-y: auto; }
+.triggers ul { list-style-type: none; margin: 0; padding: 0; }
+.triggers li { padding: .5em .25em; margin: 0; cursor:pointer;  }
+.triggers li.ui-state-hover, .triggers li.ui-state-active {background-image:none; border:none;}
+.conditions { border-bottom:none; border-left: none; border-right:none; border-width: 1px; margin:0; padding: 0 0 .5em 0;}
+.condition { border-top:none; border-left: none; border-right:none; border-width: 1px; margin:0; padding: .5em 0; }
+.condition .ui-combobox, .condition input.text { margin-right: .3em; white-space:nowrap; }
+.condition .ts-icon { float:right; margin: .25em 1em 0 0; cursor: pointer;}
+.condition-value { float:left; }
+.condition .ui-combobox { float:left; }
+
+.actions { border-bottom:none; border-left: none; border-right:none; border-width: 1px; margin:0; padding: 0 0 .5em 0;}
+.action { border-top:none; border-left: none; border-right:none; border-width: 1px; margin:0; padding: .5em 0;}
+.action .ui-combobox, .action input.text { margin-right: .3em; white-space:nowrap; }
+.action-main { }
+.action-main .ts-icon { float:right; margin-top: .25em; margin-right: 1em; cursor: pointer;}
+.action-editor { margin-top: 1em; }
+
+.admin-auto-save { text-align:center; padding: 0 auto;}
+.admin-auto-save .ui-button { padding: .25em .25em; margin-top: 1.5em;  }
+.triggerDetails {margin-top: 10px; font-style: oblique; color: Gray;}
+.inactive {color: #B8B8B8 !important;}
+
+.automation-button {
+    font-size:1.1em;
+    margin-left:6px;
+    margin-right:6px;
+    margin-top:8px;
+}
+
+i, href{
+    margin-right:4px;
+    cursor: pointer;
+}

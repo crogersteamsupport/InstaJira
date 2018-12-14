@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:ns2="http://xmlns.oracle.com/apps/cdm/foundation/parties/personService/" xmlns:ns4="http://xmlns.oracle.com/adf/svc/types/" xmlns:tns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/types/" xmlns:ns0="http://xmlns.oracle.com/apps/cdm/foundation/parties/organizationService/" xmlns:ns1="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" xmlns:ns3="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/types/" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/crmCommon/salesParties/salesPartiesService/SalesAccount.xsd" namespace="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" />
+  <import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/crmCommon/salesParties/salesPartiesService/SalesAccountResource.xsd" namespace="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" />
+  <import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/META-INF/wsdl/BC4JService.xsd" namespace="http://xmlns.oracle.com/adf/svc/types/" />
+  <import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/crmCommon/salesParties/salesPartiesService/SalesAccountTerritory.xsd" namespace="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" />
+  <import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/crmCommon/salesParties/salesPartiesService/SalesParty.xsd" namespace="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" />
+  <import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/crmCommon/salesParties/salesPartiesService/MySalesAccount.xsd" namespace="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" />
+  <import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/cdm/foundation/parties/personService/Person.xsd" namespace="http://xmlns.oracle.com/apps/cdm/foundation/parties/personService/" />
+  <import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/crmCommon/salesParties/salesPartiesService/SalesAccountResourceAccess.xsd" namespace="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" />
+  <import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/cdm/foundation/parties/organizationService/OrganizationParty.xsd" namespace="http://xmlns.oracle.com/apps/cdm/foundation/parties/organizationService/" />
+  <element name="assignSalesAccountChkProfile">
+    <complexType>
+      <sequence>
+        <element name="partyId" type="long" />
+        <element name="operation" type="string" />
+        <element name="saveFlag" type="boolean" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="assignSalesAccountChkProfileResponse">
+    <complexType>
+      <sequence />
+    </complexType>
+  </element>
+  <element name="updateExistingFlag">
+    <complexType>
+      <sequence>
+        <element name="startId" type="long" />
+        <element name="endId" type="long" />
+        <element name="schTime" type="long" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateExistingFlagResponse">
+    <complexType>
+      <sequence />
+    </complexType>
+  </element>
+  <element name="createOrganizationParty">
+    <complexType>
+      <sequence>
+        <element name="organizationParty" type="ns0:OrganizationParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createOrganizationPartyResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns0:OrganizationPartyResult" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="mergeOrganizationParty">
+    <complexType>
+      <sequence>
+        <element name="organizationParty" type="ns0:OrganizationParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="mergeOrganizationPartyResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns0:OrganizationPartyResult" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createPersonParty">
+    <complexType>
+      <sequence>
+        <element name="personParty" type="ns2:Person" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createPersonPartyResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns2:PersonResult" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="mergePersonParty">
+    <complexType>
+      <sequence>
+        <element name="personParty" type="ns2:Person" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="mergePersonPartyResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns2:PersonResult" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesAccount">
+    <complexType>
+      <sequence>
+        <element name="partyId" type="long" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesAccountResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createSalesAccount">
+    <complexType>
+      <sequence>
+        <element name="salesAccount" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createSalesAccountResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesAccount">
+    <complexType>
+      <sequence>
+        <element name="salesAccount" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesAccountResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="mergeSalesAccount">
+    <complexType>
+      <sequence>
+        <element name="salesAccount" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="mergeSalesAccountResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesAccount">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesAccountResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createSalesAccountResource">
+    <complexType>
+      <sequence>
+        <element name="salesAccountResource" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createSalesAccountResourceResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesAccountResource">
+    <complexType>
+      <sequence>
+        <element name="salesAccountResource" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesAccountResourceResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="deleteSalesAccountResource">
+    <complexType>
+      <sequence>
+        <element name="salesAccountResource" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="deleteSalesAccountResourceResponse">
+    <complexType>
+      <sequence />
+    </complexType>
+  </element>
+  <element name="findSalesAccountResource">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesAccountResourceResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesAccountResourceAccess">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesAccountResourceAccessResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:SalesAccountResourceAccess" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesParty">
+    <complexType>
+      <sequence>
+        <element name="partyId" type="long" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesPartyResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createSalesParty">
+    <complexType>
+      <sequence>
+        <element name="salesParty" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createSalesPartyResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesParty">
+    <complexType>
+      <sequence>
+        <element name="salesParty" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesPartyResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesParty">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesPartyResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesAccountResourceAsync">
+    <complexType>
+      <sequence>
+        <element name="salesAccountResource" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesAccountResourceAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesAccountResourceAsync">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesAccountResourceAsyncResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createOrganizationPartyAsync">
+    <complexType>
+      <sequence>
+        <element name="organizationParty" type="ns0:OrganizationParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createOrganizationPartyAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns0:OrganizationPartyResult" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesPartyAsync">
+    <complexType>
+      <sequence>
+        <element name="partyId" type="long" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesPartyAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="mergeOrganizationPartyAsync">
+    <complexType>
+      <sequence>
+        <element name="organizationParty" type="ns0:OrganizationParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="mergeOrganizationPartyAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns0:OrganizationPartyResult" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateExistingFlagAsync">
+    <complexType>
+      <sequence>
+        <element name="startId" type="long" />
+        <element name="endId" type="long" />
+        <element name="schTime" type="long" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateExistingFlagAsyncResponse">
+    <complexType>
+      <sequence />
+    </complexType>
+  </element>
+  <element name="createSalesAccountResourceAsync">
+    <complexType>
+      <sequence>
+        <element name="salesAccountResource" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createSalesAccountResourceAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesAccountAsync">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesAccountAsyncResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="mergePersonPartyAsync">
+    <complexType>
+      <sequence>
+        <element name="personParty" type="ns2:Person" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="mergePersonPartyAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns2:PersonResult" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="assignSalesAccountChkProfileAsync">
+    <complexType>
+      <sequence>
+        <element name="partyId" type="long" />
+        <element name="operation" type="string" />
+        <element name="saveFlag" type="boolean" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="assignSalesAccountChkProfileAsyncResponse">
+    <complexType>
+      <sequence />
+    </complexType>
+  </element>
+  <element name="createPersonPartyAsync">
+    <complexType>
+      <sequence>
+        <element name="personParty" type="ns2:Person" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createPersonPartyAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns2:PersonResult" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createSalesAccountAsync">
+    <complexType>
+      <sequence>
+        <element name="salesAccount" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createSalesAccountAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesAccountAsync">
+    <complexType>
+      <sequence>
+        <element name="salesAccount" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesAccountAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="deleteSalesAccountResourceAsync">
+    <complexType>
+      <sequence>
+        <element name="salesAccountResource" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="deleteSalesAccountResourceAsyncResponse">
+    <complexType>
+      <sequence />
+    </complexType>
+  </element>
+  <element name="mergeSalesAccountAsync">
+    <complexType>
+      <sequence>
+        <element name="salesAccount" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="mergeSalesAccountAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createSalesPartyAsync">
+    <complexType>
+      <sequence>
+        <element name="salesParty" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createSalesPartyAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesPartyAsync">
+    <complexType>
+      <sequence>
+        <element name="salesParty" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="updateSalesPartyAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesAccountResourceAccessAsync">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesAccountResourceAccessAsyncResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:SalesAccountResourceAccess" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesPartyAsync">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findSalesPartyAsyncResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:SalesParty" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesAccountAsync">
+    <complexType>
+      <sequence>
+        <element name="partyId" type="long" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesAccountAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesAccountResource">
+    <complexType>
+      <sequence>
+        <element name="sAccountResourceId" type="long" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesAccountResourceResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesAccountResourceAsync">
+    <complexType>
+      <sequence>
+        <element name="sAccountResourceId" type="long" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="getSalesAccountResourceAsyncResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="ns3:SalesAccountResource" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createPartyUsage">
+    <complexType>
+      <sequence>
+        <element name="partyId" type="long" />
+        <element name="partyUsage" type="string" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createPartyUsageResponse">
+    <complexType>
+      <sequence />
+    </complexType>
+  </element>
+  <element name="createPartyUsageAsync">
+    <complexType>
+      <sequence>
+        <element name="partyId" type="long" />
+        <element name="partyUsage" type="string" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="createPartyUsageAsyncResponse">
+    <complexType>
+      <sequence />
+    </complexType>
+  </element>
+  <element name="findMySalesAccount">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findMySalesAccountResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:MySalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findMySalesAccountAsync">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findMySalesAccountAsyncResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:MySalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findMySalesAccountMyTeamVC">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findMySalesAccountMyTeamVCResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:MySalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findMySalesAccountMyVC">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findMySalesAccountMyVCResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:MySalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findMySalesAccountMyVCAsync">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findMySalesAccountMyVCAsyncResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:MySalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findMySalesAccountMyTeamVCAsync">
+    <complexType>
+      <sequence>
+        <element name="findCriteria" type="ns4:FindCriteria" />
+        <element name="findControl" type="ns4:FindControl" />
+      </sequence>
+    </complexType>
+  </element>
+  <element name="findMySalesAccountMyTeamVCAsyncResponse">
+    <complexType>
+      <sequence>
+        <element minOccurs="0" maxOccurs="unbounded" name="result" type="ns3:MySalesAccount" />
+      </sequence>
+    </complexType>
+  </element>
+</schema>

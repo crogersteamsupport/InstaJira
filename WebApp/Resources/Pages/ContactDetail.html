@@ -1,0 +1,1057 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="Tasks.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/standards.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/ts.editor.css" rel="stylesheet" />
+    <!--<link href="Tasks.css" rel="stylesheet" type="text/css" />-->
+    <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <link href="../Css/jquery-ui-bs3.min.css" rel="stylesheet" type="text/css" />
+    <link href="contactdetail.css?1527026843" rel="stylesheet" type="text/css" />
+    <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+
+    <script src="/frontend/library/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/respond.js" type="text/javascript"></script>
+    <script src="/frontend/library/highcharts.js"></script>
+    <script src="/frontend/library/jquery.placeholder.js" type="text/javascript"></script>
+    <script src="../../../tinymce/tinymce.min.js?1512863055" type="text/javascript"></script>
+    <script src="../../../tinymce/jquery.tinymce.min.js?1512863055" type="text/javascript"></script>
+    <script src="/frontend/library/moment.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap-datetimepicker.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.layout.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.iframe-transport.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.fileupload.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.maskedinput.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/handlebars.js" type="text/javascript"></script>
+    <script src="contactdetail.js?1543430185" type="text/javascript"></script>
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+    <script src="../Js/Ts/ts.editor.js?1513012903"></script>
+    <script src="/frontend/library/browser.js" type="text/javascript"></script>
+    <script src="//static.opentok.com/v2/js/opentok.min.js"></script>
+</head>
+<body>
+    <div class="ui-layout-north">
+        <div class="pageheader contactHeader" style="z-index:1000 !important;">
+            <div class="header-nav contactTitleHeader">
+                <div class="pull-right">
+                    <div class="btn-toolbar" role="toolbar">
+                        <div class="btn-group">
+                            <button class="btn btn-primary customer-tooltip" title="Edit this contact" id="contactEdit"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-default customer-tooltip" type="button" title="Refresh this contact" id="contactRefresh"><i class="fa fa-refresh"></i></button>
+                            <button id="Contact-Merge" class="btn btn-default customer-tooltip" title="Merge this contact" type="button" data-toggle="modal" data-target="#MergeModal">
+                                <i class="fa fa-exchange"></i> Merge
+                            </button>
+                            <!--<button class="btn btn-default customer-tooltip" type="button" title="Send a new portal password"  id="btnSendNewPW">Send Password</button>-->
+                            <div class="btn-group" id="passwordResetBtnGroup">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Send Password <span class="caret"></span>
+                                </button>
+                                <ul id="hubPasswordResetList" class="dropdown-menu" style="z-index:10000;">
+                                </ul>
+                            </div>
+                            <button class="btn btn-default customer-tooltip" type="button" title="Send a welcome email" id="btnSendWelcome">Send Welcome Message</button>
+                            <button class="btn btn-default customer-tooltip" type="button" title="Add a reminder" data-target="#modalReminder" data-toggle="modal" id="contactReminder"><i class="fa fa-bell"></i></button>
+                            <button class="btn btn-default customer-tooltip" type="button" title="Delete" id="contactDelete"><i class="fa fa-trash-o"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <img id="contactAvatar" class="user-avatar" src="" />
+                <span id="contactName"></span>
+            </div>
+            <div class="main-nav">
+                <ul class="nav nav-tabs" id="contactTabs">
+                    <li><a href="#contact-overview" id="a-overview" data-toggle="tab">Overview</a></li>
+                    <li><a href="#contact-tickets" id="a-tickets" data-toggle="tab">Tickets</a></li>
+                    <li><a href="#contact-notes" id="a-notes" data-toggle="tab">Activities</a></li>
+                    <li><a href="#contact-files" id="a-files" data-toggle="tab">Files</a></li>
+                    <li><a href="#contact-products" id="a-products" data-toggle="tab">Products</a></li>
+                    <li><a href="#contact-inventory" id="a-inventory" data-toggle="tab">Inventory</a></li>
+                    <li id="ratingsTab"><a href="#contact-ratings" id="a-ratings" data-toggle="tab">Ratings</a></li>
+                    <li id="taskTab"><a href="#contact-tasks" id="a-tasks" data-toggle="tab">Tasks</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui-layout-center">
+        <div class="maincontainer">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="contact-overview">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="box">
+                                <div class="box-header"></div>
+                                <div class="box-content">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-horizontal">
+                                                <div class="row">
+                                                    <div id="openChart" class="col-xs-6"></div>
+                                                    <div id="closedChart" class="col-xs-6"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="customPropRow">
+                                <div class="box">
+                                    <div class="box-header" data-toggle="collapse" data-target="#customFieldContent">
+                                        <span class="ui-icon ui-icon-triangle-1-s"></span>
+                                        <h3>Custom Fields</h3>
+                                    </div>
+                                    <div class="box-content in" id="customFieldContent">
+                                        <div class="row">
+                                            <form class="form-horizontal">
+                                                <div class="col-xs-6">
+                                                    <div id="customPropertiesL" class="customProperties">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div id="customPropertiesR" class="customProperties">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box mb10">
+                                <div class="box-header" style="padding-bottom: 10px;">
+                                    <h3>History</h3>
+                                    <div class="box-actions">
+                                        <a id="historyToggle" data-action="collapse" data-toggle="collapse" data-target="#historyContent"
+                                           href="#"><i class="fa fa-chevron-down"></i></a><a id="historyRefresh" href="#">
+                                            <i class="fa fa-refresh"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="box-content collapse" id="historyContent">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-hover" id="tblHistory">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Author</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="box">
+                                <div class="box-header"><h3>Recent Ticket History</h3><h3 class="pull-right" id="openTicketCount"></h3></div>
+                                <div class="box-content">
+
+                                    <div id="openTickets" class="tickets">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3>Contact Info</h3>
+                                    <div class="pull-right">
+                                        <button class="btn-link btn-sm btn-primary" data-toggle="modal" data-target="#modalEmail" id="contactEmailButton" style="display:none;"><i class="fa fa-plus"></i> Email</button>
+                                        <button class="btn-link btn-sm btn-primary" data-toggle="modal" data-target="#modalPhone" id="contactPhoneButton"><i class="fa fa-plus"></i> Phone</button>
+                                        <button class="btn-link btn-sm btn-primary" data-toggle="modal" data-target="#modalAddress" id="contactAddressButton"><i class="fa fa-plus"></i> Address</button>
+                                    </div>
+
+                                </div>
+                                <div class="box-content">
+                                    <div class="form-horizontal">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div id="userInfo" class="userProperties"></div>
+                                                <div id="emailPanel">
+                                                </div>
+                                                <div id="phonePanel">
+                                                </div>
+                                                <div id="addressPanel">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="box-header"><h3>Settings</h3></div>
+                                <div class="box-content">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <form class="form-horizontal">
+                                                <div class="col-md-12">
+                                                    <div id="userProp" class="userProperties"></div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="contact-tickets">
+                    <iframe id="ticketIframe" frameborder="0" scrolling="no" src="" width="100%" style="height:96%;position:absolute"></iframe>
+                </div>
+                <div class="tab-pane fade" id="contact-notes">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box" id="noteForm" style="display:none;">
+                                <div class="box-content">
+                                    <form class="form-horizontal file-upload-activity" action="Upload/Actions/555" method="POST"
+                                          enctype="multipart/form-data" title="You can drag and drop your attachments here.">
+                                        <div class="form-group">
+                                            <label for="inputName" class="col-sm-1 control-label">Title</label>
+                                            <div class="col-md-10">
+                                                <input class="col-md-10 form-control" id="fieldNoteTitle" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputName" class="col-sm-1 control-label">Description</label>
+                                            <div class="col-md-10">
+                                                <textarea id="fieldNoteDesc"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <label for="ddlNoteActivityType" class="col-sm-1 control-label">Activity Type</label>
+                                                <div class="col-sm-3">
+                                                    <select class="form-control" id="ddlNoteActivityType"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <label for="activityDate" class="col-sm-1 control-label">Date Activity Occurred</label>
+                                                <div class="col-sm-3">
+                                                    <input id="activityDate" class="col-md-10 form-control datepicker">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group productFamilyRow" style="display:none;">
+                                            <div class="row">
+                                                <label for="ddlNoteProductFamily" class="col-sm-1 control-label">Product Line</label>
+                                                <div class="col-sm-3">
+                                                    <select class="form-control" id="ddlNoteProductFamily">
+                                                        <option value="-1">Unassigned</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputName" class="col-sm-1 control-label">File</label>
+                                            <div class="col-md-10">
+                                                <input class="hiddenfile" type="file" name="file[]">
+                                                <p class="form-control-static">
+                                                    <a class="ui-state-default ts-link" href="#" title="You can drag and drop your attachments here.">
+                                                        Click to select your file or drag and drop files here.
+                                                    </a>
+                                                </p>
+                                                <ul class="upload-queue-activity"></ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <label for="noteContactAlert" class="col-sm-1 control-label">Set as Alert</label>
+                                                <div class="col-sm-1" style="padding:8px 15px;"><input type="checkbox" id="noteContactAlert"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="display: none;" id="noteAttachmentsRow">
+                                            <div class="row">
+                                                <label for="inputName" class="col-sm-1 control-label">Existing Files</label>
+                                                <div class="col-md-10" id="noteAttachments"></div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top:15px;">
+                                            <input type="hidden" id="fieldNoteID" value="-1" />
+                                            <button id="btnNotesSave" class="btn btn-primary">Save Activity</button>
+                                            <button id="btnNotesCancel" class="btn btn-default">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="box-header">
+                                    <button id="noteToggle" class="btn btn-primary">Log Activity</button>
+                                </div>
+                                <div class="box-content">
+                                    <h4>Contact Activity</h4>
+                                    <div class="row note-list">
+                                        <div class="col-md-12">
+                                            <table class="table table-hover" id="tblNotes">
+                                                <thead>
+                                                <th style="width:1%"></th>
+                                                <th style="width:1%"></th>
+                                                <th style="width:15%">Title</th>
+                                                <th style="width:10%">Author</th>
+                                                <th style="width:10%">Date Written</th>
+                                                <th class="productFamilyColumn" style="display: none;width:10%">Product Line</th>
+                                                <th style="width:10%">Activity Type</th>
+                                                <th style="width:10%">Date Occurred</th>
+                                                <th style="width:5%">Add Task</th>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <h4>Company Activity</h4>
+                                    <div class="row note-list">
+                                        <div class="col-md-12">
+                                            <table class="table table-hover" id="tblNotesAdditional">
+                                                <thead>
+                                                <th style="width:1%"></th>
+                                                <th style="width:1%"></th>
+                                                <th style="width:15%">Title</th>
+                                                <th style="width:10%">Author</th>
+                                                <th style="width:10%">Date Written</th>
+                                                <th class="productFamilyColumn" style="display: none;width:10%">Product Line</th>
+                                                <th style="width:10%">Activity Type</th>
+                                                <th style="width:10%">Date Occurred</th>
+                                                <th style="width:5%">Add Task</th>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box" id="noteDescBox" style="display:none;">
+                                <div class="box-content">
+                                    <div class="noteDesc"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="contact-files">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box" id="fileForm" style="display:none;">
+                                <div class="box-header"></div>
+                                <div class="box-content">
+                                    <form class="form-horizontal file-upload" action="Upload/Actions/555" method="POST" enctype="multipart/form-data" title="You can drag and drop your attachments here.">
+                                        <div class="form-group">
+                                            <label for="inputName" class="col-md-2 control-label">File</label>
+                                            <div class="col-md-10">
+                                                <input class="hiddenfile" type="file" name="file[]">
+                                                <p class="form-control-static"><a class="ui-state-default ts-link" href="#" title="You can drag and drop your attachments here.">Click to select your file or drag and drop files here.</a></p>
+                                                <ul class="upload-queue"></ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputName" class="col-md-2 control-label">Description</label>
+                                            <div class="col-md-10">
+                                                <textarea class="col-md-3 form-control" id="attachmentDescription"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group productFamilyRow" style="display:none">
+                                            <div class="row">
+                                                <!--<div class="col-md-8">-->
+                                                <label for="ddlFileProductFamily" class="col-md-2 control-label">Product Line</label>
+                                                <div class="col-md-6">
+                                                    <select class="form-control" id="ddlFileProductFamily">
+                                                        <option value="-1">Unassigned</option>
+                                                    </select>
+                                                </div>
+                                                <!--</div>-->
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    <button id="btnFilesSave" class="btn btn-primary col-md-offset-1">Upload</button>
+                                    <button id="btnFilesCancel" class="btn btn-default">Cancel</button>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="box-header">
+                                    <a href="#" id="fileToggle"><i class="fa fa-plus"></i> Files</a>
+                                </div>
+                                <div class="box-content">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-hover" id="tblFiles">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>File Name</th>
+                                                        <th>Description</th>
+                                                        <th>Attached By</th>
+                                                        <th>Date Attached</th>
+                                                        <th class="productFamilyColumn" style="display: none;">Product Line</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="contact-products">
+                    <div class="row">
+                        <div class="col-xs-12" id="productsContainer">
+                            <div class="box" id="productForm" style="display: none;">
+                                <div class="box-header">
+                                </div>
+                                <div class="box-content">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="col-md-2 control-label" for="productProduct">Product</label>
+                                                    <div class="col-md-8">
+                                                        <select id="productProduct" class="form-control"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="col-md-2 control-label" for="productVersion">Version</label>
+                                                    <div class="col-md-8">
+                                                        <select id="productVersion" class="form-control">
+                                                            <option value="-1">Unassigned</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="col-md-2 control-label" for="productExpiration">Warranty Expiration</label>
+                                                    <div class="col-md-8">
+                                                        <input id="productExpiration" class="col-md-10 form-control datepicker">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="productContact">
+                                        <div id="customProductsControls"></div>
+                                    </form>
+                                    <input type="hidden" id="fieldProductID" value="-1" />
+                                    <button id="btnProductSave" class="btn btn-primary col-md-offset-1">Associate Product</button>
+                                    <button id="btnProductCancel" class="btn btn-default">Cancel</button>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="box-header">
+                                    <button id="productToggle" class="btn btn-primary">Associate Product</button>
+                                </div>
+                                <div class="box-content">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-hover" id="tblProducts">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th><a href="#" class="productHeader">Product Name</a></th>
+                                                        <th><a href="#" class="productHeader">Version</a></th>
+                                                        <th><a href="#" class="productHeader">Support Expiration</a></th>
+                                                        <th><a href="#" class="productHeader">Status</a></th>
+                                                        <th><a href="#" class="productHeader">Released</a></th>
+                                                        <th><a href="#" class="productHeader">Released Date</a></th>
+                                                        <th><a href="#" class="productHeader">Date Created<i class="fa fa-sort-desc"></i></a></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                            <div class="products-loading"><i class="fa fa-spinner fa-spin"></i>&nbsp; Loading...</div>
+                                            <div class="products-empty" hidden>This contact has no products.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="contact-inventory">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                </div>
+                                <div class="box-content">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button class="btn btn-primary asset-action-assign" data-toggle="modal" data-target="#modalAssign">Assign Asset</button>
+                                            <div class="list-group assetList">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="contact-ratings">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <!--<div class="row productLineRowLabel" style="display:none">
+                                        <label for="ddlRatingProductFamily" class="col-md-2 control-label">Product Line</label>
+                                    </div>-->
+                                    <div class="row productLineRow" style="display:none">
+                                        <div class="col-md-6">
+                                            <select class="form-control" id="ddlRatingProductFamily">
+                                                <option value="-1">All Product Lines</option>
+                                                <option value="0">Without Product Line</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-1">
+                                            <p class="percent" id="positivePercent">0%</p>
+                                            <a href="#"><img id="positiveImage" src="../Images/face-positive.png" style="width:50px;height:50px" /></a>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <p class="percent" id="neutralPercent">0%</p>
+                                            <a href="#"><img id="neutralImage" src="../Images/face-neutral.png" style="width:50px;height:50px" /></a>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <p class="percent" id="negativePercent">0%</p>
+                                            <a href="#"><img id="negativeImage" src="../Images/face-negative.png" style="width:50px;height:50px" /></a>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <a href="#" id="viewAll">View All</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-content">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table table-hover" id="tblRatings">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="col-xs-1">Ticket</th>
+                                                        <th class="col-xs-2">Agents</th>
+                                                        <th class="col-xs-1">Reported By</th>
+                                                        <th class="col-xs-1">Date Reported</th>
+                                                        <th class="col-xs-1">Rating</th>
+                                                        <th class="col-xs-5">Comments</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="contact-tasks">
+                    <div class="row">
+                        <div class="col-xs-12" id="taskContainer">
+                            <div class="box">
+                                <div class="box-header">
+                                </div>
+                                <div class="box-content">
+                                    <div class="row">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Name</td>
+                                                    <td>Assigned To</td>
+                                                    <td>Due</td>
+                                                    <td>Reminder Date</td>
+                                                    <td>Associations</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tasks"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalAssign">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="modalAssignTitle">Assign asset</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group" id="inputAssetDiv">
+                            <label for="inputAsset" class="col-md-4 control-label">Asset to assign:</label>
+                            <div class="col-md-8">
+                                <input class="col-md-10 form-control" id="inputAsset" placeholder="Enter partial name or serial number then select asset from list">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateShipped" class="col-md-4 control-label">Date Shipped:</label>
+                            <div class="col-md-8">
+                                <input class="col-md-10 form-control" id="dateShipped">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shippingMethod" class="col-md-4 control-label">Shipping method:</label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="shippingMethod">
+                                    <option value="FedEx">FedEx</option>
+                                    <option value="UPS">UPS</option>
+                                    <option value="USPS">USPS</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="trackingNumber" class="col-md-4 control-label">Tracking Number:</label>
+                            <div class="col-md-8">
+                                <input class="col-md-10 form-control" id="trackingNumber" placeholder="Tracking Number">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="referenceNumber" class="col-md-4 control-label">Reference Number:</label>
+                            <div class="col-md-8">
+                                <input class="col-md-10 form-control" id="referenceNumber" placeholder="Reference Number (PO etc.)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comments" class="col-md-4 control-label">Comments:</label>
+                            <div class="col-md-8">
+                                <textarea class="col-md-10 form-control" id="comments" placeholder="Comments about assigning this asset."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnSaveAssign">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="btnClose">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalReminder">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Reminder</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputName" class="col-md-4 control-label">What is this reminder all about?</label>
+                            <div class="col-md-8">
+                                <input class="col-md-10 form-control" id="reminderDesc">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber" class="col-md-4 control-label">When do you want to be reminded?</label>
+                            <div class="col-md-8">
+                                <input class="col-md-10 form-control" id="reminderDate" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneExt" class="col-md-4 control-label">Who do you want to remind?</label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="reminderUsers"></select>
+                            </div>
+                        </div>
+                        <input type="hidden" id="Hidden1" value="-1"></input>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnSaveReminder">Save</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEmail">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Email</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <!--<div class="form-group">
+                            <label for="inputName" class="col-md-4 control-label">Phone Type</label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="phoneType"></select>
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <label for="phoneNumber" class="col-md-4 control-label">Email</label>
+                            <div class="col-md-8">
+                                <input class="col-md-10 form-control" id="email">
+                            </div>
+                        </div>
+                        <!--<div class="form-group">
+                            <label for="phoneExt" class="col-md-4 control-label">Ext</label>
+                            <div class="col-md-8">
+                                <input class="col-md-3 form-control" id="phoneExt">
+                            </div>
+                        </div>-->
+                        <input type="hidden" id="emailID" value="-1"></input>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnEmailSave">Save</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="modalPhone">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Phone Number</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputName" class="col-md-4 control-label">Phone Type</label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="phoneType"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber" class="col-md-4 control-label">Phone Number</label>
+                            <div class="col-md-8">
+                                <input class="col-md-10 form-control" id="phoneNumber">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneExt" class="col-md-4 control-label">Ext</label>
+                            <div class="col-md-8">
+                                <input class="col-md-3 form-control" id="phoneExt">
+                            </div>
+                        </div>
+                        <input type="hidden" id="phoneID" value="-1"></input>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnPhoneSave">Save</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="modalAddress">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Address</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputName" class="col-md-4 control-label">Description</label>
+                            <div class="col-md-8">
+                                <input class="col-md-10 form-control" id="addressDesc">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-md-4 control-label">Address Line 1</label>
+                            <div class="col-md-8">
+                                <input class="col-md-3 form-control" id="address1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-md-4 control-label">Address Line 2</label>
+                            <div class="col-md-8">
+                                <input class="col-md-3 form-control" id="address2">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-md-4 control-label">Address Line 3</label>
+                            <div class="col-md-8">
+                                <input class="col-md-3 form-control" id="address3">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-md-4 control-label">City</label>
+                            <div class="col-md-8">
+                                <input class="col-md-3 form-control" id="addressCity">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-md-4 control-label">State</label>
+                            <div class="col-md-8">
+                                <input class="col-md-3 form-control" id="addressState">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-md-4 control-label">Zip / Postal</label>
+                            <div class="col-md-8">
+                                <input class="col-md-3 form-control" id="addressZip">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-md-4 control-label">Country</label>
+                            <div class="col-md-8">
+                                <input class="col-md-3 form-control" id="addressCountry">
+                            </div>
+                        </div>
+                        <input type="hidden" id="addressID" value="-1"></input>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnAddressSave">Save</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <div id="MergeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="MergeModalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="MergeModalTitle">Merge Contacts</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="border: 1px solid #fbfbfb;padding:10px;background-color: #fbfbfb;">
+                        <h4>1. You have selected the "loser" of the merge</h4>
+                        <p>All the tickets, notes, files, products, assets and ratings of this contact will be moved to the "winner" you choose below. The "loser" will then be deleted.</p>
+                    </div>
+
+                    <div style="border: 1px solid #fbfbfb;padding:10px;background-color: #fbfbfb;">
+                        <h4>2. Next choose the Contact you want to keep the "winner"</h4>
+                        <p>You can only choose one Contact. If you'd like to merge more than two contacts together just go through the merge process again after the merge you are performing now is done.</p>
+                    </div>
+
+                    <input type="text" id="Contact-Merge-search" class="form-control" placeholder="Search for the contact you want to merge ..." />
+
+                    <div class="ui-helper-hidden" id="dialog-contactmerge-preview" style="padding-top: 10px;">
+                        <div id="contactmerge-preview-details">Here is some basic information about the contact you have selected :</div>
+                    </div>
+
+                    <div class="ui-helper-hidden" id="dialog-contactmerge-warning" style="padding-top:10px;">
+                        <h4>3. Finally, click "OK" to merge these Contacts.</h4>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="dialog-contactmerge-confirm"> I understand that I will be deleting the losing contact, and there is no recovery from that action.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="merge-processing" hidden><i class="fa fa-spinner fa-spin"></i>&nbsp; Merging...</div>
+                    <div id="merge-success" class="alert alert-success" role="alert" style="display:none;">Merge Successfull!</div>
+                    <div id="merge-error" class="alert alert-danger" role="alert" style="display:none;">There was an error merging your contacts.  Please try again.</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button id="contact-merge-complete" type="button" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--    <div class="modal fade" id="modalAlert">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">Alert Message</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="modalAlertMessage"></div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-toggle="tooltip" data-dismiss="modal" title="Close Alert" id="alertClose">Close</button>
+                  <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Snooze Alert" id="alertSnooze">Snooze</button>
+                  <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Dismiss Alert" id="alertDismiss">Dismiss</button>
+                </div>
+              </div>
+            </div>
+          </div>-->
+    <div id="dialog" title="Alert Message">
+        <div id="modalAlertMessage"></div>
+    </div>
+
+    <div class="modal fade" id="modalTaskComment">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Would you like to add a comment to complete this task?</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="comments" class="col-md-2 control-label">Comments:</label>
+                            <div class="col-md-10">
+                                <textarea class="col-md-12 form-control" id="taskCompleteComment" placeholder="Comment about completing this task."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnTaskCompleteComment">Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+
+    <div id="AssociateTicketModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="AssociateTicketModalTitle" aria-hidden="true">
+        <div class="modal-dialog" style="width:400px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="AssociateTicketModalTitle">How do you want this ticket associated?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="center-block">
+                        <button class="btn btn-default btn-block ticket-association" data-isparent="null">Related</button>
+                        <button class="btn btn-default btn-block ticket-association" data-isparent="true">Parent</button>
+                        <button class="btn btn-default btn-block ticket-association" data-isparent="false">Child</button>
+                    </div>
+                    <br />
+                    <div id="associate-success" class="alert alert-success" role="alert" style="display:none;">Ticket Associated!</div>
+                    <div id="associate-error" class="alert alert-danger" role="alert" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="SuggestedSolutionsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="SuggestedSolutionModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="SuggestedSolutionsModalTitle">Insert Knowledgebase</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="dialog-select-ticket2" title="Select a Ticket">
+                            <p>Search a ticket number or description:</p>
+                            <input type="text" class="text ui-corner-all ui-widget-content" style="width:50%;" />
+                        </div>
+                    </div>
+                    <p>Or select a suggested solution:</p>
+                    <iframe id="SuggestedSolutionsIFrame" class="afterSearch" src="" style="width:100%; height:350px;"></iframe>
+                </div>
+                <div class="modal-footer" style="margin-top: -16px">
+                    <button id="InsertSuggestedSolutions" type="button" class="btn btn-primary afterSearch">Insert</button>
+                    <button type="button" class="btn btn-default afterSearch" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ChromeInstallModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Extension Required</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p>An Extension is required in order for Screen Sharing to function properly. Please select your browser and install the extension. Once the installation is complete close this dialog and click the Record Screen button again.</p>
+                        <p id="chromemodalbutton"><a href="https://chrome.google.com/webstore/detail/teamsupport-screen-sharin/dlbbnbankbgdoidhinoomgojjbdamofh?hl=en-US" target="_blank" class="btn btn-primary" role="button">Install Extension</a></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="FireFoxInstallModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Extension Required</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p>An Extension is required in order for Screen Sharing to function properly. Please install the browser extension. Once the installation is complete you will need to refresh your browser for the installation to complete. Please save your ticket action text if any before proceeding.</p>
+                        <p id="firefoxmodalbutton"><a href="../../../ScreenShare/ScreenSharing.xpi" class="btn btn-info" role="button">Add to Firefox</a></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script id="hub-password-dropdown-template" type="text/x-handlebars-template">
+    <li class="dropdown-header">
+        Customer Hub{{pluralize this}}
+    </li>
+    {{#hubList}}
+    <li><a href="#" title="Reset CustomerHub password" class="btnResetChubPW" data-familyid="{{ProductFamilyID}}">{{PortalName}}</a></li>
+    {{/hubList}}
+    <li class="divider"></li>
+    <li><a href="#" title="Send a new portal password" id="btnSendNewPW">Portal</a></li>
+</script>
+<script id="contact-tasks-template" type="text/x-handlers-template">
+    {{#taskList}}
+    <tr class="{{formatRow this}}">
+        <td>
+            <input {{taskComplete IsComplete}} type="checkbox" class="change-task-status" data-taskid="{{TaskID}}" />
+        </td>
+        <td>
+            <a href="#" class="tasklink" id="cb{{TaskID}}" data-taskid="{{TaskID}}">
+                {{Name}}
+            </a>
+        </td>
+        <td>{{AssignedTo}}</td>
+        <td>{{formatDate DueDate}}</</td>
+        <td>{{formatDate ReminderDueDate}}</td>
+        <td>
+            {{#Associations}}
+            {{mapAssociation this}}
+            {{/Associations}}
+        </td>
+        </td>
+    </tr>
+
+    <!--{{#SubTasks}}
+    <tr class="">
+        <td>
+            Poop
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    {{/SubTasks}}-->
+    {{/taskList}}
+</script>

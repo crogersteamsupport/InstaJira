@@ -1,0 +1,136 @@
+--This file has a number of queries we can use to tell ages of tickets
+
+
+-- Shows the number of actions per day
+Select CONVERT(VARCHAR,dt.dtime,1) AS 'Action Date',Count(a.datecreated) as 'Number of Actions' 
+FROM dbo.udfDateTimes(CONVERT(VARCHAR,GETDATE()-30,1),CONVERT(VARCHAR,GETDATE(),1), 1, 'day') AS dt 
+LEFT JOIN Actions a ON dt.dtime = CAST(FLOOR(CAST(a.DateCreated AS FLOAT)) AS DATETIME) 
+ group by dt.dtime
+
+
+--Shows number of logins per day
+Select CONVERT(VARCHAR,dt.dtime,1) AS 'Login Date',Count(lh.userid) as 'Number of Logins' 
+FROM dbo.udfDateTimes(CONVERT(VARCHAR,GETDATE()-30,1),CONVERT(VARCHAR,GETDATE(),1), 1, 'day') AS dt 
+LEFT JOIN LoginHistory lh ON dt.dtime = CAST(FLOOR(CAST(lh.DateCreated AS FLOAT)) AS DATETIME) 
+ group by dt.dtime
+
+
+--Overall average to close tickets (all types)
+
+select avg(datediff(d, t.datecreated, t.dateclosed)) as AvgDaysToCloseAllTickets
+ from tickets as t, tickettypes as tt, ticketstatuses as ts
+where 
+t.tickettypeid = tt.tickettypeid and t.organizationid=1078
+and t.ticketstatusid = ts.ticketstatusid
+and ts.isclosed = 1
+
+--Avg to close issues
+select avg(datediff(d, t.datecreated, t.dateclosed)) as AvgDaysToCloseIssues
+ from tickets as t, tickettypes as tt, ticketstatuses as ts
+where 
+t.tickettypeid = tt.tickettypeid and t.organizationid=1078
+and t.ticketstatusid = ts.ticketstatusid
+and ts.isclosed = 1
+and tt.name = 'issues'
+
+--Avg to close bugs
+select avg(datediff(d, t.datecreated, t.dateclosed)) as AvgDaysToCloseBugs
+ from tickets as t, tickettypes as tt, ticketstatuses as ts
+where 
+t.tickettypeid = tt.tickettypeid and t.organizationid=1078
+and t.ticketstatusid = ts.ticketstatusid
+and ts.isclosed = 1
+and tt.name = 'bugs'
+
+--Avg to close features
+select avg(datediff(d, t.datecreated, t.dateclosed)) as AvgDaysToCloseFeatures
+ from tickets as t, tickettypes as tt, ticketstatuses as ts
+where 
+t.tickettypeid = tt.tickettypeid and t.organizationid=1078
+and t.ticketstatusid = ts.ticketstatusid
+and ts.isclosed = 1
+and tt.name = 'features'
+
+--Avg to close tasks
+select avg(datediff(d, t.datecreated, t.dateclosed)) as AvgDaysToCloseTasks
+ from tickets as t, tickettypes as tt, ticketstatuses as ts
+where 
+t.tickettypeid = tt.tickettypeid and t.organizationid=1078
+and t.ticketstatusid = ts.ticketstatusid
+and ts.isclosed = 1
+and tt.name = 'tasks'
+
+
+
+--Avg age of open tickets
+select avg(datediff(d, t.datecreated, getutcdate())) as AvgDaysTicketsCurrentlyOpen
+ from tickets as t, tickettypes as tt, ticketstatuses as ts
+where 
+t.tickettypeid = tt.tickettypeid and t.organizationid=1078
+and t.ticketstatusid = ts.ticketstatusid
+and ts.isclosed = 0
+and tt.name = 'issues'
+
+
+--**Average days to close tickets.  Can be used to track efficiency
+
+
+--Average to close tickets created one month ago
+select avg(datediff(d, t.datecreated, t.dateclosed)) as AvgDaysToClose
+ from tickets as t, tickettypes as tt, ticketstatuses as ts
+where 
+t.tickettypeid = tt.tickettypeid and t.organizationid=1078
+and t.ticketstatusid = ts.ticketstatusid
+and ts.isclosed = 1
+and datediff(m,t.datecreated,getutcdate())=1
+
+--Average to close tickets created 2 months ago
+select avg(datediff(d, t.datecreated, t.dateclosed)) as AvgDaysToClose
+ from tickets as t, tickettypes as tt, ticketstatuses as ts
+where 
+t.tickettypeid = tt.tickettypeid and t.organizationid=1078
+and t.ticketstatusid = ts.ticketstatusid
+and ts.isclosed = 1
+and datediff(m,t.datecreated,getutcdate())=2
+
+
+
+-**Used to show stale ticket backlog?
+
+
+
+--Number of tickets open by user currently
+
+select u.firstname, 
+(select count(*) from tickets as t, ticketstatuses as ts where t.ticketstatusid = ts.ticketstatusid and userid = u.userid and ts.isclosed = 0) 
+from users  as u 
+where u.organizationid = 1078
+
+--Tickets created more than 1 month ago
+select u.firstname, 
+(select count(*) from tickets as t, ticketstatuses as ts where t.ticketstatusid = ts.ticketstatusid and userid = u.userid and ts.isclosed = 0 and datediff(month, t.datecreated, getutcdate())>=1) 
+from users  as u 
+where u.organizationid = 1078
+
+--Tickets created more than 1 month ago
+select u.firstname, 
+(select count(*) from tickets as t, ticketstatuses as ts where t.ticketstatusid = ts.ticketstatusid and userid = u.userid and ts.isclosed = 0 and datediff(month, t.datecreated, getutcdate())>=2) 
+from users  as u 
+where u.organizationid = 1078
+
+
+
+--** We can use these to show efficiency of user over a period of time
+
+--Number of tickets closed this month
+select u.firstname, 
+(select count(*) from tickets as t, ticketstatuses as ts where t.ticketstatusid = ts.ticketstatusid and closerid = u.userid and ts.isclosed = 1 and datediff(month, t.dateclosed, getutcdate())=0) 
+from users  as u 
+where u.organizationid = 1078
+
+
+--Number of tickets closed last month
+select u.firstname, 
+(select count(*) from tickets as t, ticketstatuses as ts where t.ticketstatusid = ts.ticketstatusid and closerid = u.userid and ts.isclosed = 1 and datediff(month, t.dateclosed, getutcdate())=1) 
+from users  as u 
+where u.organizationid = 1078

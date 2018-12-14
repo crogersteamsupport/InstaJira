@@ -1,0 +1,182 @@
+﻿body {
+}
+
+.header-nav { height: 49px; overflow:hidden; white-space:nowrap; }
+.pageheader .btn-toolbar { margin: 10px 20px 0 0; }
+.pageheader .nav-tabs{border-bottom:none !important;}
+
+#Name {
+    margin: 0 0 0 15px;
+    font-size: 24px;
+}
+
+.fa-paste {
+    color: #5CB85C !important
+}
+
+.fa-book {
+    color: #3276B1 !important
+}
+
+.mce-i-image {
+    color: #BA55D3 !important
+}
+
+.fa-dropbox {
+    color: #3d9ae8 !important
+}
+
+.fa-circle {
+    color: #D9534F !important
+}
+
+.form-horizontal .control-label{font-weight:normal;color:#888;text-align:left;font-size:12px}
+.box-content {font-size: 12px}
+
+.taskProperties i {line-height: 2em;cursor:pointer}
+.taskProperties p {word-wrap:break-word;font-size: 12px}
+
+.form-group p.editable, .editable {
+    color: black;
+    cursor:pointer;
+}
+
+.form-inline .form-group input {
+	width:140px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.form-inline .form-group i{
+    margin-right:10px;
+    cursor:pointer;
+}
+
+.db{display:block;font-size:12px}
+
+#fieldDescription {padding-left: 10px;}
+
+.attachrow {
+    /*border-top:1px solid #ddd;
+    background-color: #F7F7F7;
+    padding: .5em;*/
+    margin-top: 5px;
+}
+
+form.file-upload { position: relative; overflow: hidden; direction: ltr; cursor: pointer; color: #333; height: 16px; line-height: 16px; float:left; margin-top: 4px !important; margin-right: 5px !important; }
+form.file-upload input { position: absolute; top: 0; right: 0; margin: 0; border: 300px solid transparent; opacity: 0; -ms-filter: 'alpha(opacity=0)'; filter: alpha(opacity=0); -o-transform: translate(-300px, -300px) scale(10); -moz-transform: translate(-800px, 0) scale(10); cursor: pointer; height: 100%; }
+:root form.file-upload input { height: auto; }
+
+.arrow-up {
+	width: 0; 
+	height: 0; 
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid black;
+	position: relative;
+	left: 7px;
+	clear: both;
+}
+
+.subcontainer {
+    /*border-top:1px solid #ddd;*/ 
+    padding: .5em;/*display:none;height: 22px*/
+}
+.ur{/*display:inline-block;*/line-height:1.5em}    
+
+.ulfn{padding:2px 2px 2px 6px;line-height:1.5em}
+
+.upload-queue .progress {
+    float: left;
+    height: 7px;
+    margin: 4px 0.25em 0 1em;
+    width: 100px;
+}
+
+.upload-queue .filename {
+    float: left;
+    line-height: 16px;
+}
+
+.upload-queue .ui-icon {
+    cursor: pointer;
+    float: left;
+    margin-left: 0.25em;
+    padding: 0;
+}
+
+/*#attachmentinput {
+    margin-bottom: 20px;
+}*/
+
+.ticket-removable-item {
+/*padding: .25em .5em;*/
+margin: 0 .5em .5em 0;
+float: left;
+}
+
+.ticket-removable-item .ui-icon-close {
+    cursor: pointer;
+    float: right;
+    margin-left: 0.25em;
+    width: 16px;
+}
+
+#associationsBreak {
+    margin: 5px 0px 10px 0px;
+}
+.associationsBreakAdjustement {
+    margin-top: 20px !important;
+}
+.attachment-list{padding: 10px 0 0 0}
+.attfilename{margin-right: 5px; line-height: 16px;}
+.ts-icon-attachment{float:left; margin-right: 10px}
+.ts-icon-attachment { background-position: -448px 0px; }
+.ts-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
+.ts-icon { width: 16px; height: 16px; background-image: url(../images/ts_icons_normal.png); }
+
+.main-quick-ticket-blur, .company-search-blur, .contact-search-blur, .user-search-blur, .insert-ticket-blur, .group-search-blur,.product-search-blur { font-style: italic;}
+.main-quick-ticket, .company-search, .user-search, .insert-ticket, .group-search, .product-search {width:200px}
+
+.parentLink {
+    color: rgb(153, 153, 153);
+}
+
+.parentName {
+    margin-top: -2px;
+    margin-bottom: 0px;
+}
+
+.subtaskButtonsAdjustement {
+    margin-top: 4px !important;
+}
+
+.clearDate {
+    float: right;
+    margin-top: -4px !important;
+}
+
+#infoBreak {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.emptyButton {
+    background-color: #FFFFFF !important;
+    color: #999;
+    border-color: #999;    
+}
+
+.completedButton {
+    background-color: #5CB85C;
+    color: #FFFFFF;
+    border-color: #999;
+}
+
+.completedButton:hover {
+    color: white;
+}
+
+.completedButton:focus {
+    color: white;
+}

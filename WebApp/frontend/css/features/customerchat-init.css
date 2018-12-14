@@ -1,0 +1,117 @@
+html,
+body {
+    margin:0px;
+    padding:0px;
+}
+
+div {
+    font-family:verdana;
+}
+
+div.alert {
+    margin:10px;
+    padding:10px;
+    background-color:#cce5ff;
+    border-radius:5px;
+    font-size:11px;
+    font-family:verdana;
+    line-height:20px;
+}
+
+
+
+input,
+select {
+    font-family:'Open Sans', sans-serif;
+    outline:0px !important;
+    border-radius:0px !important;
+    box-sizing:border-box;
+}
+input[type="text"],
+input[type="password"],
+select {
+    width:100%;
+    font-size:13px;
+    padding:6px;
+    background-color:none;
+    -webkit-box-shadow:none;
+    box-shadow:none;
+    outline:none;
+    border-top:0px;
+    border-left:0px;
+    border-right:0px;
+    border-bottom:2px solid #b8daff;
+}
+
+select {
+    padding:6px;
+    height:35px;
+}
+
+textarea {
+    font-family:'Open Sans', sans-serif;
+    border-radius:0px 0px 0px 0px !important;
+    resize:vertical;
+    overflow:hidden;
+    box-sizing:border-box;
+    padding:6px;
+    font-size:13px;
+    border-top:0px;
+    border-left:0px;
+    border-right:0px;
+    border-bottom:2px solid #b8daff;
+    width:100%;
+    background-color:#cce5ff;
+    -webkit-box-shadow:none;
+    -webkit-appearance:none;
+    box-shadow:none;
+    outline:none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-box-shadow:0px 0px 0px 1000px white inset !important;
+    -webkit-text-fill-color:black !important;
+}
+
+::placeholder               { color:rgba(0,0,0,0.7); }
+::-webkit-input-placeholder { color:rgba(0,0,0,0.7); }
+::-moz-placeholder          { color:rgba(0,0,0,0.7); }
+:-moz-placeholder           { color:rgba(0,0,0,0.7); }
+:-ms-input-placeholder      { color:rgba(0,0,0,0.7); }
+
+.placecenter::placeholder               { text-align:center; }
+.placecenter::-webkit-input-placeholder { text-align:center }
+.placecenter::-moz-placeholder          { text-align:center }
+.placecenter:-moz-placeholder           { text-align:center }
+.placecenter:-ms-input-placeholder      { text-align:center }
+
+button {
+    background-color:#31708f;
+    padding:5px 10px;
+    border:0px;
+    text-align:right;
+    color:white;
+    font-weight:bold;
+}
+
+
+#deflection-box {
+    display:none;
+    padding:5px 0px;
+    background-color:#cce5ff;
+}
+
+#deflection-results .strip {
+    margin:10px;
+    max-width:100%;
+    background-color:#b8daff;
+}

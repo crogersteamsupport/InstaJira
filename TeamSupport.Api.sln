@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamSupport.Api", "TeamSupport.Api\TeamSupport.Api.csproj", "{CC4D311A-D6EA-4113-B648-537824E3B5D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamSupport.Data", "TeamSupport.Data\TeamSupport.Data.csproj", "{1943AC11-1F2D-4B85-9F0F-4D67284814BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC4D311A-D6EA-4113-B648-537824E3B5D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC4D311A-D6EA-4113-B648-537824E3B5D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC4D311A-D6EA-4113-B648-537824E3B5D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC4D311A-D6EA-4113-B648-537824E3B5D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1943AC11-1F2D-4B85-9F0F-4D67284814BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1943AC11-1F2D-4B85-9F0F-4D67284814BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1943AC11-1F2D-4B85-9F0F-4D67284814BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1943AC11-1F2D-4B85-9F0F-4D67284814BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

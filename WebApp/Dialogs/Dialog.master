@@ -1,0 +1,142 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Dialog.master.cs" Inherits="Dialogs_Dialog" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+  <title>Untitled Page</title>
+  <link href="../Css/ui.css" rel="stylesheet" type="text/css" />
+  <!--[if IE 7]><link href="Css/ui-ie7.css" rel="stylesheet" type="text/css" /><![endif]--><!--[if IE 8]><link href="Css/ui-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <link href="../Css/dialog.css" rel="stylesheet" type="text/css" />
+  <script src="/frontend/library/jquery-1.4.2.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery.Jcrop.js" type="text/javascript"></script>
+  <link href="../Css/jquery.Jcrop.css" type="text/css" rel="stylesheet" />
+
+  <style type="text/css">
+    html, body, form
+    {
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+      overflow:hidden;
+    }
+    .dialogContentWrapperDiv
+    {
+    	overflow-x: hidden;
+    	overflow-y: auto;
+    	width:100%;
+    	height:100%;
+
+    	}
+    .dialogContentDiv
+    {
+    	padding:10px 10px;
+  	}
+
+    .reToolbar.Office2007 .InsertTicketLink
+    {
+      background-image: url(../images/icons/add.png);
+    }
+
+    .reButton_text
+    {
+        text-indent:0px !important;
+    }
+
+    .relativePane
+    {
+    	position:relative;
+    	}
+
+      [type="button"] {
+      margin: 0px 0px 30px 5px;
+      list-style: none;
+      float: left;
+      position: relative;
+      border: 0 !important;
+      padding: 0px 10px 0px 10px;
+      white-space: nowrap;
+      height: 25px;
+      cursor: pointer;
+      background-color: #445c75 !important;
+      border-radius: 5px;
+      vertical-align: middle;
+      color:white;
+      }
+
+  </style>
+
+
+  <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body>
+  <form id="form1" runat="server">
+  <telerik:RadScriptManager ID="RadScriptManager1" runat="server" ScriptMode="Release" OutputCompression="Forced"></telerik:RadScriptManager>
+  <telerik:RadAjaxManager ID="ajaxManager" runat="server" UpdatePanelsRenderMode="Inline">
+    <AjaxSettings>
+      <telerik:AjaxSetting AjaxControlID="btnSave">
+        <UpdatedControls>
+          <telerik:AjaxUpdatedControl ControlID="btnSave" />
+        </UpdatedControls>
+      </telerik:AjaxSetting>
+      <telerik:AjaxSetting AjaxControlID="btnCancel">
+        <UpdatedControls>
+          <telerik:AjaxUpdatedControl ControlID="btnCancel" />
+        </UpdatedControls>
+      </telerik:AjaxSetting>
+    </AjaxSettings>
+  </telerik:RadAjaxManager>
+  <div style="width:100%; height:100%;">
+  <telerik:RadSplitter ID="RadSplitter1" runat="server" Height="100%" Width="100%"
+    BorderSize="0" Orientation="Horizontal" FullScreenMode="true" VisibleDuringInit="false">
+    <telerik:RadPane ID="RadPane1" runat="server" Height="100%" Width="100%" Scrolling="None" CssClass="relativePane">
+      <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+    </telerik:RadPane>
+    <telerik:RadPane ID="RadPane2" runat="server" Scrolling="None" Height="50px">
+      <div id="pnlButtons" runat="server" style="margin: 5px 15px 0 0; float: right; height: 50px;">
+        <table border="0" cellpadding="0" cellspacing="10">
+          <tr>
+            <td>
+              <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" OnClientClick="clearCache();" />
+            </td>
+            <td>
+              <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click"  />
+            </td>
+          </tr>
+        </table>
+      </div>
+    </telerik:RadPane>
+  </telerik:RadSplitter>
+  </div>
+
+  <asp:HiddenField ID="fieldPostToken" runat="server" />
+
+  <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
+    <script language="javascript" type="text/javascript">
+      function clearCache() {
+        top.Ts.Cache.checkAll();
+        top.Ts.Settings.clearCache();
+        setTimeout(function () { top.Ts.System.refreshUser(); }, 2000);
+
+      }
+
+      function GetRadWindow() {
+        if (window.radWindow) {
+          return window.radWindow;
+        }
+        if (window.frameElement && window.frameElement.radWindow) {
+          return window.frameElement.radWindow;
+        }
+        return null;
+      }
+      function Close(arg) {
+        if (arg) GetRadWindow().Close(arg); else GetRadWindow().Close();
+      }
+
+
+
+    </script>
+  </telerik:RadCodeBlock>
+  </form>
+</body>
+</html>

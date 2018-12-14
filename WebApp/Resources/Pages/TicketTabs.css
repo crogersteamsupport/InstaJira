@@ -1,0 +1,32 @@
+﻿.tickets-tab-content { height:100%; }
+.tickets-panel-footer { border-bottom: none; border-left: none; border-right:none;}
+.ticket-grid-count { font-weight:bold;  padding: .25em .5em; float:right;}
+
+
+div.tickets-panel-tabs li {
+    margin: 2px 0px 0px 5px;
+    list-style: none;
+    float: left;
+    position: relative;
+    border: 0 !important;
+    padding: 0 10px;
+    white-space: nowrap;
+    height: 25px;
+    line-height: 25px;
+    cursor: pointer;
+    background-color: #445c75;
+    border-radius: 5px;
+}
+
+div.tickets-panel-tabs li a {
+    font-family: 'Lucida Sans Unicode' !important;
+    color: white !important;
+}
+
+div.tickets-panel-tabs li:hover {
+    background-color: #d27065 !important;
+}
+
+div.tickets-panel-tabs li.ui-state-active {
+    background-color: #d58279 !important;
+}

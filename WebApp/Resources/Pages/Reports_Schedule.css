@@ -1,0 +1,202 @@
+﻿body {
+   background-color: #fff;
+}
+
+body#tinymce {
+    height:300px;
+    overflow: auto;
+}
+
+.reports-header {
+	font-size: 18px;
+	padding: 20px 0 10px 10px;
+	color: #555;
+	margin-right: 25px;
+}
+
+.schedule-panel-body {
+	padding: 10px 0;
+}
+
+.schedule-panel-body ul {
+	list-style-type: none;
+}
+
+.schedule-panel-body label {
+	width: 10%;
+	vertical-align: middle;
+}
+
+.scheduledReport-error {
+	border: solid 1px #a94442 !important;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+}
+
+.scheduledReport-error-message {
+	display: block;
+	margin-left: 10%;
+	color: #a94442;
+}
+
+.scheduledReport-error-message-nomargin {
+	display: block;
+	color: #a94442;
+}
+
+.scheduledReport-error-hide {
+	display: none;
+}
+
+.form-actions {
+	text-align: center;
+}
+
+.schedule-comp {
+	margin-right: 15px;
+}
+
+.schedule-cond, .numberList {
+	padding: 5px 0;
+}
+
+.schedule-cond .form-control, .numberList {
+	display: inline-block;
+}
+
+.schedule-cond input {
+	width: 8%;
+}
+
+.schedule-cond a {
+	opacity: 0;
+	filter: alpha(opacity=0);
+	padding-left: 10px;
+	transition: opacity .25s ease-in-out; -moz-transition: opacity .25s ease-in-out; -webkit-transition: opacity .25s ease-in-out;
+}
+
+.numberList {
+	width: 50px !important;
+	display: inline-block;
+	text-align: center;
+}
+
+.monthDayList {
+	width: 75px;
+}
+
+.schedule-email-subject,
+.schedule-email-addresses {
+	width: 80% !important;
+}
+
+.schedule-email-body {
+    padding-left: 0;
+}
+
+.emailRecipients {
+    clear: both;
+    float: left;
+}
+
+.frequencyList {
+	width: 100px;
+}
+
+.scheduleOption {
+	display: inline-block;
+}
+
+#active {
+	cursor: default;
+	vertical-align: bottom;
+}
+
+.scheduleOptions {
+	overflow: hidden;
+}
+
+.frequencyLabel {
+	float: left;
+	padding-top: 5px;
+}
+
+#OptionsContainer {
+	float: left;
+	width: 90%;
+	padding-left: 3px;
+}
+
+.everyLabel {
+	display: inline;
+	margin-right: 10px;
+	vertical-align: middle;
+}
+
+#WeeklyOptions {
+	width: 34%;
+}
+
+.weeksOnLabel {
+	display: inline;
+	vertical-align: middle;
+	text-align: right;
+	margin-right: 10px;
+}
+
+#weeksOn {
+	width: 63%;
+}
+
+.monthsOnTheLabel {
+	display: inline;
+	vertical-align: middle;
+	text-align: right;
+	margin-right: 10px;
+}
+
+#StartDateTimePicker {
+    width: 1px;
+    border: none;
+    opacity: 0.00;
+    position: absolute;
+    z-index: 1;
+}
+
+.activeLabel {
+    float: left;
+    padding-top: 5px;
+}
+
+#active,
+#runNow {
+    padding-left: 3px;
+}
+
+.fa-paste {
+    color: #5CB85C !important
+}
+
+.fa-book {
+    color: #3276B1 !important
+}
+
+.fa-ticket {
+    color: #FEC21E !important
+}
+
+.mce-i-image {
+    color: #BA55D3 !important
+}
+
+.fa-dropbox {
+    color: #3d9ae8 !important
+}
+
+.fa-circle {
+    color: #D9534F !important
+}
+
+#email-body-editor_ifr {
+    width: 97% !important;
+}

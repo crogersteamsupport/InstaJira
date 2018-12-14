@@ -1,0 +1,10 @@
+﻿    .filter-left { border-right: 2px solid #428BCA; padding: 10px 10px; }
+    .filter-content { padding-left: 0; }
+    .filter-cond, .filter-actions { padding: 5px 0; }
+    .filter-cond .form-control { display: inline-block; }
+    .filter-cond input, .filter-cond select { width: 175px; }
+    .filter-cond a { opacity: 0; filter: alpha(opacity=0); padding-left: 10px; transition: opacity .25s ease-in-out; -moz-transition: opacity .25s ease-in-out; -webkit-transition: opacity .25s ease-in-out;}
+    .filter-cond:hover a { opacity: 0.5; filter: alpha(opacity=50); }
+    .filter table { border-collapse: separate; border-spacing: 15px; }
+    .filter-field, .filter-comp { margin-right: 15px;}
+    .filter-modal .modal-dialog { width: 90%;}

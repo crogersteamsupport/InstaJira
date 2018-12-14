@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:ns2="http://xmlns.oracle.com/apps/cdm/foundation/parties/personService/" xmlns:sdoXML="commonj.sdo/xml" xmlns:sdoJava="commonj.sdo/java" xmlns:ns0="http://xmlns.oracle.com/adf/svc/types/" xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" xmlns:ns1="http://xmlns.oracle.com/apps/cdm/foundation/parties/organizationService/" elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" sdoJava:package="oracle.apps.crmCommon.salesParties.salesPartiesService" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/META-INF/wsdl/BC4JService.xsd" namespace="http://xmlns.oracle.com/adf/svc/types/" />
+  <xsd:import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/cdm/foundation/parties/organizationService/OrganizationProfile.xsd" namespace="http://xmlns.oracle.com/apps/cdm/foundation/parties/organizationService/" />
+  <xsd:import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/cdm/foundation/parties/personService/PersonProfile.xsd" namespace="http://xmlns.oracle.com/apps/cdm/foundation/parties/personService/" />
+  <xsd:import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/xml/sdoJava.xsd" namespace="commonj.sdo/java" />
+  <xsd:import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/xml/sdoXML.xsd" namespace="commonj.sdo/xml" />
+  <xsd:include schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/crmCommon/salesParties/salesPartiesService/SalesAccountResource.xsd" />
+  <xsd:include schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/oracle/apps/crmCommon/salesParties/salesPartiesService/SalesAccountTerritory.xsd" />
+  <xsd:annotation>
+    <xsd:documentation xmlns:oer="http://xmlns.oracle.com/oer">
+      <name xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/">Sales Account</name>
+      <description xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/">An object used to store sales account profile attributes. A
+                sales account is a sales party with usage as sales account.</description>
+      <keywords xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/">
+        <value>SalesAccount</value>
+      </keywords>
+      <oer:category name="lba" xmlns:oer="http://xmlns.oracle.com/oer">
+        <value xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/">CrmCommonComponent-CRM Common Components</value>
+        <value xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/">CrmCommonComponent-CRM Common Components :
+                    CrmCommonSalesParties-Sales Parties</value>
+      </oer:category>
+      <oer:attributes xmlns:oer="http://xmlns.oracle.com/oer">
+        <oer:attribute description="The identifier for the sales account owner." name="AccountDirectorId" />
+        <oer:attribute description="The standard replication column." name="CpdrfLastUpd" />
+        <oer:attribute description="The standard replication column." name="CpdrfVerPillar" />
+        <oer:attribute description="The standard replication column." name="CpdrfVerSor" />
+        <oer:attribute description="The user who created the record." name="CreatedBy" />
+        <oer:attribute description="The date and time the record was created." name="CreationDate" />
+        <oer:attribute description="The indicator showing whether there is an existing selling or billing relationship with the sales account." name="ExistingFlag" />
+        <oer:attribute description="The date when the existing flag is last modified." name="ExistingFlgLastUpdDate" />
+        <oer:attribute description="The date indicating when the sales account territory assignment was last run by assignment manager." name="LastAssignedDate" />
+        <oer:attribute description="The date on which the record is last updated." name="LastUpdateDate" />
+        <oer:attribute description="The user login for the user who last updated the record." name="LastUpdateLogin" />
+        <oer:attribute description="The user who last updated the record." name="LastUpdatedBy" />
+        <oer:attribute description="The indicator for whether a sales account is a named sales account." name="NamedAccountFlag" />
+        <oer:attribute description="The number to implement optimistic locking. This number is incremented every time that the row is updated. The number is compared at the start and end of a transaction to detect whether another session has updated the row since it was queried." name="ObjectVersionNumber" />
+        <oer:attribute description="The unique identifier on the sales account." name="PartyId" />
+        <oer:attribute description="The date and time of the last update from mobile." name="UserLastUpdateDate" />
+        <oer:attribute description="The segment of the user descriptive flexfield." name="AttributeCategory" />
+        <oer:attribute description="Indicator showing whether the sales account had the required dimensions to allow assignment manager to assign territories to the sales account." name="AssgnExceptionFlag" />
+        <oer:attribute description="Label displaying the currency for a sales account." name="CurrencyCode" />
+        <oer:attribute description="Label displaying currency conversation rate type for a sales account." name="CurcyConvRateType" />
+        <oer:attribute description="Label displaying corporate currency code for a sales account." name="CorpCurrencyCode" />
+        <oer:attribute description="Label displaying the unique name for a sales party." name="PartyUniqueName" />
+        <oer:attribute description="Label displaying the classification code assignment identifier for a sales party." name="CodeAssignmentId" />
+        <oer:attribute description="Label displaying the status of a sales party. Sample values for status are active and inactive." name="Status" />
+        <oer:attribute description="Label displaying the classification category meaning." name="Meaning" />
+        <oer:attribute description="Label displaying the classification category." name="ClassCategory" />
+        <oer:attribute description="Label displaying the classification code." name="ClassCode" />
+        <oer:attribute description="Label displaying View Application" name="ViewApplicationId" />
+        <oer:attribute description="Label displaying the classification category." name="ClassCategory1" />
+        <oer:attribute description="Label displaying the unique name of a sales party." name="PartyUniqueName1" />
+        <oer:attribute description="Label displaying the status of a sales account. Sample values for status are active and inactive." name="Status1" />
+        <oer:attribute description="Label displaying the party type. Sample values for party types are organization and person." name="PartyType" />
+        <oer:attribute description="Label displaying the name of a sales party." name="PartyName" />
+        <oer:attribute description="Label displaying the user-friendly unique identifier of a sales party." name="PartyNumber" />
+        <oer:attribute description="Label displaying the internal identifier of a sales party." name="SalesAccountId" />
+        <oer:attribute description="The sales account resources in the sales account resource team." name="SalesAccountResource" />
+        <oer:attribute description="The reference to a sales party's associated territory information." name="SalesAccountTerritory" />
+        <oer:attribute description="The organization associated to the sales account." name="OrganizationD" />
+        <oer:attribute description="The person object representing the sales account." name="PersonD" />
+      </oer:attributes>
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="SalesAccount">
+    <xsd:annotation>
+      <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+        <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+          <attribute>SalesAccountId</attribute>
+        </key>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element sdoXML:dataType="sdoJava:LongObject" minOccurs="0" name="AccountDirectorId" type="xsd:long" />
+      <xsd:element minOccurs="0" name="CpdrfLastUpd" nillable="true" type="xsd:string" />
+      <xsd:element sdoXML:dataType="sdoJava:IntObject" minOccurs="0" name="CpdrfVerPillar" nillable="true" type="xsd:int" />
+      <xsd:element sdoXML:dataType="sdoJava:IntObject" minOccurs="0" name="CpdrfVerSor" nillable="true" type="xsd:int" />
+      <xsd:element minOccurs="0" name="CreatedBy" type="xsd:string" />
+      <xsd:element minOccurs="0" name="CreationDate" type="ns0:dateTime-Timestamp" />
+      <xsd:element minOccurs="0" name="ExistingFlag" nillable="true" type="xsd:boolean" />
+      <xsd:element minOccurs="0" name="ExistingFlgLastUpdDate" nillable="true" type="ns0:date-Date" />
+      <xsd:element minOccurs="0" name="LastAssignedDate" nillable="true" type="ns0:date-Date" />
+      <xsd:element minOccurs="0" name="LastUpdateDate" type="ns0:dateTime-Timestamp" />
+      <xsd:element minOccurs="0" name="LastUpdateLogin" nillable="true" type="xsd:string" />
+      <xsd:element minOccurs="0" name="LastUpdatedBy" type="xsd:string" />
+      <xsd:element sdoXML:dataType="sdoJava:BooleanObject" minOccurs="0" name="NamedAccountFlag" type="xsd:boolean" />
+      <xsd:element sdoXML:dataType="sdoJava:IntObject" minOccurs="0" name="ObjectVersionNumber" type="xsd:int" />
+      <xsd:element sdoXML:dataType="sdoJava:LongObject" minOccurs="0" name="PartyId" type="xsd:long" />
+      <xsd:element minOccurs="0" name="UserLastUpdateDate" nillable="true" type="ns0:dateTime-Timestamp" />
+      <xsd:element minOccurs="0" name="AttributeCategory" nillable="true" type="xsd:string" />
+      <xsd:element minOccurs="0" name="AssgnExceptionFlag" nillable="true" type="xsd:boolean" />
+      <xsd:element minOccurs="0" name="CurrencyCode" nillable="true" type="xsd:string" />
+      <xsd:element minOccurs="0" name="CurcyConvRateType" nillable="true" type="xsd:string" />
+      <xsd:element minOccurs="0" name="CorpCurrencyCode" nillable="true" type="xsd:string" />
+      <xsd:element minOccurs="0" name="PartyUniqueName" nillable="true" type="xsd:string" />
+      <xsd:element sdoXML:dataType="sdoJava:LongObject" minOccurs="0" name="CodeAssignmentId" type="xsd:long" />
+      <xsd:element minOccurs="0" name="Status" nillable="true" type="xsd:string" />
+      <xsd:element minOccurs="0" name="Meaning" type="xsd:string" />
+      <xsd:element minOccurs="0" name="ClassCategory" type="xsd:string" />
+      <xsd:element minOccurs="0" name="ClassCode" type="xsd:string" />
+      <xsd:element sdoXML:dataType="sdoJava:LongObject" minOccurs="0" name="ViewApplicationId" type="xsd:long" />
+      <xsd:element minOccurs="0" name="ClassCategory1" type="xsd:string" />
+      <xsd:element minOccurs="0" name="PartyUniqueName1" nillable="true" type="xsd:string" />
+      <xsd:element minOccurs="0" name="Status1" type="xsd:string" />
+      <xsd:element minOccurs="0" name="PartyType" type="xsd:string" />
+      <xsd:element minOccurs="0" name="PartyName" type="xsd:string" />
+      <xsd:element minOccurs="0" name="PartyNumber" type="xsd:string" />
+      <xsd:element sdoXML:dataType="sdoJava:LongObject" minOccurs="0" name="SalesAccountId" type="xsd:long" />
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="SalesAccountResource" type="SalesAccountResource" />
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="SalesAccountTerritory" type="SalesAccountTerritory" />
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="OrganizationD" type="ns1:OrganizationProfile" />
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="PersonD" type="ns2:PersonProfile" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="salesAccount" type="SalesAccount" />
+</xsd:schema>

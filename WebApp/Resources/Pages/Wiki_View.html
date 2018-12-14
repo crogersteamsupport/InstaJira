@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/tsbs.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+    <link href="../Css/ts.editor.css" rel="stylesheet" />
+    <!--[if IE]><link href="../Css/tsbs-ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <link href="Wiki_View.css" rel="stylesheet" type="text/css" />
+    <!--<script src="/frontend/library/deployJava.js" type="text/javascript"></script>-->
+    <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/moment.min.js" type="text/javascript"></script>
+    <script src="../../../tinymce/tinymce.min.js?1512863055" type="text/javascript"></script>
+    <script src="../../../tinymce/jquery.tinymce.min.js?1512863055" type="text/javascript"></script>
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropbox.js" id="dropboxjs" data-app-key="ebdoql1dhyy7l72"></script>
+    <script src="/frontend/library/ZeroClipboard/ZeroClipboard.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/browser.js" type="text/javascript"></script>
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+
+    <script src="/frontend/javascript/core/teamsupport.js?1524239233" type="text/javascript"></script>
+    <script src="Wiki_View.js?1524239233" type="text/javascript"></script>
+
+    <title>Wiki</title>
+</head>
+
+<body>
+    <div class="ts-loading page-loading"></div>
+    <div class="frame-container" style="display:none;">
+        <div class="container-fluid">
+            <nav style="min-height:inherit; padding-bottom: 4px;" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="row">
+                    <div id="wiki-title-div" class="col-xs-5 col-xs-offset-3 col-sm-5 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-7 col-lg-offset-2">
+                        <span id="Wiki-Title" class="wiki-title"></span>
+                    </div>
+                    <div id="wiki-view-toolbar" class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <span class="btn-group pull-right">
+                            <button id="NewWiki" class="btn btn-default wiki-tools" type="button" data-toggle="tooltip" data-placement="bottom" title="Create Wiki Page" data-original-title="Create a new wiki article"><i class="fa fa-plus"></i></button>
+                            <button id="EditWiki" class="btn btn-default  wiki-tools" type="button" data-toggle="tooltip" data-original-title="Edit Wiki Page" data-toggle="tooltip" data-placement="bottom" title="Edit Wiki Page"><i class="fa fa-pencil"></i></button>
+                            <button id="wiki-internal-link" data-copy="" class="btn btn-default wiki-tools clipboard" type="button" data-toggle="tooltip" data-placement="bottom" title="Copy Internal Link"><i class="fa fa-hand-o-down"></i></button>
+                            <button id="wiki-external-link" data-copy="" class="btn btn-default wiki-tools clipboard" type="button" data-toggle="tooltip" data-placement="bottom" title="Copy External Link"><i class="fa fa-hand-o-up"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </nav>
+            <div class="row" style="margin-top: 45px;">
+                <div id="wiki-sidebar-div" class="col-xs-3 col-sm-3 col-md-3 col-lg-2 sidebar">
+                    <ul id="wiki-sidebar" class="nav wiki-sidebar"></ul>
+                </div>
+                <div id="WikiViewArea" class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 col-lg-10 col-lg-offset-2">
+                    <div id="Wiki-Body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+
+    <link href="/frontend/css/core/body.css?1516307560" rel="stylesheet" type="text/css">
+    <link href="/frontend/css/core/flexbox.css?1516307559" rel="stylesheet" type="text/css">
+
+    <link href="/vcr/1_9_0/Css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/vcr/1_9_0/Css/frame.css" rel="stylesheet" type="text/css" />
+    <link href="/vcr/1_9_0/Css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+    <link href="/vcr/1_9_0/Css/jquery.ui.combobox.css" rel="stylesheet" type="text/css" />
+    <link href="/vcr/1_9_0/Css/jquery-ui-enhanced.css" rel="stylesheet" type="text/css" />
+    <link href="/vcr/1_9_0/Css/jquery.cluetip.css" rel="stylesheet" type="text/css" />
+    <link href="/vcr/1_9_0/Css/ts.ui.css" rel="stylesheet" type="text/css" />
+    <link href="/vcr/1_9_0/Css/ts.editor.css" rel="stylesheet" />
+    <!--[if IE 7]><link href="vcr/1_9_0/Css/ts.ui.ie7.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <!--[if IE 8]><link href="vcr/1_9_0/Css/ts.ui.ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <link href="User.css" rel="stylesheet" type="text/css" />
+    <link href="/vcr/1_9_0/Css/intlTelInput.css" rel="stylesheet" type="text/css" />
+
+    <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.hoverIntent.min.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.cluetip.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.numeric.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.ui.timepicker.js" type="text/javascript"></script>
+
+    <script src="/vcr/1_9_0/Js/Ts/ts.jquery.ui.combobox.js" type="text/javascript"></script>
+    <script src="/vcr/1_9_0/Js/Ts/ts.pendo.js" type="text/javascript"></script>
+    <script src="/vcr/1_9_0/Js/Ts/ts.utils.js" type="text/javascript"></script>
+
+    <script src="/tinymce/tinymce.min.js?1512863055" type="text/javascript"></script>
+    <script src="/tinymce/jquery.tinymce.min.js?1512863055" type="text/javascript"></script>
+    <script src="/frontend/library/jquery.maskedinput.min.js" type="text/javascript"></script>
+    <script src="/frontend/javascript/pages/user.js?1537890751" type="text/javascript"></script>
+    <script src="/frontend/library/intlTelInput.min.js" type="text/javascript"></script>
+
+</head>
+
+<body class="white">
+    <div class="ui-widget frame-content ts-color-bg-accent ui-widget white" style="position:relative;">
+        <div class="ts-section loading-section">
+            <div class="ts-loading"></div>
+        </div>
+
+        <div class="ui-helper-hidden">
+
+            <!--<span class="ts-icon ts-icon-edit user-profile-edit" title="Edit user profile."></span>-->
+            <div id="divActionForm" style="display:none;" class="fleft">
+                <textarea class="userSignatureText" style="width: 100%; height: 50px;"></textarea>
+                <div style="margin-top: 1em;">
+                    <button class="signature-save ui-state-active">Save</button> <button class="signature-cancel">Cancel</button>
+                </div>
+            </div>
+
+            <div class="flexbox ts-section" style="margin-bottom:50px;">
+                <div class="flex basis200">
+                    <div id="userPhotoContainer" class="">
+                        <img id="userPhoto" src="">
+                        <a id="userPhotoEdit" href="#">Edit</a>
+                    </div>
+                </div>
+                <div class="flex push" id="user-top-info">
+                    <h1 class="no-margin"><a id="UserName" class="user-displayname ui-state-default ts-link" href="#"></a></h1>
+
+                    <div class="user-name-value" style="height:20px;">
+                        <span class="property">Title</span>
+                        <span class="value"><a id="userTitle" class="ui-state-default ts-link" href="#"></a></span>
+                    </div>
+                    <div class="user-name-value" style="height:20px;">
+                        <span class="property">Email</span>
+                        <div class="inline">
+                            <span class="value" id="userEmail"></span>
+                            <i class="fa fa-pencil" id="editEmail"></i>
+                        </div>
+                    </div>
+
+                    <div class="user-name-value" style="height:20px;">
+                        <span class="property">Website</span>
+                        <div class="inline">
+                            <span class="value"><a id="userWebsite" class="ui-state-default ts-link"></a></span>
+                            <i class="fa fa-pencil" id="editWebsite"></i>
+                        </div>
+                    </div>
+
+                    <div class="user-name-value" style="height:20px;">
+                        <span class="property">User Information</span>
+                        <div class="inline">
+                            <a class="value fleft" id="userInfo" href="#"></a>
+                        </div>
+                        <div class="clearfix">
+                            <span class="property">&nbsp;</span>
+                        </div>
+                    </div>
+
+                    <div id="customProperties"></div>
+
+                    <div class="user-name-value">
+                        <span class="property">Signature</span>
+                        <span class="value" id="userSignature"></span>
+                        <div class="userSignature-form"></div>
+                        <div class="clearfix">
+                            <span class="property">&nbsp;</span>
+                            <a id="userSignatureEdit" href="#">Edit</a>
+                            <a id="userSignatureClear" href="#">Clear</a>
+                        </div>
+                    </div>
+
+                    <div class="user-name-value">
+                        <span class="property">Phone Numbers</span>
+                        <div id="userPhoneList"></div>
+                        <div class="clearfix">
+                            <span class="property">&nbsp;</span>
+                            <strong><a href="#" class="ts-add user-info-add user-phone-add">+ Phone</a></strong>
+                        </div>
+                    </div>
+
+                    <div class="user-name-value">
+                        <span class="property">Addresses</span>
+                        <div id="userAddressList"></div>
+                        <div class="clearfix">
+                            <span class="property">&nbsp;</span>
+                            <a href="#" class="ts-add user-address-add">+ Address</a>
+                        </div>
+                    </div>
+
+                    <div class="user-name-value">
+                        <span class="property">Groups</span>
+                        <div id="userGroups"></div>
+                        <div class="clearfix">
+                            <span class="property">&nbsp;</span>
+                            <a href="#" id="addgroup" class="ts-add user-info-add user-group-add">+ Group</a>
+                        </div>
+                    </div>
+
+                    <div id="twoFactorDiv" style="display:none;">
+                        <div class="user-name-value">
+                            <span class="property">Two Factor Authentication</span>
+                            <span class="value"><a id="userTwoFactorCell" class="ui-state-default ts-link" href="#">+ Cell Phone</a></span>
+                            <div id="twoStepInputDiv" style="display:none;">
+                                <input type="tel" id="mobile-number">
+                                <span id="twoStepSave" class="ts-icon ts-icon-save" style="margin-left: 5px;"></span>
+                                <span id="twoStepCancel" class="ts-icon ts-icon-cancel" style="margin-left: 5px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <!-- <div class="ts-seperator ui-widget-content"></div>-->
+                <div id="ts-user-rail"></div>
+                <div id="userProfile"></div>
+                <div class="clearfix"></div>
+
+            </div>
+
+            <div class="ts-section">
+                <div class="title">Account</div>
+                <div id="userProperties" style="display: block;">
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Active</span></div>
+                        <div class="flex push"><a id="userActive" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Activated On</span></div>
+                        <div class="flex push"><span class="value" id="activatedOn"></span></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Last Logged In</span></div>
+                        <div class="flex push"><span class="value" id="userLastLogin"></span></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">System Administrator</span></div>
+                        <div class="flex push"><a id="userSysAdmin" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Customer Chat User</span></div>
+                        <div class="flex push"><a id="chatUser" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Password</span></div>
+                        <div class="flex push"><a id="userPW" class="ts-link" href="#"></a></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="ts-section">
+                <div class="title">User Interface</div>
+                <div id="userProperties" style="display: block;">
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Time Zone</span></div>
+                        <div class="flex push"><a id="userTimeZone" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Date Format</span><span></div>
+                            <div class="flex push"><a id="userDateFormat" class="ts-link" href="#"></a></span></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Default Font Family</span></div>
+                        <div class="flex push"><a id="userFontFamily" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Default Font Size</span></div>
+                        <div class="flex push"><a id="userFontSize" class="ts-link" href="#"></a></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="ts-section">
+                <div class="title">Email Notifications</div>
+                <div id="userNotifications" style="display: block;">
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Email Ticket</span></div>
+                        <div class="flex push"><a id="userEmailNotify" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Assigned Group</span></div>
+                        <div class="flex push"><a id="userGroupNotify" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Unassigned Group</span></div>
+                        <div class="flex push"><a id="userUnassignedGroupNotify" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Disable Group Ticket Emails During Business Hours</span></div>
+                        <div class="flex push"><a id="userEmailAfterHours" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Subscribe To Tickets I Create</span></div>
+                        <div class="flex push"><a id="userSubscribeTickets" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Subscribe To Tickets I Post Actions</span></div>
+                        <div class="flex push"><a id="userSubscribeActions" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Do Not Subscribe To tickets When CC’d On Email</span></div>
+                        <div class="flex push"><a id="userAutoSubscribe" class="ts-link" href="#"></a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Applause</span></div>
+                        <div class="flex push"><a category="notification" setting="applause" class="ts-link setting" href="#">Yes</a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Assignment</span></div>
+                        <div class="flex push"><a category="notification" setting="assignment" class="ts-link setting" href="#">Yes</a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Ticket Modification</span></div>
+                        <div class="flex push"><a category="notification" setting="modification" class="ts-link setting" href="#">Yes</a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">SLA</span></div>
+                        <div class="flex push"><a category="notification" setting="sla" class="ts-link setting" href="#">Yes</a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Tasks</span></div>
+                        <div class="flex push"><a category="notification" setting="tasks" class="ts-link setting" href="#">Yes</a></div>
+                    </div>
+                    <div class="user-name-value flexbox">
+                        <div class="flex basis300"><span class="property-wide">Reminders</span></div>
+                        <div class="flex push"><a category="notification" setting="reminders" class="ts-link setting" href="#">Yes</a></div>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="ts-section ui-helper-hidden" id="divProductFamiliesContainer">
+                <div class="title">User Product Lines</div>
+                <div class="ts-separator ui-widget-content"></div>
+                <div id="divAddProductFamily">
+                    <input type="text" class="ui-corner-all ui-widget-content">
+                    <button>Add Product Line</button>
+                </div>
+                <div id="divProductFamilies"></div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="ts-section">
+                <div class="title">Rights</div>
+                <div class="user-name-value ui-helper-hidden">
+                    <div class="flexbox">
+                        <div class="flex basis300"><span class="property-wide">Product Lines Rights</span></div>
+                        <div class="flex push"><a id="userProductFamiliesRights" class="ts-link" href="#"></a></div>
+                    </div>
+                </div>
+                <div class="user-name-value ui-helper-hidden">
+                    <div class="flexbox">
+                        <div class="flex basis300"><span class="property-wide">Ticket Rights</span></div>
+                        <div class="flex push"><a id="userTicketRights" class="ts-link" href="#"></a></div>
+                    </div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Restrict User From Public Actions</span></div>
+                    <div class="flex push"><a id="userDisablePublic" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Restrict User From Editing Any Actions</span></div>
+                    <div class="flex push"><a id="userRestrictFromEditingAnyActions" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Restrict User From Exporting Data</span></div>
+                    <div class="flex push"><a id="userDisableExporting" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="ts-section">
+                <div class="title">Abilities</div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Actions - Pin</span></div>
+                    <div class="flex push"><a id="userCanPinAction" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Actions - Edit Any</span></div>
+                    <div class="flex push"><a id="userAllowToEditAnyAction" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Assets - Create</span></div>
+                    <div class="flex push"><a id="userCanCreateAssets" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Assets - Edit</span></div>
+                    <div class="flex push"><a id="userCanEditAssets" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Community - Change Visibility</span></div>
+                    <div class="flex push"><a id="userCommunityVisibility" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Companies - Create</span></div>
+                    <div class="flex push"><a id="userCanCreateCompany" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Companies - Edit</span></div>
+                    <div class="flex push"><a id="userCanEditCompany" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Contacts - Create</span></div>
+                    <div class="flex push"><a id="userCanCreateContacts" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Contacts - Edit</span></div>
+                    <div class="flex push"><a id="userCanEditContacts" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Knowledgebase - Change Visibility</span></div>
+                    <div class="flex push"><a id="userKBVisibility" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Products - Create</span></div>
+                    <div class="flex push"><a id="userCanCreateProducts" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Products - Edit</span></div>
+                    <div class="flex push"><a id="userCanEditProducts" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Tickets - Bulk Merge</span></div>
+                    <div class="flex push"><a id="userCanBulkMerge" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Ticket - Change Visibility</span></div>
+                    <div class="flex push"><a id="userTicketVisibility" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Versions - Create</span></div>
+                    <div class="flex push"><a id="userCanCreateVersions" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="user-name-value flexbox">
+                    <div class="flex basis300"><span class="property-wide">Versions - Edit</span></div>
+                    <div class="flex push"><a id="userCanEditVersions" class="ts-link" href="#"></a></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="ts-section ui-helper-hidden" id="divCustomerContainer">
+                <div>User Customers</div>
+                <div class="ts-separator ui-widget-content"></div>
+                <div id="divAddCustomer">
+                    <input type="text" class="ui-corner-all ui-widget-content">
+                    <button>Add Customer</button>
+                </div>
+                <div id="divCustomers"></div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="ts-section ui-helper-hidden" id="divMenuItems">
+                <div class="title">Sidebar Menu Display</div>
+                <div class="space10">
+                    <div class="flexbox wrap" id="ulMenuItems">
+                        <div class="flex basis200">
+                            <div><label class="checkbox"><input id="mniDashboard" type="checkbox">Dashboard</label></div>
+                            <div><label class="checkbox"><input id="mniAdmin" type="checkbox">Admin</label></div>
+                            <div><label class="checkbox"><input id="mniWC2" type="checkbox">Water Cooler</label></div>
+                            <div><label class="checkbox"><input id="mniSearch" type="checkbox">Search</label></div>
+                            <div><label class="checkbox"><input id="mniTasks" type="checkbox">Tasks</label></div>
+                            <div><label class="checkbox"><input id="mniUsers" type="checkbox">Users</label></div>
+                            <div><label class="checkbox"><input id="mniGroups" type="checkbox">Groups</label></div>
+                            <div><label class="checkbox"><input id="mniCustomers" type="checkbox">Customers</label></div>
+                            <div><label class="checkbox"><input id="mniProducts" type="checkbox">Products</label></div>
+                            <div><label class="checkbox"><input id="mniInventory" type="checkbox">Inventory</label></div>
+                            <div><label class="checkbox"><input id="mniReports" type="checkbox">Reports</label></div>
+                        </div>
+                        <div class="flex basis200">
+                            <div><label class="checkbox"><input id="mniMyTickets" type="checkbox">My Tickets</label></div>
+                            <div><label class="checkbox"><input id="mniTickets" type="checkbox">All Tickets</label></div>
+                            <div id="ulTicketTypes" style="padding-left:10px;"></div>
+                            <div><label class="checkbox"><input id="mniTicketTags" type="checkbox">Ticket Tags</label></div>
+                        </div>
+                        <div class="flex basis200">
+                            <div><label class="checkbox"><input id="mniChat" type="checkbox">Customer Chat</label></div>
+                            <div><label class="checkbox"><input id="mniKB" type="checkbox">Knowledge Base</label></div>
+                            <div><label class="checkbox"><input id="mniForum" type="checkbox">Community</label></div>
+                            <div><label class="checkbox"><input id="mniWiki" type="checkbox">Wiki</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dialog-avatar ui-helper-hidden">
+        <form class="file-upload" action="Upload/Actions/555" method="POST" enctype="multipart/form-data" title="You can drag and drop your attachments here.">
+            <input type="file" name="file[]">
+            <a class="ui-state-default ts-link" href="#" title="You can drag and drop your attachments here.">Select Image</a>
+        </form>
+    </div>
+</body>
+
+</html>

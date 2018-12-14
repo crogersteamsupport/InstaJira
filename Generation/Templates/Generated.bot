@@ -1,0 +1,466 @@
+Generated<$ItemCollection$>.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace TeamSupport.Data
+{
+  [Serializable]
+  public partial class <$ItemName$> : <$BaseItemClass$>
+  {
+    private <$CollectionName$> _<$collectionName$>;
+    
+    public <$ItemName$>(DataRow row, <$CollectionName$> <$collectionName$>): base(row, <$collectionName$>)
+    {
+      _<$collectionName$> = <$collectionName$>;
+    }
+	
+    #region Properties
+    
+    public <$CollectionName$> Collection
+    {
+      get { return _<$collectionName$>; }
+    }
+        
+    <$BeginFields=[!DateTime,ReadOnly,Nullable]$>
+    public <$DataType$> <$PropertyName$>
+    {
+      get { return Row["<$FieldName$>"] != DBNull.Value ? (<$DataType$>)Row["<$FieldName$>"] : null; }
+    }
+    <$EndFields$>
+    
+    <$BeginFields=[!DateTime,ReadOnly,!Nullable]$>
+    public <$DataType$> <$PropertyName$>
+    {
+      get { return (<$DataType$>)Row["<$FieldName$>"]; }
+    }
+    <$EndFields$>
+
+    <$BeginFields=[!DateTime,!ReadOnly, Nullable]$>
+    public <$DataType$> <$PropertyName$>
+    {
+      get { return Row["<$FieldName$>"] != DBNull.Value ? (<$DataType$>)Row["<$FieldName$>"] : null; }
+      set { Row["<$FieldName$>"] = CheckValue("<$FieldName$>", value); }
+    }
+    <$EndFields$>
+
+    <$BeginFields=[!DateTime,!ReadOnly, !Nullable]$>
+    public <$DataType$> <$PropertyName$>
+    {
+      get { return (<$DataType$>)Row["<$FieldName$>"]; }
+      set { Row["<$FieldName$>"] = CheckValue("<$FieldName$>", value); }
+    }
+    <$EndFields$>
+
+    /* DateTime */
+    <$BeginFields=[DateTime,ReadOnly,Nullable]$>
+    public <$DataType$> <$PropertyName$>
+    {
+      get { return Row["<$FieldName$>"] != DBNull.Value ? DateToLocal((<$DataType$>)Row["<$FieldName$>"]) : null; }
+    }
+
+    public <$DataType$> <$PropertyName$>Utc
+    {
+      get { return Row["<$FieldName$>"] != DBNull.Value ? (<$DataType$>)Row["<$FieldName$>"] : null; }
+    }
+    <$EndFields$>
+    
+    <$BeginFields=[DateTime,ReadOnly,!Nullable]$>
+    public <$DataType$> <$PropertyName$>
+    {
+      get { return DateToLocal((<$DataType$>)Row["<$FieldName$>"]); }
+    }
+
+    public <$DataType$> <$PropertyName$>Utc
+    {
+      get { return (<$DataType$>)Row["<$FieldName$>"]; }
+    }
+    <$EndFields$>
+
+    <$BeginFields=[DateTime,!ReadOnly, Nullable]$>
+    public <$DataType$> <$PropertyName$>
+    {
+      get { return Row["<$FieldName$>"] != DBNull.Value ? DateToLocal((<$DataType$>)Row["<$FieldName$>"]) : null; }
+      set { Row["<$FieldName$>"] = CheckValue("<$FieldName$>", value); }
+    }
+
+    public <$DataType$> <$PropertyName$>Utc
+    {
+      get { return Row["<$FieldName$>"] != DBNull.Value ? (<$DataType$>)Row["<$FieldName$>"] : null; }
+    }
+    <$EndFields$>
+
+    <$BeginFields=[DateTime,!ReadOnly, !Nullable]$>
+    public <$DataType$> <$PropertyName$>
+    {
+      get { return DateToLocal((<$DataType$>)Row["<$FieldName$>"]); }
+      set { Row["<$FieldName$>"] = CheckValue("<$FieldName$>", value); }
+    }
+
+    public <$DataType$> <$PropertyName$>Utc
+    {
+      get { return (<$DataType$>)Row["<$FieldName$>"]; }
+    }
+    <$EndFields$>
+
+    #endregion
+    
+    
+  }
+
+  public partial class <$CollectionName$> : <$BaseCollectionClass$>, IEnumerable<<$ItemName$>>
+  {
+    public <$CollectionName$>(LoginUser loginUser): base (loginUser)
+    {
+    }
+
+    #region Properties
+
+    public override string TableName
+    {
+      get { return "<$TableName$>"; }
+    }
+    
+    public override string PrimaryKeyFieldName
+    {
+      get { return "<$PrimaryKey$>"; }
+    }
+
+
+
+    public <$ItemName$> this[int index]
+    {
+      get { return new <$ItemName$>(Table.Rows[index], this); }
+    }
+    
+
+    #endregion
+
+    #region Protected Members
+    
+    partial void BeforeRowInsert(<$ItemName$> <$itemName$>);
+    partial void AfterRowInsert(<$ItemName$> <$itemName$>);
+    partial void BeforeRowEdit(<$ItemName$> <$itemName$>);
+    partial void AfterRowEdit(<$ItemName$> <$itemName$>);
+    partial void BeforeRowDelete(int <$primaryKey$>);
+    partial void AfterRowDelete(int <$primaryKey$>);    
+
+    partial void BeforeDBDelete(int <$primaryKey$>);
+    partial void AfterDBDelete(int <$primaryKey$>);    
+
+    #endregion
+
+    #region Public Methods
+
+    public <$ItemName$>Proxy[] Get<$ItemName$>Proxies()
+    {
+      List<<$ItemName$>Proxy> list = new List<<$ItemName$>Proxy>();
+
+      foreach (<$ItemName$> item in this)
+      {
+        list.Add(item.GetProxy()); 
+      }
+
+      return list.ToArray();
+    }	
+	
+    public virtual void DeleteFromDB(int <$primaryKey$>)
+    {
+        SqlCommand deleteCommand = new SqlCommand();
+        deleteCommand.CommandType = CommandType.Text;
+        deleteCommand.CommandText = "<$QueryDelete$>";
+        deleteCommand.Parameters.Add("<$PrimaryKey$>", SqlDbType.Int);
+        deleteCommand.Parameters["<$PrimaryKey$>"].Value = <$primaryKey$>;
+
+        BeforeDBDelete(<$primaryKey$>);
+        BeforeRowDelete(<$primaryKey$>);
+        TryDeleteFromDB(deleteCommand);
+        AfterRowDelete(<$primaryKey$>);
+        AfterDBDelete(<$primaryKey$>);
+	}
+
+    public override void Save(SqlConnection connection)    {
+		//SqlTransaction transaction = connection.BeginTransaction("<$CollectionName$>Save");
+		SqlParameter tempParameter;
+		SqlCommand updateCommand = connection.CreateCommand();
+		updateCommand.Connection = connection;
+		//updateCommand.Transaction = transaction;
+		updateCommand.CommandType = CommandType.Text;
+		updateCommand.CommandText = "<$QueryUpdate$>";
+
+		<$BeginFields=[Update]$>
+		tempParameter = updateCommand.Parameters.Add("<$FieldName$>", <$DBType$>, <$FieldSize$>);
+		if (tempParameter.SqlDbType == SqlDbType.Float)
+		{
+		  tempParameter.Precision = <$FieldPrecision$>;
+		  tempParameter.Scale = <$FieldScale$>;
+		}
+		<$EndFields$>
+
+		SqlCommand insertCommand = connection.CreateCommand();
+		insertCommand.Connection = connection;
+		//insertCommand.Transaction = transaction;
+		insertCommand.CommandType = CommandType.Text;
+		insertCommand.CommandText = "<$QueryInsert$>";
+
+		<$BeginFields=[Insert]$>
+		tempParameter = insertCommand.Parameters.Add("<$FieldName$>", <$DBType$>, <$FieldSize$>);
+		if (tempParameter.SqlDbType == SqlDbType.Float)
+		{
+		  tempParameter.Precision = <$FieldPrecision$>;
+		  tempParameter.Scale = <$FieldScale$>;
+		}
+		<$EndFields$>
+
+		insertCommand.Parameters.Add("Identity", SqlDbType.Int).Direction = ParameterDirection.Output;
+		SqlCommand deleteCommand = connection.CreateCommand();
+		deleteCommand.Connection = connection;
+		//deleteCommand.Transaction = transaction;
+		deleteCommand.CommandType = CommandType.Text;
+		deleteCommand.CommandText = "<$QueryDelete$>";
+		deleteCommand.Parameters.Add("<$PrimaryKey$>", SqlDbType.Int);
+
+		try
+		{
+		  foreach (<$ItemName$> <$itemName$> in this)
+		  {
+			if (<$itemName$>.Row.RowState == DataRowState.Added)
+			{
+			  BeforeRowInsert(<$itemName$>);
+			  for (int i = 0; i < insertCommand.Parameters.Count; i++)
+			  {
+				SqlParameter parameter = insertCommand.Parameters[i];
+				if (parameter.Direction != ParameterDirection.Output)
+				{
+				  parameter.Value = <$itemName$>.Row[parameter.ParameterName];
+				}
+			  }
+
+			  if (insertCommand.Parameters.Contains("ModifierID")) insertCommand.Parameters["ModifierID"].Value = LoginUser.UserID;
+			  if (insertCommand.Parameters.Contains("CreatorID") && (int)insertCommand.Parameters["CreatorID"].Value == 0) insertCommand.Parameters["CreatorID"].Value = LoginUser.UserID;
+
+			  insertCommand.ExecuteNonQuery();
+			  Table.Columns["<$PrimaryKey$>"].AutoIncrement = false;
+			  Table.Columns["<$PrimaryKey$>"].ReadOnly = false;
+			  if (insertCommand.Parameters["Identity"].Value != DBNull.Value)
+				<$itemName$>.Row["<$PrimaryKey$>"] = (int)insertCommand.Parameters["Identity"].Value;
+			  AfterRowInsert(<$itemName$>);
+			}
+			else if (<$itemName$>.Row.RowState == DataRowState.Modified)
+			{
+			  BeforeRowEdit(<$itemName$>);
+			  for (int i = 0; i < updateCommand.Parameters.Count; i++)
+			  {
+				SqlParameter parameter = updateCommand.Parameters[i];
+				parameter.Value = <$itemName$>.Row[parameter.ParameterName];
+			  }
+			  if (updateCommand.Parameters.Contains("ModifierID")) updateCommand.Parameters["ModifierID"].Value = LoginUser.UserID;
+			  if (updateCommand.Parameters.Contains("DateModified")) updateCommand.Parameters["DateModified"].Value = DateTime.UtcNow;
+
+			  updateCommand.ExecuteNonQuery();
+			  AfterRowEdit(<$itemName$>);
+			}
+			else if (<$itemName$>.Row.RowState == DataRowState.Deleted)
+			{
+			  int id = (int)<$itemName$>.Row["<$PrimaryKey$>", DataRowVersion.Original];
+			  deleteCommand.Parameters["<$PrimaryKey$>"].Value = id;
+			  BeforeRowDelete(id);
+			  deleteCommand.ExecuteNonQuery();
+			  AfterRowDelete(id);
+			}
+		  }
+		  //transaction.Commit();
+		}
+		catch (Exception)
+		{
+		  //transaction.Rollback();
+		  throw;
+		}
+		Table.AcceptChanges();
+      if (DataCache != null) DataCache.InvalidateItem(TableName, LoginUser.OrganizationID);
+    }
+
+    public void BulkSave()
+    {
+
+      foreach (<$ItemName$> <$itemName$> in this)
+      {
+        if (<$itemName$>.Row.Table.Columns.Contains("CreatorID") && (int)<$itemName$>.Row["CreatorID"] == 0) <$itemName$>.Row["CreatorID"] = LoginUser.UserID;
+        if (<$itemName$>.Row.Table.Columns.Contains("ModifierID")) <$itemName$>.Row["ModifierID"] = LoginUser.UserID;
+      }
+    
+      SqlBulkCopy copy = new SqlBulkCopy(LoginUser.ConnectionString);
+      copy.BulkCopyTimeout = 0;
+      copy.DestinationTableName = TableName;
+      copy.WriteToServer(Table);
+
+      Table.AcceptChanges();
+     
+      if (DataCache != null) DataCache.InvalidateItem(TableName, LoginUser.OrganizationID);
+    }
+
+    public <$ItemName$> FindBy<$PrimaryKey$>(int <$primaryKey$>)
+    {
+      foreach (<$ItemName$> <$itemName$> in this)
+      {
+        if (<$itemName$>.<$PrimaryKey$> == <$primaryKey$>)
+        {
+          return <$itemName$>;
+        }
+      }
+      return null;
+    }
+
+    public virtual <$ItemName$> AddNew<$ItemName$>()
+    {
+      if (Table.Columns.Count < 1) LoadColumns("<$TableName$>");
+      DataRow row = Table.NewRow();
+      Table.Rows.Add(row);
+      return new <$ItemName$>(row, this);
+    }
+    
+    public virtual void LoadBy<$PrimaryKey$>(int <$primaryKey$>)
+    {
+      using (SqlCommand command = new SqlCommand())
+      {
+        command.CommandText = "<$QuerySelect$>";
+        command.CommandType = CommandType.Text;
+        command.Parameters.AddWithValue("<$PrimaryKey$>", <$primaryKey$>);
+        Fill(command);
+      }
+    }
+    
+    public static <$ItemName$> Get<$ItemName$>(LoginUser loginUser, int <$primaryKey$>)
+    {
+      <$CollectionName$> <$collectionName$> = new <$CollectionName$>(loginUser);
+      <$collectionName$>.LoadBy<$PrimaryKey$>(<$primaryKey$>);
+      if (<$collectionName$>.IsEmpty)
+        return null;
+      else
+        return <$collectionName$>[0];
+    }
+    
+    
+    <$BeginCondition=[POSITION]$> 
+
+    public void LoadByPosition(int organizationID, int position)
+    {
+      using (SqlCommand command = new SqlCommand())
+      {
+        command.CommandText = "SELECT * FROM <$TableName$> WHERE (OrganizationID = @OrganizationID) AND (Position = @Position)";
+        command.CommandType = CommandType.Text;
+        command.Parameters.AddWithValue("OrganizationID", organizationID);
+        command.Parameters.AddWithValue("Position", position);
+        Fill(command);
+      }
+    }
+    
+    public void LoadAllPositions(int organizationID)
+    {
+      using (SqlCommand command = new SqlCommand())
+      {
+        command.CommandText = "SELECT * FROM <$TableName$> WHERE (OrganizationID = @OrganizationID) ORDER BY Position";
+        command.CommandType = CommandType.Text;
+        command.Parameters.AddWithValue("OrganizationID", organizationID);
+        Fill(command);
+      }
+    }
+
+    public void ValidatePositions(int organizationID)
+    {
+      <$CollectionName$> <$collectionName$> = new <$CollectionName$>(LoginUser);
+      <$collectionName$>.LoadAllPositions(organizationID);
+      int i = 0;
+      foreach (<$ItemName$> <$itemName$> in <$collectionName$>)
+      {
+        <$itemName$>.Position = i;
+        i++;
+      }
+      <$collectionName$>.Save();
+    }    
+
+    public void MovePositionUp(int <$primaryKey$>)
+    {
+      <$CollectionName$> types1 = new <$CollectionName$>(LoginUser);
+      types1.LoadBy<$PrimaryKey$>(<$primaryKey$>);
+      if (types1.IsEmpty || types1[0].Position < 1) return;
+
+      <$CollectionName$> types2 = new <$CollectionName$>(LoginUser);
+      types2.LoadByPosition(types1[0].OrganizationID, types1[0].Position - 1);
+      if (!types2.IsEmpty)
+      {
+        types2[0].Position = types2[0].Position + 1;
+        types2.Save();
+      }
+
+      types1[0].Position = types1[0].Position - 1;
+      types1.Save();
+      ValidatePositions(LoginUser.OrganizationID);
+    }
+    
+    public void MovePositionDown(int <$primaryKey$>)
+    {
+      <$CollectionName$> types1 = new <$CollectionName$>(LoginUser);
+      types1.LoadBy<$PrimaryKey$>(<$primaryKey$>);
+      if (types1.IsEmpty || types1[0].Position >= GetMaxPosition(types1[0].OrganizationID)) return;
+
+      <$CollectionName$> types2 = new <$CollectionName$>(LoginUser);
+      types2.LoadByPosition(types1[0].OrganizationID, types1[0].Position + 1);
+      if (!types2.IsEmpty)
+      {
+        types2[0].Position = types2[0].Position - 1;
+        types2.Save();
+      }
+
+      types1[0].Position = types1[0].Position + 1;
+      types1.Save();
+	  
+      ValidatePositions(LoginUser.OrganizationID);
+    }
+
+
+    public virtual int GetMaxPosition(int organizationID)
+    {
+      int position = -1;
+      
+      using (SqlCommand command = new SqlCommand())
+      {
+        command.CommandText = "SELECT MAX(Position) FROM <$TableName$> WHERE OrganizationID = @OrganizationID";
+        command.CommandType = CommandType.Text;
+        command.Parameters.AddWithValue("OrganizationID", organizationID);
+        object o = ExecuteScalar(command);
+        if (o == DBNull.Value) return -1;
+        position = (int)o;
+      }
+      return position;
+    }
+    
+    <$EndCondition$>
+
+    #endregion
+
+    #region IEnumerable<<$ItemName$>> Members
+
+    public IEnumerator<<$ItemName$>> GetEnumerator()
+    {
+      foreach (DataRow row in Table.Rows)
+      {
+        yield return new <$ItemName$>(row, this);
+      }
+    }
+
+    #endregion
+
+    #region IEnumerable Members
+
+    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+    {
+      return GetEnumerator();
+    }
+
+    #endregion
+  }
+}

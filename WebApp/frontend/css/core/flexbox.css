@@ -1,0 +1,210 @@
+/* Last Updated: 2018-11-14 */
+
+div.flexbox {
+    display:-webkit-box;
+    display:-moz-box;
+    display:-ms-flexbox;
+    display:-webkit-flex;
+    display:flex;
+}
+div.flexbox.grey {
+    background-color:rgba(0,0,0,0.05);
+}
+div.flexbox .row {
+    flex-direction:row;
+}
+div.flexbox.column {
+    flex-direction:column;
+    -webkit-flex-flow:column;
+}
+div.flexbox.wrap {
+    flex-wrap:wrap;
+    -webkit-flex-wrap:wrap;
+}
+div.flexbox.align {
+    align-items:center;
+}
+div.flexbox.justify {
+    justify-content:center;
+}
+div.flexbox.full {
+    width:100%;
+}
+
+div.flexbox .flex  {
+    flex:0 1 auto;
+    -webkit-flex:0 1 auto;
+}
+div.flexbox .flex.push {
+    flex:1 0 auto;
+    -webkit-flex:1 0 auto;
+}
+div.flexbox .flex.pull {
+    flex:0 1 !important;
+    -webkit-flex:0 1 !important;
+}
+div.flexbox .flex.full {
+    flex:0 0 100%;
+}
+div.flexbox .flex.grey {
+    background-color:rgba(0,0,0,0.05);
+}
+div.flexbox .flex.nowrap {
+    white-space:nowrap !important;
+}
+div.flexbox .flex.basis {
+    flex-basis:auto !important;
+}
+div.flexbox .flex.even {
+    flex-grow:1 !important;
+}
+
+div.flexbox .flex1 {
+    flex:1;
+    -webkit-flex:1;
+}
+div.flexbox .flex2 {
+    flex:2;
+    -webkit-flex:2;
+}
+div.flexbox .flex3 {
+    flex:3;
+    -webkit-flex:3;
+}
+div.flexbox .flex4 {
+    flex:4;
+    -webkit-flex:4;
+}
+div.flexbox .flex5 {
+    flex:5;
+    -webkit-flex:5;
+}
+div.flexbox .flex6 {
+    flex:6;
+    -webkit-flex:6;
+}
+div.flexbox .flex7 {
+    flex:7;
+    -webkit-flex:7;
+}
+div.flexbox .flex8 {
+    flex:8;
+    -webkit-flex:8;
+}
+div.flexbox .flex9 {
+    flex:9;
+    -webkit-flex:9;
+}
+
+div.flexbox .flex.basis40 {
+    flex:0 0 40px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:40px !important;
+    -webkit-flex-basis:40px;
+}
+div.flexbox .flex.basis50 {
+    flex:0 0 50px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:50px !important;
+    -webkit-flex-basis:50px;
+}
+div.flexbox .flex.basis60 {
+    flex:0 0 60px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:60px !important;
+    -webkit-flex-basis:60px;
+}
+div.flexbox .flex.basis70 {
+    flex:0 0 70px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:70px !important;
+    -webkit-flex-basis:70px;
+}
+div.flexbox .flex.basis80 {
+    flex:0 0 80px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:80px !important;
+    -webkit-flex-basis:80px;
+}
+div.flexbox .flex.basis90 {
+    flex:0 0 90px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:90px !important;
+    -webkit-flex-basis:90px;
+}
+div.flexbox .flex.basis100 {
+    flex:0 0 100px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:100px !important;
+    -webkit-flex-basis:100px;
+}
+div.flexbox .flex.basis120 {
+    flex:0 0 120px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:120px !important;
+    -webkit-flex-basis:120px;
+}
+div.flexbox .flex.basis150 {
+    flex:0 0 150px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:150px !important;
+    -webkit-flex-basis:150px;
+}
+div.flexbox .flex.basis200 {
+    flex:0 0 200px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:200px !important;
+    -webkit-flex-basis:200px;
+}
+div.flexbox .flex.basis250 {
+    flex:0 0 250px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:250px !important;
+    -webkit-flex-basis:250px;
+}
+div.flexbox .flex.basis300 {
+    flex:0 0 300px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:300px !important;
+    -webkit-flex-basis:300px;
+}
+div.flexbox .flex.basis400 {
+    flex:0 0 400px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:400px !important;
+    -webkit-flex-basis:400px;
+}
+div.flexbox .flex.basis500 {
+    flex:0 0 500px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:500px !important;
+    -webkit-flex-basis:500px;
+}
+div.flexbox .flex.basis600 {
+    flex:0 0 600px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:600px !important;
+    -webkit-flex-basis:600px;
+}
+div.flexbox .flex.basis700 {
+    flex:0 0 700px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:700px !important;
+    -webkit-flex-basis:700px;
+}

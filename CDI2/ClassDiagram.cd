@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TeamSupport.CDI.DateRange" Collapsed="true">
+    <Position X="2.5" Y="1.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAABAECAAAUAAgCAAAAAAEAAAAAEAAAAA=</HashCode>
+      <FileName>Utility\DateRange.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TeamSupport.CDI.TicketReader" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAQAAIACAAEAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>TicketReader.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_dateRange" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="AllTickets" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TeamSupport.CDI.TicketJoin">
+    <Position X="2" Y="3.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAQAAAAAAAAAQAAAAEAAgAAFiAQACAA=</HashCode>
+      <FileName>TicketJoin.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TeamSupport.CDI.Metrics" Collapsed="true">
+    <Position X="8.25" Y="4.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EQQAAAAAAACAASAMACAAAAAAABCIAAAAEAAwAAEABgQ=</HashCode>
+      <FileName>Metrics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.CDI.IntervalStrategy" Collapsed="true">
+    <Position X="4.75" Y="4.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAEgAAAAAAAAAA=</HashCode>
+      <FileName>IntervalStrategy.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_tickets" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TeamSupport.CDI.CDIEventLog" Collapsed="true">
+    <Position X="16.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAIAAAAAAAAAIAAAAAAQEAAAA=</HashCode>
+      <FileName>Utility\CDIEventLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.CDI.MetricPercentiles">
+    <Position X="10.75" Y="0.75" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MetricPercentiles.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_percentiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TeamSupport.CDI.OrganizationAnalysis">
+    <Position X="5.5" Y="1.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Intervals" Type="TeamSupport.CDI.Metrics" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="3.055" />
+        <Point X="7" Y="4.781" />
+        <Point X="8.25" Y="4.781" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAEAAAAAFAICAACAAAAACAAAAAAABgAAAABA=</HashCode>
+      <FileName>OrganizationAnalysis.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_intervalStrategy" />
+      <Property Name="_dateRange" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Intervals" />
+      <Property Name="Tickets" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TeamSupport.CDI.Client" Collapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="_organizationAnalysis" Type="TeamSupport.CDI.OrganizationAnalysis" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.25" Y="3.781" />
+        <Point X="7.875" Y="3.781" />
+        <Point X="7.875" Y="2.438" />
+        <Point X="7.25" Y="2.438" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ADAAAIAAAAAAIAAAAAAAAAAAAYAIAAAAAAAJAEEBAAg=</HashCode>
+      <FileName>Client.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_organizationAnalysis" />
+      <Field Name="_iCdiStrategy" />
+      <Property Name="NormalizedMetrics" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TeamSupport.CDI.Customer" Collapsed="true">
+    <Position X="8.25" Y="0.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="_organizationAnalysis" Type="TeamSupport.CDI.OrganizationAnalysis">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.037" Y="0.341" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>IAAAAIAICAAAAAAEAAAAAAAAAQEAAIAAAIAJAEEBAAA=</HashCode>
+      <FileName>Customer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_organizationAnalysis" />
+      <Field Name="_percentiles" />
+      <Field Name="_weights" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_clients" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TeamSupport.CDI.CDI2Engine" Collapsed="true">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAQEAAAAAAAEAAAAAAAABAAEAEAAAIAAAAABM=</HashCode>
+      <FileName>CDI2Engine.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_dateRange" />
+      <Field Name="_ticketReader" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_customers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="TeamSupport.CDI.Percentile" Collapsed="true">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAACBAAAAAAABAAAAA=</HashCode>
+      <FileName>Utility\Percentile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.CDI.Statistics" Collapsed="true">
+    <Position X="16.25" Y="2.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAIAAAAAABCAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Statistics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamSupport.CDI.CDI1Strategy">
+    <Position X="11.75" Y="4.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="_rawMetrics" Type="TeamSupport.CDI.Metrics">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.133" Y="-0.255" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAEICAAAAAgAAAAAAIIAAAAEAAAgEABAAA=</HashCode>
+      <FileName>CDI1Strategy.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_organizationAnalysis" />
+      <Field Name="_rawMetrics" />
+      <Field Name="_normalizedMetrics" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TeamSupport.CDI.OptimalWeighting" Collapsed="true">
+    <Position X="13.5" Y="1.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IIAAAEAACAAAAIAgAAAAAACAAAAAAICAAAAAAAAAAgA=</HashCode>
+      <FileName>OptimalWeighting.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_percentiles" />
+      <Field Name="_customer" />
+      <Field Name="_weights" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TeamSupport.CDI.linq.CDI_Settings" Collapsed="true">
+    <Position X="10.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAICBAAAABABCAgAAAAAAAAAAIAAAAAEFIAQABAA=</HashCode>
+      <FileName>linq\CDI_Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TeamSupport.CDI.ICDIStrategy" Collapsed="true">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAEICAAAAAAAAAAAAAIAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>OrganizationAnalysis.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="TeamSupport.CDI.EMetrics">
+    <Position X="13.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAQAAIAAAAAAABAAAAgAAQACAAAAAAQgAAAA=</HashCode>
+      <FileName>Metrics.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

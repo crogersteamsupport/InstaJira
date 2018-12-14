@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache" />
+    <link href="../Css/frame.css" rel="stylesheet" type="text/css" />
+    <!--<link href="../Css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />-->
+    <!--<link href="../Css/ts.ui.css" rel="stylesheet" type="text/css" />-->
+    <!--<link href="../Css/jquery-ui-enhanced.css" rel="stylesheet" type="text/css" />-->
+    <link href="Welcome.css" rel="stylesheet" type="text/css" />
+
+    <script src="../Js/Ts/ts.pendo.js" type="text/javascript"></script>
+    <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="./Welcome.js" type="text/javascript"></script>
+
+    <title></title>
+
+    <style>
+        p {
+            padding: .5em 0;
+        }
+
+        .ts-section {
+            padding: 2em 2em;
+            font-size: 1.2em;
+            line-height: 1.5em;
+        }
+
+        .welcome-hide {
+            margin-top: 1em;
+            float: right;
+        }
+    </style>
+    <script src="/frontend/javascript/vendors/growthscore.js?1515087127" type="text/javascript"></script>
+</head>
+<body>
+    <header>
+        <div class="header_info">
+            <div class="header_info_title">Welcome <span id="LoggedInUser"></span>!</div>
+            <div class="header_info_context">
+                Thank you for trying TeamSupport, the customer support solution that helps you:<br />
+                <div>
+                    <ul class="info_context_list" style="">
+                        <li>Focus on your customers</li>
+                        <li>Improve efficiency</li>
+                        <li>Reduce support costs</li>
+                        <li>Increase customer satisfaction</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="btn-container" style="">
+            <div class="btn_info_context">
+                I'd Like to See More
+            </div>
+            <a href="https://www.teamsupport.com/customer-support-software-demo" target="_blank" class="btn demo">Schedule a Demo</a>
+            <div class="btn_info_context">
+                I Love It, Sign Me Up!
+            </div>
+            <a href="https://www.teamsupport.com/new-customer-signup" target="_blank" class="btn purchase">Purchase Now</a>
+        </div>
+    </header>
+    <div class="container">
+        <div class="info">
+            <div class="info_card one">
+                <div class="info_card_header">
+                    <div class="info_card_header_title">
+                        <img class="info_card_header_icon" src="../Images/welcome/tips.png" />
+                        Ticket Tips
+                    </div>
+                </div>
+                <ul class="info_card_options">
+                    <li><a href="http://help.teamsupport.com/1/en/topic/create-your-first-ticket" target="_blank" class="info_card_options_button">Create your first ticket<img src="../Images/welcome/right-pointer.png" /></a></li>
+                    <li><a href="http://help.teamsupport.com/1/en/topic/my-tickets-basics" target="_blank" class="info_card_options_button">Ticket Basics<img src="../Images/welcome/right-pointer.png" /></a></li>
+                    <li><a href="http://help.teamsupport.com/1/en/topic/ticket-detail-tab" target="_blank" class="info_card_options_button">Ticket detail tab<img src="../Images/welcome/right-pointer.png" /></a></li>
+                </ul>
+            </div>
+            <div class="info_card two">
+                <div class="info_card_header">
+                    <div class="info_card_header_title">
+                        <img class="info_card_header_icon" src="../Images/welcome/basics.png" />
+                        TeamSupport Basics
+                    </div>
+                </div>
+                <ul class="info_card_options">
+                    <li><a href="http://help.teamsupport.com/1/en/topic/basic-workflow" target="_blank" class="info_card_options_button">Basic Workflow<img src="../Images/welcome/right-pointer.png" /></a></li>
+                    <li><a href="http://help.teamsupport.com/1/en/topic/email-integration" target="_blank" class="info_card_options_button">Email Integration<img src="../Images/welcome/right-pointer.png" /></a></li>
+                    <li><a href="http://help.teamsupport.com/1/en/topic/add-a-fake-customer" target="_blank" class="info_card_options_button">Add a Test Customer<img src="../Images/welcome/right-pointer.png" /></a></li>
+                </ul>
+            </div>
+            <div class="info_card three">
+                <div class="info_card_header">
+                    <div class="info_card_header_title">
+                        <img class="info_card_header_icon" src="../Images/welcome/manage.png" />
+                        Managing your Account
+                    </div>
+                </div>
+                <ul class="info_card_options">
+                    <li><a href="http://help.teamsupport.com/1/en/topic/logging-in" target="_blank" class="info_card_options_button">Logging in<img src="../Images/welcome/right-pointer.png" /></a></li>
+                    <li><a href="http://help.teamsupport.com/1/en/topic/add-a-new-user" target="_blank" class="info_card_options_button">Adding a new user<img src="../Images/welcome/right-pointer.png" /></a></li>
+                    <li><a href="http://help.teamsupport.com/1/en/topic/changing-your-password" target="_blank" class="info_card_options_button">Change your password<img src="../Images/welcome/right-pointer.png" /></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="contact">
+            <div class="contact_title">How to contact us</div>
+            <div class="contact_cardholder">
+                <a id="ChatOnline" class="contact_card one" href="#">
+                    <div class="contact_card_iconholder">
+                        <img class="contact_card_icon" src="../Images/welcome/chat-grey.png" />
+                        <img class="contact_card_icon_hover" src="../Images/welcome/chat-blue.png" />
+                    </div>
+                    <div class="contact_card_text">Chat online</div>
+                </a>
+                <a class="contact_card two" href="mailto:support@teamsupport.com">
+                    <div class="contact_card_iconholder">
+                        <img class="contact_card_icon" src="../Images/welcome/email-grey.png" />
+                        <img class="contact_card_icon_hover" src="../Images/welcome/email-blue.png" />
+                    </div>
+                    <div class="contact_card_text">Send an Email</div>
+                </a>
+                <a class="contact_card three" href="tel:+18005962820">
+                    <div class="contact_card_iconholder">
+                        <img class="contact_card_icon" src="../Images/welcome/phone-grey.png" />
+                        <img class="contact_card_icon_hover" src="../Images/welcome/phone-blue.png" />
+                    </div>
+                    <div class="contact_card_text">Phone Call</div>
+                </a>
+                <a id="SupportHub" class="contact_card four" href="#">
+                    <div class="contact_card_iconholder">
+                        <img class="contact_card_icon" src="../Images/welcome/hub-grey.png" />
+                        <img class="contact_card_icon_hover" src="../Images/welcome/hub-blue.png" />
+                    </div>
+                    <div class="contact_card_text">Support Hub</div>
+                </a>
+            </div>
+        </div>
+        <div class="dismiss">
+            <a href="#" class="welcome-hide info_card_options_button">Hide this page</a>
+        </div>
+    </div>
+</body>
+</html>

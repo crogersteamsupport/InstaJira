@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TableSchema" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TableSchema" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="TableSchema" msprop:Generator_UserDSName="TableSchema">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TableNames" msprop:Generator_UserTableName="TableNames" msprop:Generator_RowEvArgName="TableNamesRowChangeEvent" msprop:Generator_TableVarName="tableTableNames" msprop:Generator_TablePropName="TableNames" msprop:Generator_RowDeletingName="TableNamesRowDeleting" msprop:Generator_RowChangingName="TableNamesRowChanging" msprop:Generator_RowDeletedName="TableNamesRowDeleted" msprop:Generator_RowEvHandlerName="TableNamesRowChangeEventHandler" msprop:Generator_TableClassName="TableNamesDataTable" msprop:Generator_RowChangedName="TableNamesRowChanged" msprop:Generator_RowClassName="TableNamesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Include" msprop:Generator_ColumnVarNameInTable="columnInclude" msprop:Generator_ColumnPropNameInRow="Include" msprop:Generator_ColumnPropNameInTable="IncludeColumn" msprop:Generator_UserColumnName="Include" type="xs:boolean" />
+              <xs:element name="TableName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTableName" msprop:Generator_ColumnPropNameInRow="TableName" msprop:Generator_ColumnPropNameInTable="TableNameColumn" msprop:Generator_UserColumnName="TableName" type="xs:string" />
+              <xs:element name="ItemName" msprop:Generator_ColumnVarNameInTable="columnItemName" msprop:Generator_ColumnPropNameInRow="ItemName" msprop:Generator_ColumnPropNameInTable="ItemNameColumn" msprop:Generator_UserColumnName="ItemName" type="xs:string" />
+              <xs:element name="CollectionName" msprop:Generator_ColumnVarNameInTable="columnCollectionName" msprop:Generator_ColumnPropNameInRow="CollectionName" msprop:Generator_ColumnPropNameInTable="CollectionNameColumn" msprop:Generator_UserColumnName="CollectionName" type="xs:string" />
+              <xs:element name="BaseItemClass" msprop:Generator_ColumnVarNameInTable="columnBaseItemClass" msprop:Generator_ColumnPropNameInRow="BaseItemClass" msprop:Generator_ColumnPropNameInTable="BaseItemClassColumn" msprop:Generator_UserColumnName="BaseItemClass" type="xs:string" />
+              <xs:element name="BaseCollectionClass" msprop:Generator_ColumnVarNameInTable="columnBaseCollectionClass" msprop:Generator_ColumnPropNameInRow="BaseCollectionClass" msprop:Generator_ColumnPropNameInTable="BaseCollectionClassColumn" msprop:Generator_UserColumnName="BaseCollectionClass" type="xs:string" />
+              <xs:element name="Conditions" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Conditions" msprop:Generator_ColumnVarNameInTable="columnConditions" msprop:Generator_ColumnPropNameInTable="ConditionsColumn" msprop:Generator_UserColumnName="Conditions" type="xs:string" default="" />
+              <xs:element name="IsDBReadOnly" msprop:nullValue="false" msprop:Generator_ColumnPropNameInRow="IsDBReadOnly" msprop:Generator_ColumnVarNameInTable="columnIsDBReadOnly" msprop:Generator_ColumnPropNameInTable="IsDBReadOnlyColumn" msprop:Generator_UserColumnName="IsDBReadOnly" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Fields" msprop:Generator_UserTableName="Fields" msprop:Generator_RowEvArgName="FieldsRowChangeEvent" msprop:Generator_TableVarName="tableFields" msprop:Generator_TablePropName="Fields" msprop:Generator_RowDeletingName="FieldsRowDeleting" msprop:Generator_RowChangingName="FieldsRowChanging" msprop:Generator_RowDeletedName="FieldsRowDeleted" msprop:Generator_RowEvHandlerName="FieldsRowChangeEventHandler" msprop:Generator_TableClassName="FieldsDataTable" msprop:Generator_RowChangedName="FieldsRowChanged" msprop:Generator_RowClassName="FieldsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TableName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTableName" msprop:Generator_ColumnPropNameInRow="TableName" msprop:Generator_ColumnPropNameInTable="TableNameColumn" msprop:Generator_UserColumnName="TableName" type="xs:string" />
+              <xs:element name="FieldName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFieldName" msprop:Generator_ColumnPropNameInRow="FieldName" msprop:Generator_ColumnPropNameInTable="FieldNameColumn" msprop:Generator_UserColumnName="FieldName" type="xs:string" />
+              <xs:element name="PropertyName" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="PropertyName" msprop:Generator_ColumnVarNameInTable="columnPropertyName" msprop:Generator_ColumnPropNameInTable="PropertyNameColumn" msprop:Generator_UserColumnName="PropertyName" type="xs:string" minOccurs="0" />
+              <xs:element name="CustomType" msprop:Generator_ColumnVarNameInTable="columnCustomType" msprop:Generator_ColumnPropNameInRow="CustomType" msprop:Generator_ColumnPropNameInTable="CustomTypeColumn" msprop:Generator_UserColumnName="CustomType" type="xs:string" />
+              <xs:element name="IsReadOnly" msprop:Generator_ColumnVarNameInTable="columnIsReadOnly" msprop:Generator_ColumnPropNameInRow="IsReadOnly" msprop:Generator_ColumnPropNameInTable="IsReadOnlyColumn" msprop:Generator_UserColumnName="IsReadOnly" type="xs:boolean" />
+              <xs:element name="AllowDBNull" msprop:Generator_ColumnVarNameInTable="columnAllowDBNull" msprop:Generator_ColumnPropNameInRow="AllowDBNull" msprop:Generator_ColumnPropNameInTable="AllowDBNullColumn" msprop:Generator_UserColumnName="AllowDBNull" type="xs:boolean" default="true" />
+              <xs:element name="IsNullable" msprop:Generator_ColumnVarNameInTable="columnIsNullable" msprop:Generator_ColumnPropNameInRow="IsNullable" msprop:Generator_ColumnPropNameInTable="IsNullableColumn" msprop:Generator_UserColumnName="IsNullable" type="xs:boolean" />
+              <xs:element name="IsPrimaryKey" msprop:Generator_ColumnVarNameInTable="columnIsPrimaryKey" msprop:Generator_ColumnPropNameInRow="IsPrimaryKey" msprop:Generator_ColumnPropNameInTable="IsPrimaryKeyColumn" msprop:Generator_UserColumnName="IsPrimaryKey" type="xs:boolean" />
+              <xs:element name="IsIdentity" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnIsIdentity" msprop:Generator_ColumnPropNameInRow="IsIdentity" msprop:Generator_ColumnPropNameInTable="IsIdentityColumn" msprop:Generator_UserColumnName="IsIdentity" type="xs:boolean" />
+              <xs:element name="IsAutoInc" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnIsAutoInc" msprop:Generator_ColumnPropNameInRow="IsAutoInc" msprop:Generator_ColumnPropNameInTable="IsAutoIncColumn" msprop:Generator_UserColumnName="IsAutoInc" type="xs:boolean" default="false" />
+              <xs:element name="DBType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDBType" msprop:Generator_ColumnPropNameInRow="DBType" msprop:Generator_ColumnPropNameInTable="DBTypeColumn" msprop:Generator_UserColumnName="DBType" type="xs:string" />
+              <xs:element name="SqlDbType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSqlDbType" msprop:Generator_ColumnPropNameInRow="SqlDbType" msprop:Generator_ColumnPropNameInTable="SqlDbTypeColumn" msprop:Generator_UserColumnName="SqlDbType" type="xs:string" />
+              <xs:element name="SystemType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSystemType" msprop:Generator_ColumnPropNameInRow="SystemType" msprop:Generator_ColumnPropNameInTable="SystemTypeColumn" msprop:Generator_UserColumnName="SystemType" type="xs:string" />
+              <xs:element name="Size" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSize" msprop:Generator_ColumnPropNameInRow="Size" msprop:Generator_ColumnPropNameInTable="SizeColumn" msprop:Generator_UserColumnName="Size" type="xs:int" />
+              <xs:element name="Precision" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPrecision" msprop:Generator_ColumnPropNameInRow="Precision" msprop:Generator_ColumnPropNameInTable="PrecisionColumn" msprop:Generator_UserColumnName="Precision" type="xs:short" />
+              <xs:element name="Scale" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnScale" msprop:Generator_ColumnPropNameInRow="Scale" msprop:Generator_ColumnPropNameInTable="ScaleColumn" msprop:Generator_UserColumnName="Scale" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TableNames" />
+      <xs:field xpath="mstns:TableName" />
+    </xs:unique>
+    <xs:unique name="Fields_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Fields" />
+      <xs:field xpath="mstns:TableName" />
+      <xs:field xpath="mstns:FieldName" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

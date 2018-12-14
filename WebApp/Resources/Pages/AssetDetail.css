@@ -1,0 +1,128 @@
+﻿body {
+}
+.form-horizontal .control-label{font-weight:normal;color:#888;text-align:left;font-size:12px}
+/*.form-group {margin-bottom: 0px;}*/
+.borderbottom{border-bottom: 1px dashed #e3e3e3;}
+.mr15{margin-right:15px;}
+.modal-body .form-group{margin-bottom: 10px;}
+.pageheader .nav-tabs{border-bottom:none !important;}
+
+.box-content {font-size: 12px}
+
+.hiddenmenu {display:none;}
+  
+#addressPanel {margin-top: 20px;}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus
+{
+    background-color: #428BCA !important;
+    color: white !important;
+    border:none;
+}
+.header-nav { height: 49px; overflow:hidden; white-space:nowrap; }
+.pageheader .btn-toolbar { margin: 10px 20px 0 0; }
+.main-nav { margin-top: 0; }
+
+.list-group { padding-top: 15px; }
+
+#tblNotes, #tblProducts, #tblFiles i {cursor:pointer;}
+
+.user-active{
+    color: #808080;
+}
+
+.user-inactive {
+    color: #f00;
+}
+
+.note-list{
+    border-bottom: 3px solid #DDDDDD;
+    max-height: 208px;
+    overflow: auto;
+}
+
+.hiddenfile{
+    position:absolute;
+    opacity:0;
+}
+
+.upload-queue {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0.5em 0;
+}
+.upload-queue .ts-color-bg-accent {
+    float: left;
+    margin-bottom: 0.25em;
+    padding: 0.25em;
+    background-color: #EEEEEE;
+    margin-right:10px;
+}
+.upload-queue li .filename {
+    float: left;
+    line-height: 16px;
+}
+.upload-queue li .glyphicon {
+    cursor: pointer;
+    float: left;
+    margin-left: 0.25em;
+    padding: 0;
+}
+.progress-bar{
+    float:none !important;
+}
+.progress {overflow:visible !important;margin-bottom: 0px !important;}
+
+#assetTitle{
+    margin: 0 0 0 15px;
+    font-size: 24px;
+}
+
+.assetProperties i, .customProperties i{line-height: 2em;cursor:pointer}
+
+.form-group p.editable, .editable {
+    color:#428BCA;
+    cursor:pointer;
+}
+
+.form-inline .form-group input {
+	width:140px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.form-inline .form-group i{
+    margin-right:10px;
+    cursor:pointer;
+}
+
+.viewFile {cursor:pointer}
+.db{display:block;font-size:12px}
+
+.w-wrap{word-wrap:break-word;}
+
+.assetProperties p, .customProperties p{word-wrap:break-word;font-size: 12px}
+
+.list-group-item-text a{
+    word-wrap:break-word;
+}
+
+.ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}
+
+#locationHeader
+{
+  color: #444;
+  display: inline-block;
+  line-height: 18px;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 300;  
+  margin-left: 10px;
+  font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: 400;
+}
+
+.historyTableAdjustment
+{
+  padding-left: 0px !important;
+}

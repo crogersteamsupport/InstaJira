@@ -1,0 +1,47 @@
+Rest<$ItemCollection$>.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.IO;
+using System.Xml;
+using System.Data;
+using TeamSupport.Data;
+using System.Net;
+
+namespace TeamSupport.Api
+{
+  
+  public class Rest<$CollectionName$>
+  {
+    public static string Get<$ItemName$>(RestCommand command, int <$primaryKey$>)
+    {
+      <$ItemName$> <$itemName$> = <$CollectionName$>.Get<$ItemName$>(command.LoginUser, <$primaryKey$>);
+      if (<$itemName$>.OrganizationID != command.Organization.OrganizationID) throw new RestException(HttpStatusCode.Unauthorized);
+      return <$itemName$>.GetXml("<$ItemName$>", true);
+    }
+    
+    public static string Get<$CollectionName$>(RestCommand command)
+    {
+      <$CollectionName$> <$collectionName$> = new <$CollectionName$>(command.LoginUser);
+      <$collectionName$>.LoadByOrganizationID(command.Organization.OrganizationID);
+
+      if (command.Format == RestFormat.XML)
+      {
+        return <$collectionName$>.GetXml("<$CollectionName$>", "<$ItemName$>", true, command.Filters);
+      }
+      else
+      {
+        throw new RestException(HttpStatusCode.BadRequest, "Invalid data format");
+      }
+      
+    }    
+  }
+  
+}
+
+
+
+
+
+  

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" xmlns:sdoXML="commonj.sdo/xml" xmlns:sdoJava="commonj.sdo/java" elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/" sdoJava:package="oracle.apps.crmCommon.salesParties.salesPartiesService" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/xml/sdoJava.xsd" namespace="commonj.sdo/java" />
+  <xsd:import schemaLocation="https://crm-aufsn4x0gka.oracleoutsourcing.com:443/crmCommonSalesParties/SalesPartyService?XSD=/xml/sdoXML.xsd" namespace="commonj.sdo/xml" />
+  <xsd:annotation>
+    <xsd:documentation xmlns:oer="http://xmlns.oracle.com/oer">
+      <name xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/">Sales Account Resource Access SDO</name>
+      <description xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/">An alternative sales account resource service data object used
+                exclusively by Oracle Fusion Secure Enterprise Search.</description>
+      <keywords xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/">
+        <value>SalesAccount</value>
+      </keywords>
+      <oer:category name="lba" xmlns:oer="http://xmlns.oracle.com/oer">
+        <value xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/">CrmCommonComponent-CRM Common Components</value>
+        <value xmlns="http://xmlns.oracle.com/apps/crmCommon/salesParties/salesPartiesService/">CrmCommonComponent-CRM Common Components :
+                    CrmCommonSalesParties-Sales Parties</value>
+      </oer:category>
+      <oer:attributes xmlns:oer="http://xmlns.oracle.com/oer">
+        <oer:attribute description="The identifier for the sales account." name="SalesAccountId" />
+        <oer:attribute description="The party identifier for the sales account resource." name="ResourceId" />
+        <oer:attribute description="The name of the party." name="PartyName" />
+        <oer:attribute description="The user guid for the sales account resource." name="UserGUID" />
+      </oer:attributes>
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="SalesAccountResourceAccess">
+    <xsd:annotation>
+      <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+        <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+          <attribute>SalesAccountId</attribute>
+          <attribute>ResourceId</attribute>
+        </key>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element sdoXML:dataType="sdoJava:LongObject" minOccurs="0" name="SalesAccountId" nillable="true" type="xsd:long" />
+      <xsd:element minOccurs="0" name="ResourceId" nillable="true" type="xsd:decimal" />
+      <xsd:element minOccurs="0" name="PartyName" nillable="true" type="xsd:string" />
+      <xsd:element minOccurs="0" name="UserGUID" nillable="true" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="salesAccountResourceAccess" type="SalesAccountResourceAccess" />
+</xsd:schema>

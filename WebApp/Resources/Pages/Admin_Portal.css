@@ -1,0 +1,179 @@
+﻿.red{
+    color: red;
+}
+
+.face{
+    width: 90px;
+    height: 90px;
+}
+
+.rating-negative {
+    background: url('../Images/faces.png') no-repeat;
+    background-position: -180px -90px;
+    width: 90px;
+    height: 90px;
+}
+
+.rating-neutral {
+    background: url('../Images/faces.png') no-repeat;
+    background-position: -90px -90px;
+    width: 90px;
+    height: 90px;
+}
+
+.rating-postive {
+    background: url('../Images/faces.png') no-repeat;
+    background-position: 0 -90px;
+    width: 90px;
+    height: 90px;
+}
+
+#tabs-cdi .slider-container{
+    width: 400px;
+}
+
+#cdi-green .ui-slider-range { background: #8ae234; }
+#cdi-green .ui-slider-handle { border-color: #8ae234; }
+
+#cdi-yellow .ui-slider-range { background: #ffd800; }
+#cdi-yellow .ui-slider-handle { border-color: #ffd800; }
+
+form.positive-file-upload, form.neutral-file-upload, form.negative-file-upload { position: relative; overflow: hidden; direction: ltr; cursor: pointer; color: #333; width: 15em; height: 16px; line-height: 16px; float:left; margin-top: 0em; }
+form.positive-file-upload input, form.neutral-file-upload input, form.negative-file-upload input { position: absolute; top: 0; right: 0; margin: 0; border: 300px solid transparent; opacity: 0; -ms-filter: 'alpha(opacity=0)'; filter: alpha(opacity=0); -o-transform: translate(-300px, -300px) scale(10); -moz-transform: translate(-800px, 0) scale(10); cursor: pointer; height: 100%; }
+:root form.file-upload input { height: auto; }
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue { list-style: none; padding: .5em 0; margin:0;}
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue li { padding: 0; margin: 0; clear:both;}
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue .ts-color-bg-accent { margin-bottom: .25em; padding: .25em .25em; float:left; }
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue li .filename { line-height: 16px; float:left;}
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue li .progress { height: 7px; width: 100px; float:left; margin: 4px .25em 0 1em; }
+.positive-upload-queue, .neutral-upload-queue, .negative-upload-queue li .ui-icon { float:left; padding: 0; cursor: pointer; margin-left: .25em;}
+
+.sort-item {
+    clear: both;
+    height: 16px;
+    line-height: 16px;
+    min-height: 16px;
+    padding: 0.5em 1em;
+    cursor: url(../cursors/grab.cur), move !important;
+}
+
+.sort-item span:first-child {
+    float:left;
+    padding-right: 15px;
+}
+
+.seperator{color:grey; margin-left:10px !important; margin-right:10px !important; padding-top:4px !important;}
+
+.hubWell {
+    padding: 20px 30px 20px 30px;
+    width: 220px;
+}
+
+.hubDisabledWell {
+    padding: 20px;
+    width: 380px;
+    font-size:12px;
+}
+
+#disabledNewHub {
+    min-height: 1000px; 
+    display: none;
+}
+
+.hubProperty {
+    margin-top:10px;
+}
+
+#HubList {
+    font-size: 13px;
+    width: 180px;
+    padding: 0 8px 0 2px;
+    float: left;
+}
+
+.hubName {
+    width:146px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.hub-container {
+    padding:12px 10px 12px 6px;
+}
+
+.hub-container:hover > a {
+    color: #2A3F54;
+}
+
+.hub-container.active > a, .hub-container.active {
+    background-color: #2A3F54;
+    color: white;
+}
+
+.hub-container:hover .remove {
+    display: block !important;
+}
+
+.hub-container > a:active {
+    text-decoration:none;
+}
+
+.hub-container > a:link {
+    text-decoration: none;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 20px;
+}
+
+.loadcarat {
+    font-size:10px;
+}
+
+.remove {
+    display: none;
+    position: absolute;
+    font-size: 13px;
+}
+
+.error {
+    color: #D9534F;
+}
+
+.hub-container.active .remove {
+    color: #FFFFFF;
+}
+
+.remove:hover, .hub-container.active .remove:hover {
+    color: #D9534F;
+}
+
+input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:focus {
+    border-color: #D9534F;
+}
+
+
+hr, .divider {
+    color: lightgray;
+    margin-left: 12px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+#hub_admin {
+    -moz-box-shadow: 4px 4px 8px #000;
+    -webkit-box-shadow: 4px 4px 8px #000;
+    box-shadow: 4px 4px 8px #000;
+}
+
+.kb-cat-productfamily-only {
+    display:none;
+}
+
+.com-cat-productfamily-only {
+    display:none;
+}
+
+.hub-container > a {
+    color:black;
+}

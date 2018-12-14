@@ -1,0 +1,36 @@
+﻿<html>
+<head>
+  <meta charset="utf-8">
+  <title>TeamSupport - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="../Css/bootstrap3.min.css" rel="stylesheet" type="text/css" />
+  <link href="LoginTwoStepSetup.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/intlTelInput.css" rel="stylesheet" type="text/css" />
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/bootstrap3.min.js" type="text/javascript"></script>
+  <script src="LoginTwoStepSetup.js" type="text/javascript"></script>
+  <script src="../Js/Ts/ts.utils.js"></script>
+  <script src="/frontend/library/intlTelInput.min.js" type="text/javascript"></script>
+</head>
+<body>
+  <header>
+    <div class="headerDiv">
+      <img alt="Logo" src="../images/page_header.png" />
+    </div>
+  </header>
+  <div class="container-fluid">
+    <div class="card card-container">
+      <h3 class="pageTitle">Add a Phone Number</h3>
+      <form class="form-signin">
+        <div class="form-group">
+          <input type="tel" id="mobile-number" class="form-control">
+        </div>
+        <button id="update" class="btn btn-lg btn-primary btn-block btn-signin">Verify</button>
+      </form>
+	 	<div id="pageError" class="alert alert-danger" style="display:none; margin-top:15px; margin-bottom: 0px;" role="alert"></div>
+      <div class="alert alert-info" role="alert">The administator of your account has turned on two factor authentication. 
+       Please enter your current cell phone number so we can text you a verification code.</div>
+    </div>
+  </div>
+ </body>
+</html>

@@ -1,0 +1,97 @@
+﻿<div class="filter-templates" style="display: none">
+  <ul class="filter-template-cond">
+    <li class="filter-cond">
+      <select class="form-control filter-field"></select><a href="#" class="filter-remove-cond"><i
+        class="fa fa-times"></i></a></li>
+  </ul>
+  <div class="filter-template-comps">
+    <select class="form-control filter-comp filter-comp-number">
+      <option data-argtype-1="float">Is</option>
+      <option data-argtype-1="float">Is Not</option>
+      <option data-argtype-1="float">Less Than</option>
+      <option data-argtype-1="float">Greater Than</option>
+      <option>Is Empty</option>
+      <option>Is Not Empty</option>
+    </select>
+    <select class="form-control filter-comp filter-comp-text">
+      <option data-argtype-1="text">Is</option>
+      <option data-argtype-1="text">Is Not</option>
+      <option data-argtype-1="text">Contains</option>
+      <option data-argtype-1="text">Does Not Contain</option>
+      <option data-argtype-1="text">Starts With</option>
+      <option data-argtype-1="text">Ends With</option>
+      <option>Is Empty</option>
+      <option>Is Not Empty</option>
+    </select>
+    <select class="form-control filter-comp filter-comp-bool">
+      <option>Is True</option>
+      <option>Is False</option>
+      <option>Is Empty</option>
+      <option>Is Not Empty</option>
+    </select>
+    <select class="form-control filter-comp filter-comp-datetime">
+      <optgroup label="Date Filters">
+        <option data-argtype-1="date">Is</option>
+        <option data-argtype-1="date">Is Not</option>
+        <option data-argtype-1="date">Is Before</option>
+        <option data-argtype-1="date">Is After</option>
+        <option>Is Empty</option>
+        <option>Is Not Empty</option>
+      </optgroup>
+      <optgroup label="Year Filters">
+        <option>Current Year</option>
+        <option>Previous Year</option>
+        <option>Next Year</option>
+        <option data-argtype-1="int">Specific Year</option>
+        <option data-argtype-1="int">Previous # Years</option>
+        <option data-argtype-1="int">Last # Years</option>
+        <option data-argtype-1="int">Next # Years</option>
+      </optgroup>
+      <optgroup label="Quarter Filters">
+        <option>Current Quarter</option>
+        <option>Previous Quarter</option>
+        <option>Next Quarter</option>
+        <option data-argtype-1="int">Specific Quarter</option>
+      </optgroup>
+      <optgroup label="Month Filters">
+        <option>Current Month</option>
+        <option>Previous Month</option>
+        <option>Next Month</option>
+        <option data-argtype-1="month">Specific Month</option>
+      </optgroup>
+      <optgroup label="Day Filters">
+        <option>Today</option>
+        <option>Yesterday</option>
+        <option>Tomorrow</option>
+        <option data-argtype-1="day">Specific Day</option>
+        <option data-argtype-1="int">Previous # Days</option>
+        <option data-argtype-1="int">Last # Days</option>
+        <option data-argtype-1="int">Next # Days</option>
+      </optgroup>
+    </select>
+  </div>
+  <div class="filter-template-body">
+    <table class="filter-group">
+      <tr>
+        <td class="filter-left">
+          <button type="button" class="filter-conj btn btn-primary btn-xs">And</button>
+        </td>
+        <td class="filter-right">
+          <div class="filter-content">
+            <ul class="filter-conds list-unstyled"></ul>
+            <div class="filter-actions">
+              <div class="btn-group btn-group-xs">
+                <button type="button" class="btn btn-default filter-add-cond"><i class="fa fa-plus">
+                </i>&nbsp;Condition</button>
+                <button type="button" class="btn btn-default filter-add-group"><i class="fa fa-plus">
+                </i>&nbsp;Group</button>
+              </div>
+            </div>
+            <div class="filter-subs">
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

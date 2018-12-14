@@ -1,0 +1,35 @@
+<$ItemCollection$>Proxy.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data;
+using System.Data.SqlClient;
+using System.Runtime.Serialization;
+
+namespace TeamSupport.Data
+{
+  [DataContract(Namespace="http://teamsupport.com/")]
+  [KnownType(typeof(<$ItemName$>Proxy))]
+  public class <$ItemName$>Proxy
+  {
+    public <$ItemName$>Proxy() {}
+    <$BeginFields=[All]$>[DataMember] public <$DataType$> <$PropertyName$> { get; set; }
+    <$EndFields$>      
+  }
+  
+  public partial class <$ItemName$> : <$BaseItemClass$>
+  {
+    public <$ItemName$>Proxy GetProxy()
+    {
+      <$ItemName$>Proxy result = new <$ItemName$>Proxy();
+      <$BeginFields=[!DateTime]$>result.<$PropertyName$> = this.<$PropertyName$>;
+      <$EndFields$> 
+      <$BeginFields=[DateTime,!Nullable]$>result.<$PropertyName$> = DateTime.SpecifyKind(this.<$PropertyName$>Utc, DateTimeKind.Utc);
+      <$EndFields$> 
+      <$BeginFields=[DateTime,Nullable]$>result.<$PropertyName$> = this.<$PropertyName$>Utc == null ? this.<$PropertyName$>Utc : DateTime.SpecifyKind((DateTime)this.<$PropertyName$>Utc, DateTimeKind.Utc); 
+      <$EndFields$> 
+      return result;
+    }	
+  }
+}

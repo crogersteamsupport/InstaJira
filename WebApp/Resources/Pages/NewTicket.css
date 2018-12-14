@@ -1,0 +1,31 @@
+﻿    .ticket-customer-add{ padding-left: 10px; }
+
+    .newticket-kbCategory { width: 350px; }
+
+    .category {
+        color: #444;
+        display: inline-block;
+        line-height: 18px;
+        margin: 0;
+        font-size: 18px;
+        font-weight: 300 !important;
+    }
+
+    #deployJavaPlugin
+    {
+        position: absolute;    left: -10px;
+    }
+
+    .divScreenRecorderMessages
+    {
+      border-radius: 5px;
+      background: #e6e6e6;
+      padding: 5px; 
+      font-family: inherit;
+      font-style: inherit;
+    }
+
+    #tempContainer{
+    margin: 0 auto;
+    padding-bottom: 10px;
+}

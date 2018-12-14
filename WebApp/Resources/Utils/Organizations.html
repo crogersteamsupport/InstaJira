@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <link href="../Css/frame.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery-ui-latest.custom.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/jquery-ui-enhanced.css" rel="stylesheet" type="text/css" />
+  <link href="../Css/ts.ui.css" rel="stylesheet" type="text/css" />
+  <!--[if IE 7]><link href="vcr/1_9_0/Css/ts.ui.ie7.css" rel="stylesheet" type="text/css" /><![endif]--><!--[if IE 8]><link href="vcr/1_9_0/Css/ts.ui.ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+  <script src="/frontend/library/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="/frontend/library/jquery-ui-latest.custom.min.js" type="text/javascript"></script>
+
+  <style type="text/css">
+    .ts-toolbar { border-top: none; }
+    #divCopyConfirm { padding: 1em 1em; margin: 1em 0; }
+    
+      </style>
+
+  <script language="javascript" type="text/javascript">
+
+    $(document).ready(function () {
+      $('button').button();
+      $('#btnRefresh').click(function (e) { e.preventDefault(); window.location = window.location; });
+      $('.ts-loading').hide().next().show();
+
+      function addToolbarButton(id, icon, caption, callback) {
+        var html = '<a href="#" id="' + id + '" class="ts-toolbar-button ui-corner-all"><span class="ts-toolbar-icon ts-icon ' + icon + '"></span><span class="ts-toolbar-caption">' + caption + '</span></a>';
+        $('.ts-toolbar').append(html).find('#' + id).click(callback).hover(function () { $(this).addClass('ui-state-hover'); }, function () { $(this).removeClass('ui-state-hover'); });
+      }
+
+      addToolbarButton('btnRefresh', 'ts-icon-refresh', 'Refresh', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location = window.location;
+      });
+
+
+      var execGetOrganization = null;
+      function getOrganizations(request, response) {
+        if (execGetOrganization) { execGetOrganization._executor.abort(); }
+        execGetOrganization = top.Ts.Services.Organizations.AdminGetOrganizations(request.term, function (result) { response(result); });
+      }
+
+      $('#textOrgID').autocomplete({
+        minLength: 2,
+        source: getOrganizations,
+        select: function (event, ui) {
+          $(this).data('itemID', ui.item.id);
+          top.Ts.Services.Organizations.GetOrganization(ui.item.id, function (org) {
+            top.Ts.Services.Organizations.GetPortalOption(ui.item.id, function (po) {
+              top.Ts.Services.Organizations.AdminGetCrmLinks(ui.item.id, function (crms) {
+
+              	var apiLink = 'https://' + org.OrganizationID + ':' + org.WebServiceID + '@' + top.Ts.System.AppDomain + '/api/xml/';
+                org.ApiLink = '<a href="' + apiLink + '" target="_blank">' + apiLink + '</a>';
+                var orgDiv = $('#divOrganization').empty().data('o', org);
+
+                appendData(orgDiv, org.Name, org);
+                $('<button>')
+                  .text('Set admin(s) show welcome page to true')
+                  .click(function (e) {
+                    e.preventDefault();
+                    top.Ts.Services.Organizations.SetShowWelcomePage($('#divOrganization').data('o').OrganizationID, function () { alert('Word.'); });
+                  })
+                  .appendTo(orgDiv)
+                  .button();
+
+                  appendData(orgDiv, 'Portal Options', po);
+
+                  var crmDivs = $('<div>').appendTo('#divOrganization');
+
+                for (var i = 0; i < crms.length; i++) {
+                  var crm = crms[i];
+                  var crmDiv = $('<div>')
+                  .addClass('crm-item')
+                  .data('o', crm)
+                  .appendTo(crmDivs);
+
+                  $('<h1>')
+                .text(crm.CRMType)
+                .appendTo(crmDiv);
+
+                  $('<button>')
+                  .text('Reset LastLink Date')
+                  .click(function (e) {
+                    e.preventDefault();
+                    top.Ts.Services.Organizations.ResetCrmLastLink($(this).closest('.crm-item').data('o').CRMLinkID, function () { alert('LastLink was set to NULL.'); });
+                  })
+                  .appendTo(crmDiv)
+                  .button();
+
+                  appendData(crmDiv, '', crm);
+
+                }
+              });
+            });
+          });
+        }
+      });
+
+      function appendData(element, name, data) {
+        $('<h1>').text(name).appendTo(element);
+        var table = $('<table>').appendTo(element);
+        function addRow(k, v) {
+          var row = $('<tr>').appendTo(table);
+          $('<td>').html(k + ':').appendTo(row);
+          $('<td>').html(v == null ? 'NULL' : v + '').appendTo(row);
+        }
+        for (prop in data) { addRow(prop, data[prop]); }
+      }
+
+      $('.utils-copy-org').autocomplete({
+        minLength: 2,
+        source: getOrganizations,
+        select: function (event, ui) { $(this).data('itemID', ui.item.id); }
+      });
+
+      $('#btnCopy').click(function (e) {
+        e.preventDefault();
+        var id1 = $('#textCopySrc').data('itemID');
+        var id2 = $('#textCopyDest').data('itemID');
+        if (!id1 || !id2) {
+          alert('Please choose your organizations to copy.');
+          return;
+        }
+        var msg = 'Are you sure you would like to copy settings from <strong>' + id1 + '</strong> to <strong>' + id2 + '</strong>?  This will ERASE the destination settings!';
+        $('#divCopyConfirm p:first').html(msg).parent().show();
+      });
+
+      $('#btnCopyNo').click(function (e) {
+        e.preventDefault();
+        $('#divCopyConfirm').hide();
+      });
+
+      $('#btnCopyYes').click(function (e) {
+        e.preventDefault();
+        $('#divCopyConfirm').hide();
+        try {
+          if (confirm('Are you sure again?!')) {
+            $('.ts-loading').show().next().hide();
+            top.Ts.Services.Organizations.CopyOrganizationSettings($('#textCopySrc').data('itemID'), $('#textCopyDest').data('itemID'), function (result) {
+              $('.ts-loading').hide().next().show();
+              alert(result);
+            });
+
+          }
+        } catch (e) {
+          alert('Error:  The request did not process.');
+        }
+      });
+    });  
+  </script>
+
+</head>
+<body>
+  <div class="ts-loading">
+  </div>
+  <div class="frame-content ts-content ui-widget">
+    <div class="ts-toolbar ui-widget-header">
+    </div>
+    <div class="frame-content-wrapper">
+
+      <div class="ts-section ui-widget-content  ui-corner-all">
+        <h2>Lookup Organization</h2>
+        <input class="text ui-corner-all ui-widget-content" type="text" id="textOrgID" style="width: 250px;" />
+        <div id="divOrganization">
+        </div>
+        
+      </div>
+      <div class="ts-section ui-widget-content  ui-corner-all ui-helper-hidden">
+        <h2>Copy Organization's Settings and Users</h2>
+        <p>This will copy the Ticket Types, Custom Fields, Users, and Settings to the destination.  These items will be wiped out on the destination.</p>
+        <table>
+          <tr>
+          <td>Source:</td>
+          <td><input class="text ui-corner-all ui-widget-content utils-copy-org" type="text" id="textCopySrc" style="width: 250px;" /></td>
+          </tr>
+          <tr>
+          <td>Destination:</td>
+          <td><input class="text ui-corner-all ui-widget-content utils-copy-org" type="text" id="textCopyDest" style="width: 250px;" /></td>
+          </tr>
+          <tr>
+          <td><button id="btnCopy">Copy</button></td>
+          </tr>
+        </table>
+        <div id="divCopyConfirm" class="ui-helper-hidden">
+          <p class="ui-state-highlight ui-widget ui-corner-all"></p>
+          <p>
+            <button id="btnCopyYes">Yes</button>
+            <button id="btnCopyNo">No</button>
+          </p>
+        </div>
+        
+        
+      </div>
+    </div>
+  </div>
+</body>
+</html>

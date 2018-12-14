@@ -1,0 +1,198 @@
+﻿
+
+:focus { -moz-outline-style: none; outline:0; }
+
+body { font-size: 12px; margin:0; padding-left: 5px !important; padding-top:5px !important; }
+h1 { font-size: 1.5em; padding: .5em 0; }
+h2 { font-size: 1.3em; font-weight:bold; padding: .5em 0;}
+h3 { font-size: 1.2em; font-weight:bold; padding: .5em 0;}
+td, th { padding: .5em .5em;}
+thead th, tfoot td { font-weight:bold; }
+p { padding: 0; margin: 0;}
+ul { list-style-type:disc; }
+ul,ol { margin: 1em 1em; }
+li { margin: .5em .5em;}
+strong { font-weight:bold;}
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+blockquote { background-color:#E3EEFC; border: 1px solid #2a3f54; margin: 1em 0; padding: .5em .5em; font-family:courier; }
+pre {border: 1px solid #2a3f54; margin: 1em 0; padding: .5em .5em; font-family:courier;}
+
+.ts-clearfix { clear:both; height: 1px; }
+
+.ui-widget-header a, .ui-widget-header a:link, .ui-widget-header a:visited, .ui-widget-header a:active { text-decoration: none;}
+.ui-widget-header a:hover { text-decoration: underline;}
+.ui-widget .ui-autocomplete-input, .ui-autocomplete-input, input.text  { padding: .2em .2em; text-align:left; height: 1.2em;}
+.ui-menu .ui-menu-item a { padding: 0 .1em 0 .2em; }
+.ui-button .ui-button-text-only, .ui-button-text-only .ui-button-text { line-height: 2em !important; padding: 0 .4em !important; }
+.ui-button, .ui-widget .ui-button{ font-weight:normal; padding:0; }
+label.checkbox { vertical-align: middle; margin: 0px; top:0; font-weight:bold; display:inline; }    
+input.checkbox { vertical-align: middle; margin: 0px; top:0; display: inline; width: auto;}
+
+.ts-loading { background-color: transparent; background-image: url('../images/loading/loading2.gif'); background-repeat: no-repeat;  background-position: 50% 25%; height:100%; min-height: 200px; }
+
+.mceLayout .mceIframeContainer { background: #fff;}
+.mceLayout td.mceIframeContainer { vertical-align:top;}
+.mceLayout td.mceIframeContainer iframe { min-height: 75px;}
+.mceContentBody { border: none; }
+.o2k7Skin a.mce_insertTicket img.mceIcon, .o2k7Skin a.mce_insertKb img.mceIcon,  .o2k7Skin a.mce_recordScreen img.mceIcon { height: 16px; width: 16px; padding: 3px 0 0 2px; }
+
+/*
+.ts-separator { height: 1px; background-color:#D7E6F9;}
+.ts-section { margin: .5em .5em; padding: 0 .5em .5em .5em; border: 2px solid #D7E6F9; clear:both;}
+.ts-side-widget { background-color: #EDF4FC; }
+.ts-content { background-image:none; border:none; overflow:auto; background-color: #EDF4FC;} 
+*/
+.ui-widget-content a.ts-link { border: none; background:none; cursor: pointer;}
+.ts-color-bg-accent, .ui-widget-content.ts-color-bg-accent { background-color:#EEEEEE; /* #E3EEFC;*/ background-image: none;}
+.ui-widget-content.ts-separator { height: 1px; border-bottom: none; border-left:none; border-right:none; margin-bottom: .5em; clear:both; }
+
+/* Old, but used in automation admin */
+.ts-section { margin: .5em .5em; padding: 0 .5em .5em .5em; border: none; clear:both;}
+.ts-side-widget { background-color: #fff; }
+.ts-content { background-image:none; border:none; overflow:auto; background-color: #fff;} 
+.ts-content h1 { padding: .5em 0 .5em 0; font-size: 1.5em; }
+.ts-content h2 { padding: .5em 0 .5em 0; font-size: 1.25em; }
+.ts-content h2 { padding: .5em 0 .5em 0; font-size: 1em; }
+
+
+.ui-autocomplete-loading { background-image: url('../images/loading/loading_small2.gif'); background-position:  right center; background-repeat: no-repeat; }
+
+
+/* states and images */
+.ts-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
+.ts-icon { width: 16px; height: 16px; background-image: url(../images/ts_icons_normal.png); }
+.ui-state-disabled.ts-icon { background-image: url(../images/ts_icons_disabled.png); }
+.ui-state-hover .ts-icon, .ui-state-focus .ts-icon {background-image: url(../images/ts_icons_hover.png); }
+.ts-icon-none { background-position: 99999px 99999px; }
+/*button icon element(s) */
+.ui-button-icon-only .ts-icon, .ui-button-text-icon-primary .ts-icon, .ui-button-text-icon-secondary .ts-icon, .ui-button-text-icons .ts-icon, .ui-button-icons-only .ts-icon { position: absolute; top: 50%; margin-top: -8px; }
+.ui-button-icon-only .ts-icon { left: 50%; margin-left: -8px; }
+
+/* ts-icons */
+.ts-icon-triangle-n { background-position: 0 0; }
+.ts-icon-triangle-e { background-position: -16px 0; }
+.ts-icon-triangle-s { background-position: -32px 0; }
+.ts-icon-triangle-w { background-position: -48px 0; }
+.ts-icon-close-small { background-position: -464px -16px; }
+.ts-icon-close { background-position: -896px 0; }
+.ts-icon-open { background-position: -96px 0; }
+.ts-icon-top { background-position: -592px 0; }
+.ts-icon-add { background-position: -912px 0; }
+.ts-icon-delete { background-position: -976px 0; }
+.ts-icon-remove { background-position: -832px 0; }
+.ts-icon-enqueue { background-position: -496px -16px; }
+.ts-icon-takeownership { background-position: -368px 0; }
+.ts-icon-request { background-position: -624px 0; }
+.ts-icon-compose-email { background-position: -464px 0; }
+.ts-icon-print { background-position: -1104px 0; }
+.ts-icon-export { background-position: -592px 0; }
+.ts-icon-history { background-position: -512px -16px; }
+.ts-icon-refresh { background-position: -656px 0; }
+.ts-icon-online { background-position: -352px 0; }
+.ts-icon-offline { background-position: -832px 0; }
+.ts-icon-chat { background-position: -288px -16px; }
+.ts-icon-edit { background-position: -960px 0px; }
+.ts-icon-cancel { background-position: -896px 0px; }
+.ts-icon-save { background-position: -928px 0px; }
+.ts-icon-saved { background-position: -1056px 0px; }
+.ts-icon-new { background-position: -944px 0px; }
+.ts-icon-read { background-position: -576px -16px; }
+.ts-icon-unread { background-position: -560px -16px; }
+.ts-icon-flagged { background-position: -576px 0px; }
+.ts-icon-unflagged { background-position: -544px -16px; }
+.ts-icon-subscribed { background-position: -384px 0; }
+.ts-icon-unsubscribed { background-position: -592px -16px; }
+.ts-icon-open-sla-violated { background-position: -608px -16px; }
+.ts-icon-open-sla-warning { background-position: -624px -16px; }
+.ts-icon-sla-good { background-position: -784px -16px; }
+.ts-icon-sla-warning { background-position: -528px -16px; }
+.ts-icon-sla-bad { background-position: -512px 0px; }
+.ts-icon-attachment { background-position: -448px 0px; }
+.ts-icon-tip { background-position: -640px -16px; }
+.ts-icon-info { background-position: -656px -16px; }
+.ts-icon-email { background-position: -672px -16px; }
+.ts-icon-portal { background-position: -416px -16px; }
+.ts-icon-portalnot { background-position: -432px -16px; }
+.ts-icon-kb { background-position: -144px -16px; }
+.ts-icon-kbnot { background-position: -688px -16px; }
+.ts-icon-ticket-parent { background-position: -720px -16px; }
+.ts-icon-ticket-related { background-position: -736px -16px; }
+.ts-icon-ticket-child { background-position: -752px -16px; }
+.ts-icon-tsuser { background-position: -400px -16px; }
+.ts-icon-customer { background-position: -768px -16px; }
+.ts-icon-light { background-position: -128px -16px; }
+
+
+
+
+
+/* ts helpers */
+.ts-clickable { cursor: pointer;}
+.ts-noborder  { border: none;}
+.ts-hidden { display:none !important; }
+
+/* jGrowl Fixes */
+div.jGrowl-message { max-height: 68px; overflow:hidden;}
+
+/* Layout */
+.ui-layout-resizer-west, .ui-layout-resizer-east { border-top: none !important; border-bottom:none !important;  }
+.ui-layout-resizer-north, .ui-layout-resizer-south { border-left: none !important; border-right:none !important;  }
+
+/* Chat */
+.chat-messages { font-size:14px; color:#000; }
+.chat-messages p { margin:5px; }
+.chat-notification  { color:#333399; }
+.chat-name { font-weight:bold;}
+.chat-message-user .chat-name { color:#329938;}
+.chat-message-client .chat-name  { color:#333399; }
+.chat-message-self .chat-name { color:#696969;}
+
+/* Ts Tabs */
+.ts-tabs { position: relative; padding: 0 .5em; zoom: 1; z-index:99999 !important; border-left: none; border-right:none; border-top:none; overflow:hidden; margin-top:1px;} 
+.ts-tabs .ui-icon-close { float:left; cursor:pointer; margin: .33em .25em 0 0; padding:0;}
+.ts-tabs li { list-style: none; float: left; position: relative; border-bottom: 0 !important; padding: 0 .33em; white-space: nowrap; height:25px; line-height:25px; margin: 5px .1em 0 0; cursor:pointer;}
+.ts-tabs li a { float: left; text-decoration: none; display:block; margin: 0 .33em;}
+.ts-tabs li a:hover { text-decoration:none;}
+.ts-tabs li.ui-state-active a, .ts-tabs li.ui-state-disabled a, .ts-tabs li.ui-state-processing a { cursor: default; }
+.ts-tabs-hide { display: none !important; }
+.ts-tabs .ts-icon { float:left; margin: .33em 0 0 .25em; padding:0;}
+.ts-tabs .tab-image { float: left; display:block; height: 16px; width: 16px; margin: .33em 0 0 .35em; padding: 0;}
+
+/* Ts MenuTree */
+.ts-menutree { border: none; height: 100%; overflow: auto; position:relative; }
+.ts-menutree > ul { padding:0 .5em; margin: .2em 0;}
+.ts-menutree li ul { padding:0; margin:0;}
+.ts-menutree li { list-style: none; position: relative; cursor:pointer; padding:.05em 0; margin:0; overflow:hidden;}
+.ts-menutree li ul li { padding-left: .5em;}
+.ts-menutree li a { text-decoration: none;  height: 16px; overflow:hidden;}
+.ts-menutree li > div { padding: 0 .1em; height: 16px; line-height:16px;  }
+.ts-menutree .ts-icon { float:left; padding-right: .33em;}
+.ts-menutree .ui-icon { float:left; padding-right: 0;}
+.ts-menutree img { float:left; padding-right: .33em; height: 16px; width: 16px;}
+li.ts-menutree-item  div { border:1px solid transparent; }
+
+.ts-toolbar { line-height: 29px; height:29px; border-left:none; border-right:none; font-weight:normal;}
+.ts-toolbar .ts-toolbar-button { float:left; display:block; height: 28px; }
+.ts-toolbar .ts-toolbar-button span.ts-icon { float:left; margin: 7px 2px 0 5px;}
+.ts-toolbar .ts-toolbar-button .ts-toolbar-caption { float:left; margin-right: 5px;}
+.ts-toolbar a.ui-state-hover { border-top: none; border-bottom:none; padding:0;}
+.ts-toolbar a { padding: 0 1px; line-height:30px;}
+.ts-toolbar a:hover { text-decoration:none;}
+
+.ts-layout-tabs { height: 31px; }
+.ts-layout-toolbar { height: 31px; }
+.ts-layout-container { height: 100%; }
+
+.ui-cluetip-content h1 { padding: 0 0 .5em 0; } 
+.ui-cluetip-content h2 { padding: 0 0 .5em 0; font-size: 1.2em; font-weight:normal;} 
+.ui-cluetip-content h3 { } 
+.ui-cluetip-content dl { font-size:1em; line-height: 1.5em; padding: 0 0 1em 0;} 
+.ui-cluetip-content dt { float:left; width: 25%; font-weight:bold; clear:both;} 
+.ui-cluetip-content dd { float:left; width: 70%;} 
+.ui-cluetip-content { padding: 1em 1em;  border:none;}
+
+.loading-indicator label {padding-left: 20px;	background: url('../images/ajax-loader-small.gif') no-repeat center left; }
+
+/*Wiki Editor*/
+.wiki-desc-editor{ min-height:430px !important; overflow-y:auto !important; }
