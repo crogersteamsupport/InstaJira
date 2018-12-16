@@ -1306,7 +1306,7 @@ WHERE ot.OrganizationID = @OrganizationID {0}";
         ,tv.ProductFamilyID";
             StringBuilder where = new StringBuilder();
 
-           enable = true;
+    enable = true;
     if(enable)
             GetFilterWhereClauseTicketView(loginUser, filter, command, where);
     else
@@ -1664,18 +1664,18 @@ END AS DaysOpened";
                         joins = @"LEFT JOIN Products p ON p.ProductID = t.ProductID";
                     break;
                 case "ReportedVersion":
-                    if (filter.ProductVersionID == null)
-                    {
+                    //if (filter.ProductVersionID == null)
+                    //{
                         sortFields = ",pv1.VersionNumber AS ReportedVersion";
                         joins = @"LEFT OUTER JOIN dbo.ProductVersions AS pv1 ON pv1.ProductVersionID = t.ReportedVersionID";
-                    }
+                    //}
                     break;
                 case "SolvedVersion":
-                    if (filter.ProductVersionID == null)
-                    {
+                    //if (filter.ProductVersionID == null)
+                    //{
                         sortFields = ",pv2.VersionNumber AS SolvedVersion";
                         joins = "LEFT OUTER JOIN dbo.ProductVersions AS pv2 ON pv2.ProductVersionID = t.SolvedVersionID";
-                    }
+                    //}
                     break;
                 case "CategoryName":
                     sortFields = ",fc.CategoryName";
@@ -1795,13 +1795,11 @@ LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID
 as tv";
             //Try to separate isClosed from this query
             //This is for ProductVersion - Tickets Stockgrid (Open/Closed)
-            if (filter.ProductVersionID != null)
+            if (filter.ProductVersionID != null || filter.SolvedVersionID  != null || filter.ReportedVersionID != null)
                 baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, t.UserID, t.GroupID, t.IsKnowledgeBase,
-pv1.VersionNumber AS ReportedVersion,pv2.VersionNumber AS SolvedVersion,ISNULL(ts.IsClosed, 0) AS IsClosed  {0}
+t.ReportedVersionID,t.SolvedVersionID,ISNULL(ts.IsClosed, 0) AS IsClosed  {0}
 FROM  Tickets t
 LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
-LEFT OUTER JOIN dbo.ProductVersions AS pv1 ON pv1.ProductVersionID = t.ReportedVersionID
-LEFT OUTER JOIN dbo.ProductVersions AS pv2 ON pv2.ProductVersionID = t.SolvedVersionID
 LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID
 {1}
 )
