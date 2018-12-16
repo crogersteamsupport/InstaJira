@@ -1664,18 +1664,12 @@ END AS DaysOpened";
                         joins = @"LEFT JOIN Products p ON p.ProductID = t.ProductID";
                     break;
                 case "ReportedVersion":
-                    //if (filter.ProductVersionID == null)
-                    //{
                         sortFields = ",pv1.VersionNumber AS ReportedVersion";
-                        joins = @"LEFT OUTER JOIN dbo.ProductVersions AS pv1 ON pv1.ProductVersionID = t.ReportedVersionID";
-                    //}
+                        joins = @"LEFT OUTER JOIN dbo.ProductVersions AS pv1 ON pv1.ProductVersionID = t.ReportedVersionID";               
                     break;
                 case "SolvedVersion":
-                    //if (filter.ProductVersionID == null)
-                    //{
                         sortFields = ",pv2.VersionNumber AS SolvedVersion";
-                        joins = "LEFT OUTER JOIN dbo.ProductVersions AS pv2 ON pv2.ProductVersionID = t.SolvedVersionID";
-                    //}
+                        joins = "LEFT OUTER JOIN dbo.ProductVersions AS pv2 ON pv2.ProductVersionID = t.SolvedVersionID";                    
                     break;
                 case "CategoryName":
                     sortFields = ",fc.CategoryName";
