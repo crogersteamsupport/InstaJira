@@ -460,6 +460,7 @@
     <Compile Include="FieldMaps\ReportFoldersFieldMap.cs" />
     <Compile Include="FieldMaps\ReportTicketsViewFieldMap.cs" />
     <Compile Include="FieldMaps\ReportViewsFieldMap.cs" />
+    <Compile Include="FieldMaps\SAMLSettingsFieldMap.cs" />
     <Compile Include="FieldMaps\ScheduledReportsFieldMap.cs" />
     <Compile Include="FieldMaps\ScheduledReportsRecurrencyFieldMap.cs" />
     <Compile Include="FieldMaps\SearchCustomFiltersFieldMap.cs" />
@@ -766,6 +767,7 @@
     <Compile Include="Generated\GeneratedReportTables.cs" />
     <Compile Include="Generated\GeneratedReportTicketsView.cs" />
     <Compile Include="Generated\GeneratedReportViews.cs" />
+    <Compile Include="Generated\GeneratedSAMLSettings.cs" />
     <Compile Include="Generated\GeneratedScheduledReports.cs" />
     <Compile Include="Generated\GeneratedScheduledReportsRecurrency.cs" />
     <Compile Include="Generated\GeneratedSearchCustomFilters.cs" />
@@ -870,6 +872,7 @@
     <Compile Include="Proxies\KBRatingsProxy.cs" />
     <Compile Include="Proxies\PluginsProxy.cs" />
     <Compile Include="Proxies\ProductFamiliesProxy.cs" />
+    <Compile Include="Proxies\SAMLSettingsProxy.cs" />
     <Compile Include="Proxies\ScheduledReportsProxy.cs" />
     <Compile Include="Proxies\ScheduledReportsRecurrencyProxy.cs" />
     <Compile Include="Proxies\SimpleImportFieldsViewProxy.cs" />
