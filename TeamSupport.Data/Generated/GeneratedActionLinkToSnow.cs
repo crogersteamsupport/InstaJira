@@ -341,7 +341,26 @@ namespace TeamSupport.Data
         return actionLinkToSnow[0];
     }
     
-    
+	public static ActionLinkToSnowItem GetActionLinkToSnowItemByActionID(LoginUser loginUser, int id)
+	{
+		ActionLinkToSnow actionLinkToSnow = new ActionLinkToSnow(loginUser);
+		actionLinkToSnow.LoadByActionId(id);
+		if (actionLinkToSnow.IsEmpty)
+			return null;
+		else
+			return actionLinkToSnow[0];
+	}
+
+	public virtual void LoadByActionId(int id)
+	{
+		using (SqlCommand command = new SqlCommand())
+		{
+			command.CommandText = "SET NOCOUNT OFF; SELECT [id], [ActionID], [DateModifiedBySync], [AppId] FROM [dbo].[ActionLinkToSnow] WHERE ([ActionID] = @id);";
+			command.CommandType = CommandType.Text;
+			command.Parameters.AddWithValue("id", id);
+			Fill(command);
+		}
+	}
     
 
     #endregion
