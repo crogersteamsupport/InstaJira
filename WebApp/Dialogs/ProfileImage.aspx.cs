@@ -68,20 +68,15 @@ public partial class Dialogs_ProfileImage : BaseDialogPage
         Boolean FileOK = false;
         Boolean FileSaved = false;
 
-        string fileName = "tmpavatar" + Upload.FileName.Replace(" ", string.Empty);
-        uploadedFileName = fileName;
+        uploadedFileName = _userID + "_tmpavatar_" + Upload.FileName.Replace(" ", string.Empty);
 
         if (Upload.HasFile)
         {
-            Session["WorkingImage"] = fileName;
-            String FileExtension = Path.GetExtension(Session["WorkingImage"].ToString()).ToLower();
+            String FileExtension = Path.GetExtension(uploadedFileName).ToLower();
             String[] allowedExtensions = { ".png", ".jpeg", ".jpg" };
-            for (int i = 0; i < allowedExtensions.Length; i++)
+            if(allowedExtensions.Contains(FileExtension))
             {
-                if (FileExtension == allowedExtensions[i])
-                {
-                    FileOK = true;
-                }
+                FileOK = true;
             }
         }
 
@@ -89,7 +84,7 @@ public partial class Dialogs_ProfileImage : BaseDialogPage
         {
             try
             {
-                string path = TeamSupport.Data.Quarantine.WebAppQ.GetAttachmentPath7(UserSession.LoginUser, fileName);
+                string path = TeamSupport.Data.Quarantine.WebAppQ.GetAttachmentPath7(UserSession.LoginUser, uploadedFileName);
                 Upload.PostedFile.SaveAs(path);
                 FileSaved = true;
             }
@@ -108,7 +103,7 @@ public partial class Dialogs_ProfileImage : BaseDialogPage
 
         if (FileSaved)
         {
-            imgCrop.ImageUrl = "dc/" + UserSession.LoginUser.OrganizationID + "/images/temp/" + fileName + "?height=300";
+            imgCrop.ImageUrl = "dc/" + UserSession.LoginUser.OrganizationID + "/images/temp/" + uploadedFileName + "?height=300";
             croppanel.Visible = true;
         }
     }
@@ -138,7 +133,7 @@ public partial class Dialogs_ProfileImage : BaseDialogPage
             if (img1.Value != "")
             {
                 img1.Value = img1.Value.Replace(".ashx", "");
-                string source = TeamSupport.Data.Quarantine.WebAppQ.GetAttachmentPath9(UserSession.LoginUser, Session["WorkingImage"].ToString());
+                string source = TeamSupport.Data.Quarantine.WebAppQ.GetAttachmentPath9(UserSession.LoginUser, uploadedFileName);
                 string dest = path + '\\' + _userID + "avatar.jpg";
                 try
                 {
@@ -150,6 +145,7 @@ public partial class Dialogs_ProfileImage : BaseDialogPage
                     throw;
                 }
 
+                //Delete the temp file
                 File.Delete(source);
 
                 AttachmentProxy proxy = TeamSupport.ModelAPI.Model_API.ReadRefTypeProxyByRefID<UserPhotoAttachmentProxy>(_userID);
@@ -187,7 +183,7 @@ public partial class Dialogs_ProfileImage : BaseDialogPage
         String temppath = HttpContext.Current.Request.PhysicalApplicationPath + "images\\";
         try
         {
-            File.Delete(temppath + Session["WorkingImage"].ToString());
+            File.Delete(temppath + uploadedFileName);
             return true;
         }
         catch
