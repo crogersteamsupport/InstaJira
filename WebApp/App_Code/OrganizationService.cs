@@ -507,7 +507,8 @@ namespace TSWebServices
             string excludedTicketStatuses,
             string jiraInstanceName,
             bool useNetworkCredentials,
-			string webhookToken
+			string webhookToken,
+			bool sendCustomFields
             )
         {
             if (!TSAuthentication.IsSystemAdmin) return null;
@@ -559,6 +560,7 @@ namespace TSWebServices
             item.RestrictedToTicketTypes = restrictedToTicketTypes;
             item.ExcludedTicketStatusUpdate = excludedTicketStatuses;
             item.UseNetworkCredentials = useNetworkCredentials;
+			item.SendCustomFields = sendCustomFields;
 			item.Collection.Save();
 
 			if (!string.IsNullOrEmpty(webhookToken) && item.CRMLinkID > 0)
