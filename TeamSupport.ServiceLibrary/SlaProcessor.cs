@@ -835,12 +835,6 @@ AND
   )
 )
 ";
-					command.CommandText =
-		@"
-SELECT t.TicketId, t.TicketStatusId, OrganizationId, SlaViolationTimeClosed, SlaWarningTimeClosed, SlaViolationLastAction, SlaWarningLastAction, SlaViolationInitialResponse, SlaWarningInitialResponse
-FROM Tickets t with(nolock)
-LEFT JOIN SlaNotifications sn with(nolock) ON t.TicketID = sn.TicketID
-WHERE t.ticketID = 3887997";
 
 					command.CommandType = CommandType.Text;
 					connection.Open();

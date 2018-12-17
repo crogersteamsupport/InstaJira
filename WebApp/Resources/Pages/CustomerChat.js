@@ -150,7 +150,7 @@ $(document).ready(function () {
 
 function GetChatSettings(chatID) {
     var chatObject = { chatID: chatID };
-    
+
     IssueAjaxRequest("GetClientChatPropertiesByChatID", chatObject,
     function (result) {
 		if (!result.TOKScreenEnabled) {
@@ -212,15 +212,12 @@ function createMessageElement(messageData, direction) {
 		i++;
 	}
 
-	if ((messageData.Message.trim().indexOf("<img ") == 0 && !containsProhibitedText)
-		|| (messageData.Message.trim().indexOf("/chatattachments/") > 0 && !containsProhibitedText)
-		|| (messageData.Message.trim().indexOf('<a target="_blank" href=') >= 0 && !containsProhibitedText)) {
+	if ((messageData.Message.trim().indexOf("<img ") == 0 && !containsProhibitedText) || (messageData.Message.trim().indexOf("/chatattachments/") > 0 && !containsProhibitedText) || (messageData.Message.trim().indexOf('<a href=') >= 0 && !containsProhibitedText)) {
 		displayMessage = messageData.Message;
 	}
 
 	var escapedCreator = $("<div>").text(messageData.CreatorDisplayName).html();
-    $('#chat-body').append('<div class="answer ' + direction + '"> <div class="avatar"> <img src="'+ userAvatar +'" alt="User name">  </div>' +
-                        '<div class="name">' + escapedCreator + '</div>  <div class="text' + hasLeftChatClass + '">' + displayMessage + '</div> <div class="time">' + moment(messageData.DateCreated).format('MM/DD/YYYY hh:mm A') + '</div></div>');
+    $('#chat-body').append('<div class="answer ' + direction + '"> <div class="avatar"> <img src="'+ userAvatar +'" alt="User name">  </div>' + '<div class="name">' + escapedCreator + '</div>  <div class="text' + hasLeftChatClass + '">' + displayMessage + '</div> <div class="time">' + moment(messageData.DateCreated).format('MM/DD/YYYY hh:mm A') + '</div></div>');
 
     $('#typing').remove();
 
@@ -326,7 +323,7 @@ function setupChat(chatID, participantID, pusherKey, callback) {
                     //Second Checking Condition Works For Chrome
                     alert("Popup Blocker is enabled! Please add this site to your exception list.");
                 } else {
-    
+
                 }
             }, 500);
         } else {
@@ -381,7 +378,7 @@ function setupChat(chatID, participantID, pusherKey, callback) {
         }
     });
 
-    //on keydown, clear the countdown 
+    //on keydown, clear the countdown
     $input.on('keydown', function (e) {
         if (!isTyping) {
             isTyping = true;

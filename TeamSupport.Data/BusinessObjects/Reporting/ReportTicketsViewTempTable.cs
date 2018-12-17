@@ -8,7 +8,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 {
     public class ReportTicketsViewTempTable
     {
-        public static bool Enable { get; set; }
+        public static bool Enable { get; private set; }
 
         static Dictionary<EField, EJoin> _mapFieldToJoin;
         Dictionary<int, EField> _mapIdToField;    // update in case DB changes
@@ -19,7 +19,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
         static ReportTicketsViewTempTable()
         {
-            Enable = true;
+            Enable = false;
 
             // WARNING - Update this if ReportTicketsView changes
             _mapFieldToJoin = new Dictionary<EField, EJoin>()
@@ -114,7 +114,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
         }
 
-        private ReportTicketsViewTempTable(LoginUser loginUser)
+        private ReportTicketsViewTempTable(LoginUser loginUser, bool useUserFilter)
         {
             _loginUser = loginUser;
             _fields = new List<ReportTicketsViewField>();
@@ -123,7 +123,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
         }
 
         /// <summary> Tabular Report </summary>
-        public ReportTicketsViewTempTable(LoginUser loginUser, TabularReport tabularReport) : this(loginUser)
+        public ReportTicketsViewTempTable(LoginUser loginUser, TabularReport tabularReport, bool useUserFilter) : this(loginUser, useUserFilter)
         {
             // SELECT 
             foreach (ReportSelectedField field in tabularReport.Fields)
@@ -138,6 +138,9 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                 Add(EField.TicketID);
                 Add(EField.OrganizationID);
             }
+
+            if (useUserFilter)
+                Add(EField.UserID);
         }
 
         // filter fields can be recursive
@@ -150,7 +153,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
         }
 
         /// <summary> Summary Report </summary>
-        public ReportTicketsViewTempTable(LoginUser loginUser, SummaryReport summaryReport) : this(loginUser)
+        public ReportTicketsViewTempTable(LoginUser loginUser, SummaryReport summaryReport, bool useUserFilter) : this(loginUser, useUserFilter)
         {
             // SELECT fields
             foreach (ReportSummaryDescriptiveField field in summaryReport.Fields.Descriptive)
@@ -168,6 +171,9 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                 Add(EField.TicketID);
                 Add(EField.OrganizationID);
             }
+
+            if ( useUserFilter)
+                Add(EField.UserID);
         }
 
         Dictionary<int, EField> MapFieldIdToEField()

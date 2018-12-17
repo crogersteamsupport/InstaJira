@@ -1222,20 +1222,49 @@ namespace TSWebServices
         }
 
         [WebMethod]
-        public void DeleteAction(int actionID)
+        public string DeleteAction(int actionID)
         {
+			string result = string.Empty;
             TeamSupport.Data.Action action = Actions.GetAction(TSAuthentication.GetLoginUser(), actionID);
-            if (!CanDeleteAction(action)) return;
+            if (!CanDeleteAction(action)) result =  "This User can't delete this action, or this action is the Description and can't be deleted.";
 
-            ActionLinkToJiraItem actionlink = ActionLinkToJira.GetActionLinkToJiraItemByActionID(TSAuthentication.GetLoginUser(), actionID);
+			try
+			{
+				LoginUser loginUser = TSAuthentication.GetLoginUser();
+				ActionLinkToJiraItem actionlink = ActionLinkToJira.GetActionLinkToJiraItemByActionID(loginUser, actionID);
+				ActionLinkToTFSItem actionlinkTFS = ActionLinkToTFS.GetActionLinkToTFSItemByActionID(loginUser, actionID);
+				ActionLinkToSnowItem actionlinkSnow = ActionLinkToSnow.GetActionLinkToSnowItemByActionID(loginUser, actionID);
+
             if (actionlink != null)
             {
                 actionlink.Delete();
                 actionlink.Collection.Save();
             }
 
+				if (actionlinkTFS != null)
+				{
+					actionlinkTFS.Delete();
+					actionlinkTFS.Collection.Save();
+				}
+
+				if (actionlinkSnow != null)
+				{
+					actionlinkSnow.Delete();
+					actionlinkSnow.Collection.Save();
+				}
+
             action.Delete();
             action.Collection.Save();
+				result = "deleted";
+			}
+			catch (Exception ex)
+			{
+				ExceptionLogs.LogException(TSAuthentication.GetLoginUser(), ex, "TicketService.DeleteAction");
+				result = "There was an error deleting this action.";
+			}
+            
+
+			return result;
         }
 
         [WebMethod]

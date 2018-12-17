@@ -4798,10 +4798,15 @@ function CreateTimeLineDelegates() {
         var action = self.closest('div.action').data().action;
 
         if (confirm('Are you sure you would like to delete this action?')) {
-            window.parent.Ts.System.logAction('Ticket - Action Deleted');
-            window.parent.Ts.Services.Tickets.DeleteAction(action.RefID, function() {
+			window.parent.Ts.Services.Tickets.DeleteAction(action.RefID, function (result) {
+					if (result == 'deleted') {
                     self.closest('div.action').remove();
                     window.parent.Ts.Services.Dispatch.TicketUpdate(_ticketNumber, "deleteaction", userFullName);
+						window.parent.Ts.System.logAction('Ticket - Action Deleted');
+					}
+					else {
+						alert('There action could not be deleted because ' + result);
+					}
                 },
                 function() {
                     alert('There was an error deleting this action.');

@@ -22,7 +22,8 @@ namespace TeamSupport.ServiceTestApplication
     ServiceThreadPool<EmailSender> _emailSender;
     SlaProcessor _slaProcessor;
     ServiceThreadPool<Indexer> _indexer;
-    CrmPool _crmPool;
+        ServiceThreadPool<Indexer2> _indexer2;
+        CrmPool _crmPool;
     ReminderProcessor _reminderProcessor;
     ImportProcessor _importProcessor;
     WebHooks _webhooks;
@@ -57,7 +58,8 @@ namespace TeamSupport.ServiceTestApplication
       if (_emailSender != null) _emailSender.Stop();
       if (_slaProcessor != null) _slaProcessor.Stop();
       if (_indexer != null) _indexer.Stop();
-      if (_crmPool != null) _crmPool.Stop();
+            if (_indexer2 != null) _indexer2.Stop();
+            if (_crmPool != null) _crmPool.Stop();
       if (_reminderProcessor != null) _reminderProcessor.Stop();
       if (_importProcessor != null) _importProcessor.Stop();
       if (_webhooks != null) _webhooks.Stop();
@@ -224,5 +226,11 @@ namespace TeamSupport.ServiceTestApplication
 		{
 			if (_webHooksProcessor == null || _webHooksProcessor.IsStopped) StartProcess(_webHooksProcessor = new WebHooksPool(SystemUser.CRM), sender as Button); else StopProcess(_webHooksProcessor, sender as Button);
 		}
+
+        private void btnIndexer2_Click(object sender, EventArgs e)
+        {
+            if (_indexer2 == null || _indexer2.IsStopped) StartProcess(_indexer2 = new ServiceThreadPool<Indexer2>("Indexer2"), sender as Button); else StopProcess(_indexer2, sender as Button);
+
+        }
     }
 }

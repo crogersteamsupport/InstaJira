@@ -43,6 +43,7 @@
             this.btnReportSender = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.btnIndexer2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnEmailProcessor
@@ -200,25 +201,25 @@
             this.button4.Text = "Start Task Processor";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
-            /*
-				// 
-				// btnWebHooks
-				// 
-				this.btnWebHooks.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				this.btnWebHooks.ForeColor = System.Drawing.Color.Green;
-				this.btnWebHooks.Location = new System.Drawing.Point(12, 266);
-				this.btnWebHooks.Name = "btnWebHooks";
-				this.btnWebHooks.Size = new System.Drawing.Size(221, 29);
-				this.btnWebHooks.TabIndex = 37;
-				this.btnWebHooks.Text = "Start WebHooks Processor";
-				this.btnWebHooks.UseVisualStyleBackColor = true;
-				this.btnWebHooks.Click += new System.EventHandler(this.btnWebHooks_Click);*/
+            // 
+            // btnIndexer2
+            // 
+            this.btnIndexer2.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnIndexer2.ForeColor = System.Drawing.Color.Green;
+            this.btnIndexer2.Location = new System.Drawing.Point(239, 231);
+            this.btnIndexer2.Name = "btnIndexer2";
+            this.btnIndexer2.Size = new System.Drawing.Size(221, 29);
+            this.btnIndexer2.TabIndex = 36;
+            this.btnIndexer2.Text = "Start Indexer 2";
+            this.btnIndexer2.UseVisualStyleBackColor = true;
+            this.btnIndexer2.Click += new System.EventHandler(this.btnIndexer2_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(477, 268);
+            this.Controls.Add(this.btnIndexer2);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.btnReportSender);
@@ -256,6 +257,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.Button btnWebHooks;
+        private System.Windows.Forms.Button btnIndexer2;
     }
 }
 
