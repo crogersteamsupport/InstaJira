@@ -341,7 +341,26 @@ namespace TeamSupport.Data
         return actionLinkToTFS[0];
     }
     
-    
+	public static ActionLinkToTFSItem GetActionLinkToTFSItemByActionID(LoginUser loginUser, int id)
+	{
+		ActionLinkToTFS actionLinkToTFS = new ActionLinkToTFS(loginUser);
+		actionLinkToTFS.LoadByActionId(id);
+		if (actionLinkToTFS.IsEmpty)
+			return null;
+		else
+			return actionLinkToTFS[0];
+	}
+
+	public virtual void LoadByActionId(int id)
+	{
+		using (SqlCommand command = new SqlCommand())
+		{
+			command.CommandText = "SET NOCOUNT OFF; SELECT [id], [ActionID], [DateModifiedByTFSSync], [TFSID] FROM [dbo].[ActionLinkToTFS] WHERE ([ActionID] = @id);";
+			command.CommandType = CommandType.Text;
+			command.Parameters.AddWithValue("id", id);
+			Fill(command);
+		}
+	}
     
 
     #endregion
