@@ -318,6 +318,7 @@
     <Compile Include="BusinessObjects\Reporting\UserRights.cs" />
     <Compile Include="BusinessObjects\ReportTicketsView.cs" />
     <Compile Include="BusinessObjects\ReportViews.cs" />
+    <Compile Include="BusinessObjects\SAMLSettings.cs" />
     <Compile Include="BusinessObjects\ScheduledReports.cs" />
     <Compile Include="BusinessObjects\SearchCustomFilters.cs" />
     <Compile Include="BusinessObjects\SearchSorters.cs" />
