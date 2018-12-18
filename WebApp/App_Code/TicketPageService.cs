@@ -1846,7 +1846,7 @@ namespace TSWebServices
             Model_API.ReadActionAttachmentsForTicket(insertedKBTicketID, ActionAttachmentsByTicketID.KnowledgeBase, out results);
             foreach (AttachmentProxy attachment in results)
             {
-                attachment.AttachmentID = actionID;    // not used
+                attachment.AttachmentID = actionID; // clone attachment from KB attachment to this action
                 string originalAttachmentRefID = ((ActionAttachmentProxy)attachment).ActionID.ToString();
                 string clonedActionAttachmentPath = attachment.Path.Substring(0, attachment.Path.IndexOf(@"\Actions\") + @"\Actions\".Length)
                                 + actionID.ToString()
