@@ -238,10 +238,6 @@ namespace TeamSupport.ModelAPI
             return result;
         }
 
-        // load action attachments into attachment proxy
-        const string SelectActionAttachmentProxy = "SELECT a.*, a.ActionAttachmentID as AttachmentID, a.ActionAttachmentGUID as AttachmentGUID, (u.FirstName + ' ' + u.LastName) AS CreatorName, a.ActionID as RefID " +
-            "FROM ActionAttachments a LEFT JOIN Users u ON u.UserID = a.CreatorID ";
-
         /// <summary> Read most recent filenames for this ticket </summary>
         public static void ReadActionAttachmentsForTicket(TicketModel ticketModel, ActionAttachmentsByTicketID ticketActionAttachments, out AttachmentProxy[] mostRecentByFilename)
         {
@@ -266,8 +262,9 @@ namespace TeamSupport.ModelAPI
                     break;
                 case ActionAttachmentsByTicketID.KnowledgeBase:
                     {
-                        string query = SelectActionAttachmentProxy + $"JOIN Actions ac ON a.ActionID = ac.ActionID WHERE ac.TicketID = {ticketModel.TicketID} AND ac.IsKnowledgeBase = 1";
-                        mostRecentByFilename = ticketModel.ExecuteQuery<AttachmentProxy>(query).ToArray();
+                        DataContext db = ticketModel.Connection._db;
+                        string query = $"SELECT at.* FROM Attachments at JOIN Actions ac ON at.RefID = ac.ActionID WHERE at.RefType = 0  AND ac.TicketID = {ticketModel.TicketID} AND ac.IsKnowledgeBase = 1";
+                        mostRecentByFilename = db.ExecuteQuery<AttachmentProxy>(query).ToArray();
                     }
                     break;
                 default:
