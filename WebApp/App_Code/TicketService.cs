@@ -749,40 +749,49 @@ namespace TSWebServices
         [WebMethod]
         public AutocompleteItem[] SearchTickets(string searchTerm, TicketLoadFilter filter)
         {
-            try
+            List<AutocompleteItem> items = new List<AutocompleteItem>();
+            AutocompleteItem item = new AutocompleteItem()
             {
-                LoginUser loginUser = TSAuthentication.GetLoginUser();
-                Stopwatch stopWatch = Stopwatch.StartNew();
-                SearchResults results = TicketsView.GetQuickSearchTicketResults(searchTerm, loginUser, filter);
-                stopWatch.Stop();
-                NR.Agent.NewRelic.RecordMetric("Custom/SearchTickets", stopWatch.ElapsedMilliseconds);
+                label = "scot click this",
+                id = "50597"
+            };
+            items.Add(item);
+            return items.ToArray();
 
-                //Only record the custom parameter in NR if the search took longer than 3 seconds (I'm using this arbitrarily, seems appropiate)
-                if (stopWatch.ElapsedMilliseconds > 500)
-                {
-                    NR.Agent.NewRelic.AddCustomParameter("SearchTickets-OrgId", TSAuthentication.OrganizationID);
-                    NR.Agent.NewRelic.AddCustomParameter("SearchTickets-Term", searchTerm);
-                }
+            //try
+            //{
+            //    LoginUser loginUser = TSAuthentication.GetLoginUser();
+            //    Stopwatch stopWatch = Stopwatch.StartNew();
+            //    SearchResults results = TicketsView.GetQuickSearchTicketResults(searchTerm, loginUser, filter);
+            //    stopWatch.Stop();
+            //    NR.Agent.NewRelic.RecordMetric("Custom/SearchTickets", stopWatch.ElapsedMilliseconds);
 
-                List<AutocompleteItem> items = new List<AutocompleteItem>();
+            //    //Only record the custom parameter in NR if the search took longer than 3 seconds (I'm using this arbitrarily, seems appropiate)
+            //    if (stopWatch.ElapsedMilliseconds > 500)
+            //    {
+            //        NR.Agent.NewRelic.AddCustomParameter("SearchTickets-OrgId", TSAuthentication.OrganizationID);
+            //        NR.Agent.NewRelic.AddCustomParameter("SearchTickets-Term", searchTerm);
+            //    }
 
-                stopWatch.Restart();
-                for (int i = 0; i < results.Count; i++)
-                {
-                    results.GetNthDoc(i);
+            //    List<AutocompleteItem> items = new List<AutocompleteItem>();
 
-                    items.Add(new AutocompleteItem(results.CurrentItem.DisplayName, results.CurrentItem.UserFields["TicketNumber"].ToString(), results.CurrentItem.UserFields["TicketID"].ToString()));
-                }
-                stopWatch.Stop();
-                NR.Agent.NewRelic.RecordMetric("Custom/SearchTicketsPullData", stopWatch.ElapsedMilliseconds);
+            //    stopWatch.Restart();
+            //    for (int i = 0; i < results.Count; i++)
+            //    {
+            //        results.GetNthDoc(i);
 
-                return items.ToArray();
-            }
-            catch (Exception ex)
-            {
-                ExceptionLogs.LogException(TSAuthentication.GetLoginUser(), ex, "TicketService.SearchTickets");
-            }
-            return null;
+            //        items.Add(new AutocompleteItem(results.CurrentItem.DisplayName, results.CurrentItem.UserFields["TicketNumber"].ToString(), results.CurrentItem.UserFields["TicketID"].ToString()));
+            //    }
+            //    stopWatch.Stop();
+            //    NR.Agent.NewRelic.RecordMetric("Custom/SearchTicketsPullData", stopWatch.ElapsedMilliseconds);
+
+            //    return items.ToArray();
+            //}
+            //catch (Exception ex)
+            //{
+            //    ExceptionLogs.LogException(TSAuthentication.GetLoginUser(), ex, "TicketService.SearchTickets");
+            //}
+            //return null;
         }
 
         [WebMethod]
