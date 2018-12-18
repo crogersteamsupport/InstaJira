@@ -17,10 +17,6 @@ namespace TeamSupport.UnitTest
         [TestMethod]
         public void UpdateActionCopyingAttachment()
         {
-            //LoginUser loginUser = new LoginUser(AttachmentTest._connectionString, 4787299, 1078, (IDataCache)null);    // Scot, TeamSupport
-            //public TimeLineItem UpdateActionCopyingAttachment(LoginUser loginUser, ActionProxy proxy, int insertedKBTicketID)
-            //TSWebServices.TicketPageService.CopyInsertedKBAttachments(int actionID, int insertedKBTicketID);
-
             string userData = _userScot;
             AuthenticationModel authentication = AuthenticationModel.AuthenticationModelTest(userData, _connectionString);
             using (ConnectionContext connection = new ConnectionContext(authentication))

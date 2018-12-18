@@ -69,7 +69,7 @@ namespace TeamSupport.ModelAPI
                     {
                         AttachmentProxy attachment = proxy as AttachmentProxy;
                         IAttachmentDestination model = AttachmentAPI.ClassFactory(connection, attachment);
-                        Data_API.Create(model as IDNode, attachment);
+                            Data_API.Create(model as IDNode, attachment);
                     }
                     break;
                 default:

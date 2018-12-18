@@ -289,6 +289,24 @@ namespace TeamSupport.ModelAPI
             return String.Empty;
         }
 
+        public static void CopyInsertedKBAttachments(int actionID, int insertedKBTicketID)
+        {
+            try
+            {
+                using (ConnectionContext connection = new ConnectionContext())
+                {
+                    CopyInsertedKBAttachments(connection, actionID, insertedKBTicketID);
+                }
+            }
+            catch (Exception ex)
+            {
+                Data_API.LogMessage(ActionLogType.Insert, ReferenceType.Attachments, 0, "Unable to copy KB action attachment", ex);
+            }
+        }
+
+        /// <summary>
+        /// CopyInsertedKBAttachments - accessible by test code
+        /// </summary>
         public static void CopyInsertedKBAttachments(ConnectionContext connection, int actionID, int insertedKBTicketID)
         {
             TicketModel ticketModel = connection.Ticket(insertedKBTicketID);

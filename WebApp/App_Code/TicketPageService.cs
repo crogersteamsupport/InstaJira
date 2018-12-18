@@ -991,7 +991,7 @@ namespace TSWebServices
             action.IsVisibleOnPortal = proxy.IsVisibleOnPortal;
             action.Collection.Save();
 
-            CopyInsertedKBAttachments(action.ActionID, insertedKBTicketID);
+            AttachmentAPI.CopyInsertedKBAttachments(action.ActionID, insertedKBTicketID);
 
             return GetActionTimelineItem(action);
         }
@@ -1843,27 +1843,6 @@ namespace TSWebServices
             ActionLogs.AddActionLog(TSAuthentication.GetLoginUser(), ActionLogType.Update, ReferenceType.Tickets, ticket.TicketID, actionLog);
 
             return GetActionTimelineItem(action);
-        }
-
-        public static void CopyInsertedKBAttachments(int actionID, int insertedKBTicketID)
-        {
-            AttachmentProxy[] results;
-            Model_API.ReadActionAttachmentsForTicket(insertedKBTicketID, ActionAttachmentsByTicketID.KnowledgeBase, out results);
-            foreach (AttachmentProxy attachment in results)
-            {
-                attachment.AttachmentID = 0; // assigned by DB
-                string originalAttachmentRefID = ((ActionAttachmentProxy)attachment).ActionID.ToString();
-                string clonedActionAttachmentPath = attachment.Path.Substring(0, attachment.Path.IndexOf(@"\Actions\") + @"\Actions\".Length)
-                                + actionID.ToString()
-                                + attachment.Path.Substring(attachment.Path.IndexOf(originalAttachmentRefID) + originalAttachmentRefID.Length);
-                if (!Directory.Exists(Path.GetDirectoryName(clonedActionAttachmentPath)))
-                    Directory.CreateDirectory(Path.GetDirectoryName(clonedActionAttachmentPath));
-                File.Copy(attachment.Path, clonedActionAttachmentPath);
-                attachment.Path = clonedActionAttachmentPath;
-                attachment.RefID = actionID;
-
-                Model_API.Create(attachment);
-            }
         }
 
     }
