@@ -238,10 +238,6 @@ namespace TeamSupport.ModelAPI
             return result;
         }
 
-        // load action attachments into attachment proxy
-        const string SelectActionAttachmentProxy = "SELECT a.*, a.ActionAttachmentID as AttachmentID, a.ActionAttachmentGUID as AttachmentGUID, (u.FirstName + ' ' + u.LastName) AS CreatorName, a.ActionID as RefID " +
-            "FROM ActionAttachments a LEFT JOIN Users u ON u.UserID = a.CreatorID ";
-
         /// <summary> Read most recent filenames for this ticket </summary>
         public static void ReadActionAttachmentsForTicket(TicketModel ticketModel, ActionAttachmentsByTicketID ticketActionAttachments, out AttachmentProxy[] mostRecentByFilename)
         {
@@ -266,8 +262,9 @@ namespace TeamSupport.ModelAPI
                     break;
                 case ActionAttachmentsByTicketID.KnowledgeBase:
                     {
-                        string query = SelectActionAttachmentProxy + $"JOIN Actions ac ON a.ActionID = ac.ActionID WHERE ac.TicketID = {ticketModel.TicketID} AND ac.IsKnowledgeBase = 1";
-                        mostRecentByFilename = ticketModel.ExecuteQuery<AttachmentProxy>(query).ToArray();
+                        DataContext db = ticketModel.Connection._db;
+                        string query = $"SELECT at.* FROM Attachments at JOIN Actions ac ON at.RefID = ac.ActionID WHERE at.RefType = 0  AND ac.TicketID = {ticketModel.TicketID} AND ac.IsKnowledgeBase = 1";
+                        mostRecentByFilename = db.ExecuteQuery<AttachmentProxy>(query).ToArray();
                     }
                     break;
                 default:
@@ -291,6 +288,55 @@ namespace TeamSupport.ModelAPI
             }
             return String.Empty;
         }
+
+        public static void CopyInsertedKBAttachments(int actionID, int insertedKBTicketID)
+        {
+            try
+            {
+                using (ConnectionContext connection = new ConnectionContext())
+                {
+                    CopyInsertedKBAttachments(connection, actionID, insertedKBTicketID);
+                }
+            }
+            catch (Exception ex)
+            {
+                Data_API.LogMessage(ActionLogType.Insert, ReferenceType.Attachments, 0, "Unable to copy KB action attachment", ex);
+            }
+        }
+
+        /// <summary>
+        /// CopyInsertedKBAttachments - accessible by test code
+        /// </summary>
+        public static void CopyInsertedKBAttachments(ConnectionContext connection, int actionID, int insertedKBTicketID)
+        {
+            TicketModel ticketModel = connection.Ticket(insertedKBTicketID);
+            AttachmentProxy[] results;
+            ReadActionAttachmentsForTicket(ticketModel, ActionAttachmentsByTicketID.KnowledgeBase, out results);
+
+            foreach (AttachmentProxy attachment in results)
+            {
+                string originalAttachmentRefID = ((ActionAttachmentProxy)attachment).ActionID.ToString();
+                string clonedActionAttachmentPath = attachment.Path.Substring(0, attachment.Path.IndexOf(@"\Actions\") + @"\Actions\".Length)
+                                + actionID.ToString()
+                                + attachment.Path.Substring(attachment.Path.IndexOf(originalAttachmentRefID) + originalAttachmentRefID.Length);
+                if (!Directory.Exists(Path.GetDirectoryName(clonedActionAttachmentPath)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(clonedActionAttachmentPath));
+                File.Copy(attachment.Path, clonedActionAttachmentPath);
+
+                // create a full copy so linq object tracking is ignored
+                AttachmentProxy clone = AttachmentProxy.ClassFactory(AttachmentProxy.References.Actions);
+                clone.OrganizationID = attachment.OrganizationID;
+                clone.FileName = attachment.FileName;
+                clone.FileType = attachment.FileType;
+                clone.FileSize = attachment.FileSize;
+                clone.Path = attachment.Path;
+                clone.FilePathID = attachment.FilePathID;
+                clone.RefID = actionID;
+
+                Model_API.Create(connection, clone);
+            }
+        }
+
 
         ///// <summary> Read most recent filenames for this ticket </summary>
         //public static void ReadActionAttachmentsByFilenameAndTicket(TicketModel ticketModel, out AttachmentProxy[] mostRecentByFilename)

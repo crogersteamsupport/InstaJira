@@ -926,14 +926,19 @@ namespace TSWebServices
         [WebMethod]
         public TimeLineItem UpdateActionCopyingAttachment(ActionProxy proxy, int insertedKBTicketID)
         {
-            TeamSupport.Data.Action action = Actions.GetActionByID(TSAuthentication.GetLoginUser(), proxy.ActionID);
-            User user = Users.GetUser(TSAuthentication.GetLoginUser(), TSAuthentication.UserID);
+            return UpdateActionCopyingAttachment(TSAuthentication.GetLoginUser(), proxy, insertedKBTicketID);
+        }
+
+        public TimeLineItem UpdateActionCopyingAttachment(LoginUser loginUser, ActionProxy proxy, int insertedKBTicketID)
+        {
+            TeamSupport.Data.Action action = Actions.GetActionByID(loginUser, proxy.ActionID);
+            User user = Users.GetUser(loginUser, loginUser.UserID);
 
             if (action == null)
             {
-                action = (new Actions(TSAuthentication.GetLoginUser())).AddNewAction();
+                action = (new Actions(loginUser)).AddNewAction();
                 action.TicketID = proxy.TicketID;
-                action.CreatorID = TSAuthentication.UserID;
+                action.CreatorID = loginUser.UserID;
                 if (!string.IsNullOrWhiteSpace(user.Signature) && proxy.IsVisibleOnPortal && !proxy.IsKnowledgeBase && proxy.ActionID == -1)
                 {
                     if (!proxy.Description.Contains(user.Signature))
@@ -986,7 +991,7 @@ namespace TSWebServices
             action.IsVisibleOnPortal = proxy.IsVisibleOnPortal;
             action.Collection.Save();
 
-            CopyInsertedKBAttachments(action.ActionID, insertedKBTicketID);
+            AttachmentAPI.CopyInsertedKBAttachments(action.ActionID, insertedKBTicketID);
 
             return GetActionTimelineItem(action);
         }
@@ -1838,26 +1843,6 @@ namespace TSWebServices
             ActionLogs.AddActionLog(TSAuthentication.GetLoginUser(), ActionLogType.Update, ReferenceType.Tickets, ticket.TicketID, actionLog);
 
             return GetActionTimelineItem(action);
-        }
-
-        private void CopyInsertedKBAttachments(int actionID, int insertedKBTicketID)
-        {
-            AttachmentProxy[] results;
-            Model_API.ReadActionAttachmentsForTicket(insertedKBTicketID, ActionAttachmentsByTicketID.KnowledgeBase, out results);
-            foreach (AttachmentProxy attachment in results)
-            {
-                attachment.AttachmentID = 0;    // not used
-                string originalAttachmentRefID = ((ActionAttachmentProxy)attachment).ActionID.ToString();
-                string clonedActionAttachmentPath = attachment.Path.Substring(0, attachment.Path.IndexOf(@"\Actions\") + @"\Actions\".Length)
-                                + actionID.ToString()
-                                + attachment.Path.Substring(attachment.Path.IndexOf(originalAttachmentRefID) + originalAttachmentRefID.Length);
-                if (!Directory.Exists(Path.GetDirectoryName(clonedActionAttachmentPath)))
-                    Directory.CreateDirectory(Path.GetDirectoryName(clonedActionAttachmentPath));
-                File.Copy(attachment.Path, clonedActionAttachmentPath);
-                attachment.Path = clonedActionAttachmentPath;
-
-                Model_API.Create(attachment);
-            }
         }
 
     }
