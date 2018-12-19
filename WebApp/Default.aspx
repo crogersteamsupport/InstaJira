@@ -136,7 +136,7 @@
                 <asp:ScriptReference Path="/vcr/1_9_0/Js/ts/ts.cache.js?1531757816" />
                 <asp:ScriptReference Path="/vcr/1_9_0/Js/ts/ts.ui.tabs.js" />
                 <asp:ScriptReference Path="/vcr/1_9_0/Js/ts/ts.ui.menutree.js" />
-                <asp:ScriptReference Path="/vcr/1_9_0/Js/ts/ts.pages.main.js?1513637540" />
+                <asp:ScriptReference Path="/vcr/1_9_0/Js/ts/ts.pages.main.js?1545233673" />
                 <asp:ScriptReference Path="https://js.pusher.com/3.1/pusher.min.js" />
                 <asp:ScriptReference Path="/vcr/1_9_0/Js/ts/dialogs.js" />
             </scripts>

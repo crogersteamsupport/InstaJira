@@ -165,7 +165,7 @@ Ts.Pages.Main.prototype = {
                 url += '&email=' + email;
             }
 
-            window.open(url, 'TSChat', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,copyhistory=no,resizable=no,width=450,height=500');
+            window.open(url, 'TSChat', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,copyhistory=no,resizable=no,width=450,height=730');
         });
 
 
