@@ -18,6 +18,12 @@
     /// Session, and Server) used to service HTTP requests.</param>
     public void ProcessRequest(HttpContext context)
     {
+        using (UnitTest.ScopedElapsedTime.Trace())
+            ProcessRequest1(context);
+    }
+
+    public void ProcessRequest1(HttpContext context)
+    {
       // Process the request to export chart.
       ExportChart.ProcessExportRequest(context);
     }

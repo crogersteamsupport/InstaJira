@@ -51,6 +51,12 @@ namespace TeamSupport.Handlers
 
         public void ProcessRequest(HttpContext context)
         {
+            using (UnitTest.ScopedElapsedTime.Trace())
+                ProcessRequest1(context);
+        }
+
+        public void ProcessRequest1(HttpContext context)
+        {
             try
             {
                 string connection = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString;
@@ -118,16 +124,21 @@ namespace TeamSupport.Handlers
 
 		private void ProcessImages(HttpContext context, string[] segments, int organizationID)
 		{
-            TeamSupport.Data.Quarantine.ContentHandlerQ.ProcessImages(context, segments, organizationID);
+            using (UnitTest.ScopedElapsedTime.Trace())
+                TeamSupport.Data.Quarantine.ContentHandlerQ.ProcessImages(context, segments, organizationID);
         }
 
         private void ProcessRatingImages(HttpContext context, string[] segments, int organizationID)
         {
-            TeamSupport.Data.Quarantine.ContentHandlerQ.ProcessRatingImages(context, segments, organizationID);
+            using (UnitTest.ScopedElapsedTime.Trace())
+                TeamSupport.Data.Quarantine.ContentHandlerQ.ProcessRatingImages(context, segments, organizationID);
         }
 
         private void ProcessChatStatus(HttpContext context, int organizationID)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             bool areOperatorsAvailable = ChatRequests.IsOperatorAvailable(LoginUser.Anonymous, organizationID);
 
             if (areOperatorsAvailable)
@@ -173,16 +184,21 @@ namespace TeamSupport.Handlers
             context.Response.AddHeader("Pragma", "no-cache");
             context.Response.ContentType = "application/json; charset=utf-8";
             context.Response.Write(string.Format("{{\"isOperatorAvailable\": {0}}}", areOperatorsAvailable ? "true" : "false"));
+            }
         }
 
         private void ProcessChat(HttpContext context, string command, int organizationID)
         {
-            TeamSupport.Data.Quarantine.ContentHandlerQ.ProcessChat(context, command, organizationID);
+            using (UnitTest.ScopedElapsedTime.Trace())
+                TeamSupport.Data.Quarantine.ContentHandlerQ.ProcessChat(context, command, organizationID);
         }
 
         /* USER: UserAvatar instead. This is old style.  It will be going away */
         private void ProcessAvatar(HttpContext context, string[] segments, int organizationID)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             StringBuilder builder = new StringBuilder();
             for (int i = 2; i < segments.Length; i++)
             {
@@ -192,10 +208,13 @@ namespace TeamSupport.Handlers
             string path = builder.ToString();
             AttachmentProxy attachment = Model_API.Read<AttachmentProxy>(Int32.Parse(path));
             TeamSupport.Data.Quarantine.ContentHandlerQ.ProcessAvatar(context, segments, organizationID, path, (int)attachment.FilePathID);
+            }
         }
 
         private void ProcessCalendarFeed(HttpContext context, string[] segments, int organizationID)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
             DDay.iCal.iCalendar iCal = new DDay.iCal.iCalendar();
             string guid = segments[2];
 
@@ -325,11 +344,13 @@ namespace TeamSupport.Handlers
             //context.Response.Write(userID);
 
             //return;
-
+            }
         }
 
         private void ProcessUserAvatar(HttpContext context, string[] segments, int organizationID)
         {
+            using (UnitTest.ScopedElapsedTime.Trace())
+            {
 
             int userID = int.Parse(segments[2]);
             int size = int.Parse(segments[3]);
@@ -382,12 +403,15 @@ namespace TeamSupport.Handlers
             }
             WriteImage(context, cacheFileName);
             return;
-
+            }
         }
 
 
         private void ProcessInitialAvatar(HttpContext context, string[] segments, int organizationID)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             //https://app.na2.teamsupport.com/dc/{OrgID}/initialavatar/{Text}/{Size}
 
             string initial = segments[2].ToUpper();
@@ -409,12 +433,14 @@ namespace TeamSupport.Handlers
             }
             WriteImage(context, cacheFileName);
             return;
-
+            }
         }
 
 
         private void ProcessHubLogo(HttpContext context, string[] segments, int organizationID)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
 
             int userID = int.Parse(segments[2]);
             int size = int.Parse(segments[3]);
@@ -455,7 +481,7 @@ namespace TeamSupport.Handlers
             }
             WriteImage(context, cacheFileName);
             return;
-
+            }
         }
 
 
@@ -463,6 +489,9 @@ namespace TeamSupport.Handlers
         //https://app.ts.com/dc/{OrganizationID}/CompanyLogo/{orgIdLogo}/{Size}/{page}
         private void ProcessCompanyLogo(HttpContext context, string[] segments, int organizationID)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             int logoOrganizationId = int.Parse(segments[2]);
             int size = int.Parse(segments[3]);
             string type = segments.Length == 5 ? segments[4] : string.Empty;
@@ -523,6 +552,7 @@ namespace TeamSupport.Handlers
             }
 
             return;
+            }
         }
 
 
@@ -530,6 +560,9 @@ namespace TeamSupport.Handlers
         //https://app.ts.com/dc/{OrganizationID}/contactavatar/{userId}/{Size}/{page}
         private void ProcessContactAvatar(HttpContext context, string[] segments, int organizationID)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             int organizationParentId = (int)Organizations.GetOrganization(LoginUser.Anonymous, organizationID).ParentID;
             int userId = int.Parse(segments[2]);
             int size = int.Parse(segments[3]);
@@ -575,6 +608,7 @@ namespace TeamSupport.Handlers
             WriteImage(context, cacheFileName);
 
             return;
+            }
         }
 
 
@@ -775,23 +809,26 @@ namespace TeamSupport.Handlers
 
         private void ProcessAttachment(HttpContext context, string attachmentID)
         {
-            //http://127.0.0.1/tsdev/dc/attachments/7401
-            //https://app.ts.com/dc/attachments/{AttachmentID}
-
-            System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
-            if (browser.Browser != "IE") context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            // the following is a big hack to get it out fast.... Please do not consider robust code.
-            int id;
-            bool fromGuid = false;
-            if (!int.TryParse(attachmentID, out id))
+            using (UnitTest.ScopedElapsedTime.Trace())
             {
-                SqlCommand command = new SqlCommand();
-                command.CommandText = "SELECT AttachmentID FROM Attachments WHERE AttachmentGUID=@AttachmentGUID";
-                command.Parameters.AddWithValue("@AttachmentGUID", Guid.Parse(attachmentID));
 
-                id = SqlExecutor.ExecuteInt(LoginUser.Anonymous, command);
-                fromGuid = true;
-            }
+                //http://127.0.0.1/tsdev/dc/attachments/7401
+                //https://app.ts.com/dc/attachments/{AttachmentID}
+
+                System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
+                if (browser.Browser != "IE") context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                // the following is a big hack to get it out fast.... Please do not consider robust code.
+                int id;
+                bool fromGuid = false;
+                if (!int.TryParse(attachmentID, out id))
+                {
+                    SqlCommand command = new SqlCommand();
+                    command.CommandText = "SELECT AttachmentID FROM Attachments WHERE AttachmentGUID=@AttachmentGUID";
+                    command.Parameters.AddWithValue("@AttachmentGUID", Guid.Parse(attachmentID));
+
+                    id = SqlExecutor.ExecuteInt(LoginUser.Anonymous, command);
+                    fromGuid = true;
+                }
 
                 AttachmentProxy attachment = Model_API.Read<AttachmentProxy>(id);
 
@@ -799,7 +836,7 @@ namespace TeamSupport.Handlers
                 bool isAuthenticated = UserRights.CanOpenAttachment(TSAuthentication.GetLoginUser(), attachment);
 
 
-            if (isAuthenticated)
+                if (isAuthenticated)
                 {
                     // not used
                     //user = Users.GetUser(attachment.Collection.LoginUser, TSAuthentication.UserID);
@@ -839,14 +876,14 @@ namespace TeamSupport.Handlers
                     }
                 }
 
-            // only check AllowUnsecureAttachmentViewing if it was set aboveF//if (proxies != null) 
-            if (fromGuid)
-            {
-                OrganizationProxy organization = Model_API.Read<OrganizationProxy>(attachment.OrganizationID);
-                isAuthenticated = isAuthenticated || organization.AllowUnsecureAttachmentViewing;
-            }
+                // only check AllowUnsecureAttachmentViewing if it was set aboveF//if (proxies != null) 
+                if (fromGuid)
+                {
+                    OrganizationProxy organization = Model_API.Read<OrganizationProxy>(attachment.OrganizationID);
+                    isAuthenticated = isAuthenticated || organization.AllowUnsecureAttachmentViewing;
+                }
 
-            if (!isAuthenticated)
+                if (!isAuthenticated)
                 {
                     context.Response.Write("Unauthorized");
                     context.Response.ContentType = "text/html";
@@ -881,10 +918,14 @@ namespace TeamSupport.Handlers
                 context.Response.AddHeader("Content-Length", attachment.FileSize.ToString());
                 context.Response.ContentType = fileType;
                 context.Response.WriteFile(attachment.Path);
+            }
         }
 
         private void ProcessImportLog(HttpContext context, int importID)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
             if (browser.Browser != "IE") context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
 
@@ -934,11 +975,15 @@ namespace TeamSupport.Handlers
             //context.Response.AddHeader("Content-Length", attachment.FileSize.ToString());
             context.Response.ContentType = fileType;
             context.Response.WriteFile(logPath);
+            }
         }
 
 
         private void ProcessTicketExport(HttpContext context)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
             if (browser.Browser != "IE") context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
 
@@ -976,10 +1021,14 @@ namespace TeamSupport.Handlers
                 ExceptionLogs.LogException(TSAuthentication.GetLoginUser(), ex, "Ticket Grid Export");
                 return;
             }
+            }
         }
 
         private void ProcessReport(HttpContext context, int reportID, string type)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
             if (browser.Browser != "IE") context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
 
@@ -1094,6 +1143,7 @@ namespace TeamSupport.Handlers
                 context.Response.AddHeader("content-disposition", "attachment; filename=\"" + report.Name + ".csv\"");
 
             }
+            }
         }
 
         private string GetExcelColumnName(int columnNumber)
@@ -1159,6 +1209,9 @@ namespace TeamSupport.Handlers
 
         private void ProcessProductCustomers(HttpContext context, int productID, string type)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
             if (browser.Browser != "IE") context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
 
@@ -1217,10 +1270,14 @@ namespace TeamSupport.Handlers
 
                 }
             }
+            }
         }
 
         private void ProcessProductVersionCustomers(HttpContext context, int productVersionID, string type)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
             if (browser.Browser != "IE") context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
 
@@ -1279,10 +1336,14 @@ namespace TeamSupport.Handlers
 
                 }
             }
+            }
         }
 
         private void ProcessScreenRecordingSettings(HttpContext context)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             if (context.Request.Headers["Authorization"] != "fb7d29fc916a4faebde8a9bd953fd57b") return;
 
             dynamic result = new ExpandoObject();
@@ -1298,11 +1359,14 @@ namespace TeamSupport.Handlers
             context.Response.AddHeader("Pragma", "no-cache");
             context.Response.ContentType = "application/json; charset=utf-8";
             context.Response.Write(JsonConvert.SerializeObject(result));
-
+            }
         }
 
         private void ProcessScheduledReportLog(HttpContext context, int scheduledReportId)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             HttpBrowserCapabilities browser = context.Request.Browser;
             if (browser.Browser != "IE") context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
 
@@ -1339,11 +1403,15 @@ namespace TeamSupport.Handlers
             context.Response.AddHeader("Content-Disposition", openType + "; filename=\"" + fileName + "\"");
             context.Response.ContentType = fileType;
             context.Response.WriteFile(logPath);
+            }
         }
 
         // -- localhost/dc/1078/chatattachments/54782/2164854
         private void ProcessChatAttachments(HttpContext context, int organizationID, int chatID, int attachmentID)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             HttpBrowserCapabilities browser = context.Request.Browser;
             if (browser.Browser != "IE") context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             AttachmentProxy attachment = Model_API.Read<AttachmentProxy>(attachmentID);
@@ -1363,14 +1431,19 @@ namespace TeamSupport.Handlers
             context.Response.AddHeader("Content-Disposition", openType + "; filename=\"" + attachment.FileName + "\"");
             context.Response.ContentType = fileType;
             context.Response.WriteFile(attachmentPath);
+            }
         }
 
         private void ProcessUpdateServiceHealth(HttpContext context, string serviceName)
         {
+            using (UnitTest.ScopedElapsedTime.Trace()) 
+            { 
+
             Services services = new Services(LoginUser.Anonymous);
             Service service = Services.GetService(LoginUser.Anonymous, serviceName, false);
             service.HealthTime = DateTime.Now;
             service.Collection.Save();
+            }
         }
     }
 }
