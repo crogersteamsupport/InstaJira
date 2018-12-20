@@ -12,7 +12,7 @@ namespace TeamSupport.UnitTest
         {
             for (int j = 0; j < i; ++j)
                 sum += j;
-            System.Threading.Thread.Sleep(3);   // ignored!
+            System.Threading.Thread.Sleep(25);   // ignored!
 
             //for (int j = 0; j < i; ++j)
             //    sum -= j;
@@ -30,7 +30,7 @@ namespace TeamSupport.UnitTest
             }
 
             double ms = Ticks.Milliseconds(Ticks.Elapsed(outer));
-            ScopedElapsedTime.DebugWrite();
+            ScopedElapsedTime.DumpMetrics();
         }
     }
 }

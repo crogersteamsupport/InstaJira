@@ -51,15 +51,45 @@ namespace TeamSupport.UnitTest
     /// <summary> Time single method execution </summary>
     public class ScopedElapsedTime : IDisposable
     {
-        private static bool _enable = true;
-        public static ScopedElapsedTime Trace { get { return _enable ? new ScopedElapsedTime() : null; } }
-        static public Dictionary<string, MethodTime> MethodTimes { get; private set; }
-        static ScopedElapsedTime() { Reset(); }
-        public static void Reset() { MethodTimes = new Dictionary<string, MethodTime>(); }
+        // static data
+        private static bool _enable = true; // global enable/disable of performance tracking
+        public static Dictionary<string, MethodTime> MethodTimes { get; private set; }
+        static System.Timers.Timer aTimer;
 
+        // static initialization
+        static ScopedElapsedTime()
+        {
+            string timeoutString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["ScopedElapsedTime"].ConnectionString;
+
+            int timeout;   // default
+            if(!int.TryParse(timeoutString, out timeout))
+                timeout = 30;
+
+            aTimer = new System.Timers.Timer(timeout);    // record results every minute
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            aTimer.Start();
+            Reset();
+        }
+        private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            _dumpMetrics = 1;
+        }
+        public static ScopedElapsedTime Trace { get { return _enable ? new ScopedElapsedTime() : null; } }
+        public static void Reset()
+        {
+            MethodTimes = new Dictionary<string, MethodTime>();
+            _dumpMetrics = 0;
+        }
+
+
+        // implementation
         MethodTime _methodTime;
         long _start;
-        public ScopedElapsedTime([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "", [System.Runtime.CompilerServices.CallerMemberName] string callerMemberName = "")
+
+        private ScopedElapsedTime([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "", [System.Runtime.CompilerServices.CallerMemberName] string callerMemberName = "")
         {
             _start = Ticks.TickCount;
 
@@ -69,28 +99,41 @@ namespace TeamSupport.UnitTest
                 _methodTime = MethodTimes[fileMethod] = new MethodTime();
         }
 
-        public static void DebugWrite()
-        {
-            foreach (KeyValuePair<string, MethodTime> pair in ScopedElapsedTime.MethodTimes)
-                Debug.WriteLine($"{pair.Key}, {pair.Value}");
-            Reset();
-        }
-
         public void Dispose()
         {
             GC.SuppressFinalize(this);
             Dispose(true);
         }
 
-        static bool _dumpMetrics;
+        static int _dumpMetrics;
 
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
                 _methodTime.Add(Ticks.Elapsed(_start));
-            if (_dumpMetrics)   // Scot - put breakpoint here and set next statement!
-                DebugWrite();
+
+            if (1 == Interlocked.Exchange(ref _dumpMetrics, 0))
+                DumpMetrics();
         }
+
+        public static void DumpMetrics()
+        {
+            aTimer.Stop();  // prevent overlapping writes
+
+            // don't hold up the data collection
+            Dictionary<string, MethodTime> tmp = ScopedElapsedTime.MethodTimes;
+            Reset();
+
+            // Chris Rogers - send to NewRelic!!
+            StringBuilder builder = new StringBuilder();
+            foreach (KeyValuePair<string, MethodTime> pair in tmp)
+                builder.AppendLine($"{pair.Key}, {pair.Value}");
+
+            Debug.WriteLine(builder.ToString());
+
+            aTimer.Start(); // resume
+        }
+
     }
 
 }
