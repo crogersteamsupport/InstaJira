@@ -50,7 +50,7 @@ namespace TeamSupport.Handlers
 
     public void ProcessRequest(HttpContext context)
     {
-        using (new UnitTest.ScopedElapsedTime())
+        using (UnitTest.ScopedElapsedTime.Trace)
             ProcessRequest1(context);
     }
 

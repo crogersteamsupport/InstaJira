@@ -42,7 +42,7 @@ namespace TeamSupport.Handlers
         /// <param name="context"></param>
         public void ProcessRequest(HttpContext context)
         {
-            using (new UnitTest.ScopedElapsedTime())
+            using (UnitTest.ScopedElapsedTime.Trace)
                 ProcessRequest1(context);
         }
 

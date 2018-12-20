@@ -10,8 +10,10 @@ namespace TeamSupport.UnitTest
     {
         void UseThreadTime(ref long sum, int i)
         {
-            //for (int j = 0; j < i; ++j)
-            //    sum += j;
+            for (int j = 0; j < i; ++j)
+                sum += j;
+            System.Threading.Thread.Sleep(3);   // ignored!
+
             //for (int j = 0; j < i; ++j)
             //    sum -= j;
         }
@@ -29,20 +31,6 @@ namespace TeamSupport.UnitTest
 
             double ms = Ticks.Milliseconds(Ticks.Elapsed(outer));
             ScopedElapsedTime.DebugWrite();
-            using (new ScopedElapsedTime())
-                return;
-            long ticks = Ticks.TickCount;
-            System.Threading.Thread.Sleep(1234);
-            long value = 0;
-            for(int i = 0; i < 1000000000;++i)
-            {
-                if (i % 2 == 0)
-                    value += i;
-                else
-                    value -= i;
-            }
-
-            ms = Ticks.Milliseconds(Ticks.Elapsed(ticks));
         }
     }
 }
