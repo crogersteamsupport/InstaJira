@@ -145,7 +145,10 @@ namespace TeamSupport.UnitTest
                 MethodTimes = next;
 
                 foreach (KeyValuePair<string, MethodTime> pair in tmp)
-                    NewRelic.Api.Agent.NewRelic.RecordMetric($"Custom/{pair.Key}", pair.Value.Milliseconds);
+                {
+                    string name = $"Custom/{pair.Key.Replace('/', '_')}";
+                    NewRelic.Api.Agent.NewRelic.RecordMetric(name, pair.Value.Milliseconds);
+                }
 
                 //StringBuilder builder = new StringBuilder();
                 //foreach (KeyValuePair<string, MethodTime> pair in tmp)
