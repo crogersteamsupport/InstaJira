@@ -43,7 +43,7 @@ namespace TeamSupport.Handlers
         /// Session, and Server) used to service HTTP requests.</param>
         public void ProcessRequest(HttpContext context)
         {
-            using (UnitTest.ScopedElapsedTime.Trace)
+            using (UnitTest.ScopedElapsedTime.Trace())
                 ProcessRequest1(context);
         }
 

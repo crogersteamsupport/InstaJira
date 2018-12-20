@@ -51,7 +51,7 @@ namespace TeamSupport.Handlers
 
         public void ProcessRequest(HttpContext context)
         {
-            using (UnitTest.ScopedElapsedTime.Trace)
+            using (UnitTest.ScopedElapsedTime.Trace())
                 ProcessRequest1(context);
         }
 
@@ -124,19 +124,19 @@ namespace TeamSupport.Handlers
 
 		private void ProcessImages(HttpContext context, string[] segments, int organizationID)
 		{
-            using (UnitTest.ScopedElapsedTime.Trace)
+            using (UnitTest.ScopedElapsedTime.Trace())
                 TeamSupport.Data.Quarantine.ContentHandlerQ.ProcessImages(context, segments, organizationID);
         }
 
         private void ProcessRatingImages(HttpContext context, string[] segments, int organizationID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace)
+            using (UnitTest.ScopedElapsedTime.Trace())
                 TeamSupport.Data.Quarantine.ContentHandlerQ.ProcessRatingImages(context, segments, organizationID);
         }
 
         private void ProcessChatStatus(HttpContext context, int organizationID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             bool areOperatorsAvailable = ChatRequests.IsOperatorAvailable(LoginUser.Anonymous, organizationID);
@@ -189,14 +189,14 @@ namespace TeamSupport.Handlers
 
         private void ProcessChat(HttpContext context, string command, int organizationID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace)
+            using (UnitTest.ScopedElapsedTime.Trace())
                 TeamSupport.Data.Quarantine.ContentHandlerQ.ProcessChat(context, command, organizationID);
         }
 
         /* USER: UserAvatar instead. This is old style.  It will be going away */
         private void ProcessAvatar(HttpContext context, string[] segments, int organizationID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             StringBuilder builder = new StringBuilder();
@@ -213,7 +213,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessCalendarFeed(HttpContext context, string[] segments, int organizationID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
             DDay.iCal.iCalendar iCal = new DDay.iCal.iCalendar();
             string guid = segments[2];
@@ -349,7 +349,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessUserAvatar(HttpContext context, string[] segments, int organizationID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace)
+            using (UnitTest.ScopedElapsedTime.Trace())
             {
 
             int userID = int.Parse(segments[2]);
@@ -409,7 +409,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessInitialAvatar(HttpContext context, string[] segments, int organizationID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             //https://app.na2.teamsupport.com/dc/{OrgID}/initialavatar/{Text}/{Size}
@@ -439,7 +439,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessHubLogo(HttpContext context, string[] segments, int organizationID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             int userID = int.Parse(segments[2]);
@@ -489,7 +489,7 @@ namespace TeamSupport.Handlers
         //https://app.ts.com/dc/{OrganizationID}/CompanyLogo/{orgIdLogo}/{Size}/{page}
         private void ProcessCompanyLogo(HttpContext context, string[] segments, int organizationID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             int logoOrganizationId = int.Parse(segments[2]);
@@ -560,7 +560,7 @@ namespace TeamSupport.Handlers
         //https://app.ts.com/dc/{OrganizationID}/contactavatar/{userId}/{Size}/{page}
         private void ProcessContactAvatar(HttpContext context, string[] segments, int organizationID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             int organizationParentId = (int)Organizations.GetOrganization(LoginUser.Anonymous, organizationID).ParentID;
@@ -809,7 +809,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessAttachment(HttpContext context, string attachmentID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace)
+            using (UnitTest.ScopedElapsedTime.Trace())
             {
 
                 //http://127.0.0.1/tsdev/dc/attachments/7401
@@ -923,7 +923,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessImportLog(HttpContext context, int importID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
@@ -981,7 +981,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessTicketExport(HttpContext context)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
@@ -1026,7 +1026,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessReport(HttpContext context, int reportID, string type)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
@@ -1209,7 +1209,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessProductCustomers(HttpContext context, int productID, string type)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
@@ -1275,7 +1275,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessProductVersionCustomers(HttpContext context, int productVersionID, string type)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             System.Web.HttpBrowserCapabilities browser = context.Request.Browser;
@@ -1341,7 +1341,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessScreenRecordingSettings(HttpContext context)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             if (context.Request.Headers["Authorization"] != "fb7d29fc916a4faebde8a9bd953fd57b") return;
@@ -1364,7 +1364,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessScheduledReportLog(HttpContext context, int scheduledReportId)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             HttpBrowserCapabilities browser = context.Request.Browser;
@@ -1409,7 +1409,7 @@ namespace TeamSupport.Handlers
         // -- localhost/dc/1078/chatattachments/54782/2164854
         private void ProcessChatAttachments(HttpContext context, int organizationID, int chatID, int attachmentID)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             HttpBrowserCapabilities browser = context.Request.Browser;
@@ -1436,7 +1436,7 @@ namespace TeamSupport.Handlers
 
         private void ProcessUpdateServiceHealth(HttpContext context, string serviceName)
         {
-            using (UnitTest.ScopedElapsedTime.Trace) 
+            using (UnitTest.ScopedElapsedTime.Trace()) 
             { 
 
             Services services = new Services(LoginUser.Anonymous);

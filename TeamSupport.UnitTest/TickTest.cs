@@ -25,7 +25,7 @@ namespace TeamSupport.UnitTest
             long sum = 0;
             for (int i = 0; i < 10000; ++i)
             {
-                using (ScopedElapsedTime.Trace)
+                using (UnitTest.ScopedElapsedTime.Trace())
                     UseThreadTime(ref sum, i);
             }
 

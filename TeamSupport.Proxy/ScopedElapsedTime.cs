@@ -59,7 +59,7 @@ namespace TeamSupport.UnitTest
         // static initialization
         static ScopedElapsedTime()
         {
-            string timeoutString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["ScopedElapsedTime"].ConnectionString;
+            string timeoutString = System.Configuration.ConfigurationManager.AppSettings["ScopedElapsedTime"];
 
             int timeout;   // default
             if(!int.TryParse(timeoutString, out timeout))
@@ -77,7 +77,11 @@ namespace TeamSupport.UnitTest
         {
             _dumpMetrics = 1;
         }
-        public static ScopedElapsedTime Trace { get { return _enable ? new ScopedElapsedTime() : null; } }
+        public static ScopedElapsedTime Trace([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "", [System.Runtime.CompilerServices.CallerMemberName] string callerMemberName = "")
+        {
+            return _enable ? new ScopedElapsedTime(sourceFilePath, callerMemberName) : null;
+        }
+
         public static void Reset()
         {
             MethodTimes = new Dictionary<string, MethodTime>();
@@ -89,7 +93,7 @@ namespace TeamSupport.UnitTest
         MethodTime _methodTime;
         long _start;
 
-        private ScopedElapsedTime([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "", [System.Runtime.CompilerServices.CallerMemberName] string callerMemberName = "")
+        private ScopedElapsedTime(string sourceFilePath, string callerMemberName)
         {
             _start = Ticks.TickCount;
 
@@ -128,7 +132,7 @@ namespace TeamSupport.UnitTest
             
             StringBuilder builder = new StringBuilder();
             foreach (KeyValuePair<string, MethodTime> pair in tmp)
-                builder.AppendLine($"{pair.Key}, {pair.Value}");
+                builder.AppendLine($"{DateTime.UtcNow}, {pair.Key}, {pair.Value}");
 
             Debug.WriteLine(builder.ToString());    // Chris Rogers - send to NewRelic !!!!!!!!!!!!!!!!!!!!
 
