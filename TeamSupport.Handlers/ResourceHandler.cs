@@ -35,6 +35,12 @@ namespace TeamSupport.Handlers
 
     public void ProcessRequest(HttpContext context)
     {
+        using (new UnitTest.ScopedElapsedTime())
+            ProcessRequest1(context);
+    }
+
+    public void ProcessRequest1(HttpContext context)
+    {
       try
       {
         bool flag = false;

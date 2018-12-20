@@ -43,6 +43,12 @@ namespace TeamSupport.Handlers
         /// Session, and Server) used to service HTTP requests.</param>
         public void ProcessRequest(HttpContext context)
         {
+            using (new UnitTest.ScopedElapsedTime())
+                ProcessRequest1(context);
+        }
+
+        public void ProcessRequest1(HttpContext context)
+        {
             //http://trunk.tsdev.com/signup/validateCompany?name=Muroc%20Systems,%20Inc.
             string fn = context.Request.Url.Segments[2].ToLower();
             if (fn == "fn/")

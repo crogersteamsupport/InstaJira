@@ -28,6 +28,12 @@ namespace TeamSupport.Handlers
 
         public void ProcessRequest(HttpContext context)
         {
+            using (new UnitTest.ScopedElapsedTime())
+                ProcessRequest1(context);
+        }
+
+        public void ProcessRequest1(HttpContext context)
+        {
 
             //SAMPLE: http://localhost/hub/1078/search/kb?q=search%20term
             //SAMPLE: http://localhost/hub/[PARENTID]/search/kb?q=[SEARCH_STRING]

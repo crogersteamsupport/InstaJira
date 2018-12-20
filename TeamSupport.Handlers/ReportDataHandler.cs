@@ -31,10 +31,16 @@ namespace TeamSupport.Handlers
     {
       get { return false; }
     }
-    
 
-    public void ProcessRequest(HttpContext context)
-    {
+
+      public void ProcessRequest(HttpContext context)
+      {
+          using (new UnitTest.ScopedElapsedTime())
+              ProcessRequest1(context);
+      }
+
+      public void ProcessRequest1(HttpContext context)
+      {
       context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
       context.Response.AddHeader("Expires", "-1");
       context.Response.AddHeader("Pragma", "no-cache");

@@ -51,6 +51,12 @@ namespace TeamSupport.Handlers
 
         public void ProcessRequest(HttpContext context)
         {
+            using (new UnitTest.ScopedElapsedTime())
+                ProcessRequest1(context);
+        }
+
+        public void ProcessRequest1(HttpContext context)
+        {
             try
             {
                 string connection = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString;
