@@ -3402,10 +3402,7 @@ $(document).ready(function () {
             });
         }
     });
-
-
-    WatsonCustomer(organizationID);
-
+    // WatsonCustomer(organizationID);
 });
 
 //var initEditor = function (element, init) {
