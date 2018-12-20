@@ -29,7 +29,7 @@ namespace TeamSupport.UnitTest
         }
 
         /// <summary>100-nanosecond units</summary>
-        public static double Milliseconds(long ticks) { return (double)ticks / 10000f; }
+        public static float Milliseconds(long ticks) { return (float)ticks / 10000f; }
         public static long Elapsed(long start) { return TickCount - start; }
     }
 
@@ -45,62 +45,66 @@ namespace TeamSupport.UnitTest
             Interlocked.Add(ref _sum, value);
             Interlocked.Increment(ref _count);
         }
+
+        public float Milliseconds { get { return Ticks.Milliseconds(_sum); } }
         public override string ToString() { return $"{_count}, {Ticks.Milliseconds(_sum)}"; }
     }
 
-    /// <summary> Time single method execution </summary>
+    /// <summary> 
+    /// Time single method execution 
+    /// Don't let this class do a throw
+    /// </summary>
     public class ScopedElapsedTime : IDisposable
     {
         // static data
         private static bool _enable = true; // global enable/disable of performance tracking
         public static Dictionary<string, MethodTime> MethodTimes { get; private set; }
-        static System.Timers.Timer aTimer;
+        static System.Timers.Timer _timer;
+        static int _timeoutExpired;
 
         // static initialization
         static ScopedElapsedTime()
         {
+            // interval to register metrics
             string timeoutString = System.Configuration.ConfigurationManager.AppSettings["ScopedElapsedTime"];
-
-            int timeout;   // default
-            if(!int.TryParse(timeoutString, out timeout))
+            if (!int.TryParse(timeoutString, out int timeout))
                 timeout = 30;
+            _timer = new System.Timers.Timer(timeout);    // record results every minute
+            _timer.Elapsed += OnTimedEvent;
+            _timer.AutoReset = true;
+            _timer.Enabled = true;
+            _timer.Start();
+            _timeoutExpired = 0;
 
-            aTimer = new System.Timers.Timer(timeout);    // record results every minute
-            // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
-            aTimer.Start();
-            Reset();
+            MethodTimes = new Dictionary<string, MethodTime>(); // data collection
         }
         private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            _dumpMetrics = 1;
+            _timeoutExpired = 1;
         }
+
         public static ScopedElapsedTime Trace([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "", [System.Runtime.CompilerServices.CallerMemberName] string callerMemberName = "")
         {
-            return _enable ? new ScopedElapsedTime(sourceFilePath, callerMemberName) : null;
+            try
+            {
+                return _enable ? new ScopedElapsedTime(sourceFilePath, callerMemberName) : null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
-
-        public static void Reset()
-        {
-            MethodTimes = new Dictionary<string, MethodTime>();
-            _dumpMetrics = 0;
-        }
-
 
         // implementation
-        MethodTime _methodTime;
+        string _fileMethod;
         long _start;
 
         private ScopedElapsedTime(string sourceFilePath, string callerMemberName)
         {
             _start = Ticks.TickCount;
 
-            // get reference to callerMemberName MethodTimes to put the results
-            string fileMethod = $"{sourceFilePath},{callerMemberName}";
-            if (!MethodTimes.TryGetValue(fileMethod, out _methodTime))
-                _methodTime = MethodTimes[fileMethod] = new MethodTime();
+            // keep name so when we get results it can be added 
+            _fileMethod = $"{sourceFilePath}/{callerMemberName}";
         }
 
         public void Dispose()
@@ -109,34 +113,54 @@ namespace TeamSupport.UnitTest
             Dispose(true);
         }
 
-        static int _dumpMetrics;
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
-                _methodTime.Add(Ticks.Elapsed(_start));
+            try
+            {
+                if (disposing)
+                {
+                    if (!MethodTimes.TryGetValue(_fileMethod, out MethodTime methodTime))
+                        methodTime = MethodTimes[_fileMethod] = new MethodTime();
+                    methodTime.Add(Ticks.Elapsed(_start));
+                }
 
-            if (1 == Interlocked.Exchange(ref _dumpMetrics, 0))
-                DumpMetrics();
+                if (0 != Interlocked.Exchange(ref _timeoutExpired, 0))
+                    DumpMetrics();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         public static void DumpMetrics()
         {
-            aTimer.Stop();  // prevent overlapping writes
+            _timer.Stop();  // prevent overlapping writes
+            try
+            {
+                // not thread safe but close enough
+                Dictionary<string, MethodTime> next = new Dictionary<string, MethodTime>();
+                Dictionary<string, MethodTime> tmp = ScopedElapsedTime.MethodTimes;
+                MethodTimes = next;
 
-            // not thread safe but close enough
-            Dictionary<string, MethodTime> next = new Dictionary<string, MethodTime>();
-            Dictionary<string, MethodTime> tmp = ScopedElapsedTime.MethodTimes;
-            MethodTimes = next;
+                foreach (KeyValuePair<string, MethodTime> pair in tmp)
+                    NewRelic.Api.Agent.NewRelic.RecordMetric($"Custom/{pair.Key}", pair.Value.Milliseconds);
 
-            
-            StringBuilder builder = new StringBuilder();
-            foreach (KeyValuePair<string, MethodTime> pair in tmp)
-                builder.AppendLine($"{DateTime.UtcNow}, {pair.Key}, {pair.Value}");
+                //StringBuilder builder = new StringBuilder();
+                //foreach (KeyValuePair<string, MethodTime> pair in tmp)
+                //    builder.AppendLine($"{DateTime.UtcNow}, {pair.Key}, {pair.Value}");
+                //Debug.WriteLine(builder.ToString());    // Chris Rogers - send to NewRelic !!!!!!!!!!!!!!!!!!!!
 
-            Debug.WriteLine(builder.ToString());    // Chris Rogers - send to NewRelic !!!!!!!!!!!!!!!!!!!!
+            }
+            catch (Exception ex)
+            {
 
-            aTimer.Start(); // resume
+            }
+            finally
+            {
+                _timer.Start(); // resume
+            }
         }
 
     }

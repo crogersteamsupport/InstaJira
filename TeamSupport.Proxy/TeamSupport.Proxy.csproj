@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NewRelic.Api.Agent">
+      <HintPath>..\packages\NewRelic\NewRelic.Api.Agent.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -83,10 +86,10 @@
     <Compile Include="RefType\TaskAssociationsViewProxy.cs" />
     <Compile Include="RefType\WatercoolerAttachmentsProxy.cs" />
     <Compile Include="RefType\ReportsProxy.cs" />
+    <Compile Include="ScopedElapsedTime.cs" />
     <Compile Include="TicketRelationshipsProxy.cs" />
     <Compile Include="TicketsProxy.cs" />
     <Compile Include="RefType\UserNoteSettingsProxy.cs" />
-    <Compile Include="ScopedElapsedTime.cs" />
     <Compile Include="UsersProxy.cs" />
     <Compile Include="RefType\WebHooksPendingProxy.cs" />
   </ItemGroup>
