@@ -120,16 +120,17 @@ namespace TeamSupport.UnitTest
         {
             aTimer.Stop();  // prevent overlapping writes
 
-            // don't hold up the data collection
+            // not thread safe but close enough
+            Dictionary<string, MethodTime> next = new Dictionary<string, MethodTime>();
             Dictionary<string, MethodTime> tmp = ScopedElapsedTime.MethodTimes;
-            Reset();
+            MethodTimes = next;
 
-            // Chris Rogers - send to NewRelic!!
+            
             StringBuilder builder = new StringBuilder();
             foreach (KeyValuePair<string, MethodTime> pair in tmp)
                 builder.AppendLine($"{pair.Key}, {pair.Value}");
 
-            Debug.WriteLine(builder.ToString());
+            Debug.WriteLine(builder.ToString());    // Chris Rogers - send to NewRelic !!!!!!!!!!!!!!!!!!!!
 
             aTimer.Start(); // resume
         }
