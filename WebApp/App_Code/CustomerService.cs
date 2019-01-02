@@ -1218,7 +1218,29 @@ namespace TSWebServices
         {
             Notes notes = new Notes(TSAuthentication.GetLoginUser());
             notes.LoadByReferenceType(refType, refID);
-            return notes.GetNoteProxies();
+
+            ActivityTypes activities = new ActivityTypes(TSAuthentication.GetLoginUser());
+            activities.LoadByOrganizationID(TSAuthentication.GetLoginUser().OrganizationID);
+
+            var notesProxy = notes.GetNoteProxies();
+            foreach (var note in notesProxy)
+            {
+                if (refType == ReferenceType.Users)
+                {
+                    note.Owner = Users.GetUserFullName(TSAuthentication.GetLoginUser(), note.RefID);
+                }
+                note.Attachments = LoadFiles(note.NoteID, refType == ReferenceType.Organizations ? ReferenceType.CompanyActivity : ReferenceType.ContactActivity);
+                if (note.ActivityType < 5) //default values
+                {
+                    note.ActivityTypeString = Enum.GetName(typeof(ActivityTypeEnum), note.ActivityType);
+                }
+                else //custom values
+                {
+                    note.ActivityTypeString = activities.First(x => x.ActivityTypeID == note.ActivityType).Name;
+                }
+            }
+
+            return notesProxy;
         }
 
         [WebMethod]
