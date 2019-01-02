@@ -16,6 +16,7 @@ namespace TeamSupport.Data
     [DataMember] public int Id { get; set; }
     [DataMember] public int OrganizationID { get; set; }
     [DataMember] public bool IsEnabled { get; set; }
+    [DataMember] public string IdPUrl { get; set; }
     [DataMember] public string Certificate { get; set; }
     [DataMember] public DateTime DateCreated { get; set; }
     [DataMember] public DateTime DateModified { get; set; }
@@ -32,6 +33,7 @@ namespace TeamSupport.Data
       result.ModifierID = this.ModifierID;
       result.CreatorID = this.CreatorID;
       result.Certificate = this.Certificate;
+      result.IdPUrl = this.IdPUrl;
       result.IsEnabled = this.IsEnabled;
       result.OrganizationID = this.OrganizationID;
       result.Id = this.Id;

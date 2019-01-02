@@ -54,6 +54,12 @@ namespace TeamSupport.Data
       set { Row["CreatorID"] = CheckValue("CreatorID", value); }
     }
     
+    public string IdPUrl
+    {
+      get { return (string)Row["IdPUrl"]; }
+      set { Row["IdPUrl"] = CheckValue("IdPUrl", value); }
+    }
+    
     public bool IsEnabled
     {
       get { return (bool)Row["IsEnabled"]; }
@@ -181,7 +187,7 @@ namespace TeamSupport.Data
 		updateCommand.Connection = connection;
 		//updateCommand.Transaction = transaction;
 		updateCommand.CommandType = CommandType.Text;
-		updateCommand.CommandText = "SET NOCOUNT OFF; UPDATE [dbo].[SAMLSettings] SET     [OrganizationID] = @OrganizationID,    [IsEnabled] = @IsEnabled,    [Certificate] = @Certificate,    [DateModified] = @DateModified,    [ModifierID] = @ModifierID  WHERE ([Id] = @Id);";
+		updateCommand.CommandText = "SET NOCOUNT OFF; UPDATE [dbo].[SAMLSettings] SET     [OrganizationID] = @OrganizationID,    [IsEnabled] = @IsEnabled,    [IdPUrl] = @IdPUrl,    [Certificate] = @Certificate,    [DateModified] = @DateModified,    [ModifierID] = @ModifierID  WHERE ([Id] = @Id);";
 
 		
 		tempParameter = updateCommand.Parameters.Add("Id", SqlDbType.Int, 4);
@@ -199,6 +205,13 @@ namespace TeamSupport.Data
 		}
 		
 		tempParameter = updateCommand.Parameters.Add("IsEnabled", SqlDbType.Bit, 1);
+		if (tempParameter.SqlDbType == SqlDbType.Float)
+		{
+		  tempParameter.Precision = 255;
+		  tempParameter.Scale = 255;
+		}
+		
+		tempParameter = updateCommand.Parameters.Add("IdPUrl", SqlDbType.VarChar, 200);
 		if (tempParameter.SqlDbType == SqlDbType.Float)
 		{
 		  tempParameter.Precision = 255;
@@ -231,7 +244,7 @@ namespace TeamSupport.Data
 		insertCommand.Connection = connection;
 		//insertCommand.Transaction = transaction;
 		insertCommand.CommandType = CommandType.Text;
-		insertCommand.CommandText = "SET NOCOUNT OFF; INSERT INTO [dbo].[SAMLSettings] (    [OrganizationID],    [IsEnabled],    [Certificate],    [DateCreated],    [DateModified],    [CreatorID],    [ModifierID]) VALUES ( @OrganizationID, @IsEnabled, @Certificate, @DateCreated, @DateModified, @CreatorID, @ModifierID); SET @Identity = SCOPE_IDENTITY();";
+		insertCommand.CommandText = "SET NOCOUNT OFF; INSERT INTO [dbo].[SAMLSettings] (    [OrganizationID],    [IsEnabled],    [IdPUrl],    [Certificate],    [DateCreated],    [DateModified],    [CreatorID],    [ModifierID]) VALUES ( @OrganizationID, @IsEnabled, @IdPUrl, @Certificate, @DateCreated, @DateModified, @CreatorID, @ModifierID); SET @Identity = SCOPE_IDENTITY();";
 
 		
 		tempParameter = insertCommand.Parameters.Add("ModifierID", SqlDbType.Int, 4);
@@ -263,6 +276,13 @@ namespace TeamSupport.Data
 		}
 		
 		tempParameter = insertCommand.Parameters.Add("Certificate", SqlDbType.NVarChar, -1);
+		if (tempParameter.SqlDbType == SqlDbType.Float)
+		{
+		  tempParameter.Precision = 255;
+		  tempParameter.Scale = 255;
+		}
+		
+		tempParameter = insertCommand.Parameters.Add("IdPUrl", SqlDbType.VarChar, 200);
 		if (tempParameter.SqlDbType == SqlDbType.Float)
 		{
 		  tempParameter.Precision = 255;
@@ -395,7 +415,7 @@ namespace TeamSupport.Data
     {
       using (SqlCommand command = new SqlCommand())
       {
-        command.CommandText = "SET NOCOUNT OFF; SELECT [Id], [OrganizationID], [IsEnabled], [Certificate], [DateCreated], [DateModified], [CreatorID], [ModifierID] FROM [dbo].[SAMLSettings] WHERE ([Id] = @Id);";
+        command.CommandText = "SET NOCOUNT OFF; SELECT [Id], [OrganizationID], [IsEnabled], [IdPUrl], [Certificate], [DateCreated], [DateModified], [CreatorID], [ModifierID] FROM [dbo].[SAMLSettings] WHERE ([Id] = @Id);";
         command.CommandType = CommandType.Text;
         command.Parameters.AddWithValue("Id", id);
         Fill(command);
