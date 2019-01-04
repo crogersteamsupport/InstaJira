@@ -1219,28 +1219,7 @@ namespace TSWebServices
             Notes notes = new Notes(TSAuthentication.GetLoginUser());
             notes.LoadByReferenceType(refType, refID);
 
-            ActivityTypes activities = new ActivityTypes(TSAuthentication.GetLoginUser());
-            activities.LoadByOrganizationID(TSAuthentication.GetLoginUser().OrganizationID);
-
-            var notesProxy = notes.GetNoteProxies();
-            foreach (var note in notesProxy)
-            {
-                if (refType == ReferenceType.Users)
-                {
-                    note.Owner = Users.GetUserFullName(TSAuthentication.GetLoginUser(), note.RefID);
-                }
-                note.Attachments = LoadFiles(note.NoteID, refType == ReferenceType.Organizations ? ReferenceType.CompanyActivity : ReferenceType.ContactActivity);
-                if (note.ActivityType < 5) //default values
-                {
-                    note.ActivityTypeString = Enum.GetName(typeof(ActivityTypeEnum), note.ActivityType);
-                }
-                else //custom values
-                {
-                    note.ActivityTypeString = activities.First(x => x.ActivityTypeID == note.ActivityType).Name;
-                }
-            }
-
-            return notesProxy;
+            return PopulateNoteProxy(notes, refType);
         }
 
         [WebMethod]
@@ -1252,28 +1231,7 @@ namespace TSWebServices
             else
                 notes.LoadByReferenceType(refType, refID, "DateCreated", includeChildren);
 
-            ActivityTypes activities = new ActivityTypes(TSAuthentication.GetLoginUser());
-            activities.LoadByOrganizationID(TSAuthentication.GetLoginUser().OrganizationID);
-
-            var notesProxy = notes.GetNoteProxies();
-            foreach (var note in notesProxy)
-            {
-                if (refType == ReferenceType.Users)
-                {
-                    note.Owner = Users.GetUserFullName(TSAuthentication.GetLoginUser(), note.RefID);
-                }
-                note.Attachments = LoadFiles(note.NoteID, refType == ReferenceType.Organizations ? ReferenceType.CompanyActivity : ReferenceType.ContactActivity);
-                if (note.ActivityType < 5) //default values
-                {
-                    note.ActivityTypeString = Enum.GetName(typeof(ActivityTypeEnum), note.ActivityType);
-                }
-                else //custom values
-                {
-                    note.ActivityTypeString = activities.First(x => x.ActivityTypeID == note.ActivityType).Name;
-                }
-            }
-
-            return notesProxy;
+            return PopulateNoteProxy(notes, refType);
         }
 
         [WebMethod]
@@ -1286,29 +1244,7 @@ namespace TSWebServices
             else
                 notes.LoadByReferenceTypeByUserRights(refType, refID, loginUser.UserID, "DateCreated", includeChildren);
 
-            var notesProxy = notes.GetNoteProxies();
-
-            ActivityTypes activities = new ActivityTypes(TSAuthentication.GetLoginUser());
-            activities.LoadByOrganizationID(TSAuthentication.GetLoginUser().OrganizationID);
-
-            foreach (var note in notesProxy)
-            {
-                note.Attachments = LoadFiles(note.NoteID, refType == ReferenceType.Organizations ? ReferenceType.CompanyActivity : ReferenceType.ContactActivity);
-                if(refType == ReferenceType.Users)
-                {
-                    note.Owner = Users.GetUserFullName(TSAuthentication.GetLoginUser(), note.RefID);
-                }
-                if (note.ActivityType < 5) //default values
-                {
-                    note.ActivityTypeString = Enum.GetName(typeof(ActivityTypeEnum), note.ActivityType);
-                }
-                else //custom values
-                {
-                    note.ActivityTypeString = activities.First(x => x.ActivityTypeID == note.ActivityType).Name;
-                }
-            }
-
-            return notesProxy;
+            return PopulateNoteProxy(notes, refType);
         }
 
         [WebMethod]
@@ -4576,6 +4512,32 @@ SELECT
             }
 
             return true;
+        }
+
+        private NoteProxy[] PopulateNoteProxy(Notes notes, ReferenceType refType)
+        {
+            ActivityTypes activities = new ActivityTypes(TSAuthentication.GetLoginUser());
+            activities.LoadByOrganizationID(TSAuthentication.GetLoginUser().OrganizationID);
+
+            var notesProxy = notes.GetNoteProxies();
+            foreach (var note in notesProxy)
+            {
+                if (refType == ReferenceType.Users)
+                {
+                    note.Owner = Users.GetUserFullName(TSAuthentication.GetLoginUser(), note.RefID);
+                }
+                note.Attachments = LoadFiles(note.NoteID, refType == ReferenceType.Organizations ? ReferenceType.CompanyActivity : ReferenceType.ContactActivity);
+                if (Enum.IsDefined(typeof(ActivityTypeEnum), note.ActivityType)) //default values
+                {
+                    note.ActivityTypeString = Enum.GetName(typeof(ActivityTypeEnum), note.ActivityType);
+                }
+                else //custom values
+                {
+                    note.ActivityTypeString = activities.First(x => x.ActivityTypeID == note.ActivityType).Name;
+                }
+            }
+
+            return notesProxy;
         }
 
         public class NewCustomerSave
