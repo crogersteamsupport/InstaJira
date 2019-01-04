@@ -996,7 +996,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#tblNotes').on('click', '.editNote', function (e) {
+    $('#tblNotes, #tblNotesAdditional').on('click', '.editNote', function (e) {
         e.stopPropagation();
         //$(this).prop('disabled', true);
         _mainFrame.Ts.System.logAction('Contact Detail - Edit Note');
@@ -1052,7 +1052,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#tblNotes').on('click', '.deleteNote', function (e) {
+    $('#tblNotes, #tblNotesAdditional').on('click', '.deleteNote', function (e) {
         e.preventDefault();
         e.stopPropagation();
         if (confirm('Are you sure you would like to DELETE this activity?')) {
@@ -1060,6 +1060,7 @@ $(document).ready(function () {
             parent.privateServices.DeleteNote($(this).parent().parent().attr('id'), function () {
                 ;
                 LoadNotes();
+                LoadNotesAdditional();
                 $('#noteDescBox').toggle(false);
             });
         }
@@ -1155,6 +1156,7 @@ $(document).ready(function () {
             {
                 _userOrgID = null;
                 LoadNotes();
+                LoadNotesAdditional();
             }
             $('#fieldNoteTitle').val('');
             $('#fieldNoteDesc').val('');
@@ -1342,6 +1344,7 @@ $(document).ready(function () {
         stop: function (e, data) {
             $('.upload-queue-activity').empty();
             LoadNotes();
+            LoadNotesAdditional();
         }
     });
 
@@ -1391,7 +1394,7 @@ $(document).ready(function () {
                 $('#a-notes').text('Activities (' + count + ')');
                 var html;
                 for (var i = 0; i < note.length; i++) {
-                    var attachmentString = note[i].Attachments.length > 0 ? "   <i class='fa fa-paperclip'></i>" : "";
+                    var attachmentString = (note[i].Attachments != null && note[i].Attachments.length > 0) ? "   <i class='fa fa-paperclip'></i>" : "";
 
                     if (_isAdmin || note[i].CreatorID == _mainFrame.Ts.System.User.UserID || _mainFrame.Ts.System.User.CanEditContact) {
                         html = '<td><i class="fa fa-edit editNote"></i></td><td><i class="fa fa-trash-o deleteNote"></i></td><td scope="row">' + note[i].Title + attachmentString + '</td><td>' + note[i].CreatorName + '</td><td>' + note[i].DateCreated.toDateString() + '</td>';
@@ -1434,7 +1437,7 @@ $(document).ready(function () {
                 $('#tblNotes tbody').empty();
                 var html;
                 for (var i = 0; i < note.length; i++) {
-                    var attachmentString = note[i].Attachments.length > 0 ? "   <i class='fa fa-paperclip'></i>" : "";
+                    var attachmentString = (note[i].Attachments != null && note[i].Attachments.length > 0) ? "   <i class='fa fa-paperclip'></i>" : "";
 
                     if (_isAdmin || note[i].CreatorID == _mainFrame.Ts.System.User.UserID || _mainFrame.Ts.System.User.CanEditContact)
                         html = '<td><i class="fa fa-edit editNote"></i></td><td><i class="fa fa-trash-o deleteNote"></i></td><td scope="row">' + note[i].Title + attachmentString + '</td><td>' + note[i].CreatorName + '</td><td>' + note[i].DateCreated.toDateString() + '</td>';
@@ -1476,9 +1479,16 @@ $(document).ready(function () {
                 $('#tblNotesAdditional tbody').empty();
                 var html;
                 for (var i = 0; i < note.length; i++) {
-                    var attachmentString = note[i].Attachments.length > 0 ? "   <i class='fa fa-paperclip'></i>" : "";
+                    var attachmentString = (note[i].Attachments != null && note[i].Attachments.length > 0)? "   <i class='fa fa-paperclip'></i>" : "";
 
-                    html = '<td></td><td></td><td>' + note[i].Title + attachmentString + '</td><td>' + note[i].CreatorName + '</td><td>' + note[i].DateCreated.toDateString() + '</td>';
+                    if (_isAdmin || note[i].CreatorID == _mainFrame.Ts.System.User.UserID || _mainFrame.Ts.System.User.CanEditContact) {
+                        html = '<td><i class="fa fa-edit editNote"></i></td><td><i class="fa fa-trash-o deleteNote"></i></td><td scope="row">' + note[i].Title + attachmentString + '</td><td>' + note[i].CreatorName + '</td><td>' + note[i].DateCreated.toDateString() + '</td>';
+                    }
+                    else {
+                        html = '<td></td><td></td><td>' + note[i].Title + attachmentString + '</td><td>' + note[i].CreatorName + '</td><td>' + note[i].DateCreated.toDateString() + '</td>';
+                    }
+
+                    
                     if (note[i].ProductFamilyID != null) {
                         html += '<td>' + note[i].ProductFamily + '</td>';
                     }
@@ -1516,9 +1526,15 @@ $(document).ready(function () {
                 $('#tblNotesAdditional tbody').empty();
                 var html;
                 for (var i = 0; i < note.length; i++) {
-                    var attachmentString = note[i].Attachments.length > 0 ? "   <i class='fa fa-paperclip'></i>" : "";
+                    var attachmentString = (note[i].Attachments != null && note[i].Attachments.length > 0) ? "   <i class='fa fa-paperclip'></i>" : "";
 
-                    html = '<td></td><td></td><td>' + note[i].Title + attachmentString + '</td><td>' + note[i].CreatorName + '</td><td>' + note[i].DateCreated.toDateString() + '</td>';
+                    if (_isAdmin || note[i].CreatorID == _mainFrame.Ts.System.User.UserID || _mainFrame.Ts.System.User.CanEditContact) {
+                        html = '<td><i class="fa fa-edit editNote"></i></td><td><i class="fa fa-trash-o deleteNote"></i></td><td scope="row">' + note[i].Title + attachmentString + '</td><td>' + note[i].CreatorName + '</td><td>' + note[i].DateCreated.toDateString() + '</td>';
+                    }
+                    else {
+                        html = '<td></td><td></td><td>' + note[i].Title + attachmentString + '</td><td>' + note[i].CreatorName + '</td><td>' + note[i].DateCreated.toDateString() + '</td>';
+                    }
+
                     html += '<td>' + note[i].ActivityTypeString + '</td>';
                     if (note[i].DateOccurred != null) {
                         html += '<td>' + note[i].DateOccurred.toDateString() + '</td>';
