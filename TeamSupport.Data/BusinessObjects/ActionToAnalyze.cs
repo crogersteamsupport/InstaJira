@@ -39,8 +39,19 @@ namespace TeamSupport.Data.BusinessObjects
         public string ActionDescription;
 #pragma warning restore CS0649
 
-        static int MaxActionTextLength = Int32.Parse(System.Configuration.ConfigurationManager.AppSettings.Get("MaxActionTextLength"));
+        static int MaxActionTextLength;
 
+        static ActionToAnalyze()
+        {
+            try
+            {
+                MaxActionTextLength = Int32.Parse(System.Configuration.ConfigurationManager.AppSettings.Get("MaxActionTextLength"));
+            }
+            catch(Exception ex)
+            {
+                MaxActionTextLength = 5000;
+            }
+        }
         /// <summary>
         /// Watson utterance only allows 500 char
         /// (don't throw sql exception on truncate of dbo.ActionToAnalyze.ActionDescription)

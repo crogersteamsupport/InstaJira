@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace TeamSupport.Data.BusinessObjects.Reporting
 {
-    public class CustomReportSql
+    public abstract class CustomReportSql
     {
         public static void GetCustomSql(LoginUser loginUser, SqlCommand command, bool isSchemaOnly, bool useUserFilter, Report report)
         {

@@ -314,7 +314,10 @@ namespace TeamSupport.Data
             switch (ReportDefType)
             {
                 case ReportType.Table:
-                    TabularReportSql.GetTabularSql(Collection.LoginUser, command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    {
+                        TabularReportSql tabularReportSql = new TabularReportSql(Collection.LoginUser);
+                        tabularReportSql.GetTabularSql(command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    }
                     break;
                 case ReportType.Chart:
                     SummaryReportSql.GetSummarySql(Collection.LoginUser, command, JsonConvert.DeserializeObject<SummaryReport>(ReportDef), isSchemaOnly, null, false, true);
@@ -326,7 +329,10 @@ namespace TeamSupport.Data
                     SummaryReportSql.GetSummarySql(Collection.LoginUser, command, JsonConvert.DeserializeObject<SummaryReport>(ReportDef), isSchemaOnly, ReportID, useUserFilter, false);
                     break;
                 case ReportType.TicketView:
-                    TabularReportSql.GetTabularSql(Collection.LoginUser, command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    {
+                        TabularReportSql tabularReportSql = new TabularReportSql(Collection.LoginUser);
+                        tabularReportSql.GetTabularSql(command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    }
                     break;
                 default:
                     break;
@@ -335,6 +341,7 @@ namespace TeamSupport.Data
             AddCommandParametersForExport(command, Collection.LoginUser);
             command.CommandText = $" /* ReportID: {ReportID.ToString()} OrganizationID: {OrganizationID.ToString()} */ " + command.CommandText;
         }
+
         public void GetCommandForExports(SqlCommand command, bool inlcudeHiddenFields = true, bool isSchemaOnly = false, bool useUserFilter = true, string sortField = null, string sortDir = null)
         {
             MigrateToNewReport();
@@ -357,7 +364,10 @@ namespace TeamSupport.Data
                     SummaryReportSql.GetSummarySql(Collection.LoginUser, command, JsonConvert.DeserializeObject<SummaryReport>(ReportDef), isSchemaOnly, ReportID, useUserFilter, false);
                     break;
                 case ReportType.TicketView:
-                    TabularReportSql.GetTabularSql(Collection.LoginUser, command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    {
+                        TabularReportSql tabularReportSql = new TabularReportSql(Collection.LoginUser);
+                        tabularReportSql.GetTabularSql(command, JsonConvert.DeserializeObject<TabularReport>(ReportDef), inlcudeHiddenFields, isSchemaOnly, ReportID, useUserFilter, sortField, sortDir);
+                    }
                     break;
                 default:
                     break;
@@ -387,7 +397,7 @@ namespace TeamSupport.Data
             }
         }
 
-        private static void AddCommandParametersForExport(SqlCommand command, LoginUser loginUser)
+        public static void AddCommandParametersForExport(SqlCommand command, LoginUser loginUser)
         {
             User user = loginUser.GetUser();
 
@@ -1163,6 +1173,55 @@ namespace TeamSupport.Data
 
             Collection.Save();
         }
+
+        public GridResult GetReportData(LoginUser loginUser, int from, int to, string sortField, bool isDesc, bool useUserFilter)
+        {
+            if (IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
+            if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
+            {
+                ReportSummaryAll reportTableAll = new ReportSummaryAll(loginUser, this);
+                return reportTableAll.GetReportData(sortField, isDesc, useUserFilter);
+            }
+            else
+            {
+                ReportTablePage reportTablePage = new ReportTablePage(loginUser, this);
+                return reportTablePage.GetReportData(from, to, sortField, isDesc, useUserFilter);
+            }
+        }
+
+        public DataTable GetReportTable(LoginUser loginUser, int from, int to, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        {
+            if (IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
+
+            if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
+            {
+                ReportSummaryAll reportTableAll = new ReportSummaryAll(loginUser, this);
+                return reportTableAll.GetReportTable(sortField, isDesc, useUserFilter, includeHiddenFields);
+            }
+            else
+            {
+                ReportTablePage reportTablePage = new ReportTablePage(loginUser, this);
+                return reportTablePage.GetReportTable(from, to, sortField, isDesc, useUserFilter, includeHiddenFields);
+            }
+        }
+
+        //For exports
+        public DataTable GetReportTableForExports(LoginUser loginUser, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
+        {
+            if (IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
+
+            if (ReportDefType == ReportType.Summary || ReportDefType == ReportType.Chart)
+            {
+                ReportSummaryAll reportTableAll = new ReportSummaryAll(loginUser, this);
+                return reportTableAll.GetReportTableForExports(sortField, isDesc, useUserFilter, includeHiddenFields);
+            }
+            else
+            {
+                ReportTablePage reportTablePage = new ReportTablePage(loginUser, this);
+                return reportTablePage.GetReportTableForExports(sortField, isDesc, useUserFilter, includeHiddenFields);
+            }
+        }
+
     }
 
     public partial class Reports
@@ -1280,494 +1339,24 @@ namespace TeamSupport.Data
 
         public static GridResult GetReportData(LoginUser loginUser, int reportID, int from, int to, string sortField, bool isDesc, bool useUserFilter)
         {
+            // forward to the Report object
             Report report = Reports.GetReport(loginUser, reportID, loginUser.UserID);
-
-            if (report.IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
-            DateTime timeStart = DateTime.Now;
-            GridResult result;
-            try
-            {
-                if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                {
-                    result = GetReportDataAll(loginUser, report, sortField, isDesc, useUserFilter);
-                }
-                else
-                {
-                    result = GetReportDataPage(loginUser, report, from, to, sortField, isDesc, useUserFilter);
-                }
-            }
-            catch (Exception)
-            {
-                // try without the sort
-                try
-                {
-                    if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                    {
-                        result = GetReportDataAll(loginUser, report, null, isDesc, useUserFilter);
-                    }
-                    else
-                    {
-                        result = GetReportDataPage(loginUser, report, from, to, null, isDesc, useUserFilter);
-                    }
-                }
-                catch (Exception)
-                {
-                    // try without the user filters
-                    if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                    {
-                        result = GetReportDataAll(loginUser, report, null, isDesc, false);
-                    }
-                    else
-                    {
-                        result = GetReportDataPage(loginUser, report, from, to, null, isDesc, false);
-                    }
-
-                    UserTabularSettings userFilters = JsonConvert.DeserializeObject<UserTabularSettings>((string)report.Row["Settings"]);
-                    userFilters.Filters = null;
-                    report.Row["Settings"] = JsonConvert.SerializeObject(userFilters);
-                    report.Collection.Save();
-                }
-            }
-            report.LastTimeTaken = (int)(DateTime.Now - timeStart).TotalSeconds;
-            report.Collection.Save();
-            return result;
-
+            return report.GetReportData(loginUser, from, to, sortField, isDesc, useUserFilter);
         }
 
         public static DataTable GetReportTable(LoginUser loginUser, int reportID, int from, int to, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
+            // forward to the Report object
             Report report = Reports.GetReport(loginUser, reportID);
-            if (report.IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
-            DateTime timeStart = DateTime.Now;
-            DataTable result = null;
-            try
-            {
-                if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                {
-                    result = GetReportTableAll(loginUser, report, sortField, isDesc, useUserFilter, includeHiddenFields);
-                }
-                else
-                {
-                    result = GetReportTablePage(loginUser, report, from, to, sortField, isDesc, useUserFilter, includeHiddenFields);
-                }
-            }
-            catch (Exception)
-            {
-                // try without the sort
-                try
-                {
-                    if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                    {
-                        result = GetReportTableAll(loginUser, report, null, isDesc, useUserFilter, includeHiddenFields);
-                    }
-                    else
-                    {
-                        result = GetReportTablePage(loginUser, report, from, to, null, isDesc, useUserFilter, includeHiddenFields);
-                    }
-                }
-                catch (Exception)
-                {
-                    // try without the user filters
-                    if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                    {
-                        result = GetReportTableAll(loginUser, report, null, isDesc, false, includeHiddenFields);
-                    }
-                    else
-                    {
-                        result = GetReportTablePage(loginUser, report, from, to, null, isDesc, false, includeHiddenFields);
-                    }
-
-                    UserTabularSettings userFilters = JsonConvert.DeserializeObject<UserTabularSettings>((string)report.Row["Settings"]);
-                    userFilters.Filters = null;
-                    report.Row["Settings"] = JsonConvert.SerializeObject(userFilters);
-                    report.Collection.Save();
-                }
-            }
-            report.LastTimeTaken = (int)(DateTime.Now - timeStart).TotalSeconds;
-            report.Collection.Save();
-
-
-            return result;
+            return report.GetReportTable(loginUser, from, to, sortField, isDesc, useUserFilter, includeHiddenFields);
         }
 
         //For exports
         public static DataTable GetReportTableForExports(LoginUser loginUser, int reportID,  string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
         {
+            // forward to the Report object
             Report report = Reports.GetReport(loginUser, reportID);
-            if (report.IsDisabled || SystemSettings.GetIsReportsDisabled()) return null;
-            DateTime timeStart = DateTime.Now;
-            DataTable result = null;
-            try
-            {
-                if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                {
-                    result = GetReportTableAllForExports(loginUser, report, sortField, isDesc, useUserFilter, includeHiddenFields);
-                }
-                else
-                {
-                    result = GetReportTablePageForExports(loginUser, report,sortField, isDesc, useUserFilter, includeHiddenFields);
-                }
-            }
-            catch (Exception)
-            {
-                // try without the sort
-                try
-                {
-                    if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                    {
-                        result = GetReportTableAllForExports(loginUser, report, null, isDesc, useUserFilter, includeHiddenFields);
-                    }
-                    else
-                    {
-                        result = GetReportTablePageForExports(loginUser, report,  null, isDesc, useUserFilter, includeHiddenFields);
-                    }
-                }
-                catch (Exception)
-                {
-                    // try without the user filters
-                    if (report.ReportDefType == ReportType.Summary || report.ReportDefType == ReportType.Chart)
-                    {
-                        result = GetReportTableAllForExports(loginUser, report, null, isDesc, false, includeHiddenFields);
-                    }
-                    else
-                    {
-                        result = GetReportTablePageForExports(loginUser, report, null, isDesc, false, includeHiddenFields);
-                    }
-
-                    UserTabularSettings userFilters = JsonConvert.DeserializeObject<UserTabularSettings>((string)report.Row["Settings"]);
-                    userFilters.Filters = null;
-                    report.Row["Settings"] = JsonConvert.SerializeObject(userFilters);
-                    report.Collection.Save();
-                }
-            }
-            report.LastTimeTaken = (int)(DateTime.Now - timeStart).TotalSeconds;
-            report.Collection.Save();
-
-
-            return result;
-        }
-
-
-        private static GridResult GetReportDataPage(LoginUser loginUser, Report report, int from, int to, string sortField, bool isDesc, bool useUserFilter)
-        {
-            DataTable table = GetReportTablePage(loginUser, report, from, to, sortField, isDesc, useUserFilter, true);
-            GridResult result = new GridResult();
-            result.From = from;
-            result.To = to;
-            int page = to - from + 1;
-            if (table.Rows.Count < 1)
-            {
-                //0 rows or exact match
-                result.Total = from > 0 ? from : 0;
-            }
-            else if (table.Rows.Count == page)
-            {
-                //page is full, add some padding
-                result.Total = to + 100;
-            }
-            else
-            {
-                //page is not full, so set the proper total
-                result.Total = from + table.Rows.Count;
-            }
-            result.Data = table;
-            return result;
-        }
-
-        private static DataTable GetReportTablePage(LoginUser loginUser, Report report, int from, int to, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
-        {
-            from++;
-            to++;
-
-            SqlCommand command = new SqlCommand();
-
-            string query = @"WITH  q AS({0}) SELECT * FROM q WHERE RowNum BETWEEN @From AND @To ORDER BY RowNum ASC";
-            
-            /*WITH 
-            q AS ({0}),
-            r AS (SELECT q.*, ROW_NUMBER() OVER (ORDER BY [{1}] {2}) AS 'RowNum' FROM q)
-            SELECT  *{3} FROM r
-            WHERE RowNum BETWEEN @From AND @To";
-            */
-
-            if (report.ReportDefType == ReportType.Custom)
-            {
-                query = @"
-WITH 
-{0}
-,r AS (SELECT q.*, ROW_NUMBER() OVER (ORDER BY [{1}] {2}) AS 'RowNum' FROM q)
-SELECT  * FROM r
-WHERE RowNum BETWEEN @From AND @To";
-            }
-
-            if (string.IsNullOrWhiteSpace(sortField))
-            {
-                sortField = GetReportColumnNames(loginUser, report.ReportID)[0];
-                isDesc = false;
-            }
-
-            if (includeHiddenFields && report.ReportSubcategoryID == 70)
-            {
-                switch (sortField)
-                {
-                    case "Severity":
-                        sortField = "hiddenSeverityPosition";
-                        break;
-                    case "Status":
-                        sortField = "hiddenStatusPosition";
-                        break;
-                }
-            }
-
-
-            command.Parameters.AddWithValue("@From", from);
-            command.Parameters.AddWithValue("@To", to);
-
-            if (report.ReportDefType != ReportType.Custom)
-            {
-                report.GetCommand(command, includeHiddenFields, false, useUserFilter, sortField, isDesc ? "DESC" : "ASC");
-                command.CommandText = string.Format(query, command.CommandText);
-            }
-            else
-            {
-                report.GetCommand(command, includeHiddenFields, false, useUserFilter);
-                command.CommandText = string.Format(query, command.CommandText, sortField, isDesc ? "DESC" : "ASC");
-            }
-
-            report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
-            report.Collection.Save();
-            FixCommandParameters(command);
-
-            DataTable table = new DataTable();
-            using (SqlConnection connection = new SqlConnection(loginUser.ConnectionString))
-            {
-                connection.Open();
-                SqlTransaction transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted);
-
-                command.Connection = connection;
-                command.Transaction = transaction;
-                try
-                {
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        adapter.Fill(table);
-                    }
-                    transaction.Commit();
-                    table = DataUtils.DecodeDataTable(table);
-                    table = DataUtils.StripHtmlDataTable(table);
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    ExceptionLogs.LogException(loginUser, ex, "Report Data", DataUtils.GetCommandTextSql(command));
-                    throw;
-                }
-                connection.Close();
-            }
-
-            if (!includeHiddenFields) table.Columns.Remove("RowNum");
-
-            return table;
-        }
-
-        //For Exports
-        private static DataTable GetReportTablePageForExports(LoginUser loginUser, Report report, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
-        {
-            
-            SqlCommand command = new SqlCommand();
-            string query = string.Empty;
-
-            if (string.IsNullOrWhiteSpace(sortField))
-            {
-                sortField = GetReportColumnNames(loginUser, report.ReportID)[0];
-                isDesc = false;
-            }
-
-            if (includeHiddenFields && report.ReportSubcategoryID == 70)
-            {
-                switch (sortField)
-                {
-                    case "Severity":
-                        sortField = "hiddenSeverityPosition";
-                        break;
-                    case "Status":
-                        sortField = "hiddenStatusPosition";
-                        break;
-                }
-            }          
-
-            if (report.ReportDefType != ReportType.Custom)
-            {
-                report.GetCommandForExports(command, includeHiddenFields, false, useUserFilter, sortField, isDesc ? "DESC" : "ASC");
-            }
-            else
-            {
-               report.GetCommandForExports(command, includeHiddenFields, false, useUserFilter);
-            }
-
-            report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
-            report.Collection.Save();
-            FixCommandParameters(command);
-
-            DataTable table = new DataTable();
-            using (SqlConnection connection = new SqlConnection(loginUser.ConnectionString))
-            {
-                connection.Open();
-                SqlTransaction transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted);
-
-                command.Connection = connection;
-                command.Transaction = transaction;
-                try
-                {
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        adapter.Fill(table);
-                    }
-                    transaction.Commit();
-                    table = DataUtils.DecodeDataTable(table);
-                    table = DataUtils.StripHtmlDataTable(table);
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    ExceptionLogs.LogException(loginUser, ex, "Report Data", DataUtils.GetCommandTextSql(command));
-                    throw;
-                }
-                connection.Close();
-            }
-
-            //On exports it is always false
-            //if (!includeHiddenFields) 
-            if (table.Columns.Contains("RowNum"))
-                table.Columns.Remove("RowNum");
-
-            return table;
-        }
-        private static GridResult GetReportDataAll(LoginUser loginUser, Report report, string sortField, bool isDesc, bool useUserFilter)
-        {
-            DataTable table = GetReportTableAll(loginUser, report, sortField, isDesc, useUserFilter, true);
-
-            GridResult result = new GridResult();
-            result.From = 0;
-            result.To = table.Rows.Count - 1;
-            result.Total = table.Rows.Count;
-            result.Data = table;
-            return result;
-        }
-
-        private static DataTable GetReportTableAll(LoginUser loginUser, Report report, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
-        {
-            SqlCommand command = new SqlCommand();
-
-            report.GetCommand(command, includeHiddenFields, false, useUserFilter);
-            if (command.CommandText.ToLower().IndexOf(" order by ") < 0)
-            {
-                if (string.IsNullOrWhiteSpace(sortField))
-                {
-                    sortField = GetReportColumnNames(loginUser, report.ReportID)[0];
-                    isDesc = false;
-                }
-                command.CommandText = command.CommandText + " ORDER BY [" + sortField + (isDesc ? "] DESC" : "] ASC");
-            }
-
-            report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
-            report.Collection.Save();
-            FixCommandParameters(command);
-
-            DataTable table = new DataTable();
-            using (SqlConnection connection = new SqlConnection(loginUser.ConnectionString))
-            {
-                connection.Open();
-                command.Connection = connection;
-                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                {
-                    try
-                    {
-                        adapter.Fill(table);
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionLogs.LogException(loginUser, ex, "Report Data");
-                        throw;
-                    }
-                }
-                connection.Close();
-            }
-            return table;
-        }
-
-        private static DataTable GetReportTableAllForExports(LoginUser loginUser, Report report, string sortField, bool isDesc, bool useUserFilter, bool includeHiddenFields)
-        {
-            SqlCommand command = new SqlCommand();
-
-            report.GetCommandForExports(command, includeHiddenFields, false, useUserFilter);
-            if (command.CommandText.ToLower().IndexOf(" order by ") < 0)
-            {
-                if (string.IsNullOrWhiteSpace(sortField))
-                {
-                    sortField = GetReportColumnNames(loginUser, report.ReportID)[0];
-                    isDesc = false;
-                }
-                command.CommandText = command.CommandText + " ORDER BY [" + sortField + (isDesc ? "] DESC" : "] ASC");
-            }
-
-            report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
-            report.Collection.Save();
-            FixCommandParameters(command);
-
-            DataTable table = new DataTable();
-            using (SqlConnection connection = new SqlConnection(loginUser.ConnectionString))
-            {
-                connection.Open();
-                command.Connection = connection;
-                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                {
-                    try
-                    {
-                        adapter.Fill(table);
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionLogs.LogException(loginUser, ex, "Report Data");
-                        throw;
-                    }
-                }
-                connection.Close();
-            }
-            return table;
-        }
-
-        public static DataTable GetSummaryData(LoginUser loginUser, SummaryReport summaryReport, bool useDefaultOrderBy, Report report = null)
-        {
-            SqlCommand command = new SqlCommand();
-            SummaryReportSql.GetSummaryCommand(loginUser, command, summaryReport, false, false, useDefaultOrderBy);
-            FixCommandParameters(command);
-            if (report != null)
-            {
-                report.LastSqlExecuted = DataUtils.GetCommandTextSql(command);
-                report.Collection.Save();
-            }
-
-            DataTable table = new DataTable();
-            using (SqlConnection connection = new SqlConnection(loginUser.ConnectionString))
-            {
-                connection.Open();
-                command.Connection = connection;
-                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                {
-                    try
-                    {
-                        adapter.Fill(table);
-                    }
-                    catch (Exception ex)
-                    {
-                        ExceptionLogs.LogException(loginUser, ex, "GetSummaryData");
-                        throw;
-                    }
-                }
-                connection.Close();
-            }
-            return table;
+            return report.GetReportTableForExports(loginUser, sortField, isDesc, useUserFilter, includeHiddenFields);
         }
 
         public static string[] GetReportColumnNames(LoginUser loginUser, int reportID)
@@ -2110,100 +1699,6 @@ IF @@ROWCOUNT=0
             reportView.Collection.Save();
         }
 
-        public static string BuildChartData(LoginUser loginUser, DataTable table, SummaryReport summaryReport)
-        {
-            DataResult[] result = new DataResult[table.Columns.Count];
-
-            for (int i = 0; i < table.Columns.Count; i++)
-            {
-                result[i] = new DataResult();
-                result[i].name = table.Columns[i].ColumnName;
-                result[i].data = new object[table.Rows.Count];
-
-                for (int j = 0; j < table.Rows.Count; j++)
-                {
-                    object data = table.Rows[j][i];
-                    result[i].data[j] = data == null || data == DBNull.Value ? null : data;
-                }
-
-                if (i < summaryReport.Fields.Descriptive.Length)
-                {
-                    result[i].fieldType = summaryReport.Fields.Descriptive[i].Field.FieldType;
-                    result[i].format = summaryReport.Fields.Descriptive[i].Value1;
-                    if (result[i].fieldType == "datetime") FixChartDateNames(loginUser, result[i].data, summaryReport.Fields.Descriptive[i].Value1);
-                }
-
-
-            }
-
-            return JsonConvert.SerializeObject(result);
-        }
-
-        public static void FixChartDateNames(LoginUser loginUser, object[] list, string dateType)
-        {
-            try
-            {
-                DateTime baseDate = new DateTime(1970, 1, 1);
-                for (int i = 0; i < list.Length; i++)
-                {
-                    if (string.IsNullOrWhiteSpace((string)list[i])) continue;
-                    string item = ((string)list[i]).Trim().ToLower();
-
-
-                    if (dateType == "qtryear" || dateType == "monthyear" || dateType == "weekyear")
-                    {
-                        string[] items = item.Split('-');
-                        if (items.Length == 2)
-                        {
-                            string year = items[0];
-                            string value = items[1];
-
-                            switch (dateType)
-                            {
-                                case "qtryear": list[i] = string.Format("{1} - Q{0}", value, year); break;
-                                case "monthyear":
-                                    list[i] =
-                    string.Format("{1} {0}", loginUser.CultureInfo.DateTimeFormat.GetAbbreviatedMonthName(int.Parse(value)), year);
-                                    break;
-                                case "weekyear": list[i] = string.Format("{1}-{0}", value, year); break;
-                                default:
-                                    break;
-                            }
-                        }
-
-
-                    }
-                    else if (dateType == "qtr")
-                    {
-                        list[i] = "Q" + item;
-                    }
-                    else if (dateType == "month")
-                    {
-                        list[i] = loginUser.CultureInfo.DateTimeFormat.GetMonthName(int.Parse(item));
-                    }
-                    else if (dateType == "dayweek")
-                    {
-                        list[i] = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName((DayOfWeek)(int.Parse(item) - 1));
-                    }
-                    else if (dateType == "date")
-                    {
-
-                        DateTime d = DateTime.SpecifyKind(DateTime.Parse(item), DateTimeKind.Utc);
-                        list[i] = new TimeSpan(d.Ticks - baseDate.Ticks).TotalMilliseconds.ToString();
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-
-            }
-
-        }
 
     }
 

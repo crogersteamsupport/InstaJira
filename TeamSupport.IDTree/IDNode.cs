@@ -43,9 +43,10 @@ namespace TeamSupport.IDTree
             if (Debugger.IsAttached)
             {
                 Debug.WriteLine(query);   // see the failed query in the debug output window
-                Debugger.Break();   // ID is wrong - fix the code!
+                // TODO - TA-1461
+                //Debugger.Break();   // ID is wrong - fix the code!
             }
-            throw new System.Data.ConstraintException(String.Format($"{query} not found")); // error - a join of the records to authentication just doesn't add up
+            //throw new System.Data.ConstraintException(String.Format($"{query} not found")); // error - a join of the records to authentication just doesn't add up
         }
 
 

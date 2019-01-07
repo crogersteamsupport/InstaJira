@@ -11,9 +11,15 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 {
     class UserRights
     {
-        public static void UseTicketRights(LoginUser loginUser, int subCAtID, ReportTables tables, SqlCommand command, StringBuilder builder)
+        public LoginUser _loginUser { get; private set; }
+        public UserRights(LoginUser loginUser)
         {
-            ReportSubcategory subCat = ReportSubcategories.GetReportSubcategory(loginUser, subCAtID);
+            _loginUser = loginUser;
+        }
+
+        public void UseTicketRights(int subCAtID, ReportTables tables, SqlCommand command, StringBuilder builder)
+        {
+            ReportSubcategory subCat = ReportSubcategories.GetReportSubcategory(_loginUser, subCAtID);
 
             if (subCat != null)
             {
@@ -21,12 +27,12 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
                 if (catTable.UseTicketRights)
                 {
-                    GetUserRightsClause(loginUser, command, builder, catTable.TableName);
+                    GetUserRightsClause(command, builder, catTable.TableName);
                     return;
                 }
                 else if (catTable.ReportTableID == 6)
                 {
-                    GetCustomerUserRightsClause(loginUser, command, builder, catTable.TableName);
+                    GetCustomerUserRightsClause(command, builder, catTable.TableName);
                 }
 
                 if (subCat.ReportTableID != null)
@@ -35,22 +41,22 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
                     if (reportTable.UseTicketRights)
                     {
-                        GetUserRightsClause(loginUser, command, builder, reportTable.TableName);
+                        GetUserRightsClause(command, builder, reportTable.TableName);
                         return;
                     }
                     else if (reportTable.ReportTableID == 6)
                     {
-                        GetCustomerUserRightsClause(loginUser, command, builder, reportTable.TableName);
+                        GetCustomerUserRightsClause(command, builder, reportTable.TableName);
                     }
                 }
             }
         }
 
-        private static void GetUserRightsClause(LoginUser loginUser, SqlCommand command, StringBuilder builder, string mainTableName)
+        private void GetUserRightsClause(SqlCommand command, StringBuilder builder, string mainTableName)
         {
             string rightsClause = "";
 
-            User user = Users.GetUser(loginUser, loginUser.UserID);
+            User user = Users.GetUser(_loginUser, _loginUser.UserID);
             switch (user.TicketRights)
             {
                 case TicketRightType.All:
@@ -68,8 +74,8 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 		                                OR (t.UserID IS NULL AND t.GroupID IS NULL))
 	                                ))";
 
-                    Groups groups = new Groups(loginUser);
-                    groups.LoadByUserID(loginUser.UserID);
+                    Groups groups = new Groups(_loginUser);
+                    groups.LoadByUserID(_loginUser.UserID);
 
                     string groupString = groups.Count < 1 ? "" : string.Format("(t.GroupID IN ({0})) OR ", DataUtils.IntArrayToCommaString(groups.Select(gr => gr.GroupID).ToArray()));
 
@@ -88,8 +94,8 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                     break;
             }
 
-            Organizations organization = new Organizations(loginUser);
-            organization.LoadByOrganizationID(loginUser.OrganizationID);
+            Organizations organization = new Organizations(_loginUser);
+            organization.LoadByOrganizationID(_loginUser.OrganizationID);
             if (organization.Count > 0 && organization[0].UseProductFamilies)
             {
                 switch ((ProductFamiliesRightType)user.ProductFamiliesRights)
@@ -121,7 +127,7 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
                     ) 
                     OR {0}.UserID = @UserID
                   )";
-                        builder.Append(string.Format(rightsClause, mainTableName, loginUser.OrganizationID));
+                        builder.Append(string.Format(rightsClause, mainTableName, _loginUser.OrganizationID));
                         break;
                     default:
                         break;
@@ -129,11 +135,11 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             }
         }
 
-        private static void GetCustomerUserRightsClause(LoginUser loginUser, SqlCommand command, StringBuilder builder, string mainTableName)
+        private void GetCustomerUserRightsClause(SqlCommand command, StringBuilder builder, string mainTableName)
         {
             string rightsClause = "";
 
-            User user = Users.GetUser(loginUser, loginUser.UserID);
+            User user = Users.GetUser(_loginUser, _loginUser.UserID);
 
             if (user.TicketRights == TicketRightType.Customers)
             {

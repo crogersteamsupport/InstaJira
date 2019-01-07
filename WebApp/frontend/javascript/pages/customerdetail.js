@@ -4213,10 +4213,8 @@ var getUrls = function (input) {
     var url;
     var matchArray;
     var result = '';
-
-    // Regular expression to find FTP, HTTP(S) and email URLs. Updated to include urls without http
-    var regexToken = /(((ftp|https?|www):?\/?\/?)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
-
+    // Regular expression to find FTP, HTTP(S). Updated to include urls without http
+    var regexToken = /(((ftp|https?|www):?\/?\/?)[\-\w@:%_\+.~#?,&\/\/=]+)/g;
     // Iterate through any URLs in the text.
     while ((matchArray = regexToken.exec(source)) !== null) {
         url = matchArray[0];
@@ -4225,7 +4223,6 @@ var getUrls = function (input) {
         }
         result = result + '<a target="_blank" class="valueLink" href="' + url + '" title="' + matchArray[0] + '">' + matchArray[0] + '</a>'
     }
-
     return result == '' ? input : result;
 }
 

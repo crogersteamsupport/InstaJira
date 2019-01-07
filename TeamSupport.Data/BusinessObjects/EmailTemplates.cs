@@ -154,7 +154,7 @@ namespace TeamSupport.Data
                     string Title = (MatchTitle.Success) ? MatchTitle.Groups[1].Value : null;
                     Deflection = EmailTemplates.GenerateEmailDeflectionTemplate(DeflectionResults, Title);
                 } else {
-                    Deflection = null;
+                    Deflection = " ";
                 }
                 Body = Regex.Replace(Body, "{{Deflector(.+?)?}}", Deflection, RegexOptions.IgnoreCase);
             }
@@ -162,7 +162,7 @@ namespace TeamSupport.Data
         }
 
         private static string Exclusions (string phrase) {
-            return Regex.Replace(phrase, "<(.+?)?exclude>.*?</(.+?)?>", "", RegexOptions.IgnoreCase);
+            return Regex.Replace(phrase, "<i(.+?)?exclude(.+?)?>.*?</i>", "", RegexOptions.IgnoreCase);
         }
 
         private static string StripHTML(string html) {

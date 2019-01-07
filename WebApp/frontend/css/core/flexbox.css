@@ -104,11 +104,11 @@ div.flexbox .flex.basis40 {
     -webkit-flex-basis:40px;
 }
 div.flexbox .flex.basis50 {
-    flex:0 0 40px;
+    flex:0 0 50px;
     flex-grow:0;
     flex-shrink:0;
-    flex-basis:40px !important;
-    -webkit-flex-basis:40px;
+    flex-basis:50px !important;
+    -webkit-flex-basis:50px;
 }
 div.flexbox .flex.basis60 {
     flex:0 0 60px;
@@ -116,6 +116,27 @@ div.flexbox .flex.basis60 {
     flex-shrink:0;
     flex-basis:60px !important;
     -webkit-flex-basis:60px;
+}
+div.flexbox .flex.basis70 {
+    flex:0 0 70px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:70px !important;
+    -webkit-flex-basis:70px;
+}
+div.flexbox .flex.basis80 {
+    flex:0 0 80px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:80px !important;
+    -webkit-flex-basis:80px;
+}
+div.flexbox .flex.basis90 {
+    flex:0 0 90px;
+    flex-grow:0;
+    flex-shrink:0;
+    flex-basis:90px !important;
+    -webkit-flex-basis:90px;
 }
 div.flexbox .flex.basis100 {
     flex:0 0 100px;
@@ -128,7 +149,7 @@ div.flexbox .flex.basis120 {
     flex:0 0 120px;
     flex-grow:0;
     flex-shrink:0;
-    flex-basis:100px !important;
+    flex-basis:120px !important;
     -webkit-flex-basis:120px;
 }
 div.flexbox .flex.basis150 {
@@ -146,7 +167,7 @@ div.flexbox .flex.basis200 {
     -webkit-flex-basis:200px;
 }
 div.flexbox .flex.basis250 {
-    flex:0 0 200px;
+    flex:0 0 250px;
     flex-grow:0;
     flex-shrink:0;
     flex-basis:250px !important;
