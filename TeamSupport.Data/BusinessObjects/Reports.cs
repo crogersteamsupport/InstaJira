@@ -481,7 +481,9 @@ namespace TeamSupport.Data
                 switch (condition.Comparator)
                 {
                     case "IS":
-                        creatorID = db.ExecuteQuery<int>($"Select UserID FROM Users WHERE OrganizationID = {loginUser.OrganizationID} AND (FirstName + ' ' + LastName) = '{condition.Value1}'").Min();
+                        int[] creatorIDs = db.ExecuteQuery<int>($"Select UserID FROM Users WHERE OrganizationID = {loginUser.OrganizationID} AND (FirstName + ' ' + LastName) = '{condition.Value1}'").ToArray();
+                        if (creatorIDs.Length == 1)
+                            creatorID = creatorIDs[0];
                         break;
                     default:
                         if (Debugger.IsAttached) Debugger.Break();
