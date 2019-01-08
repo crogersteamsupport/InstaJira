@@ -264,44 +264,27 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
             if (includeHiddenFields)
             {
                 ReportTable hiddenTable = tables.FindByReportTableID(sub.ReportCategoryTableID);
-                if (!string.IsNullOrWhiteSpace(hiddenTable.LookupKeyFieldName))
-                {
-                    builder.Append(string.Format(", {1}.{0} AS [hidden{0}]", hiddenTable.LookupKeyFieldName, hiddenTable.TableName));
-                }
+                AppendField(builder, hiddenTable.TableName, hiddenTable.LookupKeyFieldName, sortField);
 
                 if (sub.ReportTableID != null)
                 {
                     hiddenTable = tables.FindByReportTableID((int)sub.ReportTableID);
-                    if (!string.IsNullOrWhiteSpace(hiddenTable.LookupKeyFieldName))
-                        builder.Append(string.Format(", {1}.{0} AS [hidden{0}]", hiddenTable.LookupKeyFieldName, hiddenTable.TableName));
+                    AppendField(builder, hiddenTable.TableName, hiddenTable.LookupKeyFieldName, sortField);
                 }
 
                 if (tabularReport.Subcategory == 70)
                 {
-                    string dueDateField = hiddenTable.TableName + ".DueDate";
-                    dueDateField = string.Format("CAST(SWITCHOFFSET(TODATETIMEOFFSET({0}, '+00:00'), '{1}{2:D2}:{3:D2}') AS DATETIME)",
-                    dueDateField,
-                    offset < TimeSpan.Zero ? "-" : "+",
-                    Math.Abs(offset.Hours),
-                    Math.Abs(offset.Minutes));
-                    builder.Append(string.Format(", {0} AS [hiddenDueDate]", dueDateField));
+                    offset = AppendDateField(builder, offset, sortField, hiddenTable, "DueDate");
+                    offset = AppendDateField(builder, offset, sortField, hiddenTable, "DateModified");
 
-                    string dateModifiedField = hiddenTable.TableName + ".DateModified";
-                    dateModifiedField = string.Format("CAST(SWITCHOFFSET(TODATETIMEOFFSET({0}, '+00:00'), '{1}{2:D2}:{3:D2}') AS DATETIME)",
-                    dateModifiedField,
-                    offset < TimeSpan.Zero ? "-" : "+",
-                    Math.Abs(offset.Hours),
-                    Math.Abs(offset.Minutes));
-                    builder.Append(string.Format(", {0} AS [hiddenDateModified]", dateModifiedField));
-
-                    builder.Append(string.Format(", {1}.{0} AS [hidden{0}]", "SlaWarningTime", hiddenTable.TableName));
-                    builder.Append(string.Format(", {1}.{0} AS [hidden{0}]", "SlaViolationTime", hiddenTable.TableName));
-                    builder.Append(string.Format(", {1}.{0} AS [hidden{0}]", "IsRead", hiddenTable.TableName));
-                    builder.Append(string.Format(", {1}.{0} AS [hidden{0}]", "IsClosed", hiddenTable.TableName));
-                    builder.Append(string.Format(", {1}.{0} AS [hidden{0}]", "TicketTypeID", hiddenTable.TableName));
-                    builder.Append(string.Format(", {1}.{0} AS [hidden{0}]", "UserID", hiddenTable.TableName));
-                    builder.Append(string.Format(", {1}.{0} AS [hidden{0}]", "SeverityPosition", hiddenTable.TableName));
-                    builder.Append(string.Format(", {1}.{0} AS [hidden{0}]", "StatusPosition", hiddenTable.TableName));
+                    AppendField(builder, hiddenTable.TableName, "SlaWarningTime", sortField);
+                    AppendField(builder, hiddenTable.TableName, "SlaViolationTime", sortField);
+                    AppendField(builder, hiddenTable.TableName, "IsRead", sortField);
+                    AppendField(builder, hiddenTable.TableName, "IsClosed", sortField);
+                    AppendField(builder, hiddenTable.TableName, "TicketTypeID", sortField);
+                    AppendField(builder, hiddenTable.TableName, "UserID", sortField);
+                    AppendField(builder, hiddenTable.TableName, "SeverityPosition", sortField);
+                    AppendField(builder, hiddenTable.TableName, "StatusPosition", sortField);
                 }
 
             }
@@ -321,7 +304,33 @@ namespace TeamSupport.Data.BusinessObjects.Reporting
 
             if (isSchemaOnly) builder.Append(" AND (0=1)");
         }
-        
+
+        private static TimeSpan AppendDateField(StringBuilder builder, TimeSpan offset, string sortField, ReportTable hiddenTable, string fieldName)
+        {
+            string dueDateField = hiddenTable.TableName + "." + fieldName;
+            dueDateField = string.Format("CAST(SWITCHOFFSET(TODATETIMEOFFSET({0}, '+00:00'), '{1}{2:D2}:{3:D2}') AS DATETIME)",
+                dueDateField,
+                offset < TimeSpan.Zero ? "-" : "+",
+                Math.Abs(offset.Hours),
+                Math.Abs(offset.Minutes));
+            AppendField(builder, hiddenTable.TableName, fieldName, sortField, dueDateField);
+            return offset;
+        }
+
+        private static void AppendField(StringBuilder builder, string tableName, string fieldName, string sortField, string dboField = "")
+        {
+            if (string.IsNullOrWhiteSpace(fieldName))
+                return;
+
+            string hiddenFieldName = "hidden" + fieldName;
+            if (String.IsNullOrEmpty(dboField))
+                dboField = $"{tableName}.{fieldName}";
+            builder.Append($", {dboField} AS [{hiddenFieldName}]");
+
+            if (hiddenFieldName.Equals(sortField))
+                builder.Append($", ROW_NUMBER() OVER (ORDER BY {tableName}.{fieldName}) AS [RowNum]");
+        }
+
         private static void GetWhereClauseForExport(LoginUser loginUser, SqlCommand command, StringBuilder builder, ReportFilter[] filters, string primaryTableKeyName = null)
         {
             if (filters != null) WriteFiltersForExports(loginUser, command, builder, filters, null, primaryTableKeyName);

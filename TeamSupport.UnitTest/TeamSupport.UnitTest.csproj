@@ -69,6 +69,7 @@
     <Compile Include="ProxyTest.cs" />
     <Compile Include="TicketSortTest.cs" />
     <Compile Include="ReportTest.cs" />
+    <Compile Include="TickTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

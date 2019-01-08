@@ -15,6 +15,20 @@ namespace TeamSupport.UnitTest
         public static string _connectionString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString;
 
         [TestMethod]
+        public void UpdateActionCopyingAttachment()
+        {
+            string userData = _userScot;
+            AuthenticationModel authentication = AuthenticationModel.AuthenticationModelTest(userData, _connectionString);
+            using (ConnectionContext connection = new ConnectionContext(authentication))
+            {
+                int actionID = 58290070;
+                int insertedKBTicketID = 19770659;
+                AttachmentAPI.CopyInsertedKBAttachments(connection, actionID, insertedKBTicketID);
+            }
+
+        }
+
+        [TestMethod]
         public void ActionAttachments()
         {
             string userData = _userScot;

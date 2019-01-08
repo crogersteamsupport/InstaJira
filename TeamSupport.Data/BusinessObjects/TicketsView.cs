@@ -1211,7 +1211,7 @@ WHERE ot.OrganizationID = @OrganizationID {0}";
             return command;
 
         }
-
+           public static bool enable { get; set; }
         public static SqlCommand GetLoadRangeCommand(LoginUser loginUser, int from, int to, TicketLoadFilter filter)
         {
             SqlCommand command = new SqlCommand();
@@ -1305,7 +1305,13 @@ WHERE ot.OrganizationID = @OrganizationID {0}";
         ,tv.DueDate
         ,tv.ProductFamilyID";
             StringBuilder where = new StringBuilder();
+
+    enable = true;
+    if(enable)
+            GetFilterWhereClauseTicketView(loginUser, filter, command, where);
+    else
             GetFilterWhereClause(loginUser, filter, command, where);
+
 
             string query = @"
 
@@ -1359,6 +1365,11 @@ WHERE ot.OrganizationID = @OrganizationID {0}";
         {
             builder.Append(" FROM UserTicketsView tv ");
 
+            GetFilterWhereClauseHelper(loginUser, filter, command, builder);
+        }
+
+        private static void GetFilterWhereClauseHelper(LoginUser loginUser, TicketLoadFilter filter, SqlCommand command, StringBuilder builder)
+        {
             if (filter.UserID != null && filter.GroupID != null && (filter.GroupID == -1 || filter.GroupID == -2))
             {
                 builder.Append(" INNER JOIN GroupUsers gu ON tv.GroupID = gu.GroupID");
@@ -1587,6 +1598,841 @@ WHERE ot.OrganizationID = @OrganizationID {0}";
                 }
             }
         }
+
+        private static void GetFilterWhereClauseTicketView(LoginUser loginUser, TicketLoadFilter filter, SqlCommand command, StringBuilder builder)
+        {
+            // builder.Append(" FROM UserTicketsView tv ");
+            string baseQuery = getBaseQuery(filter);
+
+            string sort = filter.SortColumn.Trim();
+            string sortFields = "";
+            string joins = "";
+            switch (sort)
+            {
+                case "Severity":
+                    sortFields = ",tse.Position AS SeverityPosition";
+                    if (filter.IsClosed == null && filter.ProductID == null && filter.ProductVersionID == null && filter.TicketTypeID == null && filter.ForumCategoryID == null)
+                        joins = @"LEFT OUTER JOIN dbo.TicketStatuses AS ts  WITH(NOLOCK) ON ts.TicketStatusID = t.TicketStatusID
+LEFT OUTER JOIN dbo.TicketSeverities AS tse  WITH(NOLOCK) ON tse.TicketSeverityID = t.TicketSeverityID";
+                    else
+                        joins = @"LEFT OUTER JOIN dbo.TicketSeverities AS tse  WITH(NOLOCK) ON tse.TicketSeverityID = t.TicketSeverityID";
+                    break;
+                case "Status":
+                    sortFields = ",ts.Name AS STATUS, ts.Position AS StatusPosition, tt.Name AS TicketTypeName";
+                    if (filter.IsClosed == null && filter.ProductID == null && filter.ProductVersionID == null && filter.TicketTypeID == null && filter.ForumCategoryID == null)
+                        joins = @"LEFT OUTER JOIN dbo.TicketStatuses AS ts  WITH(NOLOCK) ON ts.TicketStatusID = t.TicketStatusID
+                                  LEFT OUTER JOIN dbo.TicketTypes AS tt WITH(NOLOCK) ON tt.TicketTypeID = t.TicketTypeID";
+                    else
+                        if(filter.TicketTypeID == null)
+                            joins = "LEFT OUTER JOIN dbo.TicketTypes AS tt WITH(NOLOCK) ON tt.TicketTypeID = t.TicketTypeID ";
+                    break;
+                case "TicketTypeName":
+                    sortFields = ",tt.Name AS TicketTypeName";
+                    if(filter.TicketTypeID == null)
+                        joins = "LEFT OUTER JOIN dbo.TicketTypes AS tt WITH(NOLOCK) ON tt.TicketTypeID = t.TicketTypeID";
+                    break;
+                case "DaysOpened":
+                    sortFields = @",CASE WHEN t.DateClosed IS NOT NULL THEN FLOOR(datediff(hh, t.datecreated, t.dateclosed) / 24) 
+ELSE FLOOR(datediff(hh, t.DateCreated, GETUTCDATE()) / 24)
+END AS DaysOpened";
+                    break;
+                case "TicketNumber":
+                case "Name":
+                case "DueDate":
+                case "TicketSource":
+                case "DateCreated":
+                case "DateModified":
+                    sortFields = ",t.TicketNumber, t.Name, T.DueDate,ISNULL(t.TicketSource, 'Agent') AS TicketSource, t.DateCreated, t.DateModified";
+                    break;
+                case "UserName":
+                    sortFields = ",u2.FirstName + ' ' + u2.LastName AS UserName";
+                    joins = "LEFT JOIN Users U2 WITH(NOLOCK) on U2.UserID = t.Userid";
+                    break;
+                case "Contacts":
+                    sortFields = ",dbo.GetTicketContacts(t.TicketID) AS Contacts";
+                    break;
+                case "Customers":
+                    sortFields = ",dbo.GetTicketCustomers(t.TicketID) AS Customers";
+                    break;
+                case "GroupName":
+                    sortFields = ",g.Name AS GroupName";
+                    joins = "LEFT OUTER JOIN dbo.Groups AS g ON g.GroupID = t.GroupID";
+                    break;
+                case "ProductName":
+                    sortFields = ",p.Name as ProductName";
+                    if (filter.ProductID == null)
+                        joins = @"LEFT JOIN Products p WITH(NOLOCK) ON p.ProductID = t.ProductID";
+                    break;
+                case "ReportedVersion":
+                        sortFields = ",pv1.VersionNumber AS ReportedVersion";
+                        joins = @"LEFT OUTER JOIN dbo.ProductVersions AS pv1  WITH(NOLOCK) ON pv1.ProductVersionID = t.ReportedVersionID";               
+                    break;
+                case "SolvedVersion":
+                        sortFields = ",pv2.VersionNumber AS SolvedVersion";
+                        joins = "LEFT OUTER JOIN dbo.ProductVersions AS pv2  WITH(NOLOCK) ON pv2.ProductVersionID = t.SolvedVersionID";                    
+                    break;
+                case "CategoryName":
+                    sortFields = ",fc.CategoryName";
+                    if (filter.ForumCategoryID == null)
+                        joins = @"LEFT OUTER JOIN dbo.ForumTickets AS ft ON ft.TicketID = t.TicketID
+                            LEFT OUTER JOIN dbo.ForumCategories AS fc ON fc.CategoryID = ft.ForumCategory";
+                    else
+                        joins = "LEFT OUTER JOIN dbo.ForumCategories AS fc ON fc.CategoryID = ft.ForumCategory";
+                    break;
+                case "CloserName":
+                    sortFields = ",u2.FirstName + ' ' + u2.LastName AS CloserName";
+                    joins = "LEFT OUTER JOIN dbo.Users AS u2 WITH(NOLOCK) ON u2.UserID = t.CloserID";
+                    break;
+                case "SlaViolationTime":
+                    sortFields = ",DATEDIFF(mi, GETUTCDATE(), dbo.GetMinViolationDate(t.SlaViolationTimeClosed, t.SlaViolationLastAction, t.SlaViolationInitialResponse)) AS SlaViolationTime";
+                    break;
+                case "IsFlagged":
+                    if (filter.IsFlagged == null)
+                    {
+                        sortFields = ",CAST(ISNULL(dbo.UserTicketStatuses.IsFlagged, 0) AS Bit) AS IsFlagged";
+                        joins = "LEFT OUTER JOIN dbo.UserTicketStatuses WITH(NOLOCK) ON dbo.UserTicketStatuses.UserID = U.UserID AND dbo.UserTicketStatuses.TicketID = t.TicketID";
+                    }
+                    break;
+                case "IsSubscribed":
+                    if (filter.IsSubscribed == null)
+                    {
+                        sortFields = ",CAST(CASE WHEN Subscriptions.RefID IS NOT NULL THEN 1 ELSE 0 END AS BIT) AS IsSubscribed";
+                        joins = "LEFT OUTER JOIN dbo.Subscriptions WITH(NOLOCK) ON dbo.Subscriptions.UserID = U.UserID AND dbo.Subscriptions.RefID = t.TicketID AND dbo.Subscriptions.RefType = 17";
+                    }
+                    break;
+                case "IsEnqueued":
+                    if (filter.IsEnqueued == null)
+                    {
+                        sortFields = ",CAST(CASE WHEN TicketQueue.TicketQueueID IS NOT NULL THEN 1 ELSE 0 END AS Bit) AS IsEnqueued";
+                        joins = "LEFT OUTER JOIN dbo.TicketQueue WITH(NOLOCK) ON dbo.TicketQueue.UserID = U.UserID AND dbo.TicketQueue.TicketID = t.TicketID";
+                    }
+                    break;
+                case "IsRead":
+                    sortFields = @",CAST(CASE WHEN(dbo.UserTicketStatuses.DateRead IS NOT NULL AND UserTicketStatuses.DateRead >= t.DateModified)
+OR(t.ModifierID = U.UserID AND DATEDIFF(YEAR, UserTicketStatuses.DateRead, GETUTCDATE()) < 5) THEN 1 ELSE 0 END AS Bit) AS IsRead";
+                    joins = "LEFT OUTER JOIN dbo.UserTicketStatuses  WITH(NOLOCK) ON dbo.UserTicketStatuses.UserID = U.UserID AND dbo.UserTicketStatuses.TicketID = t.TicketID";
+                    break;
+                case "IsClosed":                    
+                if (filter.IsClosed == null && filter.ProductID == null && filter.ProductVersionID == null && filter.TicketTypeID == null && filter.ForumCategoryID == null)
+                    { 
+                        sortFields = ",ISNULL(ts.IsClosed, 0) AS IsClosed";
+                        joins = @"LEFT OUTER JOIN dbo.TicketStatuses AS ts WITH(NOLOCK) ON ts.TicketStatusID = t.TicketStatusID";
+                    }
+                   
+                    break;
+
+                default:
+
+                    break;
+            }
+
+           
+            baseQuery = string.Format(baseQuery, sortFields, joins);
+            builder.Append(baseQuery);
+
+            
+            GetFilterWhereClauseHelper(loginUser, filter, command, builder);
+        }
+
+        private static string getBaseQuery(TicketLoadFilter filter)
+        {
+           string baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, t.UserID, t.GroupID, t.IsKnowledgeBase {0}
+FROM  Tickets t WITH(NOLOCK)
+LEFT JOIN Users U WITH(NOLOCK) ON U.OrganizationID = t.OrganizationID
+{1}
+)
+as tv";
+        if(filter.IsClosed != null )
+            baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, t.UserID, ISNULL(ts.IsClosed, 0) AS IsClosed, t.GroupID,t.IsKnowledgeBase {0}
+FROM  Tickets t WITH(NOLOCK)
+LEFT JOIN Users U WITH(NOLOCK) ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.TicketStatuses AS ts WITH(NOLOCK) ON ts.TicketStatusID = t.TicketStatusID
+{1}
+)
+as tv";
+
+        if (filter.IsSubscribed != null)
+            baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, t.UserID,CAST(CASE WHEN Subscriptions.RefID IS NOT NULL THEN 1 ELSE 0 END AS BIT) AS IsSubscribed, t.GroupID, t.IsKnowledgeBase{0}
+FROM  Tickets t WITH(NOLOCK)
+LEFT JOIN Users U WITH(NOLOCK) ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions WITH(NOLOCK) ON dbo.Subscriptions.UserID = U.UserID
+AND dbo.Subscriptions.RefID = t.TicketID
+AND dbo.Subscriptions.RefType = 17
+{1}
+)
+as tv";
+
+        if (filter.IsFlagged != null)
+            baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, CAST(ISNULL(dbo.UserTicketStatuses.IsFlagged, 0) AS Bit) AS IsFlagged, t.GroupID,t.IsKnowledgeBase,t.userid {0}
+FROM  Tickets t WITH(NOLOCK)
+LEFT JOIN Users U WITH(NOLOCK) ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.UserTicketStatuses  WITH(NOLOCK) ON dbo.UserTicketStatuses.UserID = U.UserID AND dbo.UserTicketStatuses.TicketID = t.TicketID
+{1}
+)
+as tv";
+
+        if (filter.IsEnqueued != null)
+            baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID ,CAST(CASE WHEN TicketQueue.TicketQueueID IS NOT NULL THEN 1 ELSE 0 END AS Bit) AS IsEnqueued, TicketQueue.Position AS QueuePosition, t.GroupID, t.IsKnowledgeBase,t.userid {0}
+FROM  Tickets t WITH(NOLOCK)
+LEFT JOIN Users U WITH(NOLOCK) ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.TicketQueue WITH(NOLOCK) ON dbo.TicketQueue.UserID = U.UserID AND dbo.TicketQueue.TicketID = t.TicketID
+{1}
+)
+as tv";
+        //Try to separate isClosed from this query
+        //This is for Products - Tickets Stockgrid (Open/Closed)
+        if (filter.ProductID != null )
+            baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, t.UserID, t.GroupID, t.IsKnowledgeBase,p.ProductID,ISNULL(ts.IsClosed, 0) AS IsClosed {0}
+FROM  Tickets t WITH(NOLOCK)
+LEFT JOIN Users U WITH(NOLOCK) ON U.OrganizationID = t.OrganizationID
+LEFT JOIN Products P WITH(NOLOCK) ON P.ProductID = t.ProductID
+LEFT OUTER JOIN dbo.TicketStatuses AS ts WITH(NOLOCK) ON ts.TicketStatusID = t.TicketStatusID
+{1}
+)
+as tv";
+            //Try to separate isClosed from this query
+            //This is for ProductVersion - Tickets Stockgrid (Open/Closed)
+            if (filter.ProductVersionID != null || filter.SolvedVersionID  != null || filter.ReportedVersionID != null)
+                baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, t.UserID, t.GroupID, t.IsKnowledgeBase,
+t.ReportedVersionID,t.SolvedVersionID,ISNULL(ts.IsClosed, 0) AS IsClosed  {0}
+FROM  Tickets t WITH(NOLOCK)
+LEFT JOIN Users U WITH(NOLOCK) ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.TicketStatuses AS ts WITH(NOLOCK) ON ts.TicketStatusID = t.TicketStatusID
+{1}
+)
+as tv";
+
+            if(filter.TicketTypeID != null)
+                baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, t.UserID, t.GroupID, t.IsKnowledgeBase,t.TicketTypeID,ISNULL(ts.IsClosed, 0) AS IsClosed {0}
+FROM  Tickets t WITH(NOLOCK)
+LEFT JOIN Users U WITH(NOLOCK) ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.TicketTypes AS tt WITH(NOLOCK) ON tt.TicketTypeID = t.TicketTypeID
+LEFT OUTER JOIN dbo.TicketStatuses AS ts  WITH(NOLOCK) ON ts.TicketStatusID = t.TicketStatusID
+{1}
+)
+as tv";
+
+            if (filter.ForumCategoryID != null)
+                baseQuery = @"FROM (SELECT t.TicketID, t.OrganizationID, U.userid as ViewerID, t.UserID, t.GroupID, t.IsKnowledgeBase,t.TicketTypeID,ISNULL(ts.IsClosed, 0) AS IsClosed, ft.ForumCategory {0}
+FROM  Tickets t WITH(NOLOCK)
+LEFT JOIN Users U WITH(NOLOCK) ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.TicketStatuses AS ts WITH(NOLOCK) ON ts.TicketStatusID = t.TicketStatusID
+LEFT OUTER JOIN dbo.ForumTickets AS ft WITH(NOLOCK) ON ft.TicketID = t.TicketID
+{1}
+)
+as tv";
+
+            return baseQuery;
+        }
+        private static string buildUserTicketsView(TicketLoadFilter filter)
+        {
+            string sort = filter.SortColumn.Trim();
+            string userticketview = "";
+            switch (sort)
+            {
+                case "Severity":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+,t.OrganizationID
+,t.DateModified
+,U.userid AS ViewerID
+,t.UserID
+,t.GroupID
+,tse.Position AS SeverityPosition
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM Tickets t
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID
+LEFT OUTER JOIN dbo.TicketSeverities AS tse ON tse.TicketSeverityID = t.TicketSeverityID) as tv";
+                    break;
+
+                case "Status":
+                case "TicketTypeName":
+                    userticketview= @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+,t.DateModified
+, U.userid AS ViewerID
+,t.UserID
+,t.GroupID
+, ts.Position AS StatusPosition
+, ts.Name AS STATUS
+, tt.Name AS TicketTypeName
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM Tickets t
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID
+LEFT OUTER JOIN dbo.TicketTypes AS tt ON tt.TicketTypeID = t.TicketTypeID) as tv";
+                    break;
+                case "DaysOpened":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,t.DateModified
+,CASE 
+		WHEN t.DateClosed IS NOT NULL
+			THEN FLOOR(datediff(hh, t.datecreated, t.dateclosed) / 24)
+		ELSE FLOOR(datediff(hh, t.DateCreated, GETUTCDATE()) / 24)
+		END AS DaysOpened
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID) 
+as tv";
+                break;
+
+                case "TicketNumber":
+                case "Name":
+                case "DueDate":
+                case "TicketSource":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,t.TicketNumber
+,t.Name
+,t.DueDate
+,t.DateModified
+,ISNULL(t.TicketSource, 'Agent') AS TicketSource
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID) 
+as tv";
+                    break;
+
+                case "UserName":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,t.TicketNumber
+,t.Name
+,u2.FirstName + ' ' + u2.LastName AS UserName
+,t.DateModified
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID 
+LEFT JOIN Users U2 on U2.UserID = t.Userid)
+as tv";
+                    break;
+                case "Contacts":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,t.DateModified
+,dbo.GetTicketContacts(t.TicketID) AS Contacts
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID) 
+as tv";
+                 break;
+
+                case "Customers":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,t.DateModified
+,dbo.GetTicketCustomers(t.TicketID) AS Customers
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID) 
+as tv";
+                    break;
+
+                case "GroupName":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,g.Name AS GroupName
+,t.DateModified
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Groups AS g ON g.GroupID = t.GroupID)
+as tv";
+                    break;
+                case "ProductName":
+                case "ReportedVersion":
+                case "SolvedVersion":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,pv1.VersionNumber AS ReportedVersion
+,pv2.VersionNumber AS SolvedVersion
+,p.Name as ProductName
+,t.DateModified
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT JOIN Product p ON p.TicketID= t.TicketId
+LEFT OUTER JOIN dbo.ProductVersions AS pv1 ON pv1.ProductVersionID = t.ReportedVersionID
+LEFT OUTER JOIN dbo.ProductVersions AS pv2 ON pv2.ProductVersionID = t.SolvedVersionID) 
+as tv";
+                    break;
+
+                case "CloserName":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,u2.FirstName + ' ' + u2.LastName AS CloserName
+,t.DateModified
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Users AS u2 ON u2.UserID = t.CloserID) 
+as tv";
+                    break;
+                case "SlaViolationTime":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,t.DateModified
+,DATEDIFF(mi, GETUTCDATE(), dbo.GetMinViolationDate(t.SlaViolationTimeClosed, t.SlaViolationLastAction, t.SlaViolationInitialResponse)) AS SlaViolationTime
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID)
+as tv";
+                    break;
+                case "IsFlagged":
+                    userticketview = @" FROM (SELECT t.TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,t.DateModified
+,DATEDIFF(mi, GETUTCDATE(), dbo.GetMinViolationDate(t.SlaViolationTimeClosed, t.SlaViolationLastAction, t.SlaViolationInitialResponse)) AS SlaViolationTime
+,CAST(ISNULL(dbo.UserTicketStatuses.IsFlagged, 0) AS Bit) AS IsFlagged
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID
+LEFT OUTER JOIN dbo.UserTicketStatuses ON dbo.UserTicketStatuses.UserID = U.UserID AND dbo.UserTicketStatuses.TicketID = t.TicketID) 
+as tv";
+                    break;                    
+
+                   case "IsSubscribed":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,t.DateModified
+,CAST(CASE
+WHEN Subscriptions.RefID IS NOT NULL
+THEN 1 ELSE 0
+END AS BIT) AS IsSubscribed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID) 
+as tv";
+                    break;
+                case "IsEnqueued":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,t.DateModified
+,CAST(CASE
+WHEN Subscriptions.RefID IS NOT NULL
+THEN 1 ELSE 0
+END AS BIT) AS IsSubscribed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID) 
+as tv";
+                    break;
+
+
+                default:
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,t.DateModified
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID) 
+as tv";
+                    break;
+            }
+
+            return userticketview;
+
+        }
+        private static string buildUserTicketsViewSubscribed(TicketLoadFilter filter)
+        {
+            string sort = filter.SortColumn.Trim();
+            string userticketview = "";
+            switch (sort)
+            {
+                case "Severity":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+,t.OrganizationID
+,t.DateModified
+,U.userid AS ViewerID
+,t.UserID
+,t.GroupID
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,tse.Position AS SeverityPosition
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM Tickets t
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17
+LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID
+LEFT OUTER JOIN dbo.TicketSeverities AS tse ON tse.TicketSeverityID = t.TicketSeverityID) as tv";
+                    break;
+
+                case "Status":
+                case "TicketTypeName":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+,t.DateModified
+, U.userid AS ViewerID
+,t.UserID
+,t.GroupID
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+, ts.Position AS StatusPosition
+, ts.Name AS STATUS
+, tt.Name AS TicketTypeName
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM Tickets t
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17
+LEFT OUTER JOIN dbo.TicketStatuses AS ts ON ts.TicketStatusID = t.TicketStatusID
+LEFT OUTER JOIN dbo.TicketTypes AS tt ON tt.TicketTypeID = t.TicketTypeID) as tv";
+                    break;
+                case "DaysOpened":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.DateModified
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+,CASE 
+		WHEN t.DateClosed IS NOT NULL
+			THEN FLOOR(datediff(hh, t.datecreated, t.dateclosed) / 24)
+		ELSE FLOOR(datediff(hh, t.DateCreated, GETUTCDATE()) / 24)
+		END AS DaysOpened
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17) 
+as tv";
+                    break;
+
+                case "TicketNumber":
+                case "Name":
+                case "DueDate":
+                case "TicketSource":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,t.DueDate
+,ISNULL(t.TicketSource, 'Agent') AS TicketSource
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.TicketNumber
+,t.Name
+,t.DateModified
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17) 
+as tv";
+                    break;
+
+                case "UserName":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.TicketNumber
+,t.Name
+,u2.FirstName + ' ' + u2.LastName AS UserName
+,t.DateModified
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17
+LEFT JOIN Users U2 on U2.UserID = t.Userid)
+as tv";
+                    break;
+                case "Contacts":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.DateModified
+,dbo.GetTicketContacts(t.TicketID) AS Contacts
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17) 
+as tv";
+                    break;
+
+                case "Customers":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.DateModified
+,dbo.GetTicketCustomers(t.TicketID) AS Customers
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17) 
+as tv";
+                    break;
+                case "GroupName":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,g.Name AS GroupName
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.DateModified
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17
+LEFT OUTER JOIN dbo.Groups AS g ON g.GroupID = t.GroupID)
+as tv";
+                    break;
+                case "ProductName":
+                case "ReportedVersion":
+                case "SolvedVersion":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,pv1.VersionNumber AS ReportedVersion
+,pv2.VersionNumber AS SolvedVersion
+,p.Name as ProductName
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.DateModified
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT JOIN Product p ON p.TicketID= t.TicketId
+LEFT OUTER JOIN dbo.ProductVersions AS pv1 ON pv1.ProductVersionID = t.ReportedVersionID
+LEFT OUTER JOIN dbo.ProductVersions AS pv2 ON pv2.ProductVersionID = t.SolvedVersionID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17) 
+as tv";
+                    break;
+
+                case "CategoryName":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,fc.CategoryName
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.DateModified
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.ForumTickets AS ft ON ft.TicketID = t.TicketID
+LEFT OUTER JOIN dbo.ForumCategories AS fc ON fc.CategoryID = ft.ForumCategory
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17) 
+as tv";
+                    break;
+                case "CloserName":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.DateModified
+,u2.FirstName + ' ' + u2.LastName AS CloserName
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17
+LEFT OUTER JOIN dbo.Users AS u2 ON u2.UserID = t.CloserID) 
+as tv";
+                    break;
+
+                case "SlaViolationTime":
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,DATEDIFF(mi, GETUTCDATE(), dbo.GetMinViolationDate(t.SlaViolationTimeClosed, t.SlaViolationLastAction, t.SlaViolationInitialResponse)) AS SlaViolationTime
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.DateModified
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17) 
+as tv";
+                    break;
+                case "IsFlagged":
+                    userticketview = @" FROM (SELECT t.TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.DateModified
+,CAST(ISNULL(dbo.UserTicketStatuses.IsFlagged, 0) AS Bit) AS IsFlagged
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17
+LEFT OUTER JOIN dbo.UserTicketStatuses ON dbo.UserTicketStatuses.UserID = U.UserID AND dbo.UserTicketStatuses.TicketID = t.TicketID) 
+as tv";
+                    break;
+                default:
+                    userticketview = @" FROM (SELECT TicketID
+, t.DateCreated
+, t.OrganizationID
+, U.userid as ViewerID
+,t.UserID
+,t.GroupID
+,CAST(CASE 
+			WHEN Subscriptions.RefID IS NOT NULL
+				THEN 1
+			ELSE 0
+			END AS BIT) AS IsSubscribed
+,t.DateModified
+,ISNULL(ts.IsClosed, 0) AS IsClosed
+FROM  Tickets t 
+LEFT JOIN Users U ON U.OrganizationID = t.OrganizationID
+LEFT OUTER JOIN dbo.Subscriptions ON dbo.Subscriptions.UserID = U.UserID
+	AND dbo.Subscriptions.RefID = t.TicketID
+	AND dbo.Subscriptions.RefType = 17) 
+as tv";
+                    break;
+            }
+
+            return userticketview;
+
+        }
+
 
         private static void GetHubFilterWhereClause(LoginUser loginUser, int UserID, int OrganizationID, TicketLoadFilter filter, SqlCommand command, StringBuilder builder)
         {

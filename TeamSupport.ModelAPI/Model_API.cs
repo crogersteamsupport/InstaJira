@@ -45,31 +45,36 @@ namespace TeamSupport.ModelAPI
             {
                 using (ConnectionContext connection = new ConnectionContext())
                 {
-                    switch (typeof(T).Name)
-                    {
-                        case "ActionProxy":
-                            {
-                                ActionProxy actionProxy = proxy as ActionProxy;
-                                Data_API.Create(connection.Ticket(actionProxy.TicketID), actionProxy);
-                            }
-                            break;
-                        case "AttachmentProxy":
-                            {
-                                AttachmentProxy attachment = proxy as AttachmentProxy;
-                                IAttachmentDestination model = AttachmentAPI.ClassFactory(connection, attachment);
-                                Data_API.Create(model as IDNode, attachment);
-                            }
-                            break;
-                        default:
-                            if (Debugger.IsAttached) Debugger.Break();
-                            break;
-                    }
+                    Create(connection, proxy);
                 }
             }
             catch (Exception ex)
             {
                 // TODO - tell user we failed to read
                 Data_API.LogMessage(ActionLogType.Insert, ReferenceType.None, 0, "choke", ex);
+            }
+        }
+
+        public static void Create<T>(ConnectionContext connection, T proxy)
+        {
+            switch (typeof(T).Name)
+            {
+                case "ActionProxy":
+                    {
+                        ActionProxy actionProxy = proxy as ActionProxy;
+                        Data_API.Create(connection.Ticket(actionProxy.TicketID), actionProxy);
+                    }
+                    break;
+                case "AttachmentProxy":
+                    {
+                        AttachmentProxy attachment = proxy as AttachmentProxy;
+                        IAttachmentDestination model = AttachmentAPI.ClassFactory(connection, attachment);
+                            Data_API.Create(model as IDNode, attachment);
+                    }
+                    break;
+                default:
+                    if (Debugger.IsAttached) Debugger.Break();
+                    break;
             }
         }
 
