@@ -31,9 +31,15 @@ namespace TeamSupport.Handlers
     {
       get { return false; }
     }
-    
+
 
     public void ProcessRequest(HttpContext context)
+    {
+        using (UnitTest.ScopedElapsedTime.Trace())
+            ProcessRequest1(context);
+    }
+
+    public void ProcessRequest1(HttpContext context)
     {
       context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
       context.Response.AddHeader("Expires", "-1");

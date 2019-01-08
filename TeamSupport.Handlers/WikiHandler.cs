@@ -47,6 +47,12 @@ namespace TeamSupport.Handlers
 
         public void ProcessRequest(HttpContext context)
         {
+            using (UnitTest.ScopedElapsedTime.Trace())
+                ProcessRequest1(context);
+        }
+
+        public void ProcessRequest1(HttpContext context)
+        {
             try
             {            //https://host/wiki/wikidocs/{path}
                          //https://app.teamsupport.com/Wiki/WikiDocs/1078/images/Misc%20Graphics/BlueBadge.png
