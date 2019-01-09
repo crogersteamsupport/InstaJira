@@ -96,5 +96,6 @@ namespace TeamSupport.JIRA
 
 		/// <summary>Returns information about the JIRA server</summary>
 		ServerInfo GetServerInfo();
+        List<JiraUser> GetJiraUsers();
     }
 }

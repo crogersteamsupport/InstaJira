@@ -84,6 +84,7 @@ namespace TeamSupport.JIRA
 
         /// <summary>Returns information about the JIRA server</summary>
         ServerInfo GetServerInfo();
+        List<JiraUser> GetJiraUsers();
     }
 
     public class JiraClient : IJiraClient
@@ -287,6 +288,11 @@ namespace TeamSupport.JIRA
 		public ServerInfo GetServerInfo()
         {
             return client.GetServerInfo();
+        }
+
+        public List<JiraUser> GetJiraUsers()
+        {
+            return client.GetJiraUsers();
         }
     }
 

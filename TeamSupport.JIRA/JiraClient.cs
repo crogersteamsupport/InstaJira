@@ -241,22 +241,29 @@ namespace TeamSupport.JIRA
 					updateData.Add("description", new[] { new { set = issue.fields.description } });
 				if (issue.fields.labels != null)
 					updateData.Add("labels", new[] { new { set = issue.fields.labels } });
-				if (issue.fields.timetracking != null)
-					updateData.Add("timetracking", new[] { new { set = new { originalEstimate = issue.fields.timetracking.originalEstimate } } });
+                if (issue.fields.timetracking != null)
+                    //updateData.Add("timetracking", new[] { new { set = new { originalEstimate = issue.fields.timetracking.originalEstimate } } });
+                    issue.fields.timetracking = null;
+                if (issue.fields.assignee != null)
+                {
+                    updateData.Add("assignee", new[] { new { set = issue.fields.assignee } });
+                }
+                //var propertyList = typeof(TIssueFields).GetProperties().Where(p => p.Name.StartsWith("customfield_"));
+                //foreach (var property in propertyList)
+                //{
+                //    var value = property.GetValue(issue.fields, null);
+                //    if (value != null) updateData.Add(property.Name, new[] { new { set = value } });
+                //}
 
-				//var propertyList = typeof(TIssueFields).GetProperties().Where(p => p.Name.StartsWith("customfield_"));
-				//foreach (var property in propertyList)
-				//{
-				//    var value = property.GetValue(issue.fields, null);
-				//    if (value != null) updateData.Add(property.Name, new[] { new { set = value } });
-				//}
+                if (issue.fields.customFields != null)
+                {
+                    foreach (KeyValuePair<string, CustomField> customField in issue.fields.customFields)
+                    {
+                        updateData.Add(customField.Key, new[] { new { set = customField.Value.Value } });
+                    }
+                }
 
-				foreach (KeyValuePair<string, CustomField> customField in issue.fields.customFields)
-				{
-					updateData.Add(customField.Key, new[] { new { set = customField.Value.Value } });
-				}
-
-				request.AddBody(new { update = updateData });
+                request.AddBody(new { update = updateData });
 
 				var response = client.Execute(request);
 				AssertStatus(response, HttpStatusCode.NoContent);
@@ -959,5 +966,16 @@ namespace TeamSupport.JIRA
 				throw new JiraClientException("Could not retrieve server information", ex);
 			}
 		}
-	}
+
+        public List<JiraUser> GetJiraUsers()
+        {
+            var path = string.Format("user/search?username=");
+            var request = CreateRequest(Method.GET, path);
+            request.AddHeader("ContentType", "application/json");
+
+            var response = client.Execute(request);
+            AssertStatus(response, HttpStatusCode.OK);
+            return deserializer.Deserialize<List<JiraUser>>(response);
+        }
+    }
 }

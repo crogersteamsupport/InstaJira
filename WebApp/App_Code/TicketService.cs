@@ -29,6 +29,7 @@ using Jira = TeamSupport.JIRA;
 using NR = NewRelic.Api;
 using TeamSupport.ModelAPI;
 using System.Threading;
+using TeamSupport.JIRA;
 
 namespace TSWebServices
 {
@@ -1764,9 +1765,9 @@ namespace TSWebServices
             newFields.LoadByTicketTypeID(TSAuthentication.OrganizationID, newTicketTypeID);
 
 
-            foreach (CustomField oldField in oldFields)
+            foreach (var oldField in oldFields)
             {
-                CustomField newField = newFields.FindByName(oldField.Name);
+                var newField = newFields.FindByName(oldField.Name);
                 if (newField != null)
                 {
                     CustomValue newValue = CustomValues.GetValue(oldFields.LoginUser, newField.CustomFieldID, ticketID);
@@ -4428,39 +4429,61 @@ WHERE t.TicketID = @TicketID
         private string SetSyncWithJira(LoginUser loginUser, int ticketId, string jiraIssueKey)
         {
             dynamic result = new ExpandoObject();
-
             TicketLinkToJira ticketLinkToJira = new TicketLinkToJira(loginUser);
             ticketLinkToJira.LoadByTicketID(ticketId);
-
+            //Business logic: If the ticket already exists then don't send it and make the user refresh the screen            
             if (ticketLinkToJira.Count == 0)
             {
                 try
                 {
-                    TicketLinkToJiraItem ticketLinkToJiraItem = ticketLinkToJira.AddNewTicketLinkToJiraItem();
-                    ticketLinkToJiraItem.TicketID = ticketId;
-                    ticketLinkToJiraItem.JiraKey = jiraIssueKey;
-                    ticketLinkToJiraItem.SyncWithJira = true;
-                    ticketLinkToJiraItem.CreatorID = loginUser.UserID;
-
-                    TicketsViewItem ticket = TicketsView.GetTicketsViewItem(loginUser, ticketId);
-                    ticketLinkToJiraItem.CrmLinkID = CRMLinkTable.GetIdBy(ticket.OrganizationID, IntegrationType.Jira.ToString().ToLower(), ticket.ProductID, loginUser);
-
-                    //If product is not associated to an instance then get the 'default' instance
-                    if (ticketLinkToJiraItem.CrmLinkID == null || ticketLinkToJiraItem.CrmLinkID <= 0)
+                    var jiraService = new JiraService();
+                    //Business logic: UserID is the assigned person of the ticket; CreatorID is whomever originally created the ticket.
+                    var ticket = jiraService.GetTicketData(ticketId);
+                    //If the product is not correctly associated with an Organization, Integration type and user then it will get the incorrect CrmLinkID
+                    var crmLinkId = CRMLinkTable.GetIdBy(ticket.OrganizationID, IntegrationType.Jira.ToString().ToLower(), ticket.ProductID, loginUser);
+                    
+                    if (crmLinkId != null && crmLinkId > 0)
                     {
-                        CRMLinkTable crmlink = new CRMLinkTable(loginUser);
-                        crmlink.LoadByOrganizationID(TSAuthentication.OrganizationID);
+                        var crmLinkTable = jiraService.GetCRMLinkTableData(crmLinkId);
+                        var password = string.IsNullOrEmpty(crmLinkTable.SecurityToken) == true ? crmLinkTable.Password : crmLinkTable.SecurityToken;
+                        var description = jiraService.GetTicketDescription(ticket.TicketID, ticket.OrganizationID) ?? string.Empty;
+                        var crmFieldName = jiraService.GetCRMFieldName(ticket.TicketTypeID, crmLinkTable.CRMLinkID) ?? string.Empty;
+                        if (string.IsNullOrEmpty(crmFieldName))
+                        {
+                            //They haven't setup the proper mapping(s) inside jira integration administration on the website, yet
+                            result.Error = "Incorrect ticket type mapping detected.  Please, setup mappings in the Jira Integration tab under Administration.";
+                        }
+                        if (crmLinkTable != null && !string.IsNullOrEmpty(crmFieldName))
+                        {
+                            var htmlDoc = new HtmlDocument();
+                            htmlDoc.LoadHtml(description);
+                            var issueFields = new IssueFields();
+                            issueFields.description = htmlDoc.DocumentNode.InnerText;//look at edge case for when users submit html code as an example
+                            issueFields.summary = ticket.Name;
+                            var assignee = new JiraUser();
+                            //Defaulting to -1 for Unassigned assignee in Jira
+                           
+                            if (ticket.UserID != null)
+                            {
+                                assignee = jiraService.GetUsers(crmLinkTable.HostName, crmLinkTable.Username, password).
+                                        Where(a => a.emailAddress == jiraService.GetUserMetaData(ticket.UserID).Email).
+                                        FirstOrDefault();
+                            }
+                            else
+                            {
+                                assignee.name = "-1";//Business logic for unassigned user gets set to Unassigned assignee in Jira
+                            }
 
-                        ticketLinkToJiraItem.CrmLinkID = crmlink.Where(p => p.InstanceName == "Default"
-                                                                            && p.CRMType.ToLower() == IntegrationType.Jira.ToString().ToLower())
-                                                                            .Select(p => p.CRMLinkID).FirstOrDefault();
-                    }
+                            issueFields.assignee = assignee;
 
-                    if (ticketLinkToJiraItem.CrmLinkID != null && ticketLinkToJiraItem.CrmLinkID > 0)
-                    {
-                        ticketLinkToJiraItem.Collection.Save();
-                        result.IsSuccessful = true;
-                        result.Error = null;
+                            var jiraResponse = jiraService.CreateNewJiraTicket(crmLinkTable.HostName, crmLinkTable.Username, password, crmLinkTable.DefaultProject, crmFieldName, issueFields);
+
+                            var ticketLinkToJiraModel = CreateTicketLinkToJiraModel(loginUser.UserID, ticket.TicketID, crmLinkId, jiraResponse, crmLinkTable.HostName);
+
+                            result.IsSuccessful = jiraService.SaveTicketLinkToJira(ticketLinkToJiraModel);
+                            result.Error = null;
+                        }
+
                     }
                     else
                     {
@@ -4477,6 +4500,23 @@ WHERE t.TicketID = @TicketID
             }
 
             return JsonConvert.SerializeObject(result);
+        }
+
+        private TeamSupport.EFData.Models.TicketLinkToJira CreateTicketLinkToJiraModel(int userId, int ticketId, int? crmLinkId, Issue jiraResponse, string hostName)
+        {
+            var jiraProject = jiraResponse.key ?? string.Empty;
+            var ticketLinkToJiraAdd = new TeamSupport.EFData.Models.TicketLinkToJira();
+            ticketLinkToJiraAdd.JiraKey = jiraProject;
+            ticketLinkToJiraAdd.JiraLinkURL = hostName + "/browse/" + jiraProject;
+            ticketLinkToJiraAdd.JiraID = int.Parse(jiraResponse.id);
+            ticketLinkToJiraAdd.TicketID = ticketId;
+            ticketLinkToJiraAdd.CreatorID = userId;
+            ticketLinkToJiraAdd.CrmLinkID = crmLinkId ?? null;
+            ticketLinkToJiraAdd.JiraStatus = jiraResponse.fields.status.description ?? null;
+            ticketLinkToJiraAdd.SyncWithJira = true;
+            ticketLinkToJiraAdd.DateModifiedByJiraSync = DateTime.UtcNow;
+
+            return ticketLinkToJiraAdd;
         }
 
         private string SetSyncWithTFS(LoginUser loginUser, int ticketId, string TFSWorkItemID)
