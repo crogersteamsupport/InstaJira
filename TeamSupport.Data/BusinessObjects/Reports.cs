@@ -8,6 +8,8 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.Globalization;
 using TeamSupport.Data.BusinessObjects.Reporting;
+using System.Data.Linq;
+using System.Diagnostics;
 
 
 namespace TeamSupport.Data
@@ -435,19 +437,68 @@ namespace TeamSupport.Data
                 builder.Append(")");
             }
         }
-
+        static int _CreatorID_ReportTableFieldID = 0;
 
         private static void WriteFilter(LoginUser loginUser, SqlCommand command, StringBuilder builder, ReportFilter filter, string primaryTableKeyName = null)
         {
             for (int i = 0; i < filter.Conditions.Length; i++)
             {
                 ReportFilterCondition condition = filter.Conditions[i];
+                condition = TryUseCreatorID(loginUser, condition);
+
                 if (i > 0) builder.Append(string.Format(" {0} ", filter.Conjunction.ToUpper()));
                 builder.Append("(");
                 WriteFilterCondition(loginUser, command, builder, condition, primaryTableKeyName);
                 builder.Append(")");
             }
         }
+
+        static ReportFilterCondition TryUseCreatorID(LoginUser loginUser, ReportFilterCondition condition)
+        {
+            if (!condition.FieldName.Equals("Action Creator Name")) // FieldID = 16
+                return condition;
+
+            ReportFilterCondition condition1 = new ReportFilterCondition()
+            {
+                //FieldID
+                FieldName = "CreatorID",
+                DataType = condition.DataType,
+                IsCustom = condition.IsCustom,
+                Comparator = condition.Comparator
+                //Value1
+            };
+
+            int? creatorID = null;
+            using (SqlConnection connection = new SqlConnection(loginUser.ConnectionString))
+            using (DataContext db = new DataContext(connection))
+            {
+                // FieldID = 13
+                if (_CreatorID_ReportTableFieldID == 0)
+                    _CreatorID_ReportTableFieldID = db.ExecuteQuery<int>("SELECT ReportTableFieldID AS FieldID FROM ReportTableFields WHERE FieldName = 'CreatorID'").Min();
+                condition1.FieldID = _CreatorID_ReportTableFieldID;
+
+                // Value1
+                switch (condition.Comparator)
+                {
+                    case "IS":
+                        int[] creatorIDs = db.ExecuteQuery<int>($"Select UserID FROM Users WHERE OrganizationID = {loginUser.OrganizationID} AND (FirstName + ' ' + LastName) = '{condition.Value1}'").ToArray();
+                        if (creatorIDs.Length == 1)
+                            creatorID = creatorIDs[0];
+                        break;
+                    default:
+                        if (Debugger.IsAttached) Debugger.Break();
+                        break;
+                }
+            }
+
+            if (!creatorID.HasValue)
+                return condition;
+
+            // SUCCESS !!
+            condition1.Value1 = creatorID.Value.ToString();
+            return condition1;
+        }
+
 
         public static void WriteFilterForExport(LoginUser loginUser, SqlCommand command, StringBuilder builder, ReportFilter filter, string primaryTableKeyName = null)
         {
