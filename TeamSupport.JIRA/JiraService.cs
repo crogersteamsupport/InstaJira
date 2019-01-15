@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TeamSupport.EFData;
@@ -33,6 +34,11 @@ namespace TeamSupport.JIRA
             return _jiraTicketsService.GetDescriptionFromActionsForNewTicketCreation(ticketId, organizationId);
         }
 
+        public IEnumerable<string> GetTicketComments(int ticketId, int organizationId)
+        {
+            return _jiraTicketsService.GetTicketCommentsToPush(ticketId, organizationId);
+        }
+
         public CrmLinkTable GetCRMLinkTableData(int? crmLinkId)
         {
             return _jiraTicketsService.GetCrmLinkTableById(crmLinkId).FirstOrDefault();
@@ -46,7 +52,7 @@ namespace TeamSupport.JIRA
 
         //ToDo: Implement strategy pattern for various models to be built based off of a differing issueType
         //For example: issueType of Story requires more than what issueType Task requires
-        public Issue CreateNewJiraTicket(string baseUrl, string username, string password, string projectKey, string issueType, IssueFields issueFields)
+        public Issue CreateNewJiraTicket(string baseUrl, string username, string password, string projectKey, string issueType, IssueFields issueFields, IEnumerable<string> comments)
         {
             issueFields.timetracking = null;//necessary for API rest call
             var response = new Issue();
@@ -54,12 +60,26 @@ namespace TeamSupport.JIRA
         
             if (issueFields != null)
             {
-                response = client.CreateIssue(projectKey, issueType, issueFields);
-                
-                if (issueFields.assignee != null)
+                try
                 {
-                    UpdateAssignee(issueFields, response, client);
+                    response = client.CreateIssue(projectKey, issueType, issueFields);
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
+                if (comments.Any())
+                {
+                    foreach (var comment in comments.Reverse())
+                    {
+                        var htmlDoc = new HtmlDocument();
+                        htmlDoc.LoadHtml(comment);
+                        client.CreateComment(response, htmlDoc.DocumentNode.InnerText);
+                    }
+                }
+                //if (issueFields.assignee != null)
+                //{
+                //    UpdateAssignee(issueFields, response, client);
+                //}
                 if (response == null)
                 {
                     return new Issue();

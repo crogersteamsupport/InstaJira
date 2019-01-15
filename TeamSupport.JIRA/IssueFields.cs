@@ -72,8 +72,12 @@ namespace TeamSupport.JIRA
         public List<IssueLink> issuelinks { get; set; }
         public List<Attachment> attachment { get; set; }
 		public Priority priority { get; set; }
+        public Version version { get; set; }//ToDo: remove if necessary
+        public object project { get; set; }//ToDo: remove if necessary
+        public object epic { get; set; }//ToDo: remove if necessary
+        public string issuetype { get; set; }
 
-		public Dictionary<string, CustomField> customFields { get; set; }
+        public Dictionary<string, CustomField> customFields { get; set; }
 	}
 
 	public class CustomField

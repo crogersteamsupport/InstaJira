@@ -25,5 +25,6 @@ namespace TeamSupport.JIRA
         string GetDescriptionFromActionsForNewTicketCreation(int ticketId, int organizationId);
         string GetCRMFieldName(int ticketTypeID, int cRMLinkID);
         Users GetUserMetaData(int? assignedUserToTicketId);
+        IEnumerable<string> GetTicketCommentsToPush(int ticketId, int organizationId);
     }
 }

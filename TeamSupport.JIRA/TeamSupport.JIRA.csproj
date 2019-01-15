@@ -34,6 +34,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\TeamSupport.Data\bin\x86\Debug\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -62,6 +65,8 @@
     <Compile Include="Compatibility.cs" />
     <Compile Include="Icon.cs" />
     <Compile Include="IJiraClient.cs" />
+    <Compile Include="IJiraExceptionService.cs" />
+    <Compile Include="IJiraTicketsService.cs" />
     <Compile Include="Issue.cs" />
     <Compile Include="IssueContainer.cs" />
     <Compile Include="IssueFields.cs" />
@@ -72,6 +77,10 @@
     <Compile Include="JiraClient.cs" />
     <Compile Include="JiraClientException.cs" />
     <Compile Include="JiraErrorsResponse.cs" />
+    <Compile Include="JiraExceptionService.cs" />
+    <Compile Include="JiraService.cs" />
+    <Compile Include="JiraServiceException.cs" />
+    <Compile Include="JiraTicketsService.cs" />
     <Compile Include="JiraUser.cs" />
     <Compile Include="Priority.cs" />
     <Compile Include="Project.cs" />
@@ -85,10 +94,17 @@
     <Compile Include="Timetracking.cs" />
     <Compile Include="Transition.cs" />
     <Compile Include="TransitionsContainer.cs" />
+    <Compile Include="Version.cs" />
     <Compile Include="WatchersContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TeamSupport.EFData\TeamSupport.EFData.csproj">
+      <Project>{a5c19ff9-de09-4bc7-8fcc-1d77ede7f602}</Project>
+      <Name>TeamSupport.EFData</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

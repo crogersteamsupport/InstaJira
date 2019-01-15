@@ -11,7 +11,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebApp", "http://localhost:
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.2"
-		ProjectReferences = "{cc4d311a-d6ea-4113-b648-537824e3b5d7}|TeamSupport.Api.dll;{7b8aa298-9f29-4cb1-979b-18cc31df76b1}|TeamSupport.Handlers.dll;{a5e5fc71-6b6f-4e57-9bf0-8602f7a707ea}|TeamSupport.JIRA.dll;{cc262e84-5002-4e7f-b078-7278e93f0c04}|TeamSupport.Messaging.dll;{7beb5c4f-414e-4660-904c-6407a3bc3acf}|TeamSupport.WebUtils.dll;{1943AC11-1F2D-4B85-9F0F-4D67284814BE}|TeamSupport.Data.dll;{8F3F388C-10F5-45D4-9F4C-471236DC14C0}|TeamSupport.Proxy.dll;{11C7D899-BCAA-408F-8B85-35593AB7E617}|TeamSupport.IDTree.dll;{7E2B2E07-518A-47A4-A39A-502654E8C8ED}|TeamSupport.ModelAPI.dll;{5C253014-D40C-4927-92F6-A91C2EFB49C5}|TeamSupport.DataAPI.dll;{EA4D4D19-DBFA-45CA-BB1E-6BB676BD6F0F}|TeamSupport.Permissions.dll;"
+		ProjectReferences = "{cc4d311a-d6ea-4113-b648-537824e3b5d7}|TeamSupport.Api.dll;{7b8aa298-9f29-4cb1-979b-18cc31df76b1}|TeamSupport.Handlers.dll;{a5e5fc71-6b6f-4e57-9bf0-8602f7a707ea}|TeamSupport.JIRA.dll;{cc262e84-5002-4e7f-b078-7278e93f0c04}|TeamSupport.Messaging.dll;{7beb5c4f-414e-4660-904c-6407a3bc3acf}|TeamSupport.WebUtils.dll;{1943AC11-1F2D-4B85-9F0F-4D67284814BE}|TeamSupport.Data.dll;{8F3F388C-10F5-45D4-9F4C-471236DC14C0}|TeamSupport.Proxy.dll;{11C7D899-BCAA-408F-8B85-35593AB7E617}|TeamSupport.IDTree.dll;{7E2B2E07-518A-47A4-A39A-502654E8C8ED}|TeamSupport.ModelAPI.dll;{5C253014-D40C-4927-92F6-A91C2EFB49C5}|TeamSupport.DataAPI.dll;{EA4D4D19-DBFA-45CA-BB1E-6BB676BD6F0F}|TeamSupport.Permissions.dll;{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}|TeamSupport.EFData.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/WebApp"
 		Debug.AspNetCompiler.PhysicalPath = "WebApp\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\WebApp\"
@@ -56,6 +56,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamSupport.Proxy", "TeamSupport.Proxy\TeamSupport.Proxy.csproj", "{8F3F388C-10F5-45D4-9F4C-471236DC14C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamSupport.Permissions", "TeamSupport.Permissions\TeamSupport.Permissions.csproj", "{EA4D4D19-DBFA-45CA-BB1E-6BB676BD6F0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamSupport.EFData", "TeamSupport.EFData\TeamSupport.EFData.csproj", "{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -667,6 +669,54 @@ Global
 		{EA4D4D19-DBFA-45CA-BB1E-6BB676BD6F0F}.Release|x64.Build.0 = Release|Any CPU
 		{EA4D4D19-DBFA-45CA-BB1E-6BB676BD6F0F}.Release|x86.ActiveCfg = Release|Any CPU
 		{EA4D4D19-DBFA-45CA-BB1E-6BB676BD6F0F}.Release|x86.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|.NET.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|.NET.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|Any CPU.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|Any CPU.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|Mixed Platforms.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|Win32.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|Win32.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|x64.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|x64.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|x86.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Beta|x86.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|.NET.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|Win32.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|x64.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Debug|x86.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|.NET.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|.NET.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|Win32.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|Win32.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|x64.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|x64.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|x86.ActiveCfg = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.dtSearch Internal Debug|x86.Build.0 = Debug|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|.NET.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|.NET.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|Win32.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|Win32.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|x64.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|x64.Build.0 = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|x86.ActiveCfg = Release|Any CPU
+		{A5C19FF9-DE09-4BC7-8FCC-1D77EDE7F602}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

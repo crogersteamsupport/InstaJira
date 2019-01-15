@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -192,28 +193,79 @@ namespace TeamSupport.JIRA
 				request.AddHeader("ContentType", "application/json");
 
 				var issueData = new Dictionary<string, object>();
-				issueData.Add("project", new { key = projectKey });
-				issueData.Add("issuetype", new { name = issueType });
 
-				if (issueFields.summary != null)
-					issueData.Add("summary", issueFields.summary);
-				if (issueFields.description != null)
-					issueData.Add("description", issueFields.description);
-				if (issueFields.labels != null)
-					issueData.Add("labels", issueFields.labels);
-				if (issueFields.timetracking != null)
-					issueData.Add("timetracking", new { originalEstimate = issueFields.timetracking.originalEstimate });
+                //foreach(var propertyInfo in typeof(TIssueFields).GetProperties())
+                //{
+                //    var value = propertyInfo.GetValue(issueFields, null);
+                //    if (value != null)
+                //        issueData.Add(propertyInfo.Name, value);
+                //}
 
-				var propertyList = typeof(TIssueFields).GetProperties().Where(p => p.Name.StartsWith("customfield_"));
-				foreach (var property in propertyList)
-				{
-					var value = property.GetValue(issueFields, null);
-					if (value != null) issueData.Add(property.Name, value);
-				}
+                issueData.Add("project", new { key = projectKey });
+                issueData.Add("issuetype", new { name = issueType });
 
-				request.AddBody(new { fields = issueData });
+                if (issueFields.summary != null)
+                    issueData.Add("summary", issueFields.summary);
+                if (issueFields.description != null)
+                    issueData.Add("description", issueFields.description);
+                if (issueFields.labels != null)
+                    issueData.Add("labels", issueFields.labels);
+                if (issueFields.timetracking != null)
+                    issueData.Add("timetracking", new { originalEstimate = issueFields.timetracking.originalEstimate });
+                if (issueFields.assignee != null)
+                    issueData.Add("assignee", issueFields.assignee);
+                if (issueFields.version != null)
+                {
+                    var version = new Version() { name = issueFields.version.name };
+                    issueData.Add("fixVersions", new[] { version });
+                }
+                //if(issueType == "epic" || issueType == "Epic")
+                //{
+                //    if (issueFields.epic != null)
+                //    {
+                //        issueData.Add("issuetype", new { name = issueType});
+                //        issueData.Add("epic", issueFields.epic);
+                //    }
+                //}
+
+                var propertyList = typeof(TIssueFields).GetProperties().Where(p => p.Name.StartsWith("customfield_"));
+                foreach (var property in propertyList)
+                {
+                    var value = property.GetValue(issueFields, null);
+                    if (value != null) issueData.Add(property.Name, value);
+                }
+
+
+
+                var metaData = GetIssueMetaData(projectKey, issueType);//Gets all fields to iterate over so we can find out of required == true/false
+                var issueFieldsReturned = metaData.projects[0].issuetypes[0].fields;
+                var customFields = issueFieldsReturned.customFields.ToList();
+                foreach(var customField in customFields)
+                {
+                    var currentValue = customField.Value;
+                    if (customField.Key == "customfield_10030")
+                    {
+                        issueData.Add(customField.Key, 42);
+                    }
+                }
+                //if(requiredFields.fixVersions.required == true)
+                //{
+                //    var version = new Version() { name = "FirstVersion" };                   
+
+                //    issueData.Add("fixVersions", new[] { version  });
+                //}
+                request.AddBody(new { fields = issueData });
 
 				var response = client.Execute(request);
+                var errorMessages = response.Content.Split(',');
+                for(var i = 0; i < errorMessages.Count(); i++)
+                {
+                    if (errorMessages[i].Contains("does not have any versions."))
+                    {
+                        Console.WriteLine("versioning is NOT setup properly!");
+                    }
+                }
+
 				AssertStatus(response, HttpStatusCode.Created);
 
 				var issueRef = deserializer.Deserialize<IssueRef>(response);

@@ -29,6 +29,6 @@ namespace TeamSupport.JIRA
         public TicketLinkToJira GetTicketsToPushAsIssuesById(int id) => jiraRepo.GetSingleJiraTicket(id).FirstOrDefault();
         public void Dispose() => GC.SuppressFinalize(this);
 
-
+        public IEnumerable<string> GetTicketCommentsToPush(int ticketId, int organizationId) => jiraRepo.GetTicketCommentsToPush(ticketId, organizationId);
     }
 }

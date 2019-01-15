@@ -30,6 +30,7 @@ using NR = NewRelic.Api;
 using TeamSupport.ModelAPI;
 using System.Threading;
 using TeamSupport.JIRA;
+using Version = TeamSupport.JIRA.Version;
 
 namespace TSWebServices
 {
@@ -38,13 +39,16 @@ namespace TSWebServices
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     public class TicketService : System.Web.Services.WebService
     {
-
         public TicketService()
         {
 
-            //Uncomment the following line if using designed components
-            //InitializeComponent();
         }
+        //public TicketService()
+        //{
+
+        //    //Uncomment the following line if using designed components
+        //    //InitializeComponent();
+        //}
 
         [WebMethod]
         public TicketPage GetTicketPage(int pageIndex, int pageSize, TicketLoadFilter filter)
@@ -4446,7 +4450,9 @@ WHERE t.TicketID = @TicketID
                     {
                         var crmLinkTable = jiraService.GetCRMLinkTableData(crmLinkId);
                         var password = string.IsNullOrEmpty(crmLinkTable.SecurityToken) == true ? crmLinkTable.Password : crmLinkTable.SecurityToken;
-                        var description = jiraService.GetTicketDescription(ticket.TicketID, ticket.OrganizationID) ?? string.Empty;
+                        var comments = jiraService.GetTicketComments(ticket.TicketID, ticket.OrganizationID);
+
+                       // var description = jiraService.GetTicketDescription(ticket.TicketID, ticket.OrganizationID) ?? string.Empty;
                         var crmFieldName = jiraService.GetCRMFieldName(ticket.TicketTypeID, crmLinkTable.CRMLinkID) ?? string.Empty;
                         if (string.IsNullOrEmpty(crmFieldName))
                         {
@@ -4455,14 +4461,18 @@ WHERE t.TicketID = @TicketID
                         }
                         if (crmLinkTable != null && !string.IsNullOrEmpty(crmFieldName))
                         {
-                            var htmlDoc = new HtmlDocument();
-                            htmlDoc.LoadHtml(description);
+                          //  var htmlDoc = new HtmlDocument();
+                         //  htmlDoc.LoadHtml(description);
                             var issueFields = new IssueFields();
-                            issueFields.description = htmlDoc.DocumentNode.InnerText;//look at edge case for when users submit html code as an example
+                           // issueFields.description = htmlDoc.DocumentNode.InnerText;//look at edge case for when users submit html code as an example
                             issueFields.summary = ticket.Name;
                             var assignee = new JiraUser();
                             //Defaulting to -1 for Unassigned assignee in Jira
-                           
+                         //   issueFields.version = new Jira.Version();
+                          //  issueFields.version =  new Version() { name = "FirstVersion" } ;
+                            //issueFields.project = new Project() { key = crmLinkTable.DefaultProject };
+                            issueFields.project = new { key = crmLinkTable.DefaultProject };
+                           // issueFields.epic = new { name = "SomeName" } ;
                             if (ticket.UserID != null)
                             {
                                 assignee = jiraService.GetUsers(crmLinkTable.HostName, crmLinkTable.Username, password).
@@ -4476,7 +4486,7 @@ WHERE t.TicketID = @TicketID
 
                             issueFields.assignee = assignee;
 
-                            var jiraResponse = jiraService.CreateNewJiraTicket(crmLinkTable.HostName, crmLinkTable.Username, password, crmLinkTable.DefaultProject, crmFieldName, issueFields);
+                            var jiraResponse = jiraService.CreateNewJiraTicket(crmLinkTable.HostName, crmLinkTable.Username, password, crmLinkTable.DefaultProject, crmFieldName, issueFields, comments);
 
                             var ticketLinkToJiraModel = CreateTicketLinkToJiraModel(loginUser.UserID, ticket.TicketID, crmLinkId, jiraResponse, crmLinkTable.HostName);
 

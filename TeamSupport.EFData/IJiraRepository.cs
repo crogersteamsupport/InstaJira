@@ -24,5 +24,6 @@ namespace TeamSupport.EFData
         string GetCRMFieldName(int ticketTypeID, int cRMLinkID);
         Users GetUserMetaData(int? assignedUserToTicketId);
         void SaveExceptions(ExceptionLogs entity);
+        IEnumerable<string> GetTicketCommentsToPush(int ticketId, int organizationId);
     }
 }

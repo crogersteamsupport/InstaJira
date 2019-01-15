@@ -164,5 +164,15 @@ namespace TeamSupport.EFData
             GC.SuppressFinalize(this);
         }
 
+        public IEnumerable<string> GetTicketCommentsToPush(int ticketId, int organizationId)
+        {
+            var query = from tickets in _context.Tickets
+                        where tickets.TicketID == ticketId &&
+                        tickets.OrganizationID == organizationId
+                        join actions in _context.Actions
+                        on tickets.TicketID equals actions.TicketID
+                        select actions.Description;
+            return query.ToList();
+        }
     }
 }
